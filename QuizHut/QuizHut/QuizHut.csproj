@@ -23,7 +23,7 @@
   <ItemGroup>
     <Resource Include="Images\LoginViewImages\EyePic.png" />
     <Resource Include="Images\LoginViewImages\LoginFormBackground.jpg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory></CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\LoginViewImages\MainLogo.png" />
     <Resource Include="Images\LoginViewImages\QuestionMark.png" />
