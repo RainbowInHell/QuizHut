@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:QuizHut"
              StartupUri="View/Windows/LoginView.xaml">
     <Application.Resources>
+        <FontFamily x:Key="Manrope">/Fonts/Manrope-VariableFont_wght.ttf#Manrope</FontFamily>
         <!-- 
             Template for defining a 22x22 circular button 
             with a corner radius of 11 and a mouse hover trigger,

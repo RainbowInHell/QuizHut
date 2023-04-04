@@ -45,7 +45,7 @@
                         BorderThickness="0"
                         Content="-"
                         Foreground="White"
-                        FontFamily="Manrope"
+                        FontFamily="{StaticResource Manrope}"
                         FontSize="22"
                         Cursor="Hand"
                         Grid.Column="1"
@@ -58,7 +58,7 @@
                         BorderThickness="0"
                         Content="✕"
                         Foreground="White"
-                        FontFamily="Manrope"
+                        FontFamily="{StaticResource Manrope}"
                         FontSize="16"
                         Cursor="Hand"
                         Grid.Column="2"
@@ -73,7 +73,7 @@
                 <Image Source="\Images\LoginViewImages\MainLogo.png" 
                        Height="100" Width="150"/>
 
-                <Frame Height="350">
+                <Frame x:Name="LFUserControlsFrame" Height="350">
 
                 </Frame>
             </StackPanel>
