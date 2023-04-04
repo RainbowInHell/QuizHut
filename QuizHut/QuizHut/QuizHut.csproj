@@ -7,4 +7,26 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\LoginViewImages\EyePic.png" />
+    <None Remove="Images\LoginViewImages\LoginFormBackground.jpg" />
+    <None Remove="Images\LoginViewImages\MainLogo.png" />
+    <None Remove="Images\LoginViewImages\QuestionMark.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="ViewModel\" />
+    <Folder Include="View\Pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\LoginViewImages\EyePic.png" />
+    <Resource Include="Images\LoginViewImages\LoginFormBackground.jpg">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\LoginViewImages\MainLogo.png" />
+    <Resource Include="Images\LoginViewImages\QuestionMark.png" />
+  </ItemGroup>
+
 </Project>
