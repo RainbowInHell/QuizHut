@@ -3,7 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:QuizHut"
              StartupUri="View/Windows/LoginView.xaml">
+            <!--xmlns:viewModel="clr-namespace:QuizHut.ViewModel"
+             xmlns:viewUC="clr-namespace:QuizHut.View.UserControls"
+             xmlns:viewW="clr-namespace:QuizHut.View.Windows"-->
     <Application.Resources>
+
         <!-- Fonts Resources -->
         
         <FontFamily x:Key="Manrope">/Fonts/Manrope-VariableFont_wght.ttf#Manrope</FontFamily>
@@ -74,7 +78,8 @@
                 </VisualStateManager.VisualStateGroups>
                 <Border x:Name="backgroundElement"
                         Background="{TemplateBinding Background}"
-                        CornerRadius="15">
+                        CornerRadius="15"
+                        Cursor="Hand">
                     <ContentControl x:Name="foregroundElement"
                                     FontFamily="{StaticResource Manrope}"
                                     FontSize="{TemplateBinding FontSize}"
@@ -84,6 +89,38 @@
                                     Content="{TemplateBinding Content}"/>
                 </Border>
             </Grid>
+        </ControlTemplate>
+
+        <!-- Template for button definition with transparent background and no borders -->
+        <ControlTemplate x:Key="ButtonTemplate3" TargetType="Button">
+            <Border x:Name="btnBorder"
+                    Background="Transparent"
+                    Cursor="Hand">
+                <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+            </Border>
+        </ControlTemplate>
+
+        <!-- 
+            Template for button definition with rounded edges by 15 points,
+            background #E42380 and hand cursor
+        -->
+        <ControlTemplate x:Key="MainButtonTemplate" TargetType="Button">
+            <Border CornerRadius="15"
+                    Background="#E42380" Cursor="Hand"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}">
+                <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+            </Border>
         </ControlTemplate>
     </Application.Resources>
 </Application>
