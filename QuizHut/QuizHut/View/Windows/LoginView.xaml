@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuizHut.View.Windows"
+        xmlns:controls="clr-namespace:QuizHut.View.Pages"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="977"
         WindowStyle="None"
@@ -45,7 +45,7 @@
                         BorderThickness="0"
                         Content="-"
                         Foreground="White"
-                        FontFamily="Manrope"
+                        FontFamily="{StaticResource Manrope}"
                         FontSize="22"
                         Cursor="Hand"
                         Grid.Column="1"
@@ -58,7 +58,7 @@
                         BorderThickness="0"
                         Content="✕"
                         Foreground="White"
-                        FontFamily="Manrope"
+                        FontFamily="{StaticResource Manrope}"
                         FontSize="16"
                         Cursor="Hand"
                         Grid.Column="2"
@@ -73,9 +73,10 @@
                 <Image Source="\Images\LoginViewImages\MainLogo.png" 
                        Height="100" Width="150"/>
 
-                <Frame Height="350">
-
-                </Frame>
+                <!--<Frame x:Name="LFUserControlsFrame" Height="350">
+                     
+                </Frame>-->
+                <controls:ChooseRoleView Margin="0,10,0,0"/>
             </StackPanel>
         </Grid>
     </Border>

@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:QuizHut"
              StartupUri="View/Windows/LoginView.xaml">
     <Application.Resources>
+        <!-- Fonts Resources -->
+        
+        <FontFamily x:Key="Manrope">/Fonts/Manrope-VariableFont_wght.ttf#Manrope</FontFamily>
+        
+        <!-- Controls Resources -->
+
         <!-- 
             Template for defining a 22x22 circular button 
             with a corner radius of 11 and a mouse hover trigger,
@@ -26,6 +32,58 @@
                     <Setter Property="Opacity" TargetName="btnBorder" Value="1"/>
                 </Trigger>
             </ControlTemplate.Triggers>
+        </ControlTemplate>
+        
+        <!-- 
+            A template for defining a button with rounded edges by 15 points 
+            and an animated visual state when the mouse cursor is over: when 
+            the mouse is hovered over, the background of the button becomes #E42380 
+            and the foreground becomes white, and when the mouse is removed from the element, 
+            the button also returns to its original visual state in an animated way. 
+            Duration of the animation is 3 milliseconds.
+        -->
+        <ControlTemplate x:Key="ButtonTemplate2" TargetType="Button">
+            <Grid>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup Name="CommonStates">
+                        <VisualState Name="Normal">
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetName="backgroundElement" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                            To="{TemplateBinding Background}"
+                            Duration="0:0:0.3"/>
+                                <ColorAnimation Storyboard.TargetName="foregroundElement" 
+                            Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                            To="{TemplateBinding Foreground}"
+                            Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState Name="MouseOver">
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetName="backgroundElement" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="#E42380" 
+                            Duration="0:0:0.3"/>
+                                <ColorAnimation Storyboard.TargetName="foregroundElement" 
+                            Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                            To="White"
+                            Duration="0:0:0.3"/>
+                            </Storyboard>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Border x:Name="backgroundElement"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="15">
+                    <ContentControl x:Name="foregroundElement"
+                                    FontFamily="{StaticResource Manrope}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Content="{TemplateBinding Content}"/>
+                </Border>
+            </Grid>
         </ControlTemplate>
     </Application.Resources>
 </Application>

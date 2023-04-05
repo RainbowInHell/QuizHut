@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace QuizHut.View.Windows
+﻿namespace QuizHut.View.Windows
 {
+    using System.Windows;
+    using System.Windows.Input;
+
     /// <summary>
     /// Логика взаимодействия для LoginView.xaml
     /// </summary>
