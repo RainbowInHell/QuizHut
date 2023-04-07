@@ -21,12 +21,12 @@
             }
         }
 
-        private void LFMinimizeBtn_Click(object sender, RoutedEventArgs e)
+        private void LVMinimizeBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void LFCloseBtn_Click(object sender, RoutedEventArgs e)
+        private void LVCloseBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
