@@ -1,8 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Input;
-
-namespace QuizHut.View.Windows
+﻿namespace QuizHut.View.Windows
 {
+    using System.Windows;
+    using System.Windows.Input;
+
     /// <summary>
     /// Логика взаимодействия для LoginView.xaml
     /// </summary>
@@ -21,12 +21,12 @@ namespace QuizHut.View.Windows
             }
         }
 
-        private void LFMinimizeBtn_Click(object sender, RoutedEventArgs e)
+        private void LVMinimizeBtn_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void LFCloseBtn_Click(object sender, RoutedEventArgs e)
+        private void LVCloseBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

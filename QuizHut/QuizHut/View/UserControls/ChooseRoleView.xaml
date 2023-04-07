@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="QuizHut.View.UserControls.ChooseRoleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizHut.View.UserControls"
+             mc:Ignorable="d" 
+             Background="Transparent"
+             d:Height ="215" d:Width="350">
+    
+    <Border CornerRadius="15">
+        <Border.Background>
+            <SolidColorBrush Color="#A5ACD2" Opacity="0.7"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions >
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="Регистрация.Выберите роль"
+                       Margin="0,10,0,0"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       FontFamily="{StaticResource Manrope}"/>
+
+            <Button x:Name="CHRVStudentBtn"
+                    Grid.Row="2" Grid.Column="1"
+                    Content="Учащийся"
+                    Background="White"
+                    Foreground="#6D6D6D"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Template="{StaticResource ButtonTemplate2}"/>
+            
+            <Button x:Name="CHRVTeacherBtn"
+                    Grid.Row="4" Grid.Column="1"
+                    Content="Преподаватель"
+                    Background="White"
+                    Foreground="#6D6D6D"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Template="{StaticResource ButtonTemplate2}"/>
+
+            <Button x:Name="CHRVGoToEnterViewBtn"
+                    Grid.Row="6" Grid.Column="1"
+                    Margin="0,10,0,0"
+                    Foreground="White"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    Template="{StaticResource ButtonTemplate3}">
+                <Button.Content>
+                    <TextBlock>
+                        <Underline>Войти в существующий аккаунт</Underline>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>
