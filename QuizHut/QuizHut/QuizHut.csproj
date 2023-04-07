@@ -21,19 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.4">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Images\LoginViewImages\EyePic.png" />
     <Resource Include="Images\LoginViewImages\LoginFormBackground.jpg">
       <CopyToOutputDirectory></CopyToOutputDirectory>
