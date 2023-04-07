@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Fonts\Manrope-VariableFont_wght.ttf" />
     <None Remove="Images\LoginViewImages\EyePic.png" />
+    <None Remove="Images\LoginViewImages\EyePic2.png" />
     <None Remove="Images\LoginViewImages\LoginFormBackground.jpg" />
     <None Remove="Images\LoginViewImages\MainLogo.png" />
     <None Remove="Images\LoginViewImages\QuestionMark.png" />
@@ -24,6 +25,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\LoginViewImages\EyePic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\LoginViewImages\EyePic2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\LoginViewImages\LoginFormBackground.jpg">

@@ -7,6 +7,12 @@
              xmlns:viewUC="clr-namespace:QuizHut.View.UserControls"
              xmlns:viewW="clr-namespace:QuizHut.View.Windows"-->
     <Application.Resources>
+        <!-- Colors Resources -->
+        <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
+        <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
+        
+        <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
+        <SolidColorBrush x:Key="PrimaryWaterMarkerLabelColor" Color="#777777"/>
 
         <!-- Fonts Resources -->
         
@@ -95,7 +101,8 @@
         <ControlTemplate x:Key="ButtonTemplate3" TargetType="Button">
             <Border x:Name="btnBorder"
                     Background="Transparent"
-                    Cursor="Hand">
+                    Cursor="Hand"
+                    Opacity="0.8">
                 <ContentControl FontFamily="{StaticResource Manrope}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
@@ -103,6 +110,11 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Content="{TemplateBinding Content}"/>
             </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" TargetName="btnBorder"  Value="1" />
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
 
         <!-- 
@@ -110,10 +122,13 @@
             background #E42380 and hand cursor
         -->
         <ControlTemplate x:Key="MainButtonTemplate" TargetType="Button">
-            <Border CornerRadius="15"
-                    Background="#E42380" Cursor="Hand"
+            <Border x:Name="btnBorder"
+                    CornerRadius="15"
+                    Cursor="Hand"
+                    Background="{TemplateBinding Background}"
                     Height="{TemplateBinding Height}"
-                    Width="{TemplateBinding Width}">
+                    Width="{TemplateBinding Width}"
+                    Opacity="0.8">
                 <ContentControl FontFamily="{StaticResource Manrope}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
@@ -121,6 +136,11 @@
                                 VerticalAlignment="Center" HorizontalAlignment="Center"
                                 Content="{TemplateBinding Content}"/>
             </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" TargetName="btnBorder"  Value="1" />
+                </Trigger>
+            </ControlTemplate.Triggers>
         </ControlTemplate>
     </Application.Resources>
 </Application>
