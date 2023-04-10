@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-namespace QuizHut.View.UserControls
+﻿namespace QuizHut.View.UserControls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media.Imaging;
+
     /// <summary>
     /// Логика взаимодействия для AuthorizationView.xaml
     /// </summary>
@@ -65,7 +56,7 @@ namespace QuizHut.View.UserControls
         }
     }
 
-    //Attached dependency for access to Length of PasswordBox
+    //Attached property for access to Length of PasswordBox
     public class PasswordBoxMonitor : DependencyObject
     {
         public static bool GetIsMonitoring(DependencyObject obj)
