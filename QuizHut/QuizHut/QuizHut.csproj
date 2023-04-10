@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Fonts\Manrope-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

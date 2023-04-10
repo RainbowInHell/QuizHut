@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Namespace="clr-namespace:QuizHut.View.UserControls"
+             xmlns:passwordBoxProperties="clr-namespace:QuizHut.AttachedProperties"
              mc:Ignorable="d" 
              Background="Transparent"
              d:Height="315" d:Width="350">
@@ -72,7 +72,7 @@
             Style for PasswordBox
         -->
         <Style x:Key="passwordBoxStyle" TargetType="PasswordBox">
-            <Setter Property="Namespace:PasswordBoxMonitor.IsMonitoring"
+            <Setter Property="passwordBoxProperties:PasswordBoxProperties.IsMonitoring"
               Value="True"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -108,7 +108,7 @@
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="Namespace:PasswordBoxMonitor.PasswordLength" Value="0" >
+                            <Trigger Property="passwordBoxProperties:PasswordBoxProperties.PasswordLength" Value="0" >
                                 <Setter Property="Visibility"
                                         TargetName="WaterMarkerLabel"
                                         Value="Visible"/>

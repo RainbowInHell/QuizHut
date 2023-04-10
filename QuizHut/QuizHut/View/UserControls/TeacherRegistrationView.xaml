@@ -3,12 +3,44 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:Namespace="clr-namespace:QuizHut.View.UserControls"
+             xmlns:passwordBoxProperties="clr-namespace:QuizHut.AttachedProperties"
              mc:Ignorable="d" 
              Background="Transparent"
-             d:Height="345" d:Width="350">
+             d:Height="370" d:Width="350">
     <Border CornerRadius="15"
             Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="8"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="1"
+                       Text="Регистрация преподавателя"
+                       Margin="0,10,0,0"
+                       FontFamily="{StaticResource Manrope}"
+                       FontSize="16"
+                       FontWeight="SemiBold"/>
+        </Grid>
     </Border>
 </UserControl>
