@@ -126,7 +126,9 @@
     </ControlTemplate>
 
     <!--
-        Style for TexBox
+        A style for TexBox that makes textBox rounded by 15 points, 
+        adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
+        properties that makes textBox focused in PrimaryActiveColor.
     -->
     <Style x:Key="textBoxStyle" TargetType="TextBox">
         <Setter Property="Background" Value="White"/>
@@ -186,8 +188,11 @@
     </Style>
 
     <!--
-            Style for PasswordBox
-        -->
+        A style for PasswordBox that makes passwordBox rounded by 15 points, 
+        adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
+        properties that makes passwordBox focused in PrimaryActiveColor. Also
+        style uses attached property for passwordBox to get password length 
+    -->
     <Style x:Key="passwordBoxStyle" TargetType="PasswordBox">
         <Setter Property="passwordBoxProperties:PasswordBoxProperties.IsMonitoring"
               Value="True"/>

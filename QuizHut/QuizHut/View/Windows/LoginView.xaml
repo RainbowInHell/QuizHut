@@ -96,8 +96,9 @@
             </Grid>
 
             <StackPanel Width="350"
-                        Grid.Row="1"
-                        Grid.RowSpan="1"
+                        Grid.Row="0"
+                        Grid.RowSpan="4"
+                        Margin="0,15,0,0"
                         Orientation="Vertical">
                 <Image Source="\Images\LoginViewImages\MainLogo.png" 
                        Height="90" Width="150"/>
@@ -108,9 +109,12 @@
                 <!--<controls:ChooseRoleView x:Name="LVChooseRoleView"
                                          Height="215"
                                          Margin="0,40,0,0"/>-->
-                <controls:AuthorizationView x:Name="LVAuthorizationView"
+                <!--<controls:AuthorizationView x:Name="LVAuthorizationView"
                                             Height="315"
-                                            Margin="0,30,0,0"/>
+                                            Margin="0,30,0,0"/>-->
+                <controls:TeacherRegistrationView x:Name="LVTeacherRegistrationView"
+                                            Height="370"
+                                            Margin="0,20,0,0"/>
             </StackPanel>
 
             <Button x:Name="LVHelpBtn"

@@ -41,6 +41,23 @@
                        FontFamily="{StaticResource Manrope}"
                        FontSize="16"
                        FontWeight="SemiBold"/>
+
+            <TextBox x:Name="TRVEmailTextBox"
+                     Grid.Column="1" Grid.Row="2"
+                     Tag="Email"
+                     MaxLength="50"
+                     FontFamily="{StaticResource Manrope}"
+                     FontSize="14"
+                     Style="{StaticResource textBoxStyle}"/>
+
+            <PasswordBox x:Name="TRVPasswordBox"
+                         Grid.Column="1" Grid.Row="4"
+                         Tag="Пароль"
+                         MaxLength="25"
+                         FontFamily="{StaticResource Manrope}"
+                         FontSize="14"
+                         Style="{StaticResource passwordBoxStyle}"
+                         PasswordChanged="TRVPasswordBox_PasswordChanged"/>
         </Grid>
     </Border>
 </UserControl>
