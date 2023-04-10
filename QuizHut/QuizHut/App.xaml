@@ -8,6 +8,8 @@
              xmlns:viewW="clr-namespace:QuizHut.View.Windows"-->
     <Application.Resources>
         <!-- Colors Resources -->
+        <SolidColorBrush x:Key="PrimaryLoginPagesBackgroundColor" Color="#A5ACD2" Opacity="0.7"/>
+
         <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
         <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
         

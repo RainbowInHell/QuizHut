@@ -128,10 +128,8 @@
         </Style>
     </UserControl.Resources>
 
-    <Border CornerRadius="15">
-        <Border.Background>
-            <SolidColorBrush Color="#A5ACD2" Opacity="0.7"/>
-        </Border.Background>
+    <Border CornerRadius="15"
+            Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
 
         <Grid>
             <Grid.RowDefinitions>
