@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QuizHut.View.UserControls
+namespace QuizHut.Views.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для TeacherRegistrationView.xaml
+    /// Логика взаимодействия для StudentRegistrationView.xaml
     /// </summary>
-    public partial class TeacherRegistrationView : UserControl
+    public partial class StudentRegistrationView : UserControl
     {
-        public TeacherRegistrationView()
+        public StudentRegistrationView()
         {
             InitializeComponent();
         }

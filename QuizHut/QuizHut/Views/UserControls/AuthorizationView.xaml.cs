@@ -1,4 +1,4 @@
-﻿namespace QuizHut.View.UserControls
+﻿namespace QuizHut.Views.UserControls
 {
     using System;
     using System.Windows;
