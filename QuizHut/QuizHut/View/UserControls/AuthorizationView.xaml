@@ -67,7 +67,7 @@
                      MaxLength="25"
                      Visibility="Hidden"/>
             <Image  x:Name="AVShowHidePasswImg"
-                    Source="\Images\LoginViewImages\EyePic.png" 
+                    Source="/QuizHut;component/Images/LoginViewImages/EyePic.png" 
                     Width="20" Height="20"
                     Grid.Row="4" Grid.Column="1"
                     HorizontalAlignment="Right"

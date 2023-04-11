@@ -83,15 +83,15 @@
                 <!--<controls:ChooseRoleView x:Name="LVChooseRoleView"
                                          Height="215"
                                          Margin="0,40,0,0"/>-->
-                <!--<controls:AuthorizationView x:Name="LVAuthorizationView"
+                <controls:AuthorizationView x:Name="LVAuthorizationView"
                                             Height="315"
-                                            Margin="0,30,0,0"/>-->
+                                            Margin="0,30,0,0"/>
                 <!--<controls:TeacherRegistrationView x:Name="LVTeacherRegistrationView"
                                             Height="370"
                                             Margin="0,20,0,0"/>-->
-                <controls:StudentRegistrationView x:Name="LVStudentRegistrationView"
+                <!--<controls:StudentRegistrationView x:Name="LVStudentRegistrationView"
                                             Height="370"
-                                            Margin="0,20,0,0"/>
+                                            Margin="0,20,0,0"/>-->
             </StackPanel>
 
             <Button x:Name="LVHelpBtn"
