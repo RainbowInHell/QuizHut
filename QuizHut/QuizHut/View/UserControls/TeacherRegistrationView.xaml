@@ -56,8 +56,15 @@
                          MaxLength="25"
                          FontFamily="{StaticResource Manrope}"
                          FontSize="14"
-                         Style="{StaticResource passwordBoxStyle}"
-                         PasswordChanged="TRVPasswordBox_PasswordChanged"/>
+                         Style="{StaticResource passwordBoxStyle}"/>
+            <PasswordBox x:Name="TRVRepeatPasswordBox"
+                         Grid.Column="1" Grid.Row="6"
+                         Tag="Повторите пароль"
+                         MaxLength="25"
+                         FontFamily="{StaticResource Manrope}"
+                         FontSize="14"
+                         Style="{StaticResource passwordBoxStyle}"/>
+            
         </Grid>
     </Border>
 </UserControl>

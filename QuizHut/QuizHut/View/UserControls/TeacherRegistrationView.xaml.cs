@@ -24,10 +24,5 @@ namespace QuizHut.View.UserControls
         {
             InitializeComponent();
         }
-
-        private void TRVPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

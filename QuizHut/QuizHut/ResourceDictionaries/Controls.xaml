@@ -248,4 +248,28 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- 
+        Template remove default MouseOver effect,
+        and make topLeft and bottomLeft corners 
+        rounded by 13 points
+    -->
+    <ControlTemplate x:Key="ButtonTemplate4" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    CornerRadius="13,0,0,13"
+                    Opacity="0.8"
+                    Background="{TemplateBinding Background}" Cursor="Hand">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder" Value="1"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>
