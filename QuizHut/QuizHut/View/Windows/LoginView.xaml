@@ -86,7 +86,10 @@
                 <!--<controls:AuthorizationView x:Name="LVAuthorizationView"
                                             Height="315"
                                             Margin="0,30,0,0"/>-->
-                <controls:TeacherRegistrationView x:Name="LVTeacherRegistrationView"
+                <!--<controls:TeacherRegistrationView x:Name="LVTeacherRegistrationView"
+                                            Height="370"
+                                            Margin="0,20,0,0"/>-->
+                <controls:StudentRegistrationView x:Name="LVStudentRegistrationView"
                                             Height="370"
                                             Margin="0,20,0,0"/>
             </StackPanel>
