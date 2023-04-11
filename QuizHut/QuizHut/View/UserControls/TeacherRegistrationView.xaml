@@ -57,6 +57,7 @@
                          FontFamily="{StaticResource Manrope}"
                          FontSize="14"
                          Style="{StaticResource passwordBoxStyle}"/>
+            
             <PasswordBox x:Name="TRVRepeatPasswordBox"
                          Grid.Column="1" Grid.Row="6"
                          Tag="Повторите пароль"
@@ -65,6 +66,54 @@
                          FontSize="14"
                          Style="{StaticResource passwordBoxStyle}"/>
             
+            <Button x:Name="TRVRegistrBtn"
+                    Grid.Column="1" Grid.Row="8"
+                    Content="Регистрация"
+                    FontFamily="{StaticResource Manrope}"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Background="#E42380"
+                    Foreground="White"
+                    Template="{StaticResource MainButtonTemplate}"/>
+
+            <Button x:Name="TRVAlreadyRegistrBtn"
+                    Grid.Row="10" Grid.Column="1"
+                    Foreground="White"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    Template="{StaticResource ButtonTemplate3}">
+                <Button.Content>
+                    <TextBlock>
+                        <Underline>Уже зарегистрирован</Underline>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="TRVForgotPasswordBtn"
+                    Grid.Row="12" Grid.Column="1"
+                    Foreground="White"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    Template="{StaticResource ButtonTemplate3}">
+                <Button.Content>
+                    <TextBlock>
+                        <Underline>Забыл пароль</Underline>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="TRVRegistrStudentBtn"
+                    Grid.Row="14" Grid.Column="1"
+                    Foreground="White"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    Template="{StaticResource ButtonTemplate3}">
+                <Button.Content>
+                    <TextBlock>
+                        <Underline>Регистрация учащегося</Underline>
+                    </TextBlock>
+                </Button.Content>
+            </Button>
         </Grid>
     </Border>
 </UserControl>

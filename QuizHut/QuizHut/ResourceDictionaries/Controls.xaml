@@ -100,8 +100,7 @@
     </ControlTemplate>
 
     <!--
-        Template for button definition with rounded edges by 15 points,
-        background #E42380 and hand cursor
+        Template for button definition with rounded edges by 15 points and hand cursor
     -->
     <ControlTemplate x:Key="MainButtonTemplate" TargetType="Button">
         <Border x:Name="btnBorder"
