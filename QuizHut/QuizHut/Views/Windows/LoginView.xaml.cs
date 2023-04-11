@@ -1,4 +1,4 @@
-﻿namespace QuizHut.View.Windows
+﻿namespace QuizHut.Views.Windows
 {
     using System.Windows;
     using System.Windows.Input;

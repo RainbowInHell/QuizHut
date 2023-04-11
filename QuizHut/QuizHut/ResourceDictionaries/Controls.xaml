@@ -1,0 +1,274 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:passwordBoxProperties="clr-namespace:QuizHut.AttachedProperties">
+
+    <!--
+        Template for defining a 22x22 circular button 
+        with a corner radius of 11 and a mouse hover trigger,
+        where 80% colour transparency becomes 100%. 
+        The content of the button is centred vertically and horizontally.
+    -->
+    <ControlTemplate x:Key="ButtonTemplate1" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    Width="22" 
+                    Height="22"
+                    CornerRadius="11"
+                    Background="{TemplateBinding Background}"
+                    Opacity="0.8">
+            <ContentPresenter VerticalAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder" Value="1"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--
+        A template for defining a button with rounded edges by 15 points 
+        and an animated visual state when the mouse cursor is over: when 
+        the mouse is hovered over, the background of the button becomes #E42380 
+        and the foreground becomes white, and when the mouse is removed from the element, 
+        the button also returns to its original visual state in an animated way. 
+        Duration of the animation is 3 milliseconds.
+    -->
+    <ControlTemplate x:Key="ButtonTemplate2" TargetType="Button">
+        <Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup Name="CommonStates">
+                    <VisualState Name="Normal">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="backgroundElement" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                            To="{TemplateBinding Background}"
+                            Duration="0:0:0.3"/>
+                            <ColorAnimation Storyboard.TargetName="foregroundElement" 
+                            Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                            To="{TemplateBinding Foreground}"
+                            Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState Name="MouseOver">
+                        <Storyboard>
+                            <ColorAnimation Storyboard.TargetName="backgroundElement" 
+                            Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                            To="#E42380" 
+                            Duration="0:0:0.3"/>
+                            <ColorAnimation Storyboard.TargetName="foregroundElement" 
+                            Storyboard.TargetProperty="(ContentControl.Foreground).(SolidColorBrush.Color)"
+                            To="White"
+                            Duration="0:0:0.3"/>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="backgroundElement"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="15"
+                        Cursor="Hand">
+                <ContentControl x:Name="foregroundElement"
+                                    FontFamily="{StaticResource Manrope}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Content="{TemplateBinding Content}"/>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+
+    <!--Template for button definition with transparent background and no borders-->
+    <ControlTemplate x:Key="ButtonTemplate3" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    Background="Transparent"
+                    Cursor="Hand"
+                    Opacity="0.8">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder"  Value="1" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--
+        Template for button definition with rounded edges by 15 points and hand cursor
+    -->
+    <ControlTemplate x:Key="MainButtonTemplate" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    CornerRadius="15"
+                    Cursor="Hand"
+                    Background="{TemplateBinding Background}"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}"
+                    Opacity="0.8">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder"  Value="1" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--
+        A style for TexBox that makes textBox rounded by 15 points, 
+        adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
+        properties that makes textBox focused in PrimaryActiveColor.
+    -->
+    <Style x:Key="textBoxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource SecondaryActiveColor}"/>
+        <Setter Property="Padding" Value="6 3"/>
+        <Setter Property="Cursor" Value="IBeam"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="txtBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="15"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                              Focusable="False"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"/>
+                            <Label x:Name="WaterMarkerLabel"
+                                       Content="{TemplateBinding Tag}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="12"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       Visibility="Collapsed"
+                                       Foreground="{StaticResource PrimaryWaterMarkerLabelColor}"
+                                       Padding="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="Text" Value=""/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Visibility"
+                                        TargetName="WaterMarkerLabel"
+                                        Value="Visible"/>
+                        </MultiTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush"
+                                        Value="{StaticResource PrimaryActiveColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush"
+                                        Value="{StaticResource PrimaryActiveColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--
+        A style for PasswordBox that makes passwordBox rounded by 15 points, 
+        adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
+        properties that makes passwordBox focused in PrimaryActiveColor. Also
+        style uses attached property for passwordBox to get password length 
+    -->
+    <Style x:Key="passwordBoxStyle" TargetType="PasswordBox">
+        <Setter Property="passwordBoxProperties:PasswordBoxProperties.IsMonitoring"
+              Value="True"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource SecondaryActiveColor}"/>
+        <Setter Property="Padding" Value="6 3"/>
+        <Setter Property="Cursor" Value="IBeam"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border x:Name="pswBorder"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="15"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                              Focusable="False"
+                                              HorizontalScrollBarVisibility="Hidden"
+                                              VerticalScrollBarVisibility="Hidden"/>
+                            <Label x:Name="WaterMarkerLabel"
+                                       Content="{TemplateBinding Tag}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="12"
+                                       FontWeight="{TemplateBinding FontWeight}"
+                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       Visibility="Collapsed"
+                                       Foreground="{StaticResource PrimaryWaterMarkerLabelColor}"
+                                       Padding="{TemplateBinding Padding}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="passwordBoxProperties:PasswordBoxProperties.PasswordLength" Value="0" >
+                            <Setter Property="Visibility"
+                                        TargetName="WaterMarkerLabel"
+                                        Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush"
+                                        Value="{StaticResource PrimaryActiveColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush"
+                                        Value="{StaticResource PrimaryActiveColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 
+        Template remove default MouseOver effect,
+        and make topLeft and bottomLeft corners 
+        rounded by 13 points
+    -->
+    <ControlTemplate x:Key="ButtonTemplate4" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    CornerRadius="13,0,0,13"
+                    Opacity="0.8"
+                    Background="{TemplateBinding Background}" Cursor="Hand">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder" Value="1"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+</ResourceDictionary>

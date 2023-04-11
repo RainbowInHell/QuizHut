@@ -1,17 +1,15 @@
-﻿<UserControl x:Class="QuizHut.View.UserControls.ChooseRoleView"
+﻿<UserControl x:Class="QuizHut.Views.UserControls.ChooseRoleView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuizHut.View.UserControls"
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls"
              mc:Ignorable="d" 
              Background="Transparent"
              d:Height ="215" d:Width="350">
-    
-    <Border CornerRadius="15">
-        <Border.Background>
-            <SolidColorBrush Color="#A5ACD2" Opacity="0.7"/>
-        </Border.Background>
+
+    <Border CornerRadius="15"
+            Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
 
         <Grid>
             <Grid.RowDefinitions >

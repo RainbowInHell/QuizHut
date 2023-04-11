@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <SolidColorBrush x:Key="PrimaryLoginPagesBackgroundColor" Color="#A5ACD2" Opacity="0.7"/>
+
+    <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
+    <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
+
+    <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
+    <SolidColorBrush x:Key="PrimaryWaterMarkerLabelColor" Color="#777777"/>
+    
+</ResourceDictionary>
