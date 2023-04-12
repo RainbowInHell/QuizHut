@@ -17,6 +17,10 @@
 
         #endregion
 
+        public ICommand MinimizeApplicationCommand { get; set; }
+        private bool CanMinimizeApplicationCommandExecute(object p) => true;
+        private void OnMinimizeApplicationCommandExecuted(object p) { Application.Current.Windows[0].WindowState = WindowState.Minimized; }
+
         #endregion
 
         public LoginViewModel() 
@@ -24,6 +28,7 @@
             #region Commands
 
             CloseApplicationCommand = new ActionCommand(OnCloseApplicationCommandExecuted, CanCloseApplicationCommandExecute);
+            MinimizeApplicationCommand = new ActionCommand(OnMinimizeApplicationCommandExecuted, CanMinimizeApplicationCommandExecute);
 
             #endregion
         }
