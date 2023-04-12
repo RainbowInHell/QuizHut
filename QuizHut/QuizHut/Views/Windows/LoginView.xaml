@@ -16,7 +16,7 @@
     <Window.DataContext>
         <vm:LoginViewModel/>
     </Window.DataContext>
-    
+
     <Border CornerRadius="15"
             BorderThickness="4">
         <Border.BorderBrush>
@@ -55,7 +55,7 @@
                         FontSize="22"
                         Cursor="Hand"
                         Grid.Column="1"
-                        Command="{Binding MinimizeApplicationCommand}"
+                        Command="{StaticResource MinimizeApplicationCommand}"
                         Template="{StaticResource ButtonTemplate1}">
                 </Button>
 
@@ -68,7 +68,7 @@
                         FontSize="16"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Command="{Binding CloseApplicationCommand}"
+                        Command="{StaticResource CloseApplicationCommand}"
                         Template="{StaticResource ButtonTemplate1}">
                 </Button>
             </Grid>

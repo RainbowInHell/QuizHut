@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Colors.xaml"/>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Fonts.xaml"/>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Controls.xaml"/>
+                <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Commands.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
