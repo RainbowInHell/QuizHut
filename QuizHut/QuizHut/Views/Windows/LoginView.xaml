@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:QuizHut.Views.UserControls"
+        xmlns:vm="clr-namespace:QuizHut.ViewModels"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="977"
         WindowStyle="None"
@@ -12,6 +13,9 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown">
+    <Window.DataContext>
+        <vm:LoginViewModel/>
+    </Window.DataContext>
 
     <Border CornerRadius="15"
             BorderThickness="4">
@@ -51,7 +55,7 @@
                         FontSize="22"
                         Cursor="Hand"
                         Grid.Column="1"
-                        Click="LVMinimizeBtn_Click"
+                        Command="{StaticResource MinimizeApplicationCommand}"
                         Template="{StaticResource ButtonTemplate1}">
                 </Button>
 
@@ -64,7 +68,7 @@
                         FontSize="16"
                         Cursor="Hand"
                         Grid.Column="2"
-                        Click="LVCloseBtn_Click"
+                        Command="{StaticResource CloseApplicationCommand}"
                         Template="{StaticResource ButtonTemplate1}">
                 </Button>
             </Grid>

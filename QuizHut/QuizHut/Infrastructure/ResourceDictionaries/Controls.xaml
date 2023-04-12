@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:passwordBoxProperties="clr-namespace:QuizHut.AttachedProperties">
+                    xmlns:passwordBoxProperties="clr-namespace:QuizHut.Infrastructure.AttachedProperties">
 
     <!--
         Template for defining a 22x22 circular button 

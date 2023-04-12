@@ -1,8 +1,20 @@
-﻿namespace QuizHut.ViewModel
+﻿namespace QuizHut.ViewModels
 {
-    using System;
-
     class LoginViewModel
     {
+        #region Commands
+
+        //commands
+
+        #endregion
+
+        public LoginViewModel() 
+        {
+            #region Commands
+
+            //commands
+
+            #endregion
+        }
     }
 }
