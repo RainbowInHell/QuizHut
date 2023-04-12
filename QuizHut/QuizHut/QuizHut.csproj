@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fonts\Manrope-VariableFont_wght.ttf" />
+    <None Remove="Infrastructure\Fonts\Manrope-VariableFont_wght.ttf" />
     <None Remove="Images\LoginViewImages\EyePic.png" />
     <None Remove="Images\LoginViewImages\EyePic2.png" />
     <None Remove="Images\LoginViewImages\LoginFormBackground.jpg" />
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Fonts\Manrope-VariableFont_wght.ttf">
+    <Resource Include="Infrastructure\Fonts\Manrope-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\LoginViewImages\EyePic.png">

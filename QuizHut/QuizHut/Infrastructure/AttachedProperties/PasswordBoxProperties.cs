@@ -1,4 +1,4 @@
-﻿namespace QuizHut.AttachedProperties
+﻿namespace QuizHut.Infrastructure.AttachedProperties
 {
     using System.Windows.Controls;
     using System.Windows;
