@@ -82,8 +82,8 @@
                     FontSize="14"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Уже зарегистрирован</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Уже зарегистрирован
                     </TextBlock>
                 </Button.Content>
             </Button>
@@ -95,8 +95,8 @@
                     FontSize="14"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Забыл пароль</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Забыл пароль
                     </TextBlock>
                 </Button.Content>
             </Button>
@@ -108,8 +108,8 @@
                     FontSize="14"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Регистрация учащегося</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Регистрация учащегося
                     </TextBlock>
                 </Button.Content>
             </Button>

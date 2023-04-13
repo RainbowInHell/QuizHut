@@ -81,10 +81,11 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Уже зарегистрирован</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Уже зарегистрирован
                     </TextBlock>
                 </Button.Content>
             </Button>
@@ -94,10 +95,11 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Забыл пароль</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Забыл пароль
                     </TextBlock>
                 </Button.Content>
             </Button>
@@ -107,10 +109,11 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Регистрация преподавателя</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Регистрация преподавателя
                     </TextBlock>
                 </Button.Content>
             </Button>
