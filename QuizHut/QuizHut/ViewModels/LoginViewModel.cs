@@ -1,16 +1,11 @@
-﻿using Microsoft.Xaml.Behaviors.Core;
-using QuizHut.Services;
-using QuizHut.Services.Contracts;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows;
+using QuizHut.Infrastructure.Commands;
+using QuizHut.ViewModels.Base;
+using System.Security;
 using System.Windows.Input;
-using ActionCommand = QuizHut.Infrastructure.Commands.ActionCommand;
 
 namespace QuizHut.ViewModels
 {
-    class LoginViewModel
+    class LoginViewModel : ViewModel
     {
         private string _username;
         private string _password;
