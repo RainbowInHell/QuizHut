@@ -80,6 +80,7 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
@@ -93,6 +94,7 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
@@ -106,6 +108,7 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
