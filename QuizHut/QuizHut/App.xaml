@@ -1,10 +1,12 @@
 ﻿<Application x:Class="QuizHut.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuizHut"
+             xmlns:local="clr-namespace:QuizHut" 
+             xmlns:vm="clr-namespace:QuizHut.ViewModels"
              StartupUri="Views/Windows/LoginView.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <vm:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Colors.xaml"/>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Fonts.xaml"/>
