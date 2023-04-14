@@ -59,10 +59,11 @@
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
                     Template="{StaticResource ButtonTemplate3}">
                 <Button.Content>
-                    <TextBlock>
-                        <Underline>Войти в существующий аккаунт</Underline>
+                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Войти в существующий аккаунт
                     </TextBlock>
                 </Button.Content>
             </Button>
