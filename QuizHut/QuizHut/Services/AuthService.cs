@@ -22,7 +22,8 @@ namespace QuizHut.Services
 
         public async Task<bool> LoginAsync(string username, string password)
         {
-            var user = await _userManager.FindByEmailAsync(username);
+            var user = await _userManager.FindByEmailAsync("matveyrfh@mail.ru");
+
             if (user == null)
             {
                 return false;

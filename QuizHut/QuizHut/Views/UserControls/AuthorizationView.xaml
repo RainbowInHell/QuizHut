@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:QuizHut.ViewModels"
              xmlns:userControls="clr-namespace:QuizHut.Infrastructure.UserControls"
+             DataContext="{Binding AuthorizationViewModel, Source={StaticResource Locator}}"
+
              mc:Ignorable="d" 
              Background="Transparent"
              d:Height="315" d:Width="350">
 
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <vm:AuthorizationViewModel/>
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
     
     <Border CornerRadius="15"
             Background="{StaticResource PrimaryLoginPagesBackgroundColor}">

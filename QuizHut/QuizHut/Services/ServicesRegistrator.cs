@@ -9,7 +9,7 @@
     public static class ServicesRegistrator
     {
         public static IServiceCollection AddServices(this IServiceCollection services) => services
-            .AddSingleton<LoginViewModel>()
+            .AddTransient<IAuthService, AuthService>()
             ;
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace QuizHut.ViewModels
 {
     using QuizHut.Infrastructure.Commands;
+    using QuizHut.Services;
+    using QuizHut.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     using System.Security;
@@ -9,6 +11,8 @@
 
     internal class AuthorizationViewModel : ViewModel
     {
+        private readonly IAuthService authService;
+
         //Fields
         private string _username;
         private string _password;
@@ -27,9 +31,20 @@
         #region Commands
 
         public ICommand LoginCommand { get; }
-        private void OnLoginCommandExecuted(object p)
+        private async void OnLoginCommandExecuted(object p)
         {
-            MessageBox.Show("Username: " + Username + "\nPassword: " + Password.ToString());
+            bool loginSuccessful = await authService.LoginAsync(Username, Password);
+
+            if (loginSuccessful)
+            {
+                MessageBox.Show("Good!");
+            }
+            else
+            {
+                MessageBox.Show("Bad!");
+            }
+
+            //MessageBox.Show("Username: " + Username + "\nPassword: " + Password.ToString());
         }
         private bool CanLoginCommandExecute(object p)
         {
@@ -42,8 +57,9 @@
 
         #endregion
 
-        public AuthorizationViewModel()
+        public AuthorizationViewModel(IAuthService authService)
         {
+            this.authService = authService;
             #region Commands
 
             LoginCommand = new ActionCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
