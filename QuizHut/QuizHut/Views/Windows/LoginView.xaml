@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:QuizHut.Views.UserControls"
         xmlns:vm="clr-namespace:QuizHut.ViewModels"
-        DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
+        DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}"
         Title="LoginView" Height="550" Width="977"
         WindowStyle="None"
         ResizeMode="NoResize"

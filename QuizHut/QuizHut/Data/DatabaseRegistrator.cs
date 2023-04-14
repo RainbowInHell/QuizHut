@@ -11,7 +11,7 @@
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration) => services
             .AddDbContext<ApplicationDbContext>(opt =>
             {
-                opt.UseMySQL(configuration.GetConnectionString("QuizHutDatabase"));
+                opt.UseMySQL("Server=localhost;Database=QuizHut;Uid=root;Pwd=matvey2003;");
             });
     }
 }
