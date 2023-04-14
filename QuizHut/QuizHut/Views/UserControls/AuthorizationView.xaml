@@ -60,23 +60,24 @@
             <userControls:BindablePasswordBox x:Name="AVPasswordBox"
                                               Grid.Row="4" Grid.Column="1"
                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <!--<TextBox x:Name="AVVisiblePasswBox"
+            <TextBox x:Name="AVVisiblePasswBox"
                      Style="{StaticResource textBoxStyle}"
                      Grid.Row="4" Grid.Column="1"
                      FontFamily="{StaticResource Manrope}"
                      FontSize="14"
                      MaxLength="25"
-                     Visibility="Hidden"/>
+                     Visibility="Hidden"
+                     Tag="Пароль"/>
             <Image  x:Name="AVShowHidePasswImg"
                     Source="/QuizHut;component/Images/LoginViewImages/EyePic.png" 
                     Width="20" Height="20"
                     Grid.Row="4" Grid.Column="1"
                     HorizontalAlignment="Right"
                     Margin="0,0,10,0"
-                    Visibility="Hidden" 
+                    Visibility="Visible" 
                     MouseDown="AVShowHidePasswImg_MouseDown"
                     PreviewMouseUp="AVShowHidePasswImg_PreviewMouseUp"
-                    MouseLeave="AVShowHidePasswImg_MouseLeave"/>-->
+                    MouseLeave="AVShowHidePasswImg_MouseLeave"/>
 
             <Button x:Name="AVEnterBtn"
                     Command="{Binding LoginCommand}"
