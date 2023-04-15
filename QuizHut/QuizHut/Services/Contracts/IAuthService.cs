@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizHut.Services.Contracts
+﻿namespace QuizHut.Services.Contracts
 {
+    using System.Threading.Tasks;
+
+    using QuizHut.DAL.Entities;
+
     public interface IAuthService
     {
-        Task<bool> LoginAsync(string username, string password);
+        Task<bool> RegisterAsync(ApplicationUser newUser, string password);
+
+        Task<bool> LoginAsync(string email, string password);
+
+        Task<bool> ResetPasswordAsync(string email);
     }
 }

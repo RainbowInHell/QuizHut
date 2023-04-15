@@ -56,7 +56,7 @@
                      FontFamily="{StaticResource Manrope}"
                      FontSize="14"
                      Style="{StaticResource textBoxStyle}"
-                     Text="{Binding Username, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
 
             <userControls:BindablePasswordBox x:Name="AVPasswordBox"
@@ -82,7 +82,7 @@
                     MouseLeave="AVShowHidePasswImg_MouseLeave"/>
 
             <Button x:Name="AVEnterBtn"
-                    Command="{Binding LoginCommand}"
+                    Command="{Binding LoginCommandAsync}"
                     Grid.Row="6" Grid.Column="1"
                     Content="Войти"
                     Background="{StaticResource PrimaryActiveColor}"

@@ -1,7 +1,9 @@
 ﻿namespace QuizHut.Infrastructure.Commands
 {
-    using QuizHut.Infrastructure.Commands.Base;
+    using System.Threading.Tasks;
     using System.Windows;
+
+    using QuizHut.Infrastructure.Commands.Base;
 
     class CloseApplicationCommand : Command
     {

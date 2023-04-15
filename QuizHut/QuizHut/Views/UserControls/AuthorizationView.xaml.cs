@@ -6,9 +6,6 @@
     using System.Windows.Input;
     using System.Windows.Media.Imaging;
 
-    /// <summary>
-    /// Логика взаимодействия для AuthorizationView.xaml
-    /// </summary>
     public partial class AuthorizationView : UserControl
     {
         public AuthorizationView()
@@ -56,4 +53,3 @@
         }
     }
 }
-

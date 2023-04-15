@@ -1,13 +1,8 @@
-﻿using QuizHut.Infrastructure.AttachedProperties;
-using System.Security;
-using System.Windows;
-using System.Windows.Controls;
-
-namespace QuizHut.Infrastructure.UserControls
+﻿namespace QuizHut.Infrastructure.UserControls
 {
-    /// <summary>
-    /// Логика взаимодействия для BindablePasswordBox.xaml
-    /// </summary>
+    using System.Windows;
+    using System.Windows.Controls;
+
     public partial class BindablePasswordBox : UserControl
     {
         public static readonly DependencyProperty PasswordProperty =
@@ -15,13 +10,14 @@ namespace QuizHut.Infrastructure.UserControls
 
         public string Password
         {
-            get { return (string)GetValue(PasswordProperty); }
-            set { SetValue(PasswordProperty, value); }
+            get => (string)GetValue(PasswordProperty);
+            set => SetValue(PasswordProperty, value);
         }
 
         public BindablePasswordBox()
         {
             InitializeComponent();
+
             bindablePassword.PasswordChanged += OnPasswordChanged;
         }
 

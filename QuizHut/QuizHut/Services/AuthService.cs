@@ -1,36 +1,64 @@
-﻿using Microsoft.AspNetCore.Identity;
-using QuizHut.DAL.Entities;
-using QuizHut.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizHut.Services
+﻿namespace QuizHut.Services
 {
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
+
+    using QuizHut.DAL.Entities;
+    using QuizHut.Services.Contracts;
+
     public class AuthService : IAuthService
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AuthService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public AuthService(UserManager<ApplicationUser> userManager)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+            this.userManager = userManager;
         }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
         {
-            var user = await _userManager.FindByEmailAsync("matveyrfh@mail.ru");
+            var appUser = new ApplicationUser
+            {
+                UserName = "Sparf",
+                Email = "Sparf",
+                FirstName = "Sparf",
+                LastName = "Sparf"
+            };
+
+            var result = await userManager.CreateAsync(appUser, "!A#1dfg");
+
+            return result.Succeeded;
+        }
+
+        //Sparf, "!A#1dfggg"
+        public async Task<bool> LoginAsync(string email, string password)
+        {
+            var user = await userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
                 return false;
             }
 
-            var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
-            return result.Succeeded;
+            return await userManager.CheckPasswordAsync(user, password);
+        }
+
+        public async Task<bool> ResetPasswordAsync(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            var resetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            var isTokenValid = await userManager.VerifyUserTokenAsync(user, TokenOptions.DefaultEmailProvider, UserManager<ApplicationUser>.ResetPasswordTokenPurpose, resetToken);
+
+            var result = await userManager.ResetPasswordAsync(user, resetToken, "!A#1dfggg");
+
+            return true;
         }
     }
 }

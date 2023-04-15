@@ -3,9 +3,6 @@
     using System.Windows;
     using System.Windows.Input;
 
-    /// <summary>
-    /// Логика взаимодействия для LoginView.xaml
-    /// </summary>
     public partial class LoginView : Window
     {
         public LoginView()

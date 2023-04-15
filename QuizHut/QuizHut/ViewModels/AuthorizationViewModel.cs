@@ -1,39 +1,48 @@
 ﻿namespace QuizHut.ViewModels
 {
-    using QuizHut.Infrastructure.Commands;
-    using QuizHut.Services;
+    using System.Threading.Tasks;
+    using System.Windows;
+
+    using QuizHut.Infrastructure.Commands.Base;
+    using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Services.Contracts;
     using QuizHut.ViewModels.Base;
-
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Input;
 
     internal class AuthorizationViewModel : ViewModel
     {
         private readonly IAuthService authService;
 
-        //Fields
-        private string _username;
-        private string _password;
+        public AuthorizationViewModel(IAuthService authService)
+        {
+            this.authService = authService;
 
-        public string Username
-        {
-            get => _username;
-            set => Set(ref _username, value);
-        }
-        public string Password
-        {
-            get => _password;
-            set => Set(ref _password, value);
+            LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecuted, CanLoginCommandExecute);
         }
 
-        #region Commands
+        private string? email;
 
-        public ICommand LoginCommand { get; }
-        private async void OnLoginCommandExecuted(object p)
+        private string? password;
+
+        public string? Email
         {
-            bool loginSuccessful = await authService.LoginAsync(Username, Password);
+            get => email;
+            set => Set(ref email, value);
+        }
+
+        public string? Password
+        {
+            get => password;
+            set => Set(ref password, value);
+        }
+
+        #region LoginCommand
+
+        public IAsyncCommand LoginCommandAsync { get; }
+
+        private async Task OnLoginCommandExecuted(object p)
+        {
+            //bool loginSuccessful = await authService.LoginAsync(UserName, Password);
+            bool loginSuccessful = await authService.ResetPasswordAsync(Email);
 
             if (loginSuccessful)
             {
@@ -43,28 +52,16 @@
             {
                 MessageBox.Show("Bad!");
             }
-
-            //MessageBox.Show("Username: " + Username + "\nPassword: " + Password.ToString());
         }
+
         private bool CanLoginCommandExecute(object p)
         {
-            bool result = true;
-            if (string.IsNullOrWhiteSpace(Username) || Username.Length < 3 ||
-                Password == null || Password.Length < 5)
-                result = false;
-            return result;
+            if (string.IsNullOrWhiteSpace(Email) || Email.Length < 3 || Password == null || Password.Length < 5)
+                return false;
+
+            return true;
         }
 
         #endregion
-
-        public AuthorizationViewModel(IAuthService authService)
-        {
-            this.authService = authService;
-            #region Commands
-
-            LoginCommand = new ActionCommand(OnLoginCommandExecuted, CanLoginCommandExecute);
-
-            #endregion
-        }
     }
 }
