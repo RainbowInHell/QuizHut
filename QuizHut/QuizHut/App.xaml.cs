@@ -6,13 +6,11 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
-    using QuizHut.Data;
-    using QuizHut.Services;
-    using QuizHut.ViewModels;
+    using QuizHut.Infrastructure.Registrars;
 
     public partial class App : Application
     {
-        private static IHost host;
+        private static IHost? host;
 
         public static IHost Host => host
             ??= Program.CreareHostBuilder(Environment.GetCommandLineArgs()).Build();
@@ -27,20 +25,18 @@
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            var host = Host;
-
             base.OnStartup(e);
 
-            await host.StartAsync();
+            await Host.StartAsync();
         }
 
         protected override async void OnExit(ExitEventArgs e)
         {
-            using (var host = Host)
+            using (Host)
             {
                 base.OnExit(e);
 
-                await host.StopAsync();
+                await Host.StopAsync();
             }
         }
     }

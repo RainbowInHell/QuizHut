@@ -5,5 +5,7 @@
     class ViewModelLocator
     {
         public LoginViewModel LoginViewModel => App.Services.GetRequiredService<LoginViewModel>();
+
+        public AuthorizationViewModel AuthorizationViewModel => App.Services.GetRequiredService<AuthorizationViewModel>();
     }
 }

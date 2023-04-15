@@ -6,7 +6,7 @@
     internal abstract class Command : ICommand
     {
         public event EventHandler? CanExecuteChanged
-        { 
+        {
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
         }

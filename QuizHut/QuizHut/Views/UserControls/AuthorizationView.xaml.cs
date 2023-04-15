@@ -6,9 +6,6 @@
     using System.Windows.Input;
     using System.Windows.Media.Imaging;
 
-    /// <summary>
-    /// Логика взаимодействия для AuthorizationView.xaml
-    /// </summary>
     public partial class AuthorizationView : UserControl
     {
         public AuthorizationView()
@@ -31,13 +28,13 @@
             HidePassword();
         }
 
-        private void AVPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (AVPasswordBox.Password.Length > 0)
-                AVShowHidePasswImg.Visibility = Visibility.Visible;
-            else
-                AVShowHidePasswImg.Visibility = Visibility.Hidden;
-        }
+        //private void AVPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (AVPasswordBox.Password.Length > 0)
+        //        AVShowHidePasswImg.Visibility = Visibility.Visible;
+        //    else
+        //        AVShowHidePasswImg.Visibility = Visibility.Hidden;
+        //}
 
         private void ShowPassword()
         {
@@ -56,4 +53,3 @@
         }
     }
 }
-
