@@ -3,18 +3,18 @@
     using System.Threading.Tasks;
     using System.Windows;
 
+    using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
-    using QuizHut.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     internal class AuthorizationViewModel : ViewModel
     {
-        private readonly IAuthService authService;
+        private readonly IUserAccountService userAccountService;
 
-        public AuthorizationViewModel(IAuthService authService)
+        public AuthorizationViewModel(IUserAccountService userAccountService)
         {
-            this.authService = authService;
+            this.userAccountService = userAccountService;
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecuted, CanLoginCommandExecute);
         }
@@ -41,8 +41,7 @@
 
         private async Task OnLoginCommandExecuted(object p)
         {
-            //bool loginSuccessful = await authService.LoginAsync(UserName, Password);
-            bool loginSuccessful = await authService.ResetPasswordAsync(Email);
+            bool loginSuccessful = await userAccountService.LoginAsync(Email, password);
 
             if (loginSuccessful)
             {
