@@ -24,7 +24,6 @@
                 options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
             });
 
-
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
             {
                 opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;

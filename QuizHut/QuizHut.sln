@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizHut", "QuizHut\QuizHut.csproj", "{81D035E7-074D-4B5E-8515-9DBE54F006D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizHut.DAL", "QuizHut.DAL\QuizHut.DAL.csproj", "{32E4B67C-19E3-4A0C-BF21-D8721C444985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuizHut.DLL", "QuizHut.DAL\QuizHut.DLL.csproj", "{32E4B67C-19E3-4A0C-BF21-D8721C444985}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizHut.BLL", "QuizHut.BLL\QuizHut.BLL.csproj", "{351BEE6C-1523-4FEA-B612-75999CA3FDC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{32E4B67C-19E3-4A0C-BF21-D8721C444985}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E4B67C-19E3-4A0C-BF21-D8721C444985}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E4B67C-19E3-4A0C-BF21-D8721C444985}.Release|Any CPU.Build.0 = Release|Any CPU
+		{351BEE6C-1523-4FEA-B612-75999CA3FDC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{351BEE6C-1523-4FEA-B612-75999CA3FDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{351BEE6C-1523-4FEA-B612-75999CA3FDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{351BEE6C-1523-4FEA-B612-75999CA3FDC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

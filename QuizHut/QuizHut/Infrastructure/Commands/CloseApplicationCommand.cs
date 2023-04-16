@@ -1,6 +1,5 @@
 ﻿namespace QuizHut.Infrastructure.Commands
 {
-    using System.Threading.Tasks;
     using System.Windows;
 
     using QuizHut.Infrastructure.Commands.Base;
