@@ -88,10 +88,10 @@
                                             Height="315"
                                             Margin="0,30,0,0"/>-->
                 <!--<controls:TeacherRegistrationView x:Name="LVTeacherRegistrationView"
-                                            Height="370"
+                                            Height="345"
                                             Margin="0,20,0,0"/>-->
                 <!--<controls:StudentRegistrationView x:Name="LVStudentRegistrationView"
-                                            Height="420"
+                                            Height="400"
                                             Margin="0,10,0,0"/>-->
                 <controls:ResetPasswordView x:Name="LVResetPasswordView"
                                             Height="350"

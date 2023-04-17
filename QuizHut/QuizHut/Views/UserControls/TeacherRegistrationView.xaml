@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              Background="Transparent"
-             d:Height="370" d:Width="350">
+             d:Height="345" d:Width="350">
     <Border CornerRadius="15"
             Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
         <Grid>
@@ -24,8 +24,6 @@
                 <RowDefinition Height="8"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="8"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -89,22 +87,8 @@
                 </Button.Content>
             </Button>
 
-            <Button x:Name="TRVForgotPasswordBtn"
-                    Grid.Row="12" Grid.Column="1"
-                    Foreground="White"
-                    FontWeight="DemiBold"
-                    FontSize="14"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
-                <Button.Content>
-                    <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Забыл пароль
-                    </TextBlock>
-                </Button.Content>
-            </Button>
-
             <Button x:Name="TRVRegistrStudentBtn"
-                    Grid.Row="14" Grid.Column="1"
+                    Grid.Row="12" Grid.Column="1"
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
