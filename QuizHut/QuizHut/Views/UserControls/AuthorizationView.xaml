@@ -11,10 +11,6 @@
              Background="Transparent"
              d:Height="315" d:Width="350">
 
-    <!--<UserControl.DataContext>
-        <vm:AuthorizationViewModel/>
-    </UserControl.DataContext>-->
-    
     <Border CornerRadius="15"
             Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
 
@@ -89,9 +85,7 @@
                     Foreground="White"
                     FontSize="14"
                     FontWeight="SemiBold"
-                    Template="{StaticResource MainButtonTemplate}">
-
-            </Button>
+                    Template="{StaticResource MainButtonTemplate}"/>
 
             <Button x:Name="AVForgotPasswordBtn"
                     Grid.Row="8" Grid.Column="1"
