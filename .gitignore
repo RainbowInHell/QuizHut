@@ -5,6 +5,7 @@
 
 EncoderDecoder/
 ApiKey.txt
+*ApiKey.*
 
 # User-specific files
 *.rsuser
