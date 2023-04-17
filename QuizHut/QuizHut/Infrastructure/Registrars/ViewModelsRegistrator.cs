@@ -10,6 +10,7 @@
         {
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<AuthorizationViewModel>();
+            services.AddSingleton<ResetPasswordViewModel>();
 
             return services;
         }
