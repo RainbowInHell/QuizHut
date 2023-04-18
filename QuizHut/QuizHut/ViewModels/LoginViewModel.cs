@@ -10,6 +10,7 @@ namespace QuizHut.ViewModels
         public LoginViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
+            NavigationService.NavigateTo<AuthorizationViewModel>();
         }
 
         public INavigationService NavigationService

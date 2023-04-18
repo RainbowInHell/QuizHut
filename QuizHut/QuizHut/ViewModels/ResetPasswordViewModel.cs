@@ -1,11 +1,20 @@
 ﻿namespace QuizHut.ViewModels
 {
     using QuizHut.Infrastructure.Commands;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using System.Windows.Input;
 
     class ResetPasswordViewModel : ViewModel
     {
+        private INavigationService navigationService;
+
+        public INavigationService NavigationService
+        {
+            get => navigationService;
+            set => Set(ref navigationService, value);
+        }
+
         private string? email;
         private bool isEmailEnabled = true;
 
@@ -21,11 +30,14 @@
 
         private string? passwordErrorMessage;
 
-        public ResetPasswordViewModel()
+        public ResetPasswordViewModel(INavigationService navigationService)
         {
+            this.navigationService = navigationService;
+
             SendTokenToEmailCommand = new ActionCommand(OnSendTokenToEmailCommandExecuted, CanSendTokenToEmailCommandExecute);
             SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
             EnterNewPasswordCommand = new ActionCommand(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
+            NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
         }
 
         public string? Email 
@@ -121,6 +133,16 @@
         {
             //enter new password functionality
         }
+        #endregion
+
+        #region NavigateAuthorizationViewCommand
+
+        public ICommand NavigateAuthorizationViewCommand { get; }
+
+        private void OnNavigateAuthorizationViewCommandExecuted(object p) { NavigationService.NavigateTo<AuthorizationViewModel>(); }
+
+        private bool CanNavigateAuthorizationViewCommandExecute(object p) => true;
+
         #endregion
     }
 }
