@@ -11,5 +11,7 @@
         public ResetPasswordViewModel ResetPasswordViewModel => App.Services.GetRequiredService<ResetPasswordViewModel>();
 
         public StudentRegistrationViewModel StudentRegistrationViewModel => App.Services.GetRequiredService<StudentRegistrationViewModel>();
+
+        public TeacherRegistrationViewModel TeacherRegistrationViewModel => App.Services.GetRequiredService<TeacherRegistrationViewModel>();
     }
 }
