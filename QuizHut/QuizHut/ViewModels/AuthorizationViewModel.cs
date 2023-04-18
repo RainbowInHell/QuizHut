@@ -2,21 +2,34 @@
 {
     using System.Threading.Tasks;
     using System.Windows;
+    using System.Windows.Input;
 
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     internal class AuthorizationViewModel : ViewModel
     {
         private readonly IUserAccountService userAccountService;
+        private INavigationService navigationService;
 
-        public AuthorizationViewModel(IUserAccountService userAccountService)
+        public INavigationService NavigationService 
+        { 
+            get => navigationService;
+            set => Set(ref navigationService, value); 
+        }
+
+        public AuthorizationViewModel(IUserAccountService userAccountService, INavigationService navigationService)
         {
             this.userAccountService = userAccountService;
 
+            this.navigationService = navigationService;
+
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecuted, CanLoginCommandExecute);
+            NavigateStudentRegistrationCommand = new ActionCommand(OnNavigateStudentRegistrationCommandExecuted, CanNavigateStudentRegistrationCommandExecute);
         }
 
         private string? email;
@@ -60,6 +73,16 @@
 
             return true;
         }
+
+        #endregion
+
+        #region NavigateStudentRegistrationCommand
+
+        public ICommand NavigateStudentRegistrationCommand { get; }
+
+        private void OnNavigateStudentRegistrationCommandExecuted(object p) { NavigationService.NavigateTo<StudentRegistrationViewModel>(); }
+
+        private bool CanNavigateStudentRegistrationCommandExecute(object p) => true;
 
         #endregion
     }
