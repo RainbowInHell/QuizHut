@@ -9,5 +9,7 @@
         public AuthorizationViewModel AuthorizationViewModel => App.Services.GetRequiredService<AuthorizationViewModel>();
 
         public ResetPasswordViewModel ResetPasswordViewModel => App.Services.GetRequiredService<ResetPasswordViewModel>();
+
+        public StudentRegistrationViewModel StudentRegistrationViewModel => App.Services.GetRequiredService<StudentRegistrationViewModel>();
     }
 }
