@@ -23,9 +23,10 @@
             _viewModelFactory = viewModelFactory;
         }
 
-        public void NavigateTo<T>() where T : ViewModel
+        public void NavigateTo<TViewModel>() where TViewModel : ViewModel
         {
-            throw new NotImplementedException();
+            ViewModel viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+            CurrentView = viewModel;
         }
     }
 }
