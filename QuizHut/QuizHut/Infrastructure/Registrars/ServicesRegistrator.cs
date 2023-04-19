@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
+    using System;
+
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -9,8 +11,8 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.Services;
     using QuizHut.ViewModels.Base;
+
     using SendGrid.Extensions.DependencyInjection;
-    using System;
 
     public static class ServicesRegistrator
     {
