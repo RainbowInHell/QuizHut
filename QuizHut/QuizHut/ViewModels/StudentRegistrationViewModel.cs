@@ -21,6 +21,7 @@
             this.navigationService = navigationService;
 
             NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
+            NavigateTeacherRegistrationViewCommand = new ActionCommand(OnNavigateTeacherRegistrationViewCommandExecuted, CanNavigateTeacherRegistrationViewCommandExecute);
         }
 
         #region NavigateAuthorizationViewCommand
@@ -30,6 +31,16 @@
         private void OnNavigateAuthorizationViewCommandExecuted(object p) { NavigationService.NavigateTo<AuthorizationViewModel>(); }
 
         private bool CanNavigateAuthorizationViewCommandExecute(object p) => true;
+
+        #endregion
+
+        #region NavigateAuthorizationViewCommand
+
+        public ICommand NavigateTeacherRegistrationViewCommand { get; }
+
+        private void OnNavigateTeacherRegistrationViewCommandExecuted(object p) { NavigationService.NavigateTo<TeacherRegistrationViewModel>(); }
+
+        private bool CanNavigateTeacherRegistrationViewCommandExecute(object p) => true;
 
         #endregion
     }
