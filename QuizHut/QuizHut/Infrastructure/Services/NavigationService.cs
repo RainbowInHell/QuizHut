@@ -1,9 +1,10 @@
 ﻿namespace QuizHut.Infrastructure.Services
 {
+    using System;
+
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
-    using System;
 
     internal class NavigationService : ViewModel, INavigationService
     {

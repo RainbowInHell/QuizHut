@@ -1,11 +1,13 @@
 ﻿namespace QuizHut.ViewModels
 {
+    using System.Windows.Input;
+
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    using System.Windows.Input;
+    using QuizHut.ViewModels.Contracts;
 
-    class ResetPasswordViewModel : ViewModel
+    class ResetPasswordViewModel : ViewModel, IResettable
     {
         private INavigationService navigationService;
 
@@ -144,5 +146,16 @@
         private bool CanNavigateAuthorizationViewCommandExecute(object p) => true;
 
         #endregion
+
+        public void Resert()
+        {
+            Email = null;
+            Token = null;
+            Password = null;
+
+            isEmailEnabled = true;
+            isTokenEnabled = false;
+            isPasswordEnabled = false;
+        }
     }
 }
