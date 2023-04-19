@@ -34,7 +34,7 @@
 
         #endregion
 
-        #region NavigateAuthorizationViewCommand
+        #region NavigateTeacherRegistrationViewCommand
 
         public ICommand NavigateTeacherRegistrationViewCommand { get; }
 
