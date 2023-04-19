@@ -109,7 +109,7 @@
 
         #endregion
 
-        public void Resert()
+        public void Reset()
         {
             Email = null;
             Password = null;

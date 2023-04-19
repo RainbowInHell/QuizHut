@@ -30,7 +30,7 @@
             ViewModel viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
             if(viewModel is IResettable resettable)
             {
-                resettable.Resert();
+                resettable.Reset();
             }
             CurrentView = viewModel;
         }

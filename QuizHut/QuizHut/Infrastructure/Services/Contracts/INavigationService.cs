@@ -5,6 +5,7 @@
     internal interface INavigationService
     {
         ViewModel CurrentView { get; }
+
         void NavigateTo<T>() where T : ViewModel;
     }
 }

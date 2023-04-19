@@ -2,6 +2,6 @@
 {
     internal interface IResettable
     {
-        void Resert();
+        void Reset();
     }
 }
