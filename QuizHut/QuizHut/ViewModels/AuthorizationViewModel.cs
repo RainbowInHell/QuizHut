@@ -10,8 +10,9 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    internal class AuthorizationViewModel : ViewModel
+    internal class AuthorizationViewModel : ViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
         private INavigationService navigationService;
@@ -107,5 +108,11 @@
         private bool CanNavigateResetPasswordCommandExecute(object p) => true;
 
         #endregion
+
+        public void Resert()
+        {
+            Email = null;
+            Password = null;
+        }
     }
 }
