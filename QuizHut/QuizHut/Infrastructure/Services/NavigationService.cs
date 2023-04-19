@@ -2,6 +2,7 @@
 {
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
     using System;
 
     internal class NavigationService : ViewModel, INavigationService
@@ -26,6 +27,10 @@
         public void NavigateTo<TViewModel>() where TViewModel : ViewModel
         {
             ViewModel viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+            if(viewModel is IResettable resettable)
+            {
+                resettable.Resert();
+            }
             CurrentView = viewModel;
         }
     }
