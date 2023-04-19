@@ -1,8 +1,10 @@
 ﻿namespace QuizHut.BLL.MapperConfig
 {
-    using AutoMapper;
-    
     using System.Reflection;
+
+    using AutoMapper;
+
+    using QuizHut.BLL.MapperConfig.Contracts;
 
     public static class AutoMapperConfig
     {
