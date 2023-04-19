@@ -2,10 +2,24 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:QuizHut" 
-             xmlns:vm="clr-namespace:QuizHut.ViewModels"
+             xmlns:vm="clr-namespace:QuizHut.ViewModels" 
+             xmlns:usercontrols="clr-namespace:QuizHut.Views.UserControls"
              StartupUri="Views/Windows/LoginView.xaml">
+
     <Application.Resources>
         <ResourceDictionary>
+            <DataTemplate DataType="{x:Type vm:StudentRegistrationViewModel}">
+                <usercontrols:StudentRegistrationView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AuthorizationViewModel}">
+                <usercontrols:AuthorizationView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ResetPasswordViewModel}">
+                <usercontrols:ResetPasswordView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:TeacherRegistrationViewModel}">
+                <usercontrols:TeacherRegistrationView/>
+            </DataTemplate>
             <vm:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Colors.xaml"/>

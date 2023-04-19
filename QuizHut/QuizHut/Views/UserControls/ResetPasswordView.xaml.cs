@@ -2,9 +2,9 @@
 {
     using System.Windows.Controls;
 
-    public partial class ChooseRoleView : UserControl
+    public partial class ResetPasswordView : UserControl
     {
-        public ChooseRoleView()
+        public ResetPasswordView()
         {
             InitializeComponent();
         }

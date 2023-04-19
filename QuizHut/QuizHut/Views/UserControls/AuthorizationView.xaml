@@ -11,12 +11,9 @@
              Background="Transparent"
              d:Height="315" d:Width="350">
 
-    <!--<UserControl.DataContext>
-        <vm:AuthorizationViewModel/>
-    </UserControl.DataContext>-->
-    
     <Border CornerRadius="15"
-            Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
+            Background="{StaticResource PrimaryLoginPagesBackgroundColor}"
+            MaxHeight="315">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -89,11 +86,10 @@
                     Foreground="White"
                     FontSize="14"
                     FontWeight="SemiBold"
-                    Template="{StaticResource MainButtonTemplate}">
-
-            </Button>
+                    Template="{StaticResource MainButtonTemplate}"/>
 
             <Button x:Name="AVForgotPasswordBtn"
+                    Command="{Binding NavigateResetPasswordCommand}"
                     Grid.Row="8" Grid.Column="1"
                     Foreground="White"
                     FontWeight="DemiBold"
@@ -113,7 +109,8 @@
                     FontWeight="DemiBold"
                     FontSize="14"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
+                    Template="{StaticResource ButtonTemplate3}"
+                    Command="{Binding NavigateTeacherRegistrationCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
                         Регистрация преподавателя
@@ -127,7 +124,8 @@
                     FontWeight="DemiBold"
                     FontSize="14"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
+                    Template="{StaticResource ButtonTemplate3}"
+                    Command="{Binding NavigateStudentRegistrationCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
                         Регистрация учащегося

@@ -10,6 +10,9 @@
         {
             services.AddSingleton<LoginViewModel>();
             services.AddSingleton<AuthorizationViewModel>();
+            services.AddSingleton<ResetPasswordViewModel>();
+            services.AddSingleton<StudentRegistrationViewModel>();
+            services.AddSingleton<TeacherRegistrationViewModel>();
 
             return services;
         }

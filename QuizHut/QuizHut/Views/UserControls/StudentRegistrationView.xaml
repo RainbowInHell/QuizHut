@@ -4,11 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizHut.Views.UserControls"
+             DataContext="{Binding StudentRegistrationViewModel, Source={StaticResource Locator}}"
+             
              mc:Ignorable="d" 
              Background="Transparent"
-             d:Height="420" d:Width="350">
+             d:Height="400" d:Width="350">
+    
     <Border CornerRadius="15"
-            Background="{StaticResource PrimaryLoginPagesBackgroundColor}">
+            Background="{StaticResource PrimaryLoginPagesBackgroundColor}"
+            MaxHeight="400">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="35"/>
@@ -27,8 +31,6 @@
                 <RowDefinition Height="8"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="8"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -102,7 +104,8 @@
                     FontWeight="DemiBold"
                     FontSize="14"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
+                    Template="{StaticResource ButtonTemplate3}"
+                    Command="{Binding NavigateAuthorizationViewCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
                         Уже зарегистрирован
@@ -110,27 +113,14 @@
                 </Button.Content>
             </Button>
 
-            <Button x:Name="SRVForgotPasswordBtn"
+            <Button x:Name="SRVRegistrStudentBtn"
                     Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="2"
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
-                <Button.Content>
-                    <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Забыл пароль
-                    </TextBlock>
-                </Button.Content>
-            </Button>
-
-            <Button x:Name="SRVRegistrStudentBtn"
-                    Grid.Column="1" Grid.Row="16" Grid.ColumnSpan="2"
-                    Foreground="White"
-                    FontWeight="DemiBold"
-                    FontSize="14"
-                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                    Template="{StaticResource ButtonTemplate3}">
+                    Template="{StaticResource ButtonTemplate3}"
+                    Command="{Binding NavigateTeacherRegistrationViewCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
                         Регистрация преподавателя
