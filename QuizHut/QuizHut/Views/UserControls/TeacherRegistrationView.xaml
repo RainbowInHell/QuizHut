@@ -26,7 +26,9 @@
                 <RowDefinition Height="45"/>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="18"/>
+                <RowDefinition Height="7"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="7"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="8"/>
                 <RowDefinition Height="20"/>
@@ -91,8 +93,16 @@
                     Foreground="White"
                     Template="{StaticResource MainButtonTemplate}"/>
 
+            <TextBlock x:Name="TRVMessageTextBox"
+                       Grid.Row="12" Grid.Column="1"
+                       Text="* Error message"
+                       FontSize="12"
+                       Foreground="Red"
+                       Margin="5,0,0,0"
+                       FontFamily="{StaticResource Manrope}"/>
+
             <Button x:Name="TRVAlreadyRegistrBtn"
-                    Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
+                    Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
@@ -107,7 +117,7 @@
             </Button>
 
             <Button x:Name="TRVRegistrStudentBtn"
-                    Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"
+                    Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2"
                     Foreground="White"
                     FontWeight="DemiBold"
                     FontSize="14"
