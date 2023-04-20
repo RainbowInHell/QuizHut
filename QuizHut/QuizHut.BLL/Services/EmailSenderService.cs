@@ -37,7 +37,8 @@
 
         public async Task<Response> SendEmailAsync(string toEmail, string subject, string body)
         {
-            var apiKey = stringEncoderDecoder.Decode(configuration.GetValue<string>(ApiKey));
+            //var apiKey = stringEncoderDecoder.Decode(configuration.GetValue<string>(ApiKey));
+            var apiKey = "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";
 
             var fromEmail = configuration.GetValue<string>(FromEmail);
 

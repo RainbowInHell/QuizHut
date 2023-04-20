@@ -61,6 +61,7 @@
             <userControls:BindablePasswordBox x:Name="AVPasswordBox"
                                               Grid.Row="4" Grid.Column="1"
                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
             <TextBox x:Name="AVVisiblePasswBox"
                      Style="{StaticResource textBoxStyle}"
                      Grid.Row="4" Grid.Column="1"

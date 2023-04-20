@@ -3,7 +3,8 @@
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-
+    using QuizHut.BLL.Dto;
+    using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -15,7 +16,10 @@
     internal class AuthorizationViewModel : ViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
+
         private INavigationService navigationService;
+
+        private readonly LoginRequestValidator validator;
 
         public INavigationService NavigationService 
         { 
@@ -23,13 +27,15 @@
             set => Set(ref navigationService, value); 
         }
 
-        public AuthorizationViewModel(IUserAccountService userAccountService, INavigationService navigationService)
+        public AuthorizationViewModel(IUserAccountService userAccountService, INavigationService navigationService, LoginRequestValidator validator)
         {
             this.userAccountService = userAccountService;
-
             this.navigationService = navigationService;
 
-            LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecuted, CanLoginCommandExecute);
+            this.validator = validator;
+
+            LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
+
             NavigateStudentRegistrationCommand = new ActionCommand(OnNavigateStudentRegistrationCommandExecuted, CanNavigateStudentRegistrationCommandExecute);
             NavigateTeacherRegistrationCommand = new ActionCommand(OnNavigateTeacherRegistrationCommandExecuted, CanNavigateTeacherRegistrationCommandExecute);
             NavigateResetPasswordCommand = new ActionCommand(OnNavigateResetPasswordCommandExecuted, CanNavigateResetPasswordCommandExecute);
@@ -63,26 +69,36 @@
 
         public IAsyncCommand LoginCommandAsync { get; }
 
-        private async Task OnLoginCommandExecuted(object p)
+        private async Task OnLoginCommandExecutedAsync(object p)
         {
-            bool loginSuccessful = await userAccountService.LoginAsync(Email, password);
+            var loginResponse = await userAccountService.LoginAsync(Email, password);
 
-            if (loginSuccessful)
+            if (loginResponse.IsSuccess)
             {
                 MessageBox.Show("Good!");
             }
             else
             {
-                MessageBox.Show("Bad!");
+                MessageBox.Show(loginResponse.Message);
             }
         }
 
         private bool CanLoginCommandExecute(object p)
         {
-            if (string.IsNullOrWhiteSpace(Email) || Email.Length < 3 || Password == null || Password.Length < 5)
-                return false;
+            var loginRequest = new LoginRequest
+            {
+                Email = Email,
+                Password = Password
+            };
 
-            return true;
+            var validationResult = validator.Validate(loginRequest);
+
+            if (validationResult.IsValid)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

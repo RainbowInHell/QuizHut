@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-    
+    using QuizHut.BLL;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DAL.Entities;
 
@@ -19,32 +19,60 @@
             this.emailSender = emailSender;
         }
 
+        //public async Task<bool> RegisterAsync(ApplicationUser newUser, string password, bool isTeacher)
         public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
         {
-            var appUser = new ApplicationUser
-            {
-                UserName = "Sparf",
-                Email = "Sparf",
-                FirstName = "Sparf",
-                LastName = "Sparf"
-            };
+            //var appUser = new ApplicationUser
+            //{
+            //    UserName = "Sparf",
+            //    Email = "Sparf",
+            //    FirstName = "Sparf",
+            //    LastName = "Sparf"
+            //};
 
-            var result = await userManager.CreateAsync(appUser, "!A#1dfg");
+            var result = await userManager.CreateAsync(newUser, password);
+
+            //if (isTeacher)
+            //{
+            //    await userManager.AddToRoleAsync(newUser, "Teacher");
+            //}
+            //else
+            //{
+            //    await userManager.AddToRoleAsync(newUser, "Student");
+            //}
 
             return result.Succeeded;
         }
 
         //Sparf, "!A#1dfggg"
-        public async Task<bool> LoginAsync(string email, string password)
+        public async Task<Response> LoginAsync(string email, string password)
         {
             var user = await userManager.FindByEmailAsync(email);
 
             if (user == null)
             {
-                return false;
+                return new Response
+                {
+                    Message = $"Пользователь не найден {email}",
+                    IsSuccess = false
+                };
             }
 
-            return await userManager.CheckPasswordAsync(user, password);
+            var isRightPassword = await userManager.CheckPasswordAsync(user, password);
+
+            if (isRightPassword)
+            {
+                return new Response
+                {
+                    IsSuccess = true
+                };
+            }
+
+            return new Response
+            {
+                Message = "Неверный пароль",
+                IsSuccess = false
+            };
         }
 
         public async Task<bool> SendPasswordResetEmail(string email)
