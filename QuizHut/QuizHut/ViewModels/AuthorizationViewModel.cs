@@ -39,6 +39,8 @@
 
         private string? password;
 
+        private string? errorMessage;
+
         public string? Email
         {
             get => email;
@@ -49,6 +51,12 @@
         {
             get => password;
             set => Set(ref password, value);
+        }
+
+        public string? ErrorMessage 
+        { 
+            get => errorMessage; 
+            set => Set(ref  errorMessage, value); 
         }
 
         #region LoginCommand
