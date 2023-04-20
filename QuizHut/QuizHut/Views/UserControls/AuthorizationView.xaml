@@ -25,7 +25,7 @@
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="7"/>
-                <RowDefinition Height="20"/>
+                <RowDefinition Height="18"/>
                 <RowDefinition Height="7"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="8"/>
@@ -61,6 +61,7 @@
             <userControls:BindablePasswordBox x:Name="AVPasswordBox"
                                               Grid.Row="4" Grid.Column="1"
                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
             <TextBox x:Name="AVVisiblePasswBox"
                      Style="{StaticResource textBoxStyle}"
                      Grid.Row="4" Grid.Column="1"
@@ -94,7 +95,7 @@
                        Grid.Row="8" Grid.Column="1"
                        Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        FontSize="11"
-                       Foreground="Red"
+                       Foreground="#a8323c"
                        Margin="5,0,0,0"
                        FontFamily="{StaticResource Manrope}"/>
 

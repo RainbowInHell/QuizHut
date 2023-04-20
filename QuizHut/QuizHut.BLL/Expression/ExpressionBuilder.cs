@@ -4,6 +4,7 @@
     using System.Linq.Expressions;
     using System.Reflection;
 
+    using QuizHut.BLL.Expression.Contracts;
     using QuizHut.DAL.Common.Enumerations;
 
     public class ExpressionBuilder : IExpressionBuilder

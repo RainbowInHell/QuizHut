@@ -4,7 +4,7 @@
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
+    using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Services;
@@ -21,6 +21,8 @@
             services.AddSendGrid(options => options.ApiKey = configuration.GetValue<string>(EmailSenderService.ApiKey));
 
             services.AddSingleton<IStringEncoderDecoder, StringEncoderDecoder>();
+            services.AddSingleton<LoginRequestValidator>();
+
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
             services.AddTransient<IUserAccountService, UserAccountService>();
             services.AddSingleton<INavigationService, NavigationService>();
