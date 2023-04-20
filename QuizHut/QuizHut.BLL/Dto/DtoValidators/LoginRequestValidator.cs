@@ -7,12 +7,12 @@
         public LoginRequestValidator()
         {
             RuleFor(loginRequest => loginRequest.Email)
-                .NotEmpty().WithMessage("Email is required.")
-                .EmailAddress().WithMessage("Email must be a valid email address.");
+                .NotEmpty().WithMessage("Почта обязательна.")
+                .EmailAddress().WithMessage("Почта должна быть допустимым адресом.");
 
             RuleFor(loginRequest => loginRequest.Password)
-                .NotEmpty().WithMessage("Password is required.")
-                .MinimumLength(6).WithMessage("Password must be at least 8 characters long.");
+                .NotEmpty().WithMessage("Пароль обязателен.")
+                .MinimumLength(6).WithMessage("Длина пароля должна быть не менее 6 символов.");
         }
     }
 }
