@@ -8,5 +8,6 @@
 
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
     <SolidColorBrush x:Key="PrimaryWaterMarkerLabelColor" Color="#777777"/>
-    
+
+    <SolidColorBrush x:Key="PrimaryErrorMessageColor" Color="#A8323C"/>
 </ResourceDictionary>

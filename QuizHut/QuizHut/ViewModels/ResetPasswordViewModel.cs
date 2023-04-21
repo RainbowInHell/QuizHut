@@ -39,7 +39,7 @@
             SendTokenToEmailCommand = new ActionCommand(OnSendTokenToEmailCommandExecuted, CanSendTokenToEmailCommandExecute);
             SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
             EnterNewPasswordCommand = new ActionCommand(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
-            NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
+            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
         }
 
         public string? Email 
@@ -140,10 +140,6 @@
         #region NavigateAuthorizationViewCommand
 
         public ICommand NavigateAuthorizationViewCommand { get; }
-
-        private void OnNavigateAuthorizationViewCommandExecuted(object p) { NavigationService.NavigateTo<AuthorizationViewModel>(); }
-
-        private bool CanNavigateAuthorizationViewCommandExecute(object p) => true;
 
         #endregion
 

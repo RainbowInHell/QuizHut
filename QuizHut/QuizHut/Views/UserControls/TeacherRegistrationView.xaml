@@ -97,7 +97,7 @@
                        Grid.Row="12" Grid.Column="1"
                        Text="* Error message"
                        FontSize="12"
-                       Foreground="Red"
+                       Foreground="{StaticResource PrimaryErrorMessageColor}"
                        Margin="5,0,0,0"
                        FontFamily="{StaticResource Manrope}"/>
 

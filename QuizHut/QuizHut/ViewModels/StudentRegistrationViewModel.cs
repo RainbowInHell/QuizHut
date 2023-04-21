@@ -31,8 +31,8 @@
 
             RegisterCommandAsync = new ActionCommandAsync(OnRegisterCommandExecutedAsync, CanRegisterCommandExecute);
 
-            NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
-            NavigateTeacherRegistrationViewCommand = new ActionCommand(OnNavigateTeacherRegistrationViewCommandExecuted, CanNavigateTeacherRegistrationViewCommandExecute);
+            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
+            NavigateTeacherRegistrationViewCommand = new NavigationCommand(typeof(TeacherRegistrationViewModel), navigationService);
         }
 
         private string? email;
@@ -115,19 +115,11 @@
 
         public ICommand NavigateAuthorizationViewCommand { get; }
 
-        private void OnNavigateAuthorizationViewCommandExecuted(object p) { NavigationService.NavigateTo<AuthorizationViewModel>(); }
-
-        private bool CanNavigateAuthorizationViewCommandExecute(object p) => true;
-
         #endregion
 
         #region NavigateTeacherRegistrationViewCommand
 
         public ICommand NavigateTeacherRegistrationViewCommand { get; }
-
-        private void OnNavigateTeacherRegistrationViewCommandExecuted(object p) { NavigationService.NavigateTo<TeacherRegistrationViewModel>(); }
-
-        private bool CanNavigateTeacherRegistrationViewCommandExecute(object p) => true;
 
         #endregion
     }

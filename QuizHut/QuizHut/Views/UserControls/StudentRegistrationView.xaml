@@ -84,6 +84,7 @@
                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <userControls:BindablePasswordBox x:Name="SRVRepeatPasswordBox"
+                                              Tag="Повторите пароль"
                                               Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="1"
                                               Password="{Binding RepeatPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -102,7 +103,7 @@
                        Grid.Row="12" Grid.Column="1"
                        Text="* Error message"
                        FontSize="12"
-                       Foreground="Red"
+                       Foreground="{StaticResource PrimaryErrorMessageColor}"
                        Margin="5,0,0,0"
                        FontFamily="{StaticResource Manrope}"/>
 
