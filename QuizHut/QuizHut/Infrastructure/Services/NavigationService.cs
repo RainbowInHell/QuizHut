@@ -27,8 +27,13 @@
 
         public void NavigateTo<TViewModel>() where TViewModel : ViewModel
         {
-            ViewModel viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
-            if(viewModel is IResettable resettable)
+            NavigateTo(typeof(TViewModel));
+        }
+
+        public void NavigateTo(Type viewModelType)
+        {
+            ViewModel viewModel = _viewModelFactory.Invoke(viewModelType);
+            if (viewModel is IResettable resettable)
             {
                 resettable.Reset();
             }

@@ -32,9 +32,9 @@
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
 
-            NavigateStudentRegistrationCommand = new ActionCommand(OnNavigateStudentRegistrationCommandExecuted, CanNavigateStudentRegistrationCommandExecute);
-            NavigateTeacherRegistrationCommand = new ActionCommand(OnNavigateTeacherRegistrationCommandExecuted, CanNavigateTeacherRegistrationCommandExecute);
-            NavigateResetPasswordCommand = new ActionCommand(OnNavigateResetPasswordCommandExecuted, CanNavigateResetPasswordCommandExecute);
+            NavigateStudentRegistrationCommand = new NavigationCommand(typeof(StudentRegistrationViewModel), navigationService);
+            NavigateTeacherRegistrationCommand = new NavigationCommand(typeof(TeacherRegistrationViewModel), navigationService);
+            NavigateResetPasswordCommand = new NavigationCommand(typeof(ResetPasswordViewModel), navigationService);
         }
 
         #region FieldsAndProperties
@@ -127,29 +127,17 @@
 
         public ICommand NavigateStudentRegistrationCommand { get; }
 
-        private void OnNavigateStudentRegistrationCommandExecuted(object p) { NavigationService.NavigateTo<StudentRegistrationViewModel>(); }
-
-        private bool CanNavigateStudentRegistrationCommandExecute(object p) => true;
-
         #endregion
 
         #region NavigateTeacherRegistrationCommand
 
         public ICommand NavigateTeacherRegistrationCommand { get; }
 
-        private void OnNavigateTeacherRegistrationCommandExecuted(object p) { NavigationService.NavigateTo<TeacherRegistrationViewModel>(); }
-
-        private bool CanNavigateTeacherRegistrationCommandExecute(object p) => true;
-
         #endregion
 
         #region NavigateResetPasswordCommand
 
         public ICommand NavigateResetPasswordCommand { get; }
-
-        private void OnNavigateResetPasswordCommandExecuted(object p) { NavigationService.NavigateTo<ResetPasswordViewModel>(); }
-
-        private bool CanNavigateResetPasswordCommandExecute(object p) => true;
 
         #endregion
 

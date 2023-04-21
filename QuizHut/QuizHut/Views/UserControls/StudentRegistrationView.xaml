@@ -84,6 +84,7 @@
                                               Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <userControls:BindablePasswordBox x:Name="SRVRepeatPasswordBox"
+                                              Tag="Повторите пароль"
                                               Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="1"
                                               Password="{Binding RepeatPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
