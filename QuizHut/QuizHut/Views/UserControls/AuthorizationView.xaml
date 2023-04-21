@@ -95,7 +95,7 @@
                        Grid.Row="8" Grid.Column="1"
                        Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                        FontSize="11"
-                       Foreground="#a8323c"
+                       Foreground="{StaticResource PrimaryErrorMessageColor}"
                        Margin="5,0,0,0"
                        FontFamily="{StaticResource Manrope}"/>
 
