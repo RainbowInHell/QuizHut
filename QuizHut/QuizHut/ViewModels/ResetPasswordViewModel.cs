@@ -1,16 +1,35 @@
 ﻿namespace QuizHut.ViewModels
 {
+    using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
 
+    using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
+    using QuizHut.Infrastructure.Commands.Base;
+    using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
 
     class ResetPasswordViewModel : ViewModel, IResettable
     {
-        private INavigationService navigationService;
+        private readonly IUserAccountService userAccountService;
 
+        public ResetPasswordViewModel(IUserAccountService userAccountService, INavigationService navigationService)
+        {
+            this.userAccountService = userAccountService;
+            this.navigationService = navigationService;
+
+            SendTokenToEmailCommandAsync = new ActionCommandAsync(OnSendTokenToEmailCommandExecuted, CanSendTokenToEmailCommandExecute);
+            SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
+            EnterNewPasswordCommand = new ActionCommand(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
+            NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
+        }
+
+        #region FieldsAndProperties
+
+        private INavigationService navigationService;
         public INavigationService NavigationService
         {
             get => navigationService;
@@ -18,19 +37,6 @@
         }
 
         private string? email;
-        private bool isEmailEnabled = true;
-
-        private string? token;
-        private bool isTokenEnabled = false;
-
-        private string? password;
-        private bool isPasswordEnabled = false;
-
-        private string? emailErrorMessage;
-
-        private string? tokenErrorMessage;
-
-        private string? passwordErrorMessage;
 
         public ResetPasswordViewModel(INavigationService navigationService)
         {
@@ -47,49 +53,69 @@
             get => email; 
             set => Set(ref  email, value); 
         }
+
+        private string? token;
         public string? Token 
         { 
             get => token; 
             set => Set(ref token, value);
         }
+
+        private string? password;
         public string? Password 
         { 
             get => password; 
             set => Set(ref password, value); 
         }
+
+        private string? emailErrorMessage;
         public string? EmailErrorMessage 
         { 
             get => emailErrorMessage; 
             set => Set(ref emailErrorMessage, value); 
         }
+
+        private string? tokenErrorMessage;
         public string? TokenErrorMessage 
         { 
             get => tokenErrorMessage; 
             set => Set(ref tokenErrorMessage, value); 
         }
+
+        private string? passwordErrorMessage;
         public string? PasswordErrorMessage 
         { 
             get => passwordErrorMessage; 
             set => Set(ref passwordErrorMessage, value); 
         }
+
+        private bool isEmailEnabled = true;
         public bool IsEmailEnabled 
         { 
             get => isEmailEnabled; 
             set => Set(ref isEmailEnabled, value); 
         }
+
+        private bool isTokenEnabled = false;
         public bool IsTokenEnabled 
         { 
             get => isTokenEnabled;
             set => Set(ref isTokenEnabled, value); 
         }
+
+        private bool isPasswordEnabled = false;
         public bool IsPasswordEnabled 
         { 
             get => isPasswordEnabled; 
             set => Set(ref isPasswordEnabled, value); 
         }
 
+        #endregion
+
         #region SendTokenToEmailCommand
-        public ICommand SendTokenToEmailCommand { get; }
+
+        public IAsyncCommand SendTokenToEmailCommandAsync { get; }
+        
         public bool CanSendTokenToEmailCommandExecute(object p)
         {
             if (string.IsNullOrWhiteSpace(Email) || Email.Length < 3 || IsTokenEnabled == true || IsPasswordEnabled == true)
@@ -97,12 +123,26 @@
 
             return true;
         }
-        public void OnSendTokenToEmailCommandExecuted(object p)
+        
+        public async Task OnSendTokenToEmailCommandExecuted(object p)
         {
-            //send token to email functionality
-            IsTokenEnabled = true;
-            IsEmailEnabled = false;
+            var resetToken = await userAccountService.SendPasswordResetEmail(Email);
+
+            if (resetToken != null)
+            {
+                var isResetSuccess = await userAccountService.ResetUserPassword(Email, resetToken, "");
+
+                if (isResetSuccess)
+                {
+                    MessageBox.Show("Good!");
+                }
+            }
+            else
+            {
+
+            }
         }
+
         #endregion
 
         #region SubmitTokenCommand

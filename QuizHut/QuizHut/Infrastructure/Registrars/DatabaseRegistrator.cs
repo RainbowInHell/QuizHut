@@ -19,17 +19,18 @@
                 opt.UseMySQL(configuration.GetConnectionString(databaseType));
             });
 
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
-            });
-
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
             {
                 opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
+              .AddDefaultTokenProviders();
+
+            //services.Configure<IdentityOptions>(options =>
+            //{
+            //    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
+            //});
+
+            services.AddRepositories();
 
             return services;
         }

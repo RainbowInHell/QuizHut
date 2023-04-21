@@ -3,9 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-EncoderDecoder/
-ApiKey.txt
-*ApiKey.*
+appsettings.json
 
 # User-specific files
 *.rsuser
