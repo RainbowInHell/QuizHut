@@ -1,6 +1,8 @@
 ﻿namespace QuizHut.ViewModels
 {
-    class MainViewModel
+    using QuizHut.ViewModels.Base;
+
+    class MainViewModel : ViewModel
     {
     }
 }
