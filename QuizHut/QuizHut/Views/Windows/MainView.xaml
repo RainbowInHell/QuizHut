@@ -4,8 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizHut.Views.Windows" mc:Ignorable="d"
+        Title="MainView" Height="700" Width="1300"
         DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
         
-        Title="MainView" Height="450" Width="800">
-    
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border BorderThickness="2"
+            CornerRadius="10">
+        
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#052661" Offset="0"/>
+                <GradientStop Color="#691257" Offset="0.65"/>
+                <GradientStop Color="#CF1A76" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- Nagivation menu -->
+                <ColumnDefinition Width="250"/>
+                <!-- Content section -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Navigation menu -->
+            <Border CornerRadius="10,0,0,10"
+                    Grid.Column="0"
+                    Background="{StaticResource SecondaryMainViewBackround}">
+                <StackPanel>
+                    <!-- Logo-->
+                    <TextBlock Height="40"
+                               Margin="15,20,0,35"
+                               Text="QUIZZES HUT"
+                               />
+
+                </StackPanel>
+            </Border>
+
+            <!-- Main Section -->
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1"
+                    Background="{StaticResource PrimaryMainViewBackround}"/>
+        </Grid>
+    </Border>
 </Window>

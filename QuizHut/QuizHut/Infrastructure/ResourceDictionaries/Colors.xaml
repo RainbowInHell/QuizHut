@@ -1,13 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
+    <!-- Background colors -->
     <SolidColorBrush x:Key="PrimaryLoginPagesBackgroundColor" Color="#A5ACD2" Opacity="0.7"/>
+    <SolidColorBrush x:Key="PrimaryMainViewBackround" Color="#FFDDF7"/>
+    <SolidColorBrush x:Key="SecondaryMainViewBackround" Color="#481269"/>
 
+    <!-- Controls colors -->
     <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
     <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
 
+    <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
+    <SolidColorBrush x:Key="SecondaryFontColor" Color="#FDF0FF"/>
     <SolidColorBrush x:Key="PrimaryWaterMarkerLabelColor" Color="#777777"/>
-
     <SolidColorBrush x:Key="PrimaryErrorMessageColor" Color="#A8323C"/>
+    
 </ResourceDictionary>
