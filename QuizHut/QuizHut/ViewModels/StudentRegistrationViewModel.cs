@@ -94,7 +94,7 @@
 
         #region RegisterCommand
 
-        public IAsyncCommand RegisterCommandAsync { get; }
+        public ICommandAsyn RegisterCommandAsync { get; }
 
         private async Task OnRegisterCommandExecutedAsync(object p)
         {

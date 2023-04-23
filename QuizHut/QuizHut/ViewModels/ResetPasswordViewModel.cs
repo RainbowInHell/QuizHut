@@ -1,10 +1,14 @@
 ﻿namespace QuizHut.ViewModels
 {
+    using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
 
+    using QuizHut.BLL.Dto;
+    using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DAL.Entities;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -16,20 +20,33 @@
     {
         private readonly IUserAccountService userAccountService;
 
-        public ResetPasswordViewModel(IUserAccountService userAccountService, INavigationService navigationService)
+        private readonly EmailRequestValidator emailValidator;
+
+        private readonly PasswordRequestValidator passwordValidator;
+
+        public ResetPasswordViewModel(
+            IUserAccountService userAccountService, 
+            INavigationService navigationService,
+            EmailRequestValidator emailValidator,
+            PasswordRequestValidator passwordValidator)
         {
             this.userAccountService = userAccountService;
             this.navigationService = navigationService;
 
-            SendTokenToEmailCommandAsync = new ActionCommandAsync(OnSendTokenToEmailCommandExecuted, CanSendTokenToEmailCommandExecute);
+            this.emailValidator = emailValidator;
+            this.passwordValidator = passwordValidator;
+
+            SendTokenToEmailCommandAsync = new ActionCommandAsync(OnSendTokenToEmailCommandExecutedAsync, CanSendTokenToEmailCommandExecute);
             SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
-            EnterNewPasswordCommand = new ActionCommand(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
-            NavigateAuthorizationViewCommand = new ActionCommand(OnNavigateAuthorizationViewCommandExecuted, CanNavigateAuthorizationViewCommandExecute);
+            EnterNewPasswordCommandAsync = new ActionCommandAsync(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
+
+            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
         }
 
         #region FieldsAndProperties
 
         private INavigationService navigationService;
+
         public INavigationService NavigationService
         {
             get => navigationService;
@@ -37,17 +54,6 @@
         }
 
         private string? email;
-
-        public ResetPasswordViewModel(INavigationService navigationService)
-        {
-            this.navigationService = navigationService;
-
-            SendTokenToEmailCommand = new ActionCommand(OnSendTokenToEmailCommandExecuted, CanSendTokenToEmailCommandExecute);
-            SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
-            EnterNewPasswordCommand = new ActionCommand(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
-        }
-
         public string? Email 
         { 
             get => email; 
@@ -61,11 +67,11 @@
             set => Set(ref token, value);
         }
 
-        private string? password;
-        public string? Password 
+        private string? newPassword;
+        public string? NewPassword 
         { 
-            get => password; 
-            set => Set(ref password, value); 
+            get => newPassword; 
+            set => Set(ref newPassword, value); 
         }
 
         private string? emailErrorMessage;
@@ -103,77 +109,145 @@
             set => Set(ref isTokenEnabled, value); 
         }
 
-        private bool isPasswordEnabled = false;
-        public bool IsPasswordEnabled 
+        private bool isNewPasswordEnabled = false;
+        public bool IsNewPasswordEnabled 
         { 
-            get => isPasswordEnabled; 
-            set => Set(ref isPasswordEnabled, value); 
+            get => isNewPasswordEnabled; 
+            set => Set(ref isNewPasswordEnabled, value); 
         }
+
+        private string ResetToken { get; set; }
+
+        private bool IsEmailValid { get; set; } = true;
+
+        private bool IsPasswordValid { get; set; } = true;
 
         #endregion
 
         #region SendTokenToEmailCommand
 
-        public IAsyncCommand SendTokenToEmailCommandAsync { get; }
+        public ICommandAsyn SendTokenToEmailCommandAsync { get; }
         
         public bool CanSendTokenToEmailCommandExecute(object p)
         {
-            if (string.IsNullOrWhiteSpace(Email) || Email.Length < 3 || IsTokenEnabled == true || IsPasswordEnabled == true)
-                return false;
+            var validationResult = emailValidator.Validate(new EmailRequest { Email = Email });
 
-            return true;
+            if (!IsEmailValid)
+            {
+                IsEmailValid = true;
+                return true;
+            }
+            if (validationResult.IsValid)
+            {
+                EmailErrorMessage = null;
+                return true;
+            }
+
+            var errors = new StringBuilder();
+
+            foreach (var error in validationResult.Errors)
+            {
+                errors.AppendLine(error.ErrorMessage);
+            }
+
+            EmailErrorMessage = errors.ToString();
+
+            return false;
         }
         
-        public async Task OnSendTokenToEmailCommandExecuted(object p)
+        public async Task OnSendTokenToEmailCommandExecutedAsync(object p)
         {
-            var resetToken = await userAccountService.SendPasswordResetEmail(Email);
+            ResetToken = await userAccountService.SendPasswordResetEmail(Email);
 
-            if (resetToken != null)
+            if (ResetToken != null)
             {
-                var isResetSuccess = await userAccountService.ResetUserPassword(Email, resetToken, "");
-
-                if (isResetSuccess)
-                {
-                    MessageBox.Show("Good!");
-                }
+                EmailErrorMessage = "Токен выслан на указанную почту";
+                
+                IsTokenEnabled = true;
+                IsEmailEnabled = false;
             }
             else
             {
-
+                MessageBox.Show("Произошла ошибка. Проверьте адрес электронной почты или попробуйте позже.");
             }
         }
 
         #endregion
 
         #region SubmitTokenCommand
+
         public ICommand SubmitTokenCommand { get; }
+        
         public bool CanSubmitTokenCommandExecute(object p)
         {
-            if (string.IsNullOrWhiteSpace(Token) || Token.Length < 10 || IsTokenEnabled == false)
+            if (!IsTokenEnabled)
                 return false;
 
             return true;
         }
+
         public void OnSubmitTokenCommandExecuted(object p)
         {
-            //submit token functionality
-            IsPasswordEnabled = true;
-            IsTokenEnabled = false;
+            if (ResetToken == Token)
+            {
+                TokenErrorMessage = "Верный токен";
+
+                IsNewPasswordEnabled = true;
+                IsTokenEnabled = false;
+            }
+            else
+            {
+                TokenErrorMessage = "Неверный токен";
+            }
         }
+
         #endregion
 
         #region EnterNewPasswordCommand
-        public ICommand EnterNewPasswordCommand { get; }
+        
+        public ICommandAsyn EnterNewPasswordCommandAsync { get; }
+
         public bool CanEnterNewPasswordCommandExecute(object p)
         {
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 6 || IsPasswordEnabled == false)
-                return false;
+            var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
 
-            return true;
+            if (!IsPasswordValid)
+            {
+                IsPasswordValid = true;
+                return true;
+            }
+            if (validationResult.IsValid)
+            {
+                PasswordErrorMessage = null;
+                return true;
+            }
+
+            var errors = new StringBuilder();
+
+            foreach (var error in validationResult.Errors)
+            {
+                errors.AppendLine(error.ErrorMessage);
+            }
+
+            PasswordErrorMessage = errors.ToString();
+
+            return false;
         }
-        public void OnEnterNewPasswordCommandExecuted(object p)
+
+        public async Task OnEnterNewPasswordCommandExecuted(object p)
         {
-            //enter new password functionality
+            var isResetSuccess = await userAccountService.ResetUserPassword(Email, ResetToken, NewPassword);
+
+            if (isResetSuccess)
+            {
+                PasswordErrorMessage = "Пароль изменен";
+            }
+            else
+            {
+                PasswordErrorMessage = "Непредвиденная ошибка. Пароль не изменен";
+            }
+
+            Reset();
         }
         #endregion
 
@@ -187,11 +261,11 @@
         {
             Email = null;
             Token = null;
-            Password = null;
+            NewPassword = null;
 
-            isEmailEnabled = true;
-            isTokenEnabled = false;
-            isPasswordEnabled = false;
+            IsEmailEnabled = true;
+            IsTokenEnabled = false;
+            IsNewPasswordEnabled = false;
         }
     }
 }

@@ -6,13 +6,9 @@
     {
         public LoginRequestValidator()
         {
-            RuleFor(request => request.Email)
-                .NotEmpty().WithMessage("Электронная почта обязательна")
-                .Matches(@"^[^@\s]+@[^@\s]+\.[^@\s]+$").WithMessage("Неверный формат электронной почты");
+            RuleFor(request => request.Email).ValidateEmail();
 
-            RuleFor(loginRequest => loginRequest.Password)
-                .NotEmpty().WithMessage("Пароль обязателен")
-                .MinimumLength(6).WithMessage("Длина пароля должна быть не менее 6 символов");
+            RuleFor(loginRequest => loginRequest.Password).ValidatePassword();
         }
     }
 }

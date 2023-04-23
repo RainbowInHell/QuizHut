@@ -21,14 +21,14 @@
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
             {
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 6;
                 opt.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
               .AddDefaultTokenProviders();
-
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
-            //});
 
             services.AddRepositories();
 

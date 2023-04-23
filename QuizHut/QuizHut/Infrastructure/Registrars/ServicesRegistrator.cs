@@ -4,7 +4,7 @@
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-
+    using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
@@ -22,8 +22,13 @@
             services.AddSendGrid(opt =>
                 opt.ApiKey = configuration.GetValue<string>("EmailSender:ApiKey"));
 
+            services.AddSingleton<EmailRequest>();
+            services.AddSingleton<PasswordRequest>();
+
             services.AddSingleton<LoginRequestValidator>();
             services.AddSingleton<RegisterRequestValidator>();
+            services.AddSingleton<EmailRequestValidator>();
+            services.AddSingleton<PasswordRequestValidator>();
 
             services.AddSingleton<Func<Type, ViewModel>>(services => viewModelType => (ViewModel)services.GetRequiredService(viewModelType));
 
