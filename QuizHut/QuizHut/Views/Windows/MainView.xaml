@@ -36,13 +36,19 @@
                     Grid.Column="0"
                     Background="{StaticResource SecondaryMainViewBackround}">
                 <StackPanel>
-                    <!-- Logo-->
+                    <!-- Title -->
                     <TextBlock Height="40"
-                               Margin="15,20,0,35"
+                               Margin="20,15,0,35"
                                Text="QUIZZES HUT"
-                               />
+                               FontSize="28"
+                               FontFamily="{StaticResource Manrope}"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource SecondaryFontColor}"/>
 
                 </StackPanel>
+                
+                <!-- Menu Buttons -->
+                
             </Border>
 
             <!-- Main Section -->

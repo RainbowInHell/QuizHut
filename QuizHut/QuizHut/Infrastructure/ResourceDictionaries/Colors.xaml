@@ -9,11 +9,20 @@
     <!-- Controls colors -->
     <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
     <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
+    <SolidColorBrush x:Key="menuOverColor" Color="#661995"/>
 
     <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
     <SolidColorBrush x:Key="SecondaryFontColor" Color="#FDF0FF"/>
+    <SolidColorBrush x:Key="FontColor3" Color="#F9D2F0"/>
     <SolidColorBrush x:Key="PrimaryWaterMarkerLabelColor" Color="#777777"/>
     <SolidColorBrush x:Key="PrimaryErrorMessageColor" Color="#A8323C"/>
     
+    <!-- Others -->
+    <SolidColorBrush x:Key="Color1" Color="#E285DE"/>
+    <SolidColorBrush x:Key="Color2" Color="#4ADAEC"/>
+    <SolidColorBrush x:Key="Color3" Color="#FB539B"/>
+    <SolidColorBrush x:Key="Color4" Color="#FFC047"/>
+    <SolidColorBrush x:Key="Color5" Color="#78A3FC"/>
+
 </ResourceDictionary>
