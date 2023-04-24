@@ -49,7 +49,7 @@
                                FontWeight="Medium"
                                Foreground="{StaticResource SecondaryFontColor}"/>
                         <TextBlock Height="20"
-                               Margin="20,0,0,20"
+                               Margin="20,0,0,25"
                                Text="Версия 1.0"
                                FontSize="12"
                                FontFamily="{StaticResource Manrope}"
