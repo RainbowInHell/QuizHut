@@ -290,7 +290,7 @@
     </Style>
     
     <!-- Template for menuButton -->
-    <Style x:Key="menuButton" TargetType="RadioButton">
+    <Style x:Key="MenuButton" TargetType="RadioButton">
         <!-- Normal button style -->
         <Setter Property="Height" Value="50"/>
         <Setter Property="Margin" Value="-5,0,0,5"/>
@@ -303,8 +303,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderThickness="4,0,0,0"
                             BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentControl HorizontalAlignment="Left" VerticalAlignment="Center"
-                                        FontFamily="{StaticResource Manrope}" FontSize="16"/>
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -327,6 +326,23 @@
                 <Setter Property="BorderBrush" Value="{Binding Path=Tag, RelativeSource={RelativeSource Self}}"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+    
+    <!-- Style defined menu button icon as 'Font.Awesome' icon image -->
+    <Style x:Key="MenuButtonIcon" TargetType="fa:IconImage">
+        <Setter Property="Foreground" Value="{Binding Path=Tag, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+        <Setter Property="Width" Value="22"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Margin" Value="35,0,20,0"/>
+    </Style>
+    
+    <!-- Style defined menu button text -->
+    <Style x:Key="MenuButtonText" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
+        <Setter Property="FontSize" Value="13.5"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     
 </ResourceDictionary>
