@@ -272,6 +272,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <!-- Style for defined text block, that have mouseOver trigger to make textBlock content underlied-->
     <Style x:Key="TextBlockStyle1" TargetType="TextBlock">
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -279,4 +280,12 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <!-- Style that defined error message textBlock-->
+    <Style x:Key="ErrorTextBlock1" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryErrorMessageColor}"/>
+    </Style>
+    
 </ResourceDictionary>

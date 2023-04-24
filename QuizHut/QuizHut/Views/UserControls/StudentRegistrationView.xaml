@@ -102,10 +102,8 @@
             <TextBlock x:Name="SRVMessageTextBox"
                        Grid.Row="12" Grid.Column="1"
                        Text="* Error message"
-                       FontSize="12"
-                       Foreground="{StaticResource PrimaryErrorMessageColor}"
-                       Margin="5,0,0,0"
-                       FontFamily="{StaticResource Manrope}"/>
+                       Style="{StaticResource ErrorTextBlock1}"
+                       Margin="5,0,0,0"/>
 
             <Button x:Name="SRVAlreadyRegistrBtn"
                     Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="2"
