@@ -72,7 +72,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color2}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="Award" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Результаты" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
@@ -81,7 +81,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color3}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
@@ -90,7 +90,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color4}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Группы" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
@@ -99,7 +99,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color5}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="LayerGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Категории" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
@@ -108,7 +108,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color6}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="FolderOpen" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Викторины" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
@@ -117,7 +117,7 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color7}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
                         </StackPanel>
                     </RadioButton>
