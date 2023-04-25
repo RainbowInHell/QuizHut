@@ -8,9 +8,9 @@
     {
         Task<bool> RegisterAsync(ApplicationUser newUser, string password);
 
-        Task<Response> LoginAsync(string email, string password);
+        Task<bool> LoginAsync(string email, string password);
 
-        Task<bool> SendPasswordResetEmail(string email);
+        Task<string> SendPasswordResetEmail(string email);
 
         Task<bool> ResetUserPassword(string email, string resetToken, string newPassword);
     }

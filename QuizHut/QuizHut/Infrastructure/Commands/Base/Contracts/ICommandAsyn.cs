@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    public interface IAsyncCommand : ICommand
+    public interface ICommandAsyn : ICommand
     {
         Task ExecuteAsync(object? parameter);
     }
