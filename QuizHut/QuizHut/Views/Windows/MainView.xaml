@@ -133,12 +133,12 @@
                         <!-- Control bar -->
                         <RowDefinition Height="30"/>
                         <!-- Header / Caption -->
-                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="40"/>
                         <!-- Content section / Child views -->
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     
-                    <!-- Conreol bar -->
+                    <!-- Control bar -->
                     <StackPanel x:Name="MVControlBar"
                                 Grid.Row="0"
                                 Orientation="Horizontal"
@@ -165,9 +165,66 @@
                                 Style="{StaticResource ControlButton}"
                                 Tag="{StaticResource Color5}"
                                 Command="{StaticResource MinimizeApplicationCommand}">
-                            <fa:IconImage Icon="WindowMinimize" Width="12" Style="{StaticResource MainControlButtonIcon}"/>
+                            <fa:IconImage Icon="WindowMinimize" Width="12" 
+                                          Style="{StaticResource MainControlButtonIcon}"/>
                         </Button>
                     </StackPanel>
+
+                    <!-- Caption -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <fa:IconImage Icon="Home"
+                                      Height="20" Width="20"
+                                      Foreground="{StaticResource PrimaryFontColor}"
+                                      Margin="15,0,10,0"/>
+
+                        <TextBlock Text="Главная"
+                                   Foreground="{StaticResource PrimaryFontColor}"
+                                   FontSize="18" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <!-- User options -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0">
+                        <!-- Logout button -->
+                        <Button x:Name="MVLogoutBtn"
+                                Style="{StaticResource UserOptionButton}"
+                                Tag="{StaticResource Color8}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Выход" Style="{StaticResource UserOptionButtonText}"/>
+                                <fa:IconImage Icon="RightFromBracket" 
+                                              Style="{StaticResource UserOptionButtonIcon}"
+                                              Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <!-- Profile button -->
+                        <Button x:Name="MVProfileBtn"
+                                Style="{StaticResource UserOptionButton}"
+                                Tag="{StaticResource Color9}"
+                                Margin="10,0,0,0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Профиль" Style="{StaticResource UserOptionButtonText}"/>
+                                <fa:IconImage Icon="AddressCard" 
+                                              Style="{StaticResource UserOptionButtonIcon}"
+                                              Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+
+                        <TextBlock Text="Александр Парфянович"
+                                   FontSize="14" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   Foreground="{StaticResource PrimaryFontColor}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <ContentControl Content=""
+                                    Grid.Row="2"
+                                    Margin="15"/>
                 </Grid>
             </Border>
         </Grid>

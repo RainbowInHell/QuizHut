@@ -10,6 +10,7 @@
     <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
     <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
     <SolidColorBrush x:Key="menuOverColor" Color="#661995"/>
+    <SolidColorBrush x:Key="ActiveColor3" Color="#FFEEFB"/>
 
     <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
@@ -26,5 +27,7 @@
     <SolidColorBrush x:Key="Color5" Color="#78A3FC"/>
     <SolidColorBrush x:Key="Color6" Color="#5FA75F"/>
     <SolidColorBrush x:Key="Color7" Color="#FF93AC"/>
+    <SolidColorBrush x:Key="Color8" Color="#FA240A"/>
+    <SolidColorBrush x:Key="Color9" Color="#C122C9"/>
 
 </ResourceDictionary>
