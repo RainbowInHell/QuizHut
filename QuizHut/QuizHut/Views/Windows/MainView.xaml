@@ -131,7 +131,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <!-- Control bar -->
-                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="30"/>
                         <!-- Header / Caption -->
                         <RowDefinition Height="35"/>
                         <!-- Content section / Child views -->
@@ -146,7 +146,27 @@
                                 Background="Transparent"
                                 Margin="0,0,5,0"
                                 MouseLeftButtonDown="MVControlBar_MouseLeftButtonDown">
-                        
+
+                        <Button x:Name="MVCLoseBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color3}"
+                                Command="{StaticResource CloseApplicationCommand}">
+                            <fa:IconImage Icon="Xmark" Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
+
+                        <Button x:Name="MVMaximizeBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color4}"
+                                Command="{StaticResource MaximizeApplicationCommand}">
+                            <fa:IconImage Icon="WindowMaximize" Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
+
+                        <Button x:Name="MVMinimizeBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color5}"
+                                Command="{StaticResource MinimizeApplicationCommand}">
+                            <fa:IconImage Icon="WindowMinimize" Width="12" Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
                     </StackPanel>
                 </Grid>
             </Border>
