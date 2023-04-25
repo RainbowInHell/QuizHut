@@ -127,7 +127,29 @@
             <!-- Main Section -->
             <Border CornerRadius="0,10,10,0"
                     Grid.Column="1"
-                    Background="{StaticResource PrimaryMainViewBackround}"/>
+                    Background="{StaticResource PrimaryMainViewBackround}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Control bar -->
+                        <RowDefinition Height="25"/>
+                        <!-- Header / Caption -->
+                        <RowDefinition Height="35"/>
+                        <!-- Content section / Child views -->
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Conreol bar -->
+                    <StackPanel x:Name="MVControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="MVControlBar_MouseLeftButtonDown">
+                        
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </Window>
