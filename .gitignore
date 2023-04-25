@@ -5,6 +5,9 @@
 
 appsettings.json
 
+*.bkp
+*.dtmp
+
 # User-specific files
 *.rsuser
 *.suo
