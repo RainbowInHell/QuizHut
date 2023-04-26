@@ -100,10 +100,12 @@
                     Template="{StaticResource MainButtonTemplate}"/>
 
             <TextBlock x:Name="SRVMessageTextBox"
-                       Grid.Row="12" Grid.Column="1"
-                       Text="* Error message"
-                       Style="{StaticResource ErrorTextBlock1}"
-                       Margin="5,0,0,0"/>
+                       Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="2"
+                       Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       FontSize="12"
+                       Foreground="{StaticResource PrimaryErrorMessageColor}"
+                       Margin="5,0,0,0"
+                       FontFamily="{StaticResource Manrope}"/>
 
             <Button x:Name="SRVAlreadyRegistrBtn"
                     Grid.Column="1" Grid.Row="14" Grid.ColumnSpan="2"
