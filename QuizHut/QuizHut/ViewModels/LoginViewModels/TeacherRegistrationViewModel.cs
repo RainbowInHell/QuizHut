@@ -14,6 +14,14 @@
             NavigateStudentRegistrationViewCommand = new RenavigateCommand(studentRegistrRenavigator);
         }
 
+        public TeacherRegistrationViewModel(INavigationService navigationService)
+        {
+            this.navigationService = navigationService;
+
+            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
+            NavigateStudentRegistrationViewCommand = new NavigationCommand(typeof(StudentRegistrationViewModel), navigationService);
+        }
+
         #region NavigateAuthorizationViewCommand
 
         public ICommand NavigateAuthorizationViewCommand { get; }

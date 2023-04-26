@@ -9,7 +9,7 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
-
+    
     class MainViewModel : DialogViewModel
     {
         public MainViewModel(INavigationService navigationService, IUserDialog userDialog, ISimpleTraderViewModelFactory traderViewModelFactory)
@@ -41,7 +41,7 @@
 
         private bool isLoggedIn = true;
         public bool IsLoggedIn 
-        { 
+        {
             get => isLoggedIn; 
             set => Set(ref  isLoggedIn, value);
         }
@@ -78,8 +78,20 @@
         private void OnLogoutCommandExecuted(object p)
         {
             NavigationCommand.Execute(ViewType.Authorization);
-        } 
+        }
+
         #endregion
+
+        #region ShowUserProfileViewCommand
+
+        public ICommand ShowUserProfileViewCommand { get; }
+        private void OnShowUserProfileViewCommandExecuted(object p)
+        {
+            NavigationService.NavigateTo<UserProfileViewModel>();
+            Caption = UserProfileViewModel.Title;
+            IconChar = UserProfileViewModel.IconChar;
+            SelectedOption = null;
+        }
 
         #endregion
 
@@ -95,5 +107,11 @@
 
             base.Dispose();
         }
+
+        #endregion
+
+        #endregion
+
+
     }
 }
