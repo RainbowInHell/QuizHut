@@ -20,6 +20,12 @@
             <DataTemplate DataType="{x:Type vm:TeacherRegistrationViewModel}">
                 <usercontrols:TeacherRegistrationView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+                <usercontrols:HomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:UserProfileViewModel}">
+                <usercontrols:UserProfileView/>
+            </DataTemplate>
             <vm:ViewModelLocator x:Key="Locator"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/QuizHut;component/Infrastructure/ResourceDictionaries/Colors.xaml"/>
