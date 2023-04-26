@@ -224,7 +224,7 @@
 
                     <ContentControl Content=""
                                     Grid.Row="2"
-                                    Margin="15"/>
+                                    Margin="10"/>
                 </Grid>
             </Border>
         </Grid>

@@ -2,8 +2,7 @@
 {
     using QuizHut.ViewModels.Base;
 
-    class MainViewModel : ViewModel
+    class HomeViewModel : ViewModel
     {
-
     }
 }
