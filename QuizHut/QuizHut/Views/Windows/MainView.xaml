@@ -62,6 +62,7 @@
                     <RadioButton x:Name="MVHomeMenuBtn"
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color1}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Home}"
                                  Command="{Binding ShowHomeViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
@@ -71,7 +72,9 @@
 
                     <RadioButton x:Name="MVResultsMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color2}">
+                                 Tag="{StaticResource Color2}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Results}"
+                                 Command="{Binding ShowResultsViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Award" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Результаты" Style="{StaticResource MenuButtonText}"/>
@@ -80,7 +83,9 @@
 
                     <RadioButton x:Name="MVEventsMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color3}">
+                                 Tag="{StaticResource Color3}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Events}"
+                                 Command="{Binding ShowEventsViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
@@ -89,7 +94,9 @@
 
                     <RadioButton x:Name="MVGroupsMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color4}">
+                                 Tag="{StaticResource Color4}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Groups}"
+                                 Command="{Binding ShowGroupsViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="PeopleGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Группы" Style="{StaticResource MenuButtonText}"/>
@@ -98,7 +105,9 @@
 
                     <RadioButton x:Name="MVCategoriesMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color5}">
+                                 Tag="{StaticResource Color5}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Categories}"
+                                 Command="{Binding ShowCategoriesViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="LayerGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Категории" Style="{StaticResource MenuButtonText}"/>
@@ -107,7 +116,9 @@
 
                     <RadioButton x:Name="MVQuizzesMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color6}">
+                                 Tag="{StaticResource Color6}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Quizzes}"
+                                 Command="{Binding ShowQuizzesViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="FolderOpen" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Викторины" Style="{StaticResource MenuButtonText}"/>
@@ -116,7 +127,9 @@
 
                     <RadioButton x:Name="MVStudentsMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color7}">
+                                 Tag="{StaticResource Color7}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Students}"
+                                 Command="{Binding ShowStudentsViewCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
@@ -176,13 +189,13 @@
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">
                         <fa:IconImage Icon="{Binding IconChar}"
-                                      Height="20" Width="20"
+                                      Height="25" Width="25"
                                       Foreground="{StaticResource PrimaryFontColor}"
                                       Margin="15,0,10,0"/>
 
                         <TextBlock Text="{Binding Caption}"
                                    Foreground="{StaticResource PrimaryFontColor}"
-                                   FontSize="18" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   FontSize="24" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                     
@@ -218,7 +231,7 @@
                         </Button>
 
                         <TextBlock Text="Александр Парфянович"
-                                   FontSize="14" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   FontSize="16" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    VerticalAlignment="Center"
                                    Margin="10,0,0,0"/>

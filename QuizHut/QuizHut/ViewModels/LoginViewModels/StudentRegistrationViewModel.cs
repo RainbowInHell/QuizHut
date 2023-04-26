@@ -1,4 +1,4 @@
-﻿namespace QuizHut.ViewModels
+﻿namespace QuizHut.ViewModels.LoginViewModels
 {
     using System.Threading.Tasks;
     using System.Windows;
