@@ -96,10 +96,8 @@
             <TextBlock x:Name="TRVMessageTextBox"
                        Grid.Row="12" Grid.Column="1"
                        Text="* Error message"
-                       FontSize="12"
-                       Foreground="{StaticResource PrimaryErrorMessageColor}"
-                       Margin="5,0,0,0"
-                       FontFamily="{StaticResource Manrope}"/>
+                       Style="{StaticResource ErrorTextBlock1}"
+                       Margin="5,0,0,0"/>
 
             <Button x:Name="TRVAlreadyRegistrBtn"
                     Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2"

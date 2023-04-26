@@ -1,0 +1,234 @@
+﻿<Window x:Class="QuizHut.Views.Windows.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuizHut.Views.Windows" mc:Ignorable="d"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        
+        Title="MainView" Height="700" Width="1300"
+        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
+        
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Border BorderThickness="2"
+            CornerRadius="10">
+        
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#052661" Offset="0"/>
+                <GradientStop Color="#691257" Offset="0.65"/>
+                <GradientStop Color="#CF1A76" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!-- Nagivation menu -->
+                <ColumnDefinition Width="250"/>
+                <!-- Content section -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Navigation menu -->
+            <Border CornerRadius="10,0,0,10"
+                    Grid.Column="0"
+                    Background="{StaticResource SecondaryMainViewBackround}">
+                <StackPanel>
+                    <StackPanel>
+                        <!-- Title -->
+                        <TextBlock Height="40"
+                                   Opacity="0.9"
+                               Margin="20,15,0,0"
+                               Text="QUIZZES HUT"
+                               FontSize="28"
+                               FontFamily="{StaticResource Manrope}"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource SecondaryFontColor}"/>
+                        <TextBlock Height="20"
+                               Margin="20,0,0,25"
+                               Text="Версия 1.0"
+                               FontSize="12"
+                               FontFamily="{StaticResource Manrope}"
+                               FontWeight="Medium"
+                               Foreground="{StaticResource SecondaryFontColor}"/>
+
+                    </StackPanel>
+
+                    <!-- Menu Buttons -->
+                    <RadioButton x:Name="MVHomeMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color1}"
+                                 Command="{Binding ShowHomeViewCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Главная" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVResultsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color2}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Award" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Результаты" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVEventsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color3}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVGroupsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color4}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="PeopleGroup" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Группы" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVCategoriesMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color5}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="LayerGroup" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Категории" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVQuizzesMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color6}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="FolderOpen" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Викторины" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <RadioButton x:Name="MVStudentsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color7}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
+                            <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+            </Border>
+
+            <!-- Main Section -->
+            <Border CornerRadius="0,10,10,0"
+                    Grid.Column="1"
+                    Background="{StaticResource PrimaryMainViewBackround}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Control bar -->
+                        <RowDefinition Height="30"/>
+                        <!-- Header / Caption -->
+                        <RowDefinition Height="40"/>
+                        <!-- Content section / Child views -->
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Control bar -->
+                    <StackPanel x:Name="MVControlBar"
+                                Grid.Row="0"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="MVControlBar_MouseLeftButtonDown">
+
+                        <Button x:Name="MVCLoseBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color3}"
+                                Command="{StaticResource CloseApplicationCommand}">
+                            <fa:IconImage Icon="Xmark" Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
+
+                        <Button x:Name="MVMaximizeBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color4}"
+                                Command="{StaticResource MaximizeApplicationCommand}">
+                            <fa:IconImage Icon="WindowMaximize" Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
+
+                        <Button x:Name="MVMinimizeBtn"
+                                Style="{StaticResource ControlButton}"
+                                Tag="{StaticResource Color5}"
+                                Command="{StaticResource MinimizeApplicationCommand}">
+                            <fa:IconImage Icon="WindowMinimize" Width="12" 
+                                          Style="{StaticResource MainControlButtonIcon}"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!-- Caption -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <fa:IconImage Icon="{Binding IconChar}"
+                                      Height="20" Width="20"
+                                      Foreground="{StaticResource PrimaryFontColor}"
+                                      Margin="15,0,10,0"/>
+
+                        <TextBlock Text="{Binding Caption}"
+                                   Foreground="{StaticResource PrimaryFontColor}"
+                                   FontSize="18" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    
+                    <!-- User options -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                VerticalAlignment="Center"
+                                Margin="0,0,10,0">
+                        <!-- Logout button -->
+                        <Button x:Name="MVLogoutBtn"
+                                Style="{StaticResource UserOptionButton}"
+                                Tag="{StaticResource Color8}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Выход" Style="{StaticResource UserOptionButtonText}"/>
+                                <fa:IconImage Icon="RightFromBracket" 
+                                              Style="{StaticResource UserOptionButtonIcon}"
+                                              Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+                        <!-- Profile button -->
+                        <Button x:Name="MVProfileBtn"
+                                Style="{StaticResource UserOptionButton}"
+                                Tag="{StaticResource Color9}"
+                                Margin="10,0,0,0"
+                                Command="{Binding ShowUserProfileViewCommand}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Профиль" Style="{StaticResource UserOptionButtonText}"/>
+                                <fa:IconImage Icon="AddressCard" 
+                                              Style="{StaticResource UserOptionButtonIcon}"
+                                              Margin="3,0,0,0"/>
+                            </StackPanel>
+                        </Button>
+
+                        <TextBlock Text="Александр Парфянович"
+                                   FontSize="14" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
+                                   Foreground="{StaticResource PrimaryFontColor}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <ContentControl Content="{Binding NavigationService.CurrentView}"
+                                    Grid.Row="2"
+                                    Margin="10"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

@@ -5,4 +5,6 @@
     <cmd:CloseApplicationCommand x:Key="CloseApplicationCommand"/>
     <!-- Command for minimaze window -->
     <cmd:MinimizeApplicationCommand x:Key="MinimizeApplicationCommand"/>
+    <!-- Command for maximize window -->
+    <cmd:MaximizeApplicationCommand x:Key="MaximizeApplicationCommand"/>
 </ResourceDictionary>

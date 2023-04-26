@@ -13,5 +13,11 @@
         public StudentRegistrationViewModel StudentRegistrationViewModel => App.Services.GetRequiredService<StudentRegistrationViewModel>();
 
         public TeacherRegistrationViewModel TeacherRegistrationViewModel => App.Services.GetRequiredService<TeacherRegistrationViewModel>();
+
+        public MainViewModel MainViewModel => App.Services.GetRequiredService<MainViewModel>();
+
+        public HomeViewModel HomeViewModel => App.Services.GetRequiredService<HomeViewModel>();
+
+        public UserProfileViewModel UserProfileViewModel => App.Services.GetRequiredService<UserProfileViewModel>();
     }
 }
