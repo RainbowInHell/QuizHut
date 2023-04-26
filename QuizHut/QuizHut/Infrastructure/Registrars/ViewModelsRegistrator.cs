@@ -14,6 +14,8 @@
             services.AddSingleton<StudentRegistrationViewModel>();
             services.AddSingleton<TeacherRegistrationViewModel>();
             services.AddSingleton<MainViewModel>();
+            services.AddSingleton<HomeViewModel>();
+            services.AddSingleton<UserProfileViewModel>();
 
             return services;
         }
