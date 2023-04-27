@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    internal class ActionCommandAsync : AsyncCommand
+    internal class ActionCommandAsync : CommandAsync
     {
         private readonly Func<object, Task> executeAsync;
 

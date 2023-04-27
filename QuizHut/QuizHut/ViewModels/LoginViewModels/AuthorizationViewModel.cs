@@ -21,9 +21,12 @@
 
         private readonly LoginRequestValidator validator;
 
-        private bool IsValidLogin { get; set; } = true;
+        private bool IsLoggedIn { get; set; } = true;
 
-        public AuthorizationViewModel(IUserAccountService userAccountService, INavigationService navigationService, LoginRequestValidator validator)
+        public AuthorizationViewModel(
+            IUserAccountService userAccountService, 
+            INavigationService navigationService, 
+            LoginRequestValidator validator)
         {
             this.userAccountService = userAccountService;
             this.navigationService = navigationService;
@@ -71,23 +74,7 @@
 
         #region LoginCommand
 
-        public IAsyncCommand LoginCommandAsync { get; }
-
-        private async Task OnLoginCommandExecutedAsync(object p)
-        {
-            var loginResponse = await userAccountService.LoginAsync(Email, password);
-
-            IsValidLogin = loginResponse.IsSuccess;
-
-            if (loginResponse.IsSuccess)
-            {
-                MessageBox.Show("Good!");
-            }
-            else
-            {
-                ErrorMessage = loginResponse.Message;
-            }
-        }
+        public ICommandAsyn LoginCommandAsync { get; }
 
         private bool CanLoginCommandExecute(object p)
         {
@@ -99,9 +86,9 @@
 
             var validationResult = validator.Validate(loginRequest);
 
-            if (!IsValidLogin)
+            if (!IsLoggedIn)
             {
-                IsValidLogin = true;
+                IsLoggedIn = true;
                 return true;
             }
             if (validationResult.IsValid)
@@ -111,6 +98,7 @@
             }
 
             var errors = new StringBuilder();
+
             foreach (var error in validationResult.Errors)
             {
                 errors.AppendLine(error.ErrorMessage);
@@ -119,6 +107,20 @@
             ErrorMessage = errors.ToString();
 
             return false;
+        }
+
+        private async Task OnLoginCommandExecutedAsync(object p)
+        {
+            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
+
+            if (IsLoggedIn)
+            {
+                MessageBox.Show("Good!");
+            }
+            else
+            {
+                ErrorMessage = "Неверная почта или пароль";
+            }
         }
 
         #endregion

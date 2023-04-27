@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-    using QuizHut.BLL;
+
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DAL.Entities;
 
@@ -19,63 +19,17 @@
             this.emailSender = emailSender;
         }
 
-        //public async Task<bool> RegisterAsync(ApplicationUser newUser, string password, bool isTeacher)
         public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
         {
-            //var appUser = new ApplicationUser
-            //{
-            //    UserName = "Sparf",
-            //    Email = "Sparf",
-            //    FirstName = "Sparf",
-            //    LastName = "Sparf"
-            //};
+            newUser.UserName = newUser.Email;
 
             var result = await userManager.CreateAsync(newUser, password);
-
-            //if (isTeacher)
-            //{
-            //    await userManager.AddToRoleAsync(newUser, "Teacher");
-            //}
-            //else
-            //{
-            //    await userManager.AddToRoleAsync(newUser, "Student");
-            //}
 
             return result.Succeeded;
         }
 
         //Sparf, "!A#1dfggg"
-        public async Task<Response> LoginAsync(string email, string password)
-        {
-            var user = await userManager.FindByEmailAsync(email);
-
-            if (user == null)
-            {
-                return new Response
-                {
-                    Message = $"Пользователь не найден {email}",
-                    IsSuccess = false
-                };
-            }
-
-            var isRightPassword = await userManager.CheckPasswordAsync(user, password);
-
-            if (isRightPassword)
-            {
-                return new Response
-                {
-                    IsSuccess = true
-                };
-            }
-
-            return new Response
-            {
-                Message = "Неверный пароль",
-                IsSuccess = false
-            };
-        }
-
-        public async Task<bool> SendPasswordResetEmail(string email)
+        public async Task<bool> LoginAsync(string email, string password)
         {
             var user = await userManager.FindByEmailAsync(email);
 
@@ -84,11 +38,30 @@
                 return false;
             }
 
+            var isRightPassword = await userManager.CheckPasswordAsync(user, password);
+
+            return isRightPassword;
+        }
+
+        public async Task<string> SendPasswordResetEmail(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user == null)
+            {
+                return null;
+            }
+
             var resetToken = await userManager.GeneratePasswordResetTokenAsync(user);
 
             var sendEmailResponse = await emailSender.SendEmailAsync(email, "Password reset token", resetToken);
 
-            return sendEmailResponse.IsSuccessStatusCode;
+            if (!sendEmailResponse.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return resetToken;
         }
 
         public async Task<bool> ResetUserPassword(string email, string resetToken, string newPassword)

@@ -3,9 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-EncoderDecoder/
-ApiKey.txt
-*ApiKey.*
+*.drawio.bkp
+*.mwb.bak
+*.mwb
+*.dtmp
 
 # User-specific files
 *.rsuser

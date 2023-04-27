@@ -4,6 +4,7 @@
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
@@ -18,16 +19,23 @@
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSendGrid(options => options.ApiKey = configuration.GetValue<string>(EmailSenderService.ApiKey));
+            services.AddSendGrid(opt =>
+                opt.ApiKey = configuration.GetValue<string>("EmailSender:ApiKey"));
 
-            services.AddSingleton<IStringEncoderDecoder, StringEncoderDecoder>();
+            services.AddSingleton<EmailRequest>();
+            services.AddSingleton<PasswordRequest>();
+
             services.AddSingleton<LoginRequestValidator>();
-
-            services.AddSingleton<IEmailSenderService, EmailSenderService>();
-            services.AddTransient<IUserAccountService, UserAccountService>();
-            services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<RegisterRequestValidator>();
+            services.AddSingleton<EmailRequestValidator>();
+            services.AddSingleton<PasswordRequestValidator>();
 
             services.AddSingleton<Func<Type, ViewModel>>(services => viewModelType => (ViewModel)services.GetRequiredService(viewModelType));
+
+            services.AddSingleton<IEmailSenderService, EmailSenderService>();
+            services.AddSingleton<INavigationService, NavigationService>();
+
+            services.AddTransient<IUserAccountService, UserAccountService>();
 
             return services;
         }
