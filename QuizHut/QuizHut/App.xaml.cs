@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Hosting;
 
     using QuizHut.Infrastructure.Registrars;
+    using QuizHut.Views.Windows;
 
     public partial class App : Application
     {
@@ -21,13 +22,16 @@
             .AddDatabase(host.Configuration.GetSection("Database"))
             .AddServices(host.Configuration)
             .AddViewModels()
+            .AddViews()
             ;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            await Host.StartAsync(); 
 
-            await Host.StartAsync();
+            Services.GetRequiredService<MainView>().Show();
+
+            base.OnStartup(e);
         }
 
         protected override async void OnExit(ExitEventArgs e)
