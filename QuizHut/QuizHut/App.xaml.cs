@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Hosting;
 
     using QuizHut.Infrastructure.Registrars;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.Views.Windows;
 
     public partial class App : Application
@@ -27,9 +28,9 @@
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            await Host.StartAsync(); 
+            await Host.StartAsync();
 
-            Services.GetRequiredService<MainView>().Show();
+            Services.GetRequiredService<IUserDialog>().OpenMainView();
 
             base.OnStartup(e);
         }
