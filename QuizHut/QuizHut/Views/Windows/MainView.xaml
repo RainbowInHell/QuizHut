@@ -229,14 +229,14 @@
                                               Margin="3,0,0,0"/>
                             </StackPanel>
                         </Button>
-
+                        <!-- User name and role -->
                         <TextBlock Text="Александр Парфянович"
                                    FontSize="16" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    VerticalAlignment="Center"
                                    Margin="10,0,0,0"/>
                     </StackPanel>
-
+                    <!-- Main content -->
                     <ContentControl Content="{Binding NavigationService.CurrentView}"
                                     Grid.Row="2"
                                     Margin="10"/>
