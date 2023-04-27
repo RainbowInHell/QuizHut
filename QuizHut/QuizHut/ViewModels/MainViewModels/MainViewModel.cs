@@ -15,16 +15,16 @@
             this.navigationService = navigationService;
             this.userDialog = userDialog;
 
-            OnShowHomeViewCommandExecuted(null);
+            ShowingContent<HomeViewModel>();
 
-            ShowHomeViewCommand = new ActionCommand(OnShowHomeViewCommandExecuted);
+            ShowHomeViewCommand = new ActionCommand(p => ShowingContent<HomeViewModel>());
             ShowUserProfileViewCommand = new ActionCommand(OnShowUserProfileViewCommandExecuted);
-            ShowResultsViewCommand = new ActionCommand(OnShowResultsViewCommandExecuted);
-            ShowEventsViewCommand = new ActionCommand(OnShowEventsViewCommandExecuted);
-            ShowGroupsViewCommand = new ActionCommand(OnShowGroupsViewCommandExecuted);
-            ShowCategoriesViewCommand = new ActionCommand(OnShowCategoriesViewCommandExecuted);
-            ShowQuizzesViewCommand = new ActionCommand(OnShowQuizzesViewCommandExecuted);
-            ShowStudentsViewCommand = new ActionCommand(OnShowStudentsViewCommandExecuted);
+            ShowResultsViewCommand = new ActionCommand(p => ShowingContent<ResultsViewModel>());
+            ShowEventsViewCommand = new ActionCommand(p => ShowingContent<EventsViewModel>());
+            ShowGroupsViewCommand = new ActionCommand(p => ShowingContent<GroupsViewModel>());
+            ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
+            ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
+            ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
         }
 
         #region Fields and properties
@@ -63,104 +63,38 @@
 
         #region Commands
 
-        #region ShowHomeViewCommand
-
         public ICommand ShowHomeViewCommand { get; }
-        private void OnShowHomeViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<HomeViewModel>();
-            Caption = HomeViewModel.Title;
-            IconChar = HomeViewModel.IconChar;
-        }
-
-        #endregion
 
         #region ShowUserProfileViewCommand
 
         public ICommand ShowUserProfileViewCommand { get; }
         private void OnShowUserProfileViewCommandExecuted(object p)
         {
-            NavigationService.NavigateTo<UserProfileViewModel>();
-            Caption = UserProfileViewModel.Title;
-            IconChar = UserProfileViewModel.IconChar;
+            ShowingContent<UserProfileViewModel>();
             SelectedOption = null;
         }
 
         #endregion
 
-        #region ShowResultsViewCommand
-
         public ICommand ShowResultsViewCommand { get; }
-        private void OnShowResultsViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<ResultsViewModel>();
-            Caption = ResultsViewModel.Title;
-            IconChar = ResultsViewModel.IconChar;
-        }
-
-        #endregion
-
-        #region ShowEventsViewCommand
 
         public ICommand ShowEventsViewCommand { get; }
-        private void OnShowEventsViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<EventsViewModel>();
-            Caption = EventsViewModel.Title;
-            IconChar = EventsViewModel.IconChar;
-        }
-
-        #endregion
-
-        #region ShowGroupsViewCommand
 
         public ICommand ShowGroupsViewCommand { get; }
-        private void OnShowGroupsViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<GroupsViewModel>();
-            Caption = GroupsViewModel.Title;
-            IconChar = GroupsViewModel.IconChar;
-        }
-
-        #endregion
-
-        #region ShowCategoriesViewCommand
 
         public ICommand ShowCategoriesViewCommand { get; }
-        private void OnShowCategoriesViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<CategoriesViewModel>();
-            Caption = CategoriesViewModel.Title;
-            IconChar = CategoriesViewModel.IconChar;
-        }
-
-        #endregion
-
-        #region ShowQuizzesViewCommand
 
         public ICommand ShowQuizzesViewCommand { get; }
-        private void OnShowQuizzesViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<QuizzesViewModel>();
-            Caption = QuizzesViewModel.Title;
-            IconChar = QuizzesViewModel.IconChar;
-        }
-
-        #endregion
-
-        #region ShowStudentsViewCommand
 
         public ICommand ShowStudentsViewCommand { get; }
 
-        private void OnShowStudentsViewCommandExecuted(object p)
+        #endregion
+
+        private void ShowingContent<T>() where T : ViewModel
         {
-            NavigationService.NavigateTo<StudentsViewModel>();
-            Caption = StudentsViewModel.Title;
-            IconChar = StudentsViewModel.IconChar;
+            NavigationService.NavigateTo<T>();
+            Caption = typeof(T).GetProperty("Title").GetValue(null).ToString();
+            IconChar = (IconChar)typeof(T).GetProperty("IconChar").GetValue(null);
         }
-
-        #endregion
-
-        #endregion
     }
 }
