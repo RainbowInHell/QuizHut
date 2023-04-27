@@ -208,7 +208,8 @@
                         <!-- Logout button -->
                         <Button x:Name="MVLogoutBtn"
                                 Style="{StaticResource UserOptionButton}"
-                                Tag="{StaticResource Color8}">
+                                Tag="{StaticResource Color8}"
+                                Command="{Binding LogoutCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Выход" Style="{StaticResource UserOptionButtonText}"/>
                                 <fa:IconImage Icon="RightFromBracket" 

@@ -25,6 +25,8 @@
             ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
             ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
             ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
+
+            LogoutCommand = new ActionCommand(p => userDialog.OpenLoginView());
         }
 
         #region Fields and properties
@@ -87,6 +89,8 @@
         public ICommand ShowQuizzesViewCommand { get; }
 
         public ICommand ShowStudentsViewCommand { get; }
+
+        public ICommand LogoutCommand { get; }
 
         #endregion
 

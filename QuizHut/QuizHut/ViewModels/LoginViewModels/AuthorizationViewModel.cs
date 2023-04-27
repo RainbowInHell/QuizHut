@@ -21,16 +21,18 @@
 
         private readonly LoginRequestValidator validator;
 
+        private readonly IUserDialog userDialog;
         private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService, 
-            LoginRequestValidator validator)
+            INavigationService navigationService,
+            LoginRequestValidator validator,
+            IUserDialog userDialog)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
+            this.userDialog = userDialog;
             this.validator = validator;
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
@@ -111,16 +113,18 @@
 
         private async Task OnLoginCommandExecutedAsync(object p)
         {
-            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
+            //IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
-            if (IsLoggedIn)
-            {
-                MessageBox.Show("Good!");
-            }
-            else
-            {
-                ErrorMessage = "Неверная почта или пароль";
-            }
+            //if (IsLoggedIn)
+            //{
+            //    MessageBox.Show("Good!");
+            //}
+            //else
+            //{
+            //    ErrorMessage = "Неверная почта или пароль";
+            //}
+
+            userDialog.OpenMainView();
         }
 
         #endregion

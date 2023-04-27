@@ -8,7 +8,6 @@
 
     using QuizHut.Infrastructure.Registrars;
     using QuizHut.Infrastructure.Services.Contracts;
-    using QuizHut.Views.Windows;
 
     public partial class App : Application
     {
