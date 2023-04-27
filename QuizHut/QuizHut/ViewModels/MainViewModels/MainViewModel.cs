@@ -10,9 +10,11 @@
     
     class MainViewModel : ViewModel
     {
-        public MainViewModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService, IUserDialog userDialog)
         {
             this.navigationService = navigationService;
+            this.userDialog = userDialog;
+
             OnShowHomeViewCommandExecuted(null);
 
             ShowHomeViewCommand = new ActionCommand(OnShowHomeViewCommandExecuted);
@@ -26,6 +28,8 @@
         }
 
         #region Fields and properties
+
+        private readonly IUserDialog userDialog;
 
         private INavigationService navigationService;
         public INavigationService NavigationService
@@ -52,7 +56,7 @@
         public string? SelectedOption 
         { 
             get => selectedOption; 
-            set => Set(ref  selectedOption, value); 
+            set => Set(ref selectedOption, value); 
         }
 
         #endregion
@@ -158,7 +162,5 @@
         #endregion
 
         #endregion
-
-
     }
 }

@@ -6,10 +6,13 @@ namespace QuizHut.ViewModels.LoginViewModels
     class LoginViewModel:ViewModel
     {
         private INavigationService navigationService;
+        private readonly IUserDialog userDialog;
 
-        public LoginViewModel(INavigationService navigationService)
+        public LoginViewModel(INavigationService navigationService, IUserDialog userDialog)
         {
             this.navigationService = navigationService;
+            this.userDialog = userDialog;
+
             NavigationService.NavigateTo<AuthorizationViewModel>();
         }
 
