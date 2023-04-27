@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System;
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
@@ -8,7 +9,7 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     
-    class MainViewModel : ViewModel
+    class MainViewModel : DialogViewModel
     {
         public MainViewModel(INavigationService navigationService, IUserDialog userDialog)
         {
@@ -26,7 +27,7 @@
             ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
             ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
 
-            LogoutCommand = new ActionCommand(p => userDialog.OpenLoginView());
+            LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
 
         #region Fields and properties
@@ -90,7 +91,14 @@
 
         public ICommand ShowStudentsViewCommand { get; }
 
+        #region LogoutCommand
         public ICommand LogoutCommand { get; }
+        private void OnLogoutCommandExecuted(object p)
+        {
+            userDialog.OpenLoginView();
+            OnDialogComplete(EventArgs.Empty);
+        } 
+        #endregion
 
         #endregion
 

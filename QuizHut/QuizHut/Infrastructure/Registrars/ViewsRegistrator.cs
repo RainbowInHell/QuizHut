@@ -14,6 +14,7 @@
                 {
                     var model = s.GetRequiredService<LoginViewModel>();
                     var window = new LoginView { DataContext = model };
+                    model.DialogComplete += (_, _) => window.Close();
 
                     return window;
                 });
@@ -23,11 +24,10 @@
                 {
                     var model = s.GetRequiredService<MainViewModel>();
                     var window = new MainView { DataContext = model };
+                    model.DialogComplete += (_, _) => window.Close();
 
                     return window;
                 });
-
-            //services.AddTransient<MainView>();
 
             return services;
         }

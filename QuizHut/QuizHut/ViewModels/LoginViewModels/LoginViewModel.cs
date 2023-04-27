@@ -3,7 +3,7 @@ namespace QuizHut.ViewModels.LoginViewModels
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
-    class LoginViewModel:ViewModel
+    class LoginViewModel : DialogViewModel
     {
         private INavigationService navigationService;
         private readonly IUserDialog userDialog;
