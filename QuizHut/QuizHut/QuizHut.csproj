@@ -21,7 +21,6 @@
   <ItemGroup>
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
