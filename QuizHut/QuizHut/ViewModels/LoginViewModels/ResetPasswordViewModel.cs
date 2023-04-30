@@ -117,7 +117,7 @@
 
         #region SendTokenToEmailCommand
 
-        public ICommandAsyn SendTokenToEmailCommandAsync { get; }
+        public ICommandAsync SendTokenToEmailCommandAsync { get; }
         
         public bool CanSendTokenToEmailCommandExecute(object p)
         {
@@ -196,7 +196,7 @@
 
         #region EnterNewPasswordCommand
         
-        public ICommandAsyn EnterNewPasswordCommandAsync { get; }
+        public ICommandAsync EnterNewPasswordCommandAsync { get; }
 
         public bool CanEnterNewPasswordCommandExecute(object p)
         {

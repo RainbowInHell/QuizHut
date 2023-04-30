@@ -7,7 +7,7 @@ using QuizHut.DAL.EntityFramework;
 
 #nullable disable
 
-namespace QuizHut.DAL.Migrations
+namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -267,7 +267,6 @@ namespace QuizHut.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("TeacherId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -747,9 +746,7 @@ namespace QuizHut.DAL.Migrations
                 {
                     b.HasOne("QuizHut.DAL.Entities.ApplicationUser", "Teacher")
                         .WithMany("Students")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
                 });

@@ -6,7 +6,7 @@
 
     using QuizHut.Infrastructure.Commands.Base.Contracts;
 
-    public abstract class CommandAsync : ICommandAsyn
+    public abstract class CommandAsync : ICommandAsync
     {
         public event EventHandler? CanExecuteChanged
         {

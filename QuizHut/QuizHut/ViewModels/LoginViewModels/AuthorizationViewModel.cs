@@ -75,7 +75,7 @@
 
         #region LoginCommand
 
-        public ICommandAsyn LoginCommandAsync { get; }
+        public ICommandAsync LoginCommandAsync { get; }
 
         private bool CanLoginCommandExecute(object p)
         {
@@ -114,14 +114,15 @@
         {
             //IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
-            //if (IsLoggedIn)
-            //{
-            //    MessageBox.Show("Good!");
-            //}
-            //else
-            //{
-            //    ErrorMessage = "Неверная почта или пароль";
-            //}
+            if (IsLoggedIn)
+            {
+                MessageBox.Show("Успех!");
+            }
+            else
+            {
+                ErrorMessage = "Неверная почта или пароль";
+            }
+
             mainRenavigator.Renavigate();
         }
 
