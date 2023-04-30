@@ -94,7 +94,7 @@
 
         #region RegisterCommand
 
-        public ICommandAsyn RegisterCommandAsync { get; }
+        public ICommandAsync RegisterCommandAsync { get; }
 
         private async Task OnRegisterCommandExecutedAsync(object p)
         {
@@ -110,11 +110,11 @@
 
             if (IsRegistred)
             {
-                MessageBox.Show("Good!");
+                ErrorMessage = "Пользователь зарегистрирован";
             }
             else
             {
-                ErrorMessage = "Неверная почта или пароль";
+                ErrorMessage = "Пользователь с такой почтой уже существует";
             }
         }
 

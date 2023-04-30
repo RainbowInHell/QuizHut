@@ -15,8 +15,10 @@
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 var databaseType = configuration["Type"];
+                var connectionString = configuration.GetConnectionString(databaseType);
 
-                opt.UseMySQL(configuration.GetConnectionString(databaseType));
+                opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>

@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:QuizHut" 
              xmlns:vm="clr-namespace:QuizHut.ViewModels" 
              xmlns:usercontrols="clr-namespace:QuizHut.Views.UserControls"
-             StartupUri="Views/Windows/MainView.xaml">
+             StartupUri="Views/Windows/LoginView.xaml">
 
     <Application.Resources>
         <ResourceDictionary>

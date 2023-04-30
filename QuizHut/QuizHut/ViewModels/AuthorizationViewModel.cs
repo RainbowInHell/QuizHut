@@ -74,7 +74,7 @@
 
         #region LoginCommand
 
-        public ICommandAsyn LoginCommandAsync { get; }
+        public ICommandAsync LoginCommandAsync { get; }
 
         private bool CanLoginCommandExecute(object p)
         {
@@ -115,7 +115,7 @@
 
             if (IsLoggedIn)
             {
-                MessageBox.Show("Good!");
+                MessageBox.Show("Успех!");
             }
             else
             {
