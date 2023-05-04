@@ -1,4 +1,4 @@
-﻿namespace QuizHut.ViewModels
+﻿namespace QuizHut.ViewModels.LoginViewModels
 {
     using System.Text;
     using System.Threading.Tasks;
@@ -21,16 +21,18 @@
 
         private readonly LoginRequestValidator validator;
 
+        private readonly IUserDialog userDialog;
         private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService, 
-            LoginRequestValidator validator)
+            INavigationService navigationService,
+            LoginRequestValidator validator,
+            IUserDialog userDialog)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
+            this.userDialog = userDialog;
             this.validator = validator;
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
@@ -116,6 +118,7 @@
             if (IsLoggedIn)
             {
                 MessageBox.Show("Good!");
+                userDialog.OpenMainView();
             }
             else
             {

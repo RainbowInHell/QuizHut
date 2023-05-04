@@ -2,9 +2,9 @@
 {
     using System.Windows.Controls;
 
-    public partial class HomeView : UserControl
+    public partial class QuizzesView : UserControl
     {
-        public HomeView()
+        public QuizzesView()
         {
             InitializeComponent();
         }
