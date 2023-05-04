@@ -3,6 +3,7 @@
     using System;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
     using Microsoft.Extensions.DependencyInjection;
     using QuizHut.BLL.Dto;
@@ -112,7 +113,7 @@
 
         private async Task OnLoginCommandExecutedAsync(object p)
         {
-            //IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
+            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
             if (IsLoggedIn)
             {
