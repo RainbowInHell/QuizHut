@@ -2,6 +2,7 @@
 {
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Input;
 
     using QuizHut.BLL.Dto;
@@ -112,18 +113,17 @@
 
         private async Task OnLoginCommandExecutedAsync(object p)
         {
-            //IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
+            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
-            //if (IsLoggedIn)
-            //{
-            //    MessageBox.Show("Good!");
-            //}
-            //else
-            //{
-            //    ErrorMessage = "Неверная почта или пароль";
-            //}
-
-            userDialog.OpenMainView();
+            if (IsLoggedIn)
+            {
+                MessageBox.Show("Good!");
+                userDialog.OpenMainView();
+            }
+            else
+            {
+                ErrorMessage = "Неверная почта или пароль";
+            }
         }
 
         #endregion
