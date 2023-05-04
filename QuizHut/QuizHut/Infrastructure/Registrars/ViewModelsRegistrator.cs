@@ -1,7 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
     using Microsoft.Extensions.DependencyInjection;
-
+    using QuizHut.Infrastructure.Services;
     using QuizHut.ViewModels.LoginViewModels;
     using QuizHut.ViewModels.MainViewModels;
 
@@ -24,6 +24,11 @@
             services.AddSingleton<CategoriesViewModel>();
             services.AddSingleton<QuizzesViewModel>();
             services.AddSingleton<StudentsViewModel>();
+
+            services.AddSingleton<ViewModelRenavigate<AuthorizationViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<StudentRegistrationViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
 
             return services;
         }

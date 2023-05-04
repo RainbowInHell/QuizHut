@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizHut.Views.Windows" mc:Ignorable="d"
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+        xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
         
         Title="MainView" Height="700" Width="1300"
         DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
@@ -63,7 +64,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color1}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Home}"
-                                 Command="{Binding ShowHomeViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Home}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Главная" Style="{StaticResource MenuButtonText}"/>
@@ -74,7 +76,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color2}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Results}"
-                                 Command="{Binding ShowResultsViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Result}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="Award" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Результаты" Style="{StaticResource MenuButtonText}"/>
@@ -85,7 +88,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color3}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Events}"
-                                 Command="{Binding ShowEventsViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Event}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
@@ -96,7 +100,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color4}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Groups}"
-                                 Command="{Binding ShowGroupsViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Group}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="PeopleGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Группы" Style="{StaticResource MenuButtonText}"/>
@@ -107,7 +112,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color5}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Categories}"
-                                 Command="{Binding ShowCategoriesViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Category}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="LayerGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Категории" Style="{StaticResource MenuButtonText}"/>
@@ -118,7 +124,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color6}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Quizzes}"
-                                 Command="{Binding ShowQuizzesViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Quiz}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="FolderOpen" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Викторины" Style="{StaticResource MenuButtonText}"/>
@@ -129,7 +136,8 @@
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color7}"
                                  IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Students}"
-                                 Command="{Binding ShowStudentsViewCommand}">
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.Student}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
                             <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
@@ -222,7 +230,8 @@
                                 Style="{StaticResource UserOptionButton}"
                                 Tag="{StaticResource Color9}"
                                 Margin="10,0,0,0"
-                                Command="{Binding ShowUserProfileViewCommand}">
+                                Command="{Binding NavigationCommand}"
+                                CommandParameter="{x:Static nav:ViewType.UserProfile}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Профиль" Style="{StaticResource UserOptionButtonText}"/>
                                 <fa:IconImage Icon="AddressCard" 
@@ -238,7 +247,7 @@
                                    Margin="10,0,0,0"/>
                     </StackPanel>
                     <!-- Main content -->
-                    <ContentControl Content="{Binding NavigationService.CurrentView}"
+                    <ContentControl Content="{Binding CurrentView}"
                                     Grid.Row="2"
                                     Margin="10"/>
                 </Grid>

@@ -8,38 +8,45 @@
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    
+    using QuizHut.ViewModels.Factory;
+
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, IUserDialog userDialog)
+        public MainViewModel(INavigationService navigationService, IUserDialog userDialog, ISimpleTraderViewModelFactory traderViewModelFactory)
         {
             this.navigationService = navigationService;
             this.userDialog = userDialog;
+            this.traderViewModelFactory = traderViewModelFactory;
 
-            ShowingContent<HomeViewModel>();
+            navigationService.StateChanged += NavigationService_StateChanged;
 
-            ShowHomeViewCommand = new ActionCommand(p => ShowingContent<HomeViewModel>());
-            ShowUserProfileViewCommand = new ActionCommand(OnShowUserProfileViewCommandExecuted);
-            ShowResultsViewCommand = new ActionCommand(p => ShowingContent<ResultsViewModel>());
-            ShowEventsViewCommand = new ActionCommand(p => ShowingContent<EventsViewModel>());
-            ShowGroupsViewCommand = new ActionCommand(p => ShowingContent<GroupsViewModel>());
-            ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
-            ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
-            ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
+            NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
+            NavigationCommand.Execute(ViewType.Home);
+
+            //ShowHomeViewCommand = new ActionCommand(p => ShowingContent<HomeViewModel>());
+            //ShowUserProfileViewCommand = new ActionCommand(OnShowUserProfileViewCommandExecuted);
+            //ShowResultsViewCommand = new ActionCommand(p => ShowingContent<ResultsViewModel>());
+            //ShowEventsViewCommand = new ActionCommand(p => ShowingContent<EventsViewModel>());
+            //ShowGroupsViewCommand = new ActionCommand(p => ShowingContent<GroupsViewModel>());
+            //ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
+            //ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
+            //ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
 
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
 
+        private void NavigationService_StateChanged()
+        {
+            OnPropertyChanged(nameof(CurrentView));
+        }
+
         #region Fields and properties
 
+        private readonly ISimpleTraderViewModelFactory traderViewModelFactory;
         private readonly IUserDialog userDialog;
+        private readonly INavigationService navigationService;
 
-        private INavigationService navigationService;
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
+        public ViewModel CurrentView => navigationService.CurrentView;
 
         private string caption;
         public string Caption 
@@ -66,6 +73,8 @@
 
         #region Commands
 
+        public NavigationCommand NavigationCommand { get; }
+
         public ICommand ShowHomeViewCommand { get; }
 
         #region ShowUserProfileViewCommand
@@ -73,8 +82,8 @@
         public ICommand ShowUserProfileViewCommand { get; }
         private void OnShowUserProfileViewCommandExecuted(object p)
         {
-            ShowingContent<UserProfileViewModel>();
-            SelectedOption = null;
+            //ShowingContent<UserProfileViewModel>();
+            //SelectedOption = null;
         }
 
         #endregion
@@ -104,7 +113,7 @@
 
         private void ShowingContent<T>() where T : ViewModel
         {
-            NavigationService.NavigateTo<T>();
+            navigationService.
             Caption = typeof(T).GetProperty("Title").GetValue(null).ToString();
             IconChar = (IconChar)typeof(T).GetProperty("IconChar").GetValue(null);
         }

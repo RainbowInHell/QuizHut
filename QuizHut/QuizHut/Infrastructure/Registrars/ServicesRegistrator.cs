@@ -31,8 +31,6 @@
             services.AddSingleton<EmailRequestValidator>();
             services.AddSingleton<PasswordRequestValidator>();
 
-            services.AddSingleton<Func<Type, ViewModel>>(services => viewModelType => (ViewModel)services.GetRequiredService(viewModelType));
-
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialog, UserDialogService>();
