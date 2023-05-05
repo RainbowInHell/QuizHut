@@ -422,4 +422,29 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
+
+    <!-- Style defined gridEdit button -->
+    <Style x:Key="GridEditButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryActiveColor}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryActiveColor}"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryFontColor}"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="0.7"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="5" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="1"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
