@@ -7,10 +7,12 @@
 
     public partial class MainView : Window
     {
-        public MainView()
+        public MainView(object dataContex)
         {
             InitializeComponent();
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+
+            DataContext = dataContex;
         }
 
         [DllImport("user32.dll")]

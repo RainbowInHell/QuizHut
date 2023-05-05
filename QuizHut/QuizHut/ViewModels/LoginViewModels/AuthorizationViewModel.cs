@@ -1,9 +1,10 @@
 ﻿namespace QuizHut.ViewModels.LoginViewModels
 {
+    using System;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
-
+    using Microsoft.Extensions.DependencyInjection;
     using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
@@ -14,20 +15,25 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
 
-    internal class AuthorizationViewModel : ViewModel, IResettable
+    internal class AuthorizationViewModel : DialogViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
 
         private readonly LoginRequestValidator validator;
 
         private readonly IUserDialog userDialog;
+
+        private IServiceProvider ServiceProvider { get; set; }
         private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
-            IUserAccountService userAccountService, 
-            INavigationService navigationService,
+            IUserAccountService userAccountService,
             LoginRequestValidator validator,
-            IUserDialog userDialog)
+            IUserDialog userDialog,
+            IRenavigator studRegisterRenavigator,
+            IRenavigator teacherRegisterRenavigator,
+            IRenavigator resetPasswordRenavigator,
+            IServiceProvider serviceProvider)
         {
             this.userAccountService = userAccountService;
 
@@ -36,19 +42,13 @@
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
 
-            NavigateStudentRegistrationCommand = new NavigationCommand(typeof(StudentRegistrationViewModel), navigationService);
-            NavigateTeacherRegistrationCommand = new NavigationCommand(typeof(TeacherRegistrationViewModel), navigationService);
-            NavigateResetPasswordCommand = new NavigationCommand(typeof(ResetPasswordViewModel), navigationService);
+            NavigateStudentRegistrationCommand = new RenavigateCommand(studRegisterRenavigator);
+            NavigateTeacherRegistrationCommand = new RenavigateCommand(teacherRegisterRenavigator);
+            NavigateResetPasswordCommand = new RenavigateCommand(resetPasswordRenavigator);
+            ServiceProvider = serviceProvider;
         }
 
         #region FieldsAndProperties
-
-        private INavigationService navigationService;
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
 
         private string? email;
         public string? Email
@@ -124,6 +124,9 @@
             //}
 
             userDialog.OpenMainView();
+            var model = ServiceProvider.GetRequiredService<LoginViewModel>(); 
+            model.OnDialogComplete(EventArgs.Empty);
+            
         }
 
         #endregion
@@ -150,6 +153,11 @@
         {
             Email = null;
             Password = null;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

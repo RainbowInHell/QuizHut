@@ -26,12 +26,11 @@
 
         public ResetPasswordViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService,
             EmailRequestValidator emailValidator,
-            PasswordRequestValidator passwordValidator)
+            PasswordRequestValidator passwordValidator,
+            IRenavigator authorizRenavigator)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
             this.emailValidator = emailValidator;
             this.passwordValidator = passwordValidator;
@@ -40,18 +39,10 @@
             SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
             EnterNewPasswordCommandAsync = new ActionCommandAsync(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
 
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
+            NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
         }
 
         #region FieldsAndProperties
-
-        private INavigationService navigationService;
-
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
 
         private string? email;
         public string? Email 
@@ -266,6 +257,12 @@
             IsEmailEnabled = true;
             IsTokenEnabled = false;
             IsNewPasswordEnabled = false;
+        }
+
+        public override void Dispose()
+        {
+
+            base.Dispose();
         }
     }
 }

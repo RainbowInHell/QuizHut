@@ -8,6 +8,7 @@
 
     using QuizHut.Infrastructure.Registrars;
     using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.Views.Windows;
 
     public partial class App : Application
     {
@@ -22,14 +23,15 @@
             .AddDatabase(host.Configuration.GetSection("Database"))
             .AddServices(host.Configuration)
             .AddViewModels()
-            .AddViews()
-            ;
+            .AddViews();
 
         protected override async void OnStartup(StartupEventArgs e)
         {
             await Host.StartAsync();
 
-            Services.GetRequiredService<IUserDialog>().OpenMainView();
+            //Window window = host.Services.GetRequiredService<LoginView>();
+            Window window = host.Services.GetRequiredService<MainView>();
+            window.Show();
 
             base.OnStartup(e);
         }

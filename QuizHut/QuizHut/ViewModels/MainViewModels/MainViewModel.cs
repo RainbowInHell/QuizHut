@@ -113,9 +113,15 @@
 
         private void ShowingContent<T>() where T : ViewModel
         {
-            navigationService.
             Caption = typeof(T).GetProperty("Title").GetValue(null).ToString();
             IconChar = (IconChar)typeof(T).GetProperty("IconChar").GetValue(null);
+        }
+
+        public override void Dispose()
+        {
+            navigationService.StateChanged -= NavigationService_StateChanged;
+
+            base.Dispose();
         }
     }
 }

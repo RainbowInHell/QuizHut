@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace QuizHut.ViewModels.Factory
 {
-    internal class SimpleTraderViewModelFactory
+    internal class SimpleTraderViewModelFactory : ISimpleTraderViewModelFactory
     {
         private readonly CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel;
         private readonly CreateViewModel<StudentRegistrationViewModel> createStudentRegistrationViewModel;

@@ -13,7 +13,7 @@
                 s =>
                 {
                     var model = s.GetRequiredService<LoginViewModel>();
-                    var window = new LoginView { DataContext = model };
+                    var window = new LoginView(model);
                     model.DialogComplete += (_, _) => window.Close();
 
                     return window;
@@ -23,7 +23,7 @@
                 s =>
                 {
                     var model = s.GetRequiredService<MainViewModel>();
-                    var window = new MainView { DataContext = model };
+                    var window = new MainView(model);
                     model.DialogComplete += (_, _) => window.Close();
 
                     return window;

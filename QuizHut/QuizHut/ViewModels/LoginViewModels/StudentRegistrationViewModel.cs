@@ -25,28 +25,21 @@
 
         public StudentRegistrationViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService,
-            RegisterRequestValidator validator)
+            RegisterRequestValidator validator,
+            IRenavigator authorizRenavigator,
+            IRenavigator teacherRegistrRenavigator)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
             this.validator = validator;
 
             RegisterCommandAsync = new ActionCommandAsync(OnRegisterCommandExecutedAsync, CanRegisterCommandExecute);
 
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
-            NavigateTeacherRegistrationViewCommand = new NavigationCommand(typeof(TeacherRegistrationViewModel), navigationService);
+            NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
+            NavigateTeacherRegistrationViewCommand = new RenavigateCommand(teacherRegistrRenavigator);
         }
 
         #region FieldsAndProperties
-
-        private INavigationService navigationService;
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
 
         private string? email;
         public string? Email
@@ -166,5 +159,10 @@
         public ICommand NavigateTeacherRegistrationViewCommand { get; }
 
         #endregion
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

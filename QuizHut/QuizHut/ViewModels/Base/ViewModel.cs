@@ -9,6 +9,8 @@
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public virtual void Dispose() { }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string? PropertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));

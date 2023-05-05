@@ -1,29 +1,47 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
     using Microsoft.Extensions.DependencyInjection;
+    using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Services;
+    using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.LoginViewModels;
     using QuizHut.ViewModels.MainViewModels;
+    using System;
 
     public static class ViewModelsRegistrator
     {
         public static IServiceCollection AddViewModels(this IServiceCollection services)
         {
-            services.AddSingleton<LoginViewModel>();
-            services.AddSingleton<AuthorizationViewModel>();
-            services.AddSingleton<ResetPasswordViewModel>();
-            services.AddSingleton<StudentRegistrationViewModel>();
-            services.AddSingleton<TeacherRegistrationViewModel>();
+            //services.AddSingleton<CreateViewModel<LoginViewModel>>(services => () => services.GetRequiredService<LoginViewModel>());
+            services.AddSingleton<CreateViewModel<AuthorizationViewModel>>(services => () => CreateAuthorizationViewModel(services));
+            services.AddSingleton<CreateViewModel<ResetPasswordViewModel>>(services => () => CreateResetPasswordViewModel(services));
+            services.AddSingleton<CreateViewModel<StudentRegistrationViewModel>>(services => () => CreateStudentRegistrationViewModel(services));
+            services.AddSingleton<CreateViewModel<TeacherRegistrationViewModel>>(services => () => CreateTeacherRegistrationViewModel(services));
 
-            services.AddSingleton<MainViewModel>();
-            services.AddSingleton<HomeViewModel>();
-            services.AddSingleton<UserProfileViewModel>();
-            services.AddSingleton<ResultsViewModel>();
-            services.AddSingleton<EventsViewModel>();
-            services.AddSingleton<GroupsViewModel>();
-            services.AddSingleton<CategoriesViewModel>();
-            services.AddSingleton<QuizzesViewModel>();
-            services.AddSingleton<StudentsViewModel>();
+            services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => services.GetRequiredService<HomeViewModel>());
+            services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
+            services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
+            services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => services.GetRequiredService<EventsViewModel>());
+            services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => services.GetRequiredService<GroupsViewModel>());
+            services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => services.GetRequiredService<CategoriesViewModel>());
+            services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
+            services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
+
+            services.AddTransient<LoginViewModel>();
+            services.AddTransient<MainViewModel>();
+            services.AddTransient<HomeViewModel>();
+            services.AddTransient<UserProfileViewModel>();
+            services.AddTransient<ResultsViewModel>();
+            services.AddTransient<EventsViewModel>();
+            services.AddTransient<GroupsViewModel>();
+            services.AddTransient<CategoriesViewModel>();
+            services.AddTransient<QuizzesViewModel>();
+            services.AddTransient<StudentsViewModel>();
+
+            services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
 
             services.AddSingleton<ViewModelRenavigate<AuthorizationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<StudentRegistrationViewModel>>();
@@ -31,6 +49,43 @@
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
 
             return services;
+        }
+
+        private static AuthorizationViewModel CreateAuthorizationViewModel(IServiceProvider services)
+        {
+            return new AuthorizationViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<LoginRequestValidator>(),
+                services.GetRequiredService<IUserDialog>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
+                services.GetRequiredService<IServiceProvider>());
+        }
+
+        private static ResetPasswordViewModel CreateResetPasswordViewModel(IServiceProvider services)
+        {
+            return new ResetPasswordViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<EmailRequestValidator>(),
+                services.GetRequiredService<PasswordRequestValidator>(),
+                services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
+        }
+
+        private static TeacherRegistrationViewModel CreateTeacherRegistrationViewModel(IServiceProvider services)
+        {
+            return new TeacherRegistrationViewModel(
+                services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>());
+        }
+
+        private static StudentRegistrationViewModel CreateStudentRegistrationViewModel(IServiceProvider services)
+        {
+            return new StudentRegistrationViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<RegisterRequestValidator>(),
+                services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>());
         }
     }
 }

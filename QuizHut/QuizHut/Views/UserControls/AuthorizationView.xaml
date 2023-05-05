@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:QuizHut.ViewModels"
              xmlns:userControls="clr-namespace:QuizHut.Infrastructure.UserControls"
-             DataContext="{Binding AuthorizationViewModel, Source={StaticResource Locator}}"
 
              mc:Ignorable="d" 
              Background="Transparent"
