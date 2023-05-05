@@ -69,9 +69,10 @@
             </StackPanel>
         </Button>
         <Separator Grid.Row="2" Background="{StaticResource menuOverColor}"/>
-        
+
         <!-- Data grid students -->
-        <DataGrid x:Name="MVSStudentDataGrid"
+        <DataGrid x:Name="MVSStudentDataGrid" 
+                  Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
             Grid.Row="3" Margin="5">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn CanUserResize="False" Width="Auto">
@@ -82,32 +83,21 @@
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>
 
-                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"/>
-                <DataGridTemplateColumn Header="Полное имя" IsReadOnly="True" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Border>
-                                    <TextBlock Text="..." VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource SecondaryFontColor}" Margin="0,0,0,1"/>
-                                </Border>
-                                <TextBlock Text="..." VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                    
-                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="События" IsReadOnly="True" Width="auto"/>
+                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"
+                                    Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="События" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Event}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button>
-                                    <fa:IconImage Icon="Pencil" />
-                                </Button>
-                                <Button>
-                                    <fa:IconImage Icon="Pencil" />
+                                <Button Style="{StaticResource GridRemoveButton}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
