@@ -150,6 +150,7 @@
                         <RowDefinition Height="30"/>
                         <!-- Header / Caption -->
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="5"/>
                         <!-- Content section / Child views -->
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -237,6 +238,7 @@
                             </Style>
                         </StackPanel.Style>
                     </StackPanel>
+                    <Separator Grid.Row="2" Background="{StaticResource menuOverColor}"/>
                     <!-- Main content -->
                     <ContentControl Content="{Binding CurrentView}"
                                     Grid.Row="2"
