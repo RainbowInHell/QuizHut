@@ -148,6 +148,7 @@
                         <RowDefinition Height="30"/>
                         <!-- Header / Caption -->
                         <RowDefinition Height="40"/>
+                        <RowDefinition Height="5"/>
                         <!-- Content section / Child views -->
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -237,9 +238,10 @@
                                    VerticalAlignment="Center"
                                    Margin="10,0,0,0"/>
                     </StackPanel>
+                    <Separator Grid.Row="2" Background="{StaticResource menuOverColor}"/>
                     <!-- Main content -->
                     <ContentControl Content="{Binding NavigationService.CurrentView}"
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Margin="10"/>
                 </Grid>
             </Border>
