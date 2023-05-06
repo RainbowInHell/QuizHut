@@ -4,6 +4,7 @@
 
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+
     using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services;
@@ -31,6 +32,7 @@
 
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IUserDialog, UserDialogService>();
 
             services.AddSingleton<IUserAccountService, UserAccountService>();
 

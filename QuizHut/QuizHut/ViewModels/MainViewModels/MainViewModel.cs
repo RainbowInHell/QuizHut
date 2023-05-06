@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System;
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
@@ -8,24 +9,30 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     
-    class MainViewModel : ViewModel
+    class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService, IUserDialog userDialog)
         {
             this.navigationService = navigationService;
-            OnShowHomeViewCommandExecuted(null);
+            this.userDialog = userDialog;
 
-            ShowHomeViewCommand = new ActionCommand(OnShowHomeViewCommandExecuted);
+            ShowingContent<HomeViewModel>();
+
+            ShowHomeViewCommand = new ActionCommand(p => ShowingContent<HomeViewModel>());
             ShowUserProfileViewCommand = new ActionCommand(OnShowUserProfileViewCommandExecuted);
-            ShowResultsViewCommand = new ActionCommand(OnShowResultsViewCommandExecuted);
-            ShowEventsViewCommand = new ActionCommand(OnShowEventsViewCommandExecuted);
-            ShowGroupsViewCommand = new ActionCommand(OnShowGroupsViewCommandExecuted);
-            ShowCategoriesViewCommand = new ActionCommand(OnShowCategoriesViewCommandExecuted);
-            ShowQuizzesViewCommand = new ActionCommand(OnShowQuizzesViewCommandExecuted);
-            ShowStudentsViewCommand = new ActionCommand(OnShowStudentsViewCommandExecuted);
+            ShowResultsViewCommand = new ActionCommand(p => ShowingContent<ResultsViewModel>());
+            ShowEventsViewCommand = new ActionCommand(p => ShowingContent<EventsViewModel>());
+            ShowGroupsViewCommand = new ActionCommand(p => ShowingContent<GroupsViewModel>());
+            ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
+            ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
+            ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
+
+            LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
 
         #region Fields and properties
+
+        private readonly IUserDialog userDialog;
 
         private INavigationService navigationService;
         public INavigationService NavigationService
@@ -52,7 +59,7 @@
         public string? SelectedOption 
         { 
             get => selectedOption; 
-            set => Set(ref  selectedOption, value); 
+            set => Set(ref selectedOption, value); 
         }
 
         #endregion
@@ -76,9 +83,7 @@
         public ICommand ShowUserProfileViewCommand { get; }
         private void OnShowUserProfileViewCommandExecuted(object p)
         {
-            NavigationService.NavigateTo<UserProfileViewModel>();
-            Caption = UserProfileViewModel.Title;
-            IconChar = UserProfileViewModel.IconChar;
+            ShowingContent<UserProfileViewModel>();
             SelectedOption = null;
         }
 
@@ -148,17 +153,23 @@
 
         public ICommand ShowStudentsViewCommand { get; }
 
-        private void OnShowStudentsViewCommandExecuted(object p)
+        #region LogoutCommand
+        public ICommand LogoutCommand { get; }
+        private void OnLogoutCommandExecuted(object p)
         {
-            NavigationService.NavigateTo<StudentsViewModel>();
-            Caption = StudentsViewModel.Title;
-            IconChar = StudentsViewModel.IconChar;
+            userDialog.OpenLoginView();
+            OnDialogComplete(EventArgs.Empty);
+        } 
+
+        #endregion
+
+        #endregion
+
+        private void ShowingContent<T>() where T : ViewModel
+        {
+            NavigationService.NavigateTo<T>();
+            Caption = typeof(T).GetProperty("Title").GetValue(null).ToString();
+            IconChar = (IconChar)typeof(T).GetProperty("IconChar").GetValue(null);
         }
-
-        #endregion
-
-        #endregion
-
-
     }
 }

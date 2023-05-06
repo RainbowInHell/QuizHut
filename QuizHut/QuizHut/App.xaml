@@ -6,9 +6,7 @@
              xmlns:lvvm="clr-namespace:QuizHut.ViewModels.LoginViewModels" 
              xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels" 
              xmlns:usercontrols="clr-namespace:QuizHut.Views.UserControls"
-             xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters"
-             StartupUri="Views/Windows/MainView.xaml">
-
+             xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type lvvm:StudentRegistrationViewModel}">

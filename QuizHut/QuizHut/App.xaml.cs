@@ -7,6 +7,7 @@
     using Microsoft.Extensions.Hosting;
 
     using QuizHut.Infrastructure.Registrars;
+    using QuizHut.Infrastructure.Services.Contracts;
 
     public partial class App : Application
     {
@@ -23,13 +24,16 @@
             .AddRepositories()
             .AddServices(host.Configuration)
             .AddViewModels()
+            .AddViews()
             ;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-
             await Host.StartAsync();
+
+            Services.GetRequiredService<IUserDialog>().OpenMainView();
+
+            base.OnStartup(e);
         }
 
         protected override async void OnExit(ExitEventArgs e)

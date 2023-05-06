@@ -3,11 +3,105 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuizHut.Views.UserControls"
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="RosyBrown">
+             d:DesignHeight="600" d:DesignWidth="1000"
+             Background="Transparent">
     <Grid>
-        <TextBlock Text="Students View" FontSize="120"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <!-- Counter TextBlock -->
+        <TextBlock Grid.Row="0" 
+                   FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="Кол-во: 0"/>
+        
+        <!-- FilterBy textBox-->
+        <TextBlock Grid.Row="0" 
+                   FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,640,0"
+                   Text="Поиск по:"/>
+        <ComboBox Grid.Row="0"
+                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Width="100" Height="35"
+                  Margin="0,0,535,0"
+                  Tag="Критерий...">
+
+        </ComboBox>
+        <TextBox  x:Name="MVSSearchTB"
+                  Style="{StaticResource textBoxStyle}"
+                  Grid.Row="0"
+                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Width="420" Height="35" Margin="0,0,110,0"
+                  Tag="Выберите критерий и введите текст для поиска..."/>
+        <Button Grid.Row="0"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="90" Height="35"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Content="Поиск" 
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold"/>
+
+        <!-- Add email textBox -->
+        <TextBox x:Name="MVSAddStudTB" Grid.Row="1"
+                 Style="{StaticResource textBoxStyle}"
+                 Height="40" Width="500" Margin="150,0,0,0"
+                 HorizontalAlignment="Left" VerticalAlignment="Center"
+                 Tag="Email"/>
+        <Button Grid.Row="1"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="100" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,245,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="25" Margin="0,0,3,0"/>
+                <TextBlock Text="Добавить" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <Separator Grid.Row="2" Background="{StaticResource menuOverColor}"/>
+
+        <!-- Data grid students -->
+        <DataGrid x:Name="MVSStudentDataGrid" 
+                  Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
+            Grid.Row="3" Margin="5">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn CanUserResize="False" Width="Auto">
+                    <DataGridCheckBoxColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <CheckBox/>
+                        </DataTemplate>
+                    </DataGridCheckBoxColumn.HeaderTemplate>
+                </DataGridCheckBoxColumn>
+
+                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"
+                                    Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Email}"/>
+
+                <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource GridRemoveButton}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
