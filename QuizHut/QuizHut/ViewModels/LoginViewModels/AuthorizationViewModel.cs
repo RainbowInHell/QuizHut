@@ -18,10 +18,9 @@
     internal class AuthorizationViewModel : DialogViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
-
         private readonly LoginRequestValidator validator;
-
         private readonly IUserDialog userDialog;
+        private readonly IRenavigator mainRenavigator;
 
         private IServiceProvider ServiceProvider { get; set; }
         private bool IsLoggedIn { get; set; } = true;
@@ -33,12 +32,13 @@
             IRenavigator studRegisterRenavigator,
             IRenavigator teacherRegisterRenavigator,
             IRenavigator resetPasswordRenavigator,
+            IRenavigator mainRenavigator,
             IServiceProvider serviceProvider)
         {
             this.userAccountService = userAccountService;
-
             this.userDialog = userDialog;
             this.validator = validator;
+            this.mainRenavigator = mainRenavigator;
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
 
@@ -122,11 +122,7 @@
             //{
             //    ErrorMessage = "Неверная почта или пароль";
             //}
-
-            userDialog.OpenMainView();
-            var model = ServiceProvider.GetRequiredService<LoginViewModel>(); 
-            model.OnDialogComplete(EventArgs.Empty);
-            
+            mainRenavigator.Renavigate();
         }
 
         #endregion

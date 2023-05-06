@@ -200,28 +200,32 @@
 
         public bool CanEnterNewPasswordCommandExecute(object p)
         {
-            var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
-
-            if (!IsPasswordValid)
+            if(isNewPasswordEnabled)
             {
-                IsPasswordValid = true;
-                return true;
+                var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
+
+                if (!IsPasswordValid)
+                {
+                    IsPasswordValid = true;
+                    return true;
+                }
+                if (validationResult.IsValid)
+                {
+                    PasswordErrorMessage = null;
+                    return true;
+                }
+
+                var errors = new StringBuilder();
+
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.AppendLine(error.ErrorMessage);
+                }
+
+                PasswordErrorMessage = errors.ToString();
+
+                return false;
             }
-            if (validationResult.IsValid)
-            {
-                PasswordErrorMessage = null;
-                return true;
-            }
-
-            var errors = new StringBuilder();
-
-            foreach (var error in validationResult.Errors)
-            {
-                errors.AppendLine(error.ErrorMessage);
-            }
-
-            PasswordErrorMessage = errors.ToString();
-
             return false;
         }
 

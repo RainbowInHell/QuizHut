@@ -21,16 +21,7 @@
             navigationService.StateChanged += NavigationService_StateChanged;
 
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
-            NavigationCommand.Execute(ViewType.Home);
-
-            //ShowHomeViewCommand = new ActionCommand(p => ShowingContent<HomeViewModel>());
-            //ShowUserProfileViewCommand = new ActionCommand(OnShowUserProfileViewCommandExecuted);
-            //ShowResultsViewCommand = new ActionCommand(p => ShowingContent<ResultsViewModel>());
-            //ShowEventsViewCommand = new ActionCommand(p => ShowingContent<EventsViewModel>());
-            //ShowGroupsViewCommand = new ActionCommand(p => ShowingContent<GroupsViewModel>());
-            //ShowCategoriesViewCommand = new ActionCommand(p => ShowingContent<CategoriesViewModel>());
-            //ShowQuizzesViewCommand = new ActionCommand(p => ShowingContent<QuizzesViewModel>());
-            //ShowStudentsViewCommand = new ActionCommand(p => ShowingContent<StudentsViewModel>());
+            NavigationCommand.Execute(ViewType.Authorization);
 
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
@@ -47,6 +38,13 @@
         private readonly INavigationService navigationService;
 
         public ViewModel CurrentView => navigationService.CurrentView;
+
+        private bool isLoggedIn = true;
+        public bool IsLoggedIn 
+        { 
+            get => isLoggedIn; 
+            set => Set(ref  isLoggedIn, value);
+        }
 
         private string caption;
         public string Caption 
@@ -75,37 +73,11 @@
 
         public NavigationCommand NavigationCommand { get; }
 
-        public ICommand ShowHomeViewCommand { get; }
-
-        #region ShowUserProfileViewCommand
-
-        public ICommand ShowUserProfileViewCommand { get; }
-        private void OnShowUserProfileViewCommandExecuted(object p)
-        {
-            //ShowingContent<UserProfileViewModel>();
-            //SelectedOption = null;
-        }
-
-        #endregion
-
-        public ICommand ShowResultsViewCommand { get; }
-
-        public ICommand ShowEventsViewCommand { get; }
-
-        public ICommand ShowGroupsViewCommand { get; }
-
-        public ICommand ShowCategoriesViewCommand { get; }
-
-        public ICommand ShowQuizzesViewCommand { get; }
-
-        public ICommand ShowStudentsViewCommand { get; }
-
         #region LogoutCommand
-        public ICommand LogoutCommand { get; }
+        public ICommand LogoutCommand { get; } 
         private void OnLogoutCommandExecuted(object p)
         {
-            userDialog.OpenLoginView();
-            OnDialogComplete(EventArgs.Empty);
+            NavigationCommand.Execute(ViewType.Authorization);
         } 
         #endregion
 

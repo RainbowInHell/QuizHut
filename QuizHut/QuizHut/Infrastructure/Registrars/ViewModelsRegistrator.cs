@@ -47,6 +47,7 @@
             services.AddSingleton<ViewModelRenavigate<StudentRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
 
             return services;
         }
@@ -60,6 +61,7 @@
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
                 services.GetRequiredService<IServiceProvider>());
         }
 
