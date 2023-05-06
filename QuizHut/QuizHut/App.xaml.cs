@@ -19,6 +19,8 @@
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
             .AddDatabase(host.Configuration.GetSection("Database"))
+            .AddMapper()
+            .AddRepositories()
             .AddServices(host.Configuration)
             .AddViewModels()
             ;
