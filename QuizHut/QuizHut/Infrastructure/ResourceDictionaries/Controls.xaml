@@ -478,7 +478,6 @@
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
         <Setter Property="ColumnWidth" Value="*"/>
-        <Setter Property="ColumnWidth" Value="*"/>
         <Setter Property="RowHeight" Value="35"/>
         <Setter Property="GridLinesVisibility" Value="None"/>
     </Style>

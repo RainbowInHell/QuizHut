@@ -89,8 +89,6 @@
                                     Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
                                     Binding="{Binding Email}"/>
-                <DataGridTextColumn Header="События" IsReadOnly="True" Width="*"
-                                    Binding="{Binding Event}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
