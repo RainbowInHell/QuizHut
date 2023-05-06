@@ -23,9 +23,6 @@
             services.AddSendGrid(opt =>
                 opt.ApiKey = configuration.GetValue<string>("EmailSender:ApiKey"));
 
-            services.AddSingleton<EmailRequest>();
-            services.AddSingleton<PasswordRequest>();
-
             services.AddSingleton<LoginRequestValidator>();
             services.AddSingleton<RegisterRequestValidator>();
             services.AddSingleton<EmailRequestValidator>();
@@ -35,7 +32,7 @@
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialog, UserDialogService>();
 
-            services.AddTransient<IUserAccountService, UserAccountService>();
+            services.AddSingleton<IUserAccountService, UserAccountService>();
 
             return services;
         }
