@@ -39,7 +39,7 @@
 
         public ViewModel CurrentView => navigationService.CurrentView;
 
-        private bool isLoggedIn = true;
+        private bool isLoggedIn = false;
         public bool IsLoggedIn 
         {
             get => isLoggedIn; 

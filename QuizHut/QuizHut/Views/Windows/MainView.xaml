@@ -43,24 +43,24 @@
                 <Grid Grid.Column="0">
                     
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="70"/>
                         <RowDefinition Height="5"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="90"/>
                     </Grid.RowDefinitions>
                     
                     <StackPanel Grid.Row="0">
                         <!-- Title -->
                         <TextBlock Height="40"
                                    Opacity="0.9"
-                               Margin="20,15,0,0"
+                               Margin="20,10,0,0"
                                Text="QUIZZES HUT"
                                FontSize="28"
                                FontFamily="{StaticResource Manrope}"
                                FontWeight="Medium"
                                Foreground="{StaticResource SecondaryFontColor}"/>
                         <TextBlock Height="20"
-                               Margin="20,0,0,25"
+                               Margin="20,0,0,0"
                                Text="Версия 1.0"
                                FontSize="12"
                                FontFamily="{StaticResource Manrope}"
@@ -241,7 +241,7 @@
                     <Separator Grid.Row="2" Background="{StaticResource menuOverColor}"/>
                     <!-- Main content -->
                     <ContentControl Content="{Binding CurrentView}"
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Margin="10"
                                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 </Grid>
