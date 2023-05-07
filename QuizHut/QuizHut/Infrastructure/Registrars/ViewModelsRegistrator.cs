@@ -57,7 +57,7 @@
             return new AuthorizationViewModel(
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<LoginRequestValidator>(),
-                services.GetRequiredService<IUserDialog>(),
+                services.GetRequiredService<IUserDialogService>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),

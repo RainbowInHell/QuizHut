@@ -14,7 +14,7 @@ namespace QuizHut.ViewModels.LoginViewModels
 
         public ViewModel CurrentView => navigationService.CurrentView;
 
-        public LoginViewModel(INavigationService navigationService, IUserDialog userDialog, ISimpleTraderViewModelFactory viewModelFactory = null)
+        public LoginViewModel(INavigationService navigationService, IUserDialogService userDialog, ISimpleTraderViewModelFactory viewModelFactory = null)
         {
 
             this.userDialog = userDialog;

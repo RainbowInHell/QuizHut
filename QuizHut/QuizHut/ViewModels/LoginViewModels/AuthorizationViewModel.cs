@@ -21,7 +21,7 @@
     {
         private readonly IUserAccountService userAccountService;
         private readonly LoginRequestValidator validator;
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
         private readonly IRenavigator mainRenavigator;
 
         private IServiceProvider ServiceProvider { get; set; }
@@ -30,7 +30,7 @@
         public AuthorizationViewModel(
             IUserAccountService userAccountService,
             LoginRequestValidator validator,
-            IUserDialog userDialog,
+            IUserDialogService userDialog,
             IRenavigator studRegisterRenavigator,
             IRenavigator teacherRegisterRenavigator,
             IRenavigator resetPasswordRenavigator,

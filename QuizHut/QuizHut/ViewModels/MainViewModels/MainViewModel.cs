@@ -12,7 +12,7 @@
     
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, IUserDialog userDialog, ISimpleTraderViewModelFactory traderViewModelFactory)
+        public MainViewModel(INavigationService navigationService, IUserDialogService userDialog, ISimpleTraderViewModelFactory traderViewModelFactory)
         {
             this.navigationService = navigationService;
             this.userDialog = userDialog;
@@ -34,7 +34,7 @@
         #region Fields and properties
 
         private readonly ISimpleTraderViewModelFactory traderViewModelFactory;
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
         private readonly INavigationService navigationService;
 
         public ViewModel CurrentView => navigationService.CurrentView;
@@ -82,17 +82,6 @@
 
         #endregion
 
-        #region ShowUserProfileViewCommand
-
-        public ICommand ShowUserProfileViewCommand { get; }
-        private void OnShowUserProfileViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<UserProfileViewModel>();
-            Caption = UserProfileViewModel.Title;
-            IconChar = UserProfileViewModel.IconChar;
-            SelectedOption = null;
-        }
-
         #endregion
 
         private void ShowingContent<T>() where T : ViewModel
@@ -107,11 +96,5 @@
 
             base.Dispose();
         }
-
-        #endregion
-
-        #endregion
-
-
     }
 }
