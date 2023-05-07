@@ -1,4 +1,4 @@
-﻿namespace QuizHut.BLL.Dto
+﻿namespace QuizHut.BLL.Dto.Requests
 {
     public class RegisterRequest
     {

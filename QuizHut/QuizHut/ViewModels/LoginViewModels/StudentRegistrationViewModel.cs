@@ -2,11 +2,10 @@
 {
     using System.Text;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Dto.Requests;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DAL.Entities;
     using QuizHut.Infrastructure.Commands;
@@ -25,28 +24,21 @@
 
         public StudentRegistrationViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService,
-            RegisterRequestValidator validator)
+            RegisterRequestValidator validator,
+            IRenavigator authorizRenavigator,
+            IRenavigator teacherRegistrRenavigator)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
             this.validator = validator;
 
             RegisterCommandAsync = new ActionCommandAsync(OnRegisterCommandExecutedAsync, CanRegisterCommandExecute);
 
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
-            NavigateTeacherRegistrationViewCommand = new NavigationCommand(typeof(TeacherRegistrationViewModel), navigationService);
+            NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
+            NavigateTeacherRegistrationViewCommand = new RenavigateCommand(teacherRegistrRenavigator);
         }
 
         #region FieldsAndProperties
-
-        private INavigationService navigationService;
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
 
         private string? email;
         public string? Email
@@ -92,9 +84,11 @@
 
         #endregion
 
+        #region Commands
+
         #region RegisterCommand
 
-        public ICommandAsyn RegisterCommandAsync { get; }
+        public ICommandAsync RegisterCommandAsync { get; }
 
         private async Task OnRegisterCommandExecutedAsync(object p)
         {
@@ -110,11 +104,11 @@
 
             if (IsRegistred)
             {
-                MessageBox.Show("Good!");
+                ErrorMessage = "Пользователь зарегистрирован";
             }
             else
             {
-                ErrorMessage = "Неверная почта или пароль";
+                ErrorMessage = "Пользователь с такой почтой уже существует";
             }
         }
 
@@ -155,16 +149,15 @@
 
         #endregion
 
-        #region NavigateAuthorizationViewCommand
-
         public ICommand NavigateAuthorizationViewCommand { get; }
-
-        #endregion
-
-        #region NavigateTeacherRegistrationViewCommand
 
         public ICommand NavigateTeacherRegistrationViewCommand { get; }
 
         #endregion
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.BLL.Dto.DtoValidators
 {
     using FluentValidation;
+    using QuizHut.BLL.Dto.Requests;
 
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {

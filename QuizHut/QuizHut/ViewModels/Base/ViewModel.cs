@@ -3,9 +3,13 @@
     using System.ComponentModel;
     using System.Runtime.CompilerServices;
 
+    internal delegate TViewModel CreateViewModel<TViewModel>() where TViewModel : ViewModel;
+
     internal class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public virtual void Dispose() { }
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? PropertyName = null)
         {

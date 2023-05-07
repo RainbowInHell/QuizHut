@@ -48,7 +48,9 @@
             user
                 .HasMany(u => u.Students)
                 .WithOne(u => u.Teacher)
-                .HasForeignKey(u => u.TeacherId);
+                .HasForeignKey(u => u.TeacherId)
+                .IsRequired(false);
+
 
             user
                 .HasMany(u => u.Results)

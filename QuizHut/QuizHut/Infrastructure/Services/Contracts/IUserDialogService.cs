@@ -1,9 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Services.Contracts
 {
-    interface IUserDialog
+    interface IUserDialogService
     {
         void OpenMainView();
-
-        void OpenLoginView();
     }
 }

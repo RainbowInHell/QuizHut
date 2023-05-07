@@ -8,11 +8,11 @@ using QuizHut.DAL.EntityFramework;
 
 #nullable disable
 
-namespace QuizHut.DAL.Migrations
+namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230412183448_Initial")]
-    partial class Initial
+    [Migration("20230430183955_InitialWithPomelo")]
+    partial class InitialWithPomelo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -270,7 +270,6 @@ namespace QuizHut.DAL.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("TeacherId")
-                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -750,9 +749,7 @@ namespace QuizHut.DAL.Migrations
                 {
                     b.HasOne("QuizHut.DAL.Entities.ApplicationUser", "Teacher")
                         .WithMany("Students")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Teacher");
                 });

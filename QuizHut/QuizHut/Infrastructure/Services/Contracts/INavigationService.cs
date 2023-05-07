@@ -4,11 +4,28 @@
 
     using QuizHut.ViewModels.Base;
     
+
+    public enum ViewType
+    {
+        Authorization,
+        StudentRegistration,
+        TeacherRegistration,
+        ResetPassword,
+
+        Home,
+        Category,
+        Event,
+        Group,
+        Quiz,
+        Result,
+        Student,
+        UserProfile,
+    }
+
     internal interface INavigationService
     {
-        ViewModel CurrentView { get; }
+        ViewModel CurrentView { get; set; }
 
-        void NavigateTo(Type viewModelType);
-        void NavigateTo<T>() where T : ViewModel;
+        event Action StateChanged;
     }
 }

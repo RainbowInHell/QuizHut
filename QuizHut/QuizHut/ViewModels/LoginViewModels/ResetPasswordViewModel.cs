@@ -5,10 +5,9 @@
     using System.Windows;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Dto.Requests;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DAL.Entities;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -19,19 +18,16 @@
     class ResetPasswordViewModel : ViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
-
         private readonly EmailRequestValidator emailValidator;
-
         private readonly PasswordRequestValidator passwordValidator;
 
         public ResetPasswordViewModel(
             IUserAccountService userAccountService, 
-            INavigationService navigationService,
             EmailRequestValidator emailValidator,
-            PasswordRequestValidator passwordValidator)
+            PasswordRequestValidator passwordValidator,
+            IRenavigator authorizRenavigator)
         {
             this.userAccountService = userAccountService;
-            this.navigationService = navigationService;
 
             this.emailValidator = emailValidator;
             this.passwordValidator = passwordValidator;
@@ -40,18 +36,10 @@
             SubmitTokenCommand = new ActionCommand(OnSubmitTokenCommandExecuted, CanSubmitTokenCommandExecute);
             EnterNewPasswordCommandAsync = new ActionCommandAsync(OnEnterNewPasswordCommandExecuted, CanEnterNewPasswordCommandExecute);
 
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
+            NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
         }
 
         #region FieldsAndProperties
-
-        private INavigationService navigationService;
-
-        public INavigationService NavigationService
-        {
-            get => navigationService;
-            set => Set(ref navigationService, value);
-        }
 
         private string? email;
         public string? Email 
@@ -124,10 +112,12 @@
 
         #endregion
 
+        #region Commands
+
         #region SendTokenToEmailCommand
 
-        public ICommandAsyn SendTokenToEmailCommandAsync { get; }
-        
+        public ICommandAsync SendTokenToEmailCommandAsync { get; }
+
         public bool CanSendTokenToEmailCommandExecute(object p)
         {
             var validationResult = emailValidator.Validate(new EmailRequest { Email = Email });
@@ -154,7 +144,7 @@
 
             return false;
         }
-        
+
         public async Task OnSendTokenToEmailCommandExecutedAsync(object p)
         {
             ResetToken = await userAccountService.SendPasswordResetEmail(Email);
@@ -162,7 +152,7 @@
             if (ResetToken != null)
             {
                 EmailErrorMessage = "Токен выслан на указанную почту";
-                
+
                 IsTokenEnabled = true;
                 IsEmailEnabled = false;
             }
@@ -177,7 +167,7 @@
         #region SubmitTokenCommand
 
         public ICommand SubmitTokenCommand { get; }
-        
+
         public bool CanSubmitTokenCommandExecute(object p)
         {
             if (!IsTokenEnabled)
@@ -204,33 +194,37 @@
         #endregion
 
         #region EnterNewPasswordCommand
-        
-        public ICommandAsyn EnterNewPasswordCommandAsync { get; }
+
+        public ICommandAsync EnterNewPasswordCommandAsync { get; }
 
         public bool CanEnterNewPasswordCommandExecute(object p)
         {
-            var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
-
-            if (!IsPasswordValid)
+            if (isNewPasswordEnabled)
             {
-                IsPasswordValid = true;
-                return true;
+                var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
+
+                if (!IsPasswordValid)
+                {
+                    IsPasswordValid = true;
+                    return true;
+                }
+                if (validationResult.IsValid)
+                {
+                    PasswordErrorMessage = null;
+                    return true;
+                }
+
+                var errors = new StringBuilder();
+
+                foreach (var error in validationResult.Errors)
+                {
+                    errors.AppendLine(error.ErrorMessage);
+                }
+
+                PasswordErrorMessage = errors.ToString();
+
+                return false;
             }
-            if (validationResult.IsValid)
-            {
-                PasswordErrorMessage = null;
-                return true;
-            }
-
-            var errors = new StringBuilder();
-
-            foreach (var error in validationResult.Errors)
-            {
-                errors.AppendLine(error.ErrorMessage);
-            }
-
-            PasswordErrorMessage = errors.ToString();
-
             return false;
         }
 
@@ -251,8 +245,6 @@
         }
         #endregion
 
-        #region NavigateAuthorizationViewCommand
-
         public ICommand NavigateAuthorizationViewCommand { get; }
 
         #endregion
@@ -266,6 +258,11 @@
             IsEmailEnabled = true;
             IsTokenEnabled = false;
             IsNewPasswordEnabled = false;
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

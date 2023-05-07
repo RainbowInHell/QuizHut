@@ -5,11 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizHut.Views.UserControls"
              xmlns:userControls="clr-namespace:QuizHut.Infrastructure.UserControls"
-             DataContext="{Binding StudentRegistrationViewModel, Source={StaticResource Locator}}"
              
              mc:Ignorable="d" 
              Background="Transparent"
-             d:Height="400" d:Width="350">
+             Height="400" Width="350">
     
     <Border CornerRadius="15"
             Background="{StaticResource PrimaryLoginPagesBackgroundColor}"

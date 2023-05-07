@@ -6,6 +6,6 @@
     {
         public event EventHandler? DialogComplete;
 
-        protected virtual void OnDialogComplete(EventArgs e) => DialogComplete?.Invoke(this, e);
+        public virtual void OnDialogComplete(EventArgs e) => DialogComplete?.Invoke(this, e);
     }
 }

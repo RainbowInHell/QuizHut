@@ -4,23 +4,34 @@
 
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Factory;
 
     class NavigationCommand : Command
     {
-        private readonly Type viewModelType;
-        private readonly INavigationService navigationService;
+        public event EventHandler CanExecuteChanged;
 
-        public NavigationCommand(Type viewModelType, INavigationService navigationService)
+        private readonly INavigationService navigationService;
+        private readonly ISimpleTraderViewModelFactory viewModelFactory;
+
+        public NavigationCommand(INavigationService navigationService, ISimpleTraderViewModelFactory viewModelFactory)
         {
-            this.viewModelType = viewModelType;
             this.navigationService = navigationService;
+            this.viewModelFactory = viewModelFactory;
         }
 
-        public override bool CanExecute(object parameter) => true;
+        public override bool CanExecute(object parameter)
+        {
+            return true;
+        }
 
         public override void Execute(object parameter)
         {
-            navigationService.NavigateTo(viewModelType);
+            if (parameter is ViewType)
+            {
+                ViewType viewType = (ViewType)parameter;
+
+                navigationService.CurrentView = viewModelFactory.CreateViewModel(viewType);
+            }
         }
     }
 }

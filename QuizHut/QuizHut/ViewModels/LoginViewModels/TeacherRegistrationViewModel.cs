@@ -8,32 +8,23 @@
 
     internal class TeacherRegistrationViewModel : ViewModel
     {
-        private INavigationService navigationService;
-
-        public INavigationService NavigationService
+        public TeacherRegistrationViewModel(IRenavigator authorizRenavigator, IRenavigator studentRegistrRenavigator)
         {
-            get => navigationService;
-            set => Set(ref navigationService, value);
+            NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
+            NavigateStudentRegistrationViewCommand = new RenavigateCommand(studentRegistrRenavigator);
         }
 
-        public TeacherRegistrationViewModel(INavigationService navigationService)
-        {
-            this.navigationService = navigationService;
-
-            NavigateAuthorizationViewCommand = new NavigationCommand(typeof(AuthorizationViewModel), navigationService);
-            NavigateStudentRegistrationViewCommand = new NavigationCommand(typeof(StudentRegistrationViewModel), navigationService);
-        }
-
-        #region NavigateAuthorizationViewCommand
+        #region Commands
 
         public ICommand NavigateAuthorizationViewCommand { get; }
-
-        #endregion
-
-        #region NavigateStudentRegistrationViewCommand
 
         public ICommand NavigateStudentRegistrationViewCommand { get; }
 
         #endregion
+
+        public override void Dispose()
+        {
+            base.Dispose();
+        }
     }
 }

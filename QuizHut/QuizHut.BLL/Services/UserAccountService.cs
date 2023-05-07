@@ -13,6 +13,8 @@
 
         private readonly IEmailSenderService emailSender;
 
+        public bool IsLoggedIn => throw new NotImplementedException();
+
         public UserAccountService(UserManager<ApplicationUser> userManager, IEmailSenderService emailSender)
         {
             this.userManager = userManager;
