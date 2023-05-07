@@ -32,7 +32,10 @@
 
             AutoMapperConfig.RegisterMappings(typeof(App).Assembly);
 
-            Services.GetRequiredService<IUserDialogService>().OpenMainView();
+            //Services.GetRequiredService<IUserDialogService>().OpenMainView();
+
+            var window = host.Services.GetRequiredService<MainView>();
+            window.Show();
 
             base.OnStartup(e);
         }

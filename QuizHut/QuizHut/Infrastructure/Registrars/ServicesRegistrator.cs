@@ -37,7 +37,6 @@
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
 
-            services.AddSingleton<Func<Type, ViewModel>>(services => viewModelType => (ViewModel)services.GetRequiredService(viewModelType));
 
             return services;
         }
