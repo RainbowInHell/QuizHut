@@ -75,8 +75,6 @@
 
             if (groupId != null)
             {
-                // var assignedstudentsIds = await studentsGroupsService.GetAllStudentsIdsByGroupIdAsync(groupId);
-                // query = query.Where(x => !assignedstudentsIds.Contains(x.Id));
                 query = query.Where(x => !x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId));
             }
 

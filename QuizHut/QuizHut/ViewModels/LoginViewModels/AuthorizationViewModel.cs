@@ -8,6 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Dto.Requests;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;

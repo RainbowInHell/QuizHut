@@ -10,7 +10,7 @@ namespace QuizHut.ViewModels.LoginViewModels
     {
         private readonly ISimpleTraderViewModelFactory viewModelFactory;
         private INavigationService navigationService;
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
 
         public ViewModel CurrentView => navigationService.CurrentView;
 
