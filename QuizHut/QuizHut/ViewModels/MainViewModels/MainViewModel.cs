@@ -70,14 +70,6 @@
         #region Commands
 
         public NavigationCommand NavigationCommand { get; }
-        private void OnShowGroupsViewCommandExecuted(object p)
-        {
-            NavigationService.NavigateTo<GroupsViewModel>();
-            Caption = GroupsViewModel.Title;
-            IconChar = GroupsViewModel.IconChar;
-        }
-
-        #endregion
 
         #region LogoutCommand
         public ICommand LogoutCommand { get; } 
