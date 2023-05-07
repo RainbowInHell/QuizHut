@@ -1,6 +1,5 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
-    using System;
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
@@ -12,10 +11,9 @@
     
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, IUserDialogService userDialog, ISimpleTraderViewModelFactory traderViewModelFactory)
+        public MainViewModel(INavigationService navigationService, ISimpleTraderViewModelFactory traderViewModelFactory)
         {
             this.navigationService = navigationService;
-            this.userDialog = userDialog;
             this.traderViewModelFactory = traderViewModelFactory;
 
             navigationService.StateChanged += NavigationService_StateChanged;
@@ -34,7 +32,7 @@
         #region Fields and properties
 
         private readonly ISimpleTraderViewModelFactory traderViewModelFactory;
-        private readonly IUserDialogService userDialog;
+
         private readonly INavigationService navigationService;
 
         public ViewModel CurrentView => navigationService.CurrentView;

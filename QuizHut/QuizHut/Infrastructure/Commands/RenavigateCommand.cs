@@ -1,14 +1,11 @@
-﻿using QuizHut.Infrastructure.Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace QuizHut.Infrastructure.Commands
+﻿namespace QuizHut.Infrastructure.Commands
 {
-    internal class RenavigateCommand : ICommand
+    using System;
+
+    using QuizHut.Infrastructure.Commands.Base;
+    using QuizHut.Infrastructure.Services.Contracts;
+
+    internal class RenavigateCommand : Command
     {
         private readonly IRenavigator renavigator;
 
@@ -19,12 +16,12 @@ namespace QuizHut.Infrastructure.Commands
 
         public event EventHandler CanExecuteChanged;
 
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             return true;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             renavigator.Renavigate();
         }

@@ -3,7 +3,5 @@
     interface IUserDialogService
     {
         void OpenMainView();
-
-        void OpenLoginView();
     }
 }

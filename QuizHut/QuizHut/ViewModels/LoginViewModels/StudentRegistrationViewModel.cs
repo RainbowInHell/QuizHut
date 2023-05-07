@@ -84,6 +84,8 @@
 
         #endregion
 
+        #region Commands
+
         #region RegisterCommand
 
         public ICommandAsync RegisterCommandAsync { get; }
@@ -147,13 +149,7 @@
 
         #endregion
 
-        #region NavigateAuthorizationViewCommand
-
         public ICommand NavigateAuthorizationViewCommand { get; }
-
-        #endregion
-
-        #region NavigateTeacherRegistrationViewCommand
 
         public ICommand NavigateTeacherRegistrationViewCommand { get; }
 

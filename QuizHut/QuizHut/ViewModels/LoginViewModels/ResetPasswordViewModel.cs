@@ -18,9 +18,7 @@
     class ResetPasswordViewModel : ViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
-
         private readonly EmailRequestValidator emailValidator;
-
         private readonly PasswordRequestValidator passwordValidator;
 
         public ResetPasswordViewModel(
@@ -114,10 +112,12 @@
 
         #endregion
 
+        #region Commands
+
         #region SendTokenToEmailCommand
 
         public ICommandAsync SendTokenToEmailCommandAsync { get; }
-        
+
         public bool CanSendTokenToEmailCommandExecute(object p)
         {
             var validationResult = emailValidator.Validate(new EmailRequest { Email = Email });
@@ -144,7 +144,7 @@
 
             return false;
         }
-        
+
         public async Task OnSendTokenToEmailCommandExecutedAsync(object p)
         {
             ResetToken = await userAccountService.SendPasswordResetEmail(Email);
@@ -152,7 +152,7 @@
             if (ResetToken != null)
             {
                 EmailErrorMessage = "Токен выслан на указанную почту";
-                
+
                 IsTokenEnabled = true;
                 IsEmailEnabled = false;
             }
@@ -167,7 +167,7 @@
         #region SubmitTokenCommand
 
         public ICommand SubmitTokenCommand { get; }
-        
+
         public bool CanSubmitTokenCommandExecute(object p)
         {
             if (!IsTokenEnabled)
@@ -194,12 +194,12 @@
         #endregion
 
         #region EnterNewPasswordCommand
-        
+
         public ICommandAsync EnterNewPasswordCommandAsync { get; }
 
         public bool CanEnterNewPasswordCommandExecute(object p)
         {
-            if(isNewPasswordEnabled)
+            if (isNewPasswordEnabled)
             {
                 var validationResult = passwordValidator.Validate(new PasswordRequest { Password = NewPassword });
 
@@ -245,8 +245,6 @@
         }
         #endregion
 
-        #region NavigateAuthorizationViewCommand
-
         public ICommand NavigateAuthorizationViewCommand { get; }
 
         #endregion
@@ -264,7 +262,6 @@
 
         public override void Dispose()
         {
-
             base.Dispose();
         }
     }

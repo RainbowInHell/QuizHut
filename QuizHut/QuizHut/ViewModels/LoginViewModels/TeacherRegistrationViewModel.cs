@@ -14,13 +14,9 @@
             NavigateStudentRegistrationViewCommand = new RenavigateCommand(studentRegistrRenavigator);
         }
 
-        #region NavigateAuthorizationViewCommand
+        #region Commands
 
         public ICommand NavigateAuthorizationViewCommand { get; }
-
-        #endregion
-
-        #region NavigateStudentRegistrationViewCommand
 
         public ICommand NavigateStudentRegistrationViewCommand { get; }
 

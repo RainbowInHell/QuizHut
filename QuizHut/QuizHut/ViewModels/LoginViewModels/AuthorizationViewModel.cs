@@ -1,12 +1,10 @@
 ﻿namespace QuizHut.ViewModels.LoginViewModels
 {
-    using System;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
-    using Microsoft.Extensions.DependencyInjection;
-    using QuizHut.BLL.Dto;
+
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Dto.Requests;
     using QuizHut.BLL.Services.Contracts;
@@ -20,25 +18,22 @@
     internal class AuthorizationViewModel : DialogViewModel, IResettable
     {
         private readonly IUserAccountService userAccountService;
+
         private readonly LoginRequestValidator validator;
-        private readonly IUserDialogService userDialog;
+
         private readonly IRenavigator mainRenavigator;
 
-        private IServiceProvider ServiceProvider { get; set; }
         private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService,
             LoginRequestValidator validator,
-            IUserDialogService userDialog,
             IRenavigator studRegisterRenavigator,
             IRenavigator teacherRegisterRenavigator,
             IRenavigator resetPasswordRenavigator,
-            IRenavigator mainRenavigator,
-            IServiceProvider serviceProvider)
+            IRenavigator mainRenavigator)
         {
             this.userAccountService = userAccountService;
-            this.userDialog = userDialog;
             this.validator = validator;
             this.mainRenavigator = mainRenavigator;
 
@@ -47,7 +42,6 @@
             NavigateStudentRegistrationCommand = new RenavigateCommand(studRegisterRenavigator);
             NavigateTeacherRegistrationCommand = new RenavigateCommand(teacherRegisterRenavigator);
             NavigateResetPasswordCommand = new RenavigateCommand(resetPasswordRenavigator);
-            ServiceProvider = serviceProvider;
         }
 
         #region FieldsAndProperties
@@ -74,6 +68,8 @@
         }
 
         #endregion
+
+        #region Commands
 
         #region LoginCommand
 
@@ -130,19 +126,9 @@
 
         #endregion
 
-        #region NavigateStudentRegistrationCommand
-
         public ICommand NavigateStudentRegistrationCommand { get; }
 
-        #endregion
-
-        #region NavigateTeacherRegistrationCommand
-
         public ICommand NavigateTeacherRegistrationCommand { get; }
-
-        #endregion
-
-        #region NavigateResetPasswordCommand
 
         public ICommand NavigateResetPasswordCommand { get; }
 

@@ -1,7 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
     using Microsoft.Extensions.DependencyInjection;
-    using QuizHut.ViewModels.LoginViewModels;
+
     using QuizHut.ViewModels.MainViewModels;
     using QuizHut.Views.Windows;
 
@@ -9,16 +9,6 @@
     {
         public static IServiceCollection AddViews(this IServiceCollection services)
         {
-            services.AddTransient(
-                s =>
-                {
-                    var model = s.GetRequiredService<LoginViewModel>();
-                    var window = new LoginView(model);
-                    model.DialogComplete += (_, _) => window.Close();
-
-                    return window;
-                });
-
             services.AddTransient(
                 s =>
                 {

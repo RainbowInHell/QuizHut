@@ -1,21 +1,21 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
+    using System;
+
     using Microsoft.Extensions.DependencyInjection;
+
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Services;
-    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.LoginViewModels;
     using QuizHut.ViewModels.MainViewModels;
-    using System;
 
     public static class ViewModelsRegistrator
     {
         public static IServiceCollection AddViewModels(this IServiceCollection services)
         {
-            //services.AddSingleton<CreateViewModel<LoginViewModel>>(services => () => services.GetRequiredService<LoginViewModel>());
             services.AddSingleton<CreateViewModel<AuthorizationViewModel>>(services => () => CreateAuthorizationViewModel(services));
             services.AddSingleton<CreateViewModel<ResetPasswordViewModel>>(services => () => CreateResetPasswordViewModel(services));
             services.AddSingleton<CreateViewModel<StudentRegistrationViewModel>>(services => () => CreateStudentRegistrationViewModel(services));
@@ -30,7 +30,6 @@
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
-            services.AddTransient<LoginViewModel>();
             services.AddTransient<MainViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<UserProfileViewModel>();
@@ -57,12 +56,10 @@
             return new AuthorizationViewModel(
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<LoginRequestValidator>(),
-                services.GetRequiredService<IUserDialogService>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
-                services.GetRequiredService<IServiceProvider>());
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
         }
 
         private static ResetPasswordViewModel CreateResetPasswordViewModel(IServiceProvider services)

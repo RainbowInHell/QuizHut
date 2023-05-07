@@ -1,12 +1,12 @@
 ﻿namespace QuizHut.Infrastructure.Commands
 {
     using System;
-    using System.Windows.Input;
+
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Factory;
 
-    class NavigationCommand : ICommand
+    class NavigationCommand : Command
     {
         public event EventHandler CanExecuteChanged;
 
@@ -19,12 +19,12 @@
             this.viewModelFactory = viewModelFactory;
         }
 
-        public bool CanExecute(object parameter)
+        public override bool CanExecute(object parameter)
         {
             return true;
         }
 
-        public void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             if (parameter is ViewType)
             {

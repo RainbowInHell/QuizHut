@@ -1,15 +1,12 @@
-﻿using QuizHut.Infrastructure.Services.Contracts;
-using QuizHut.ViewModels.Base;
-using QuizHut.ViewModels.LoginViewModels;
-using QuizHut.ViewModels.MainViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizHut.ViewModels.Factory
+﻿namespace QuizHut.ViewModels.Factory
 {
+    using System;
+
+    using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.LoginViewModels;
+    using QuizHut.ViewModels.MainViewModels;
+
     internal class SimpleTraderViewModelFactory : ISimpleTraderViewModelFactory
     {
         private readonly CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel;

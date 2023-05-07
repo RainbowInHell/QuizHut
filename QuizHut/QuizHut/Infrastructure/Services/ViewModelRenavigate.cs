@@ -1,9 +1,8 @@
-﻿using QuizHut.Infrastructure.Services.Contracts;
-using QuizHut.ViewModels.Base;
-using System;
-
-namespace QuizHut.Infrastructure.Services
+﻿namespace QuizHut.Infrastructure.Services
 {
+    using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Base;
+
     class ViewModelRenavigate<TViewModel> : IRenavigator where TViewModel : ViewModel
     {
         private readonly INavigationService navigationService;

@@ -5,10 +5,10 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+
     using QuizHut.BLL.MapperConfig;
     using QuizHut.Infrastructure.Registrars;
     using QuizHut.Infrastructure.Services.Contracts;
-    using QuizHut.Views.Windows;
 
     public partial class App : Application
     {
