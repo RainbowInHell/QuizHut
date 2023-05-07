@@ -6,9 +6,9 @@ namespace QuizHut.ViewModels.LoginViewModels
     class LoginViewModel : DialogViewModel
     {
         private INavigationService navigationService;
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
 
-        public LoginViewModel(INavigationService navigationService, IUserDialog userDialog)
+        public LoginViewModel(INavigationService navigationService, IUserDialogService userDialog)
         {
             this.navigationService = navigationService;
             this.userDialog = userDialog;

@@ -5,7 +5,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-
+    using QuizHut.BLL.MapperConfig;
     using QuizHut.Infrastructure.Registrars;
     using QuizHut.Infrastructure.Services.Contracts;
 
@@ -20,7 +20,6 @@
 
         internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
             .AddDatabase(host.Configuration.GetSection("Database"))
-            .AddMapper()
             .AddRepositories()
             .AddServices(host.Configuration)
             .AddViewModels()
@@ -31,7 +30,9 @@
         {
             await Host.StartAsync();
 
-            Services.GetRequiredService<IUserDialog>().OpenMainView();
+            AutoMapperConfig.RegisterMappings(typeof(App).Assembly);
+
+            Services.GetRequiredService<IUserDialogService>().OpenMainView();
 
             base.OnStartup(e);
         }

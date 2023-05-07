@@ -5,7 +5,7 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.Views.Windows;
     
-    class UserDialogService : IUserDialog
+    class UserDialogService : IUserDialogService
     {
         private readonly IServiceProvider Services;
 

@@ -11,7 +11,7 @@
     
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, IUserDialog userDialog)
+        public MainViewModel(INavigationService navigationService, IUserDialogService userDialog)
         {
             this.navigationService = navigationService;
             this.userDialog = userDialog;
@@ -32,7 +32,7 @@
 
         #region Fields and properties
 
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
 
         private INavigationService navigationService;
         public INavigationService NavigationService
@@ -159,7 +159,9 @@
         {
             userDialog.OpenLoginView();
             OnDialogComplete(EventArgs.Empty);
-        } 
+        }
+
+        #endregion
 
         #endregion
 

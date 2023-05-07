@@ -5,8 +5,8 @@
     using System.Windows;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Dto;
     using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Dto.Requests;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -21,14 +21,15 @@
 
         private readonly LoginRequestValidator validator;
 
-        private readonly IUserDialog userDialog;
+        private readonly IUserDialogService userDialog;
+
         private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService, 
             INavigationService navigationService,
             LoginRequestValidator validator,
-            IUserDialog userDialog)
+            IUserDialogService userDialog)
         {
             this.userAccountService = userAccountService;
 
