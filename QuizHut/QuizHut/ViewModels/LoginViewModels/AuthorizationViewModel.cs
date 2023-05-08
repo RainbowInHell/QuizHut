@@ -2,7 +2,6 @@
 {
     using System.Text;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Input;
 
     using QuizHut.BLL.Dto.DtoValidators;
@@ -114,14 +113,12 @@
 
             if (IsLoggedIn)
             {
-                MessageBox.Show("Успех!");
+                mainRenavigator.Renavigate();
             }
             else
             {
                 ErrorMessage = "Неверная почта или пароль";
             }
-
-            mainRenavigator.Renavigate();
         }
 
         #endregion

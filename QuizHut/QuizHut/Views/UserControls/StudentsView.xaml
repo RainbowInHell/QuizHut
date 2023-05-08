@@ -83,14 +83,6 @@
                   Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
             Grid.Row="3" Margin="5">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn CanUserResize="False" Width="Auto">
-                    <DataGridCheckBoxColumn.HeaderTemplate>
-                        <DataTemplate>
-                            <CheckBox/>
-                        </DataTemplate>
-                    </DataGridCheckBoxColumn.HeaderTemplate>
-                </DataGridCheckBoxColumn>
-
                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"
                                     Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"

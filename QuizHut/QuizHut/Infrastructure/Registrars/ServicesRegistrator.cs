@@ -33,6 +33,7 @@
 
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
+            services.AddSingleton<IAccountStore, AccountStore>();
 
             return services;
         }

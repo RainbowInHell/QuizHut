@@ -9,16 +9,31 @@
 
     public class UserAccountService : IUserAccountService
     {
+        private readonly IAccountStore accountStore;
+
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IEmailSenderService emailSender;
 
-        public bool IsLoggedIn => throw new NotImplementedException();
+        public bool IsLogggedIn
+        {
+            get => accountStore.IsLoggedIn;
+            private set
+            {
+                accountStore.IsLoggedIn = value;
+                StateChanged?.Invoke();
+            }
+        }
 
-        public UserAccountService(UserManager<ApplicationUser> userManager, IEmailSenderService emailSender)
+        public bool IsLoggedIn => IsLogggedIn != false;
+
+        public event Action StateChanged;
+
+        public UserAccountService(UserManager<ApplicationUser> userManager, IEmailSenderService emailSender, IAccountStore accountStore)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
+            this.accountStore = accountStore;
         }
 
         public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
@@ -41,6 +56,8 @@
             }
 
             var isRightPassword = await userManager.CheckPasswordAsync(user, password);
+
+            IsLogggedIn = isRightPassword ? true : false;
 
             return isRightPassword;
         }
@@ -85,6 +102,11 @@
             var result = await userManager.ResetPasswordAsync(user, resetToken, newPassword);
 
             return result.Succeeded;
+        }
+
+        public void Logout()
+        {
+            IsLogggedIn = false;
         }
     }
 }
