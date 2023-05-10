@@ -12,9 +12,8 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    using QuizHut.ViewModels.Contracts;
 
-    internal class AuthorizationViewModel : DialogViewModel, IResettable
+    internal class AuthorizationViewModel : DialogViewModel
     {
         private readonly IUserAccountService userAccountService;
 
@@ -130,12 +129,6 @@
         public ICommand NavigateResetPasswordCommand { get; }
 
         #endregion
-
-        public void Reset()
-        {
-            Email = null;
-            Password = null;
-        }
 
         public override void Dispose()
         {

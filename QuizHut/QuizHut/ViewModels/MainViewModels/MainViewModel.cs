@@ -8,6 +8,7 @@
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
     using QuizHut.ViewModels.Factory;
     
     class MainViewModel : DialogViewModel
@@ -23,7 +24,7 @@
 
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
             NavigationCommand.Execute(ViewType.Authorization);
-
+            
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
 
@@ -35,6 +36,7 @@
         private void NavigationService_StateChanged()
         {
             OnPropertyChanged(nameof(CurrentView));
+            ShowingContent();
         }
 
         #region Fields and properties
@@ -49,25 +51,18 @@
 
         public bool IsLoggedIn => userAccountService.IsLoggedIn;
 
-        //private bool isLoggedIn = false;
-        //public bool IsLoggedIn 
-        //{
-        //    get => isLoggedIn; 
-        //    set => Set(ref  isLoggedIn, value);
-        //}
-
-        private string caption;
-        public string Caption 
+        private string title = HomeViewModel.Title;
+        public string Title 
         { 
-            get => caption; 
-            set => Set(ref  caption, value); 
+            get => title;
+            set => Set(ref title, value);
         }
 
-        private IconChar iconChar;
+        private IconChar iconChar = HomeViewModel.IconChar;
         public IconChar IconChar 
         { 
-            get => iconChar; 
-            set => Set(ref iconChar, value); 
+            get => iconChar;
+            set => Set(ref iconChar, value);
         }
 
         private string selectedOption = "Home";
@@ -95,10 +90,13 @@
 
         #endregion
 
-        private void ShowingContent<T>() where T : ViewModel
+        private void ShowingContent()
         {
-            Caption = typeof(T).GetProperty("Title").GetValue(null).ToString();
-            IconChar = (IconChar)typeof(T).GetProperty("IconChar").GetValue(null);
+            if(CurrentView is IMenuView menuView)
+            {
+                Title = menuView.GetType().GetProperty("Title").GetValue(null).ToString();
+                IconChar = (IconChar)menuView.GetType().GetProperty("IconChar").GetValue(null);
+            }
         }
 
         public override void Dispose()

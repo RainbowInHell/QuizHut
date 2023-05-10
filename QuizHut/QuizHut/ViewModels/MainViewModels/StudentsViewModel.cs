@@ -10,11 +10,11 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    class StudentsViewModel : ViewModel
+    class StudentsViewModel : ViewModel, IMenuView
     {
         public static string Title { get; } = "Учащиеся";
-
         public static IconChar IconChar { get; } = IconChar.UserGroup;
 
         private readonly IStudentService studentService;

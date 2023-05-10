@@ -191,12 +191,12 @@
                     <StackPanel Grid.Row="1"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center">
-                        <fa:IconImage Icon="{Binding IconChar}"
+                        <fa:IconImage Icon="{Binding IconChar, UpdateSourceTrigger=PropertyChanged}"
                                       Height="25" Width="25"
                                       Foreground="{StaticResource PrimaryFontColor}"
                                       Margin="15,0,10,0"/>
 
-                        <TextBlock Text="{Binding Caption}"
+                        <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    FontSize="24" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    VerticalAlignment="Center"/>

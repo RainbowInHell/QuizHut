@@ -3,9 +3,11 @@
     using FontAwesome.Sharp;
 
     using QuizHut.ViewModels.Base;
-    class ResultsViewModel : ViewModel
+    using QuizHut.ViewModels.Contracts;
+
+    class ResultsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Результаты";
+        public static string Title { get; } = "Результаты"; 
         public static IconChar IconChar { get; } = IconChar.Award;
     }
 }

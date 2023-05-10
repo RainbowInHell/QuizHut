@@ -4,6 +4,7 @@
 
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
 
     class NavigationCommand : Command
@@ -30,7 +31,8 @@
             {
                 ViewType viewType = (ViewType)parameter;
 
-                navigationService.CurrentView = viewModelFactory.CreateViewModel(viewType);
+                ViewModel viewModel = viewModelFactory.CreateViewModel(viewType);
+                navigationService.CurrentView = viewModel;
             }
         }
     }
