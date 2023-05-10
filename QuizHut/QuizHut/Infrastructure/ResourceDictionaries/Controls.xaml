@@ -287,6 +287,7 @@
         <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryErrorMessageColor}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
     
     <!-- Template for menuButton -->

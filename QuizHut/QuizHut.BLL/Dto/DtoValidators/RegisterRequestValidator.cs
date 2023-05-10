@@ -7,6 +7,8 @@
     {
         public RegisterRequestValidator()
         {
+            RuleFor(request => request.Email).ValidateEmail();
+
             RuleFor(request => request.FirstName)
                 .NotEmpty().WithMessage("Имя обязательно")
                 .Length(2, 20).WithMessage("Длина имени от 2 до 20 символов")
@@ -15,9 +17,7 @@
             RuleFor(request => request.LastName)
                 .NotEmpty().WithMessage("Фамилия обязательна")
                 .Length(2, 20).WithMessage("Длина фамилии от 2 до 20 символов")
-                .Matches("^[А-я][а-я]*$").WithMessage("Фамилия должно начинаться с заглавной буквы и содержать только буквы");
-
-            RuleFor(request => request.Email).ValidateEmail();
+                .Matches("^[А-я][а-я]*$").WithMessage("Фамилия должна начинаться с заглавной буквы и содержать только буквы");
 
             RuleFor(request => request.Password).ValidatePassword();
         }
