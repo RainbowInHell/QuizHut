@@ -7,7 +7,7 @@
     using QuizHut.ViewModels.LoginViewModels;
     using QuizHut.ViewModels.MainViewModels;
 
-    internal class SimpleTraderViewModelFactory : ISimpleTraderViewModelFactory
+    internal class ViewModelFactory : IViewModelFactory
     {
         private readonly CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel;
         private readonly CreateViewModel<StudentRegistrationViewModel> createStudentRegistrationViewModel;
@@ -23,7 +23,7 @@
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
         private readonly CreateViewModel<UserProfileViewModel> createUserProfileViewModel;
 
-        public SimpleTraderViewModelFactory(CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel, 
+        public ViewModelFactory(CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel, 
                                             CreateViewModel<StudentRegistrationViewModel> createStudentRegistrationViewModel, 
                                             CreateViewModel<TeacherRegistrationViewModel> createTeacherRegistrationViewModel, 
                                             CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel, 

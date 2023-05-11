@@ -1,6 +1,7 @@
-﻿namespace QuizHut.DAL.Common.Repositories
+﻿namespace QuizHut.DLL.Repositories.Contracts
 {
-    public interface IRepository<TEntity> : IDisposable where TEntity : class
+    public interface IRepository<TEntity> : IDisposable 
+        where TEntity : class
     {
         IQueryable<TEntity> All();
 

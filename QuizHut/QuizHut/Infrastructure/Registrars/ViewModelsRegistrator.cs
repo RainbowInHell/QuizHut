@@ -40,7 +40,7 @@
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<StudentsViewModel>();
 
-            services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
+            services.AddSingleton<IViewModelFactory, ViewModelFactory>();
 
             services.AddSingleton<ViewModelRenavigate<AuthorizationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<StudentRegistrationViewModel>>();

@@ -2,7 +2,7 @@
 {
     public interface IStudentService
     {
-        Task<IList<T>> GetAllStudentsAsync<T>(string teacherId = null, string groupId = null);
+        Task<IList<T>> GetAllStudentsAsync<T>(string teacherId = null, string groupId = null, string searchCriteria = null, string searchText = null);
 
         Task<IList<T>> GetAllInRolesPerPageAsync<T>(
             int page,
@@ -23,7 +23,5 @@
         Task DeleteFromTeacherListAsync(string studentId, string teacherId);
 
         Task<int> GetAllStudentsCountAsync(string teacher = null, string searchCriteria = null, string searchText = null);
-
-        Task<IEnumerable<T>> GetAllStudentsPerPageAsync<T>(int page, int countPerPage, string teacherId = null, string searchCriteria = null, string searchText = null);
     }
 }

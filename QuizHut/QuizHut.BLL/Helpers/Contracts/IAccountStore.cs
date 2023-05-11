@@ -1,4 +1,4 @@
-﻿namespace QuizHut.BLL.Services.Contracts
+﻿namespace QuizHut.BLL.Helpers.Contracts
 {
     public interface IAccountStore
     {

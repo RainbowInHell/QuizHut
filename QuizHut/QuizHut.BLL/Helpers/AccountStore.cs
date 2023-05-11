@@ -1,12 +1,13 @@
-﻿using QuizHut.BLL.Services.Contracts;
-namespace QuizHut.BLL.Services
+﻿namespace QuizHut.BLL.Helpers
 {
+    using QuizHut.BLL.Helpers.Contracts;
+
     public class AccountStore : IAccountStore
     {
         private bool isLoggedIn;
-        public bool IsLoggedIn 
-        { 
-            get =>  isLoggedIn; 
+        public bool IsLoggedIn
+        {
+            get => isLoggedIn;
             set
             {
                 isLoggedIn = value;
