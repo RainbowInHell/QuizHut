@@ -108,7 +108,7 @@
         <DataGrid x:Name="MVSStudentDataGrid" ItemsSource="{Binding Students}"
                   SelectedItem="{Binding SelectedStudent}"
                   Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
-            Grid.Row="4" Margin="20,0,20,20">
+            Grid.Row="4" Margin="0,0,0,20" Width="1000">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
                                     Binding="{Binding FullName}"/>
@@ -119,7 +119,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource GridRemoveButton}" 
+                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}" 
                                     Command="{Binding DataContext.RemoveStudentFromTeacherListCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
