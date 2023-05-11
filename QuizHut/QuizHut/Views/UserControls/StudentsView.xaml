@@ -66,8 +66,6 @@
             </StackPanel>
         </Button>
 
-        <Border Grid.Row="2" Background="{StaticResource Color7Light}"/>
-
         <!-- Download data-->
         <Button x:Name="MVSDownloadBtn"
                 Grid.Row="2"
