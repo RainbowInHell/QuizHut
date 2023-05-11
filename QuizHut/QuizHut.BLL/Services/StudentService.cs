@@ -5,7 +5,7 @@
     using QuizHut.BLL.Expression.Contracts;
     using QuizHut.BLL.MapperConfig;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DAL.Entities;
+    using QuizHut.DLL.Entities;
     using QuizHut.DLL.Repositories.Contracts;
 
     public class StudentService : IStudentService

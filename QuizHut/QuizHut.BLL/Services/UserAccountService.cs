@@ -4,9 +4,10 @@
 
     using Microsoft.AspNetCore.Identity;
 
+    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DAL.Entities;
+    using QuizHut.DLL.Entities;
 
     public class UserAccountService : IUserAccountService
     {
@@ -50,6 +51,13 @@
             var isRightPassword = await userManager.CheckPasswordAsync(user, password);
 
             CurrentUser.IsLoggedIn = isRightPassword ? true : false;
+
+            var roles = await userManager.GetRolesAsync(user);
+
+            if (roles.Contains("Admin"))
+            {
+                AccountStore.CurrentAdminId = user.Id;
+            }
 
             return isRightPassword;
         }

@@ -6,6 +6,7 @@
     class ViewModelRenavigate<TViewModel> : IRenavigator where TViewModel : ViewModel
     {
         private readonly INavigationService navigationService;
+
         private readonly CreateViewModel<TViewModel> createViewModel;
 
         public ViewModelRenavigate(INavigationService navigationService, CreateViewModel<TViewModel> createViewModel)

@@ -29,10 +29,13 @@
             services.AddSingleton<EmailRequestValidator>();
             services.AddSingleton<PasswordRequestValidator>();
 
-            services.AddSingleton<IEmailSenderService, EmailSenderService>();
-            services.AddSingleton<IUserAccountService, UserAccountService>();
-            services.AddSingleton<IStudentService, StudentService>();
-            services.AddSingleton<IExpressionBuilder, ExpressionBuilder>();
+            services.AddTransient<IEmailSenderService, EmailSenderService>();
+            services.AddTransient<IUserAccountService, UserAccountService>();
+            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IGroupsService, GroupsService>();
+            services.AddTransient<IStudentsGroupsService, StudentsGroupsService>();
+            services.AddTransient<IEventsGroupsService, EventsGroupsService>();
+            services.AddTransient<IExpressionBuilder, ExpressionBuilder>();
 
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
