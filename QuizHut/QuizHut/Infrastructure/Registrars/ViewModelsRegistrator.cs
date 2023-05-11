@@ -25,7 +25,10 @@
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => services.GetRequiredService<EventsViewModel>());
-            services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => services.GetRequiredService<GroupsViewModel>());
+
+            services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => CreateGroupsViewModel(services));
+            services.AddSingleton<CreateViewModel<CreateGroupViewModel>>(services => () => CreateCreateGroupViewModell(services));
+
             services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => services.GetRequiredService<CategoriesViewModel>());
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
@@ -35,7 +38,10 @@
             services.AddTransient<UserProfileViewModel>();
             services.AddTransient<ResultsViewModel>();
             services.AddTransient<EventsViewModel>();
+
             services.AddTransient<GroupsViewModel>();
+            services.AddTransient<CreateGroupViewModel>();
+            
             services.AddTransient<CategoriesViewModel>();
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<StudentsViewModel>();
@@ -47,6 +53,9 @@
             services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
             services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
+
+            services.AddSingleton<ViewModelRenavigate<CreateGroupViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
 
             return services;
         }
@@ -85,6 +94,18 @@
                 services.GetRequiredService<RegisterRequestValidator>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>());
+        }
+
+        private static GroupsViewModel CreateGroupsViewModel(IServiceProvider services)
+        {
+            return new GroupsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<CreateGroupViewModel>>());
+        }
+
+        private static CreateGroupViewModel CreateCreateGroupViewModell(IServiceProvider services)
+        {
+            return new CreateGroupViewModel(
+                services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>());
         }
     }
 }
