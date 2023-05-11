@@ -3,8 +3,8 @@
     using Microsoft.EntityFrameworkCore;
 
     using QuizHut.DAL.Common.Models;
-    using QuizHut.DAL.Common.Repositories;
     using QuizHut.DAL.EntityFramework;
+    using QuizHut.DLL.Repositories.Contracts;
 
     public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity
@@ -22,10 +22,10 @@
 
         public IQueryable<TEntity> AllAsNoTrackingWithDeleted() => base.AllAsNoTracking().IgnoreQueryFilters();
 
-        public Task<TEntity> GetByIdWithDeletedAsync(params object[] id)
+        public async Task<TEntity> GetByIdWithDeletedAsync(params object[] id)
         {
-            var getByIdPredicate = EfExpressionHelper.BuildByIdPredicate<TEntity>(this.Context, id);
-            return this.AllWithDeleted().FirstOrDefaultAsync(getByIdPredicate);
+            var getByIdPredicate = EfExpressionHelper.BuildByIdPredicate<TEntity>(Context, id);
+            return await AllWithDeleted().FirstOrDefaultAsync(getByIdPredicate);
         }
 
         public void HardDelete(TEntity entity) => base.Delete(entity);
@@ -34,14 +34,14 @@
         {
             entity.IsDeleted = false;
             entity.DeletedOn = null;
-            this.Update(entity);
+            Update(entity);
         }
 
         public override void Delete(TEntity entity)
         {
             entity.IsDeleted = true;
             entity.DeletedOn = DateTime.UtcNow;
-            this.Update(entity);
+            Update(entity);
         }
     }
 }

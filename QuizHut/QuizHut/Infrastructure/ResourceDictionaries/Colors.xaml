@@ -5,14 +5,15 @@
     <SolidColorBrush x:Key="PrimaryLoginPagesBackgroundColor" Color="#A5ACD2" Opacity="0.7"/>
     <SolidColorBrush x:Key="PrimaryMainViewBackround" Color="#FFDDF7"/>
     <SolidColorBrush x:Key="SecondaryMainViewBackround" Color="#481269"/>
+    <SolidColorBrush x:Key="MainViewBackground3" Color="#dcb6f3"/>
 
     <!-- Controls colors -->
     <SolidColorBrush x:Key="PrimaryActiveColor" Color="#E42380"/>
     <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
     <SolidColorBrush x:Key="menuOverColor" Color="#661995"/>
     <SolidColorBrush x:Key="ActiveColor3" Color="#FFEEFB"/>
-    <SolidColorBrush x:Key="AttentionColor1" Color="#D32F2F"/>
-    <SolidColorBrush x:Key="AttentionColor11" Color="#B71C1C"/>
+    <SolidColorBrush x:Key="RemoveColor1" Color="#D32F2F"/>
+    <SolidColorBrush x:Key="EditColor1" Color="#00FF00"/>
 
     <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
@@ -24,12 +25,19 @@
 
     <!-- Others -->
     <SolidColorBrush x:Key="Color1" Color="#E285DE"/>
-    <SolidColorBrush x:Key="Color2" Color="#4ADAEC"/>
+    <SolidColorBrush x:Key="Color1Light" Color="#F5D6F4"/>
+    
+    <SolidColorBrush x:Key="Color2" Color="#FFD700"/>
     <SolidColorBrush x:Key="Color3" Color="#FB539B"/>
-    <SolidColorBrush x:Key="Color4" Color="#FFC047"/>
-    <SolidColorBrush x:Key="Color5" Color="#78A3FC"/>
-    <SolidColorBrush x:Key="Color6" Color="#5FA75F"/>
+    <SolidColorBrush x:Key="Color4" Color="#4ADAEC"/>
+    <SolidColorBrush x:Key="Color5" Color="#5FA75F"/>
+    
+    <SolidColorBrush x:Key="Color6" Color="#78A3FC"/>
+    <SolidColorBrush x:Key="Color6Light" Color="#BCD2fE"/>
+    
     <SolidColorBrush x:Key="Color7" Color="#FF93AC"/>
+    <SolidColorBrush x:Key="Color7Light" Color="#FFBBCB"/>
+    
     <SolidColorBrush x:Key="Color8" Color="#FA240A"/>
     <SolidColorBrush x:Key="Color9" Color="#C122C9"/>
 

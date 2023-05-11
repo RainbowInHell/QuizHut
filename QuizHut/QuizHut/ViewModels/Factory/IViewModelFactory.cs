@@ -3,7 +3,7 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
-    internal interface ISimpleTraderViewModelFactory
+    internal interface IViewModelFactory
     {
         ViewModel CreateViewModel(ViewType viewType);
     }

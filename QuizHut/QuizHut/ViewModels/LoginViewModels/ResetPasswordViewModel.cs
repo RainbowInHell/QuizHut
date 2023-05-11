@@ -13,9 +13,8 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    using QuizHut.ViewModels.Contracts;
 
-    class ResetPasswordViewModel : ViewModel, IResettable
+    class ResetPasswordViewModel : ViewModel
     {
         private readonly IUserAccountService userAccountService;
         private readonly EmailRequestValidator emailValidator;
@@ -240,25 +239,12 @@
             {
                 PasswordErrorMessage = "Непредвиденная ошибка. Пароль не изменен";
             }
-
-            Reset();
         }
         #endregion
 
         public ICommand NavigateAuthorizationViewCommand { get; }
 
         #endregion
-
-        public void Reset()
-        {
-            Email = null;
-            Token = null;
-            NewPassword = null;
-
-            IsEmailEnabled = true;
-            IsTokenEnabled = false;
-            IsNewPasswordEnabled = false;
-        }
 
         public override void Dispose()
         {

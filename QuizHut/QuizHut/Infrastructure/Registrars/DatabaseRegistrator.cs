@@ -18,7 +18,7 @@
                 var connectionString = configuration.GetConnectionString(databaseType);
 
                 opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-
+                opt.EnableSensitiveDataLogging();
             });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>

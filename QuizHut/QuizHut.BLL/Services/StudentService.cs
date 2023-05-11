@@ -5,8 +5,8 @@
     using QuizHut.BLL.Expression.Contracts;
     using QuizHut.BLL.MapperConfig;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DAL.Common.Repositories;
     using QuizHut.DAL.Entities;
+    using QuizHut.DLL.Repositories.Contracts;
 
     public class StudentService : IStudentService
     {
@@ -23,14 +23,14 @@
         public async Task<bool> AddStudentAsync(string email, string teacherId)
         {
             var user = await userRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.Email == email)
                 .FirstOrDefaultAsync();
 
             if (user != null)
             {
                 var teacher = await userRepository
-                    .AllAsNoTracking()
+                    .All()
                     .Where(x => x.Id == teacherId)
                     .FirstOrDefaultAsync();
 
@@ -51,12 +51,12 @@
         public async Task DeleteFromTeacherListAsync(string studentId, string teacherId)
         {
             var studentToRemove = await userRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.Id == studentId)
                 .FirstOrDefaultAsync();
 
             var teacher = await userRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.Id == teacherId)
                 .FirstOrDefaultAsync();
 
@@ -69,7 +69,11 @@
             await userRepository.SaveChangesAsync();
         }
 
-        public async Task<IList<T>> GetAllStudentsAsync<T>(string teacherId = null, string groupId = null)
+        public async Task<IList<T>> GetAllStudentsAsync<T>(
+            string teacherId = null, 
+            string groupId = null, 
+            string searchCriteria = null,
+            string searchText = null)
         {
             var query = userRepository.AllAsNoTracking();
 
@@ -83,7 +87,14 @@
                 query = query.Where(x => x.TeacherId == teacherId);
             }
 
-            return await query.Where(x => !x.Roles.Any()).To<T>().ToListAsync();
+            if (searchCriteria != null && searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<ApplicationUser>(searchCriteria, searchText);
+                query = query.Where(filter);
+            }
+
+            //return await query.Where(x => !x.Roles.Any()).To<T>().ToListAsync();
+            return await query.To<T>().ToListAsync();
         }
 
         public async Task<IList<T>> GetAllInRolesPerPageAsync<T>(
@@ -153,33 +164,6 @@
             }
 
             return await query.CountAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllStudentsPerPageAsync<T>(
-            int page,
-            int countPerPage,
-            string teacherId = null,
-            string searchCriteria = null,
-            string searchText = null)
-        {
-            var query = userRepository.AllAsNoTracking().Where(x => !x.Roles.Any());
-
-            if (teacherId != null)
-            {
-                query = query.Where(x => x.TeacherId == teacherId);
-            }
-
-            if (searchCriteria != null && searchText != null)
-            {
-                var filter = expressionBuilder.GetExpression<ApplicationUser>(searchCriteria, searchText);
-                query = query.Where(filter);
-            }
-
-            return await query.OrderByDescending(x => x.CreatedOn)
-                .Skip(countPerPage * (page - 1))
-                .Take(countPerPage)
-                .To<T>()
-                .ToListAsync();
         }
     }
 }

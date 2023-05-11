@@ -4,6 +4,7 @@
 
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Services.Contracts;
+    using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
 
     class NavigationCommand : Command
@@ -11,9 +12,9 @@
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigationService navigationService;
-        private readonly ISimpleTraderViewModelFactory viewModelFactory;
+        private readonly IViewModelFactory viewModelFactory;
 
-        public NavigationCommand(INavigationService navigationService, ISimpleTraderViewModelFactory viewModelFactory)
+        public NavigationCommand(INavigationService navigationService, IViewModelFactory viewModelFactory)
         {
             this.navigationService = navigationService;
             this.viewModelFactory = viewModelFactory;
@@ -30,7 +31,8 @@
             {
                 ViewType viewType = (ViewType)parameter;
 
-                navigationService.CurrentView = viewModelFactory.CreateViewModel(viewType);
+                ViewModel viewModel = viewModelFactory.CreateViewModel(viewType);
+                navigationService.CurrentView = viewModel;
             }
         }
     }

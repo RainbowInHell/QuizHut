@@ -2,7 +2,6 @@
 {
     using System.Text;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Input;
 
     using QuizHut.BLL.Dto.DtoValidators;
@@ -13,9 +12,8 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    using QuizHut.ViewModels.Contracts;
 
-    internal class AuthorizationViewModel : DialogViewModel, IResettable
+    internal class AuthorizationViewModel : DialogViewModel
     {
         private readonly IUserAccountService userAccountService;
 
@@ -114,14 +112,12 @@
 
             if (IsLoggedIn)
             {
-                MessageBox.Show("Успех!");
+                mainRenavigator.Renavigate();
             }
             else
             {
                 ErrorMessage = "Неверная почта или пароль";
             }
-
-            mainRenavigator.Renavigate();
         }
 
         #endregion
@@ -133,12 +129,6 @@
         public ICommand NavigateResetPasswordCommand { get; }
 
         #endregion
-
-        public void Reset()
-        {
-            Email = null;
-            Password = null;
-        }
 
         public override void Dispose()
         {
