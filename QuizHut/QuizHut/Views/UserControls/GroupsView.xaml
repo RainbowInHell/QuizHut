@@ -3,11 +3,123 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuizHut.Views.UserControls"
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="Bisque">
+             d:Height="600" d:Width="1000"
+             Background="Transparent">
     <Grid>
-        <TextBlock Text="Groups View" FontSize="140"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <!-- Counter TextBlock -->
+        <TextBlock Grid.Row="0" 
+                   FontSize="22" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                   Text="Кол-во групп: 0"/>
+
+        <!-- Search -->
+        <TextBlock Grid.Row="0" 
+                   FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,590,0"
+                   Text="Поиск:"/>
+        <TextBox  x:Name="MVQSearchTB"
+                  Style="{StaticResource textBoxStyle}"
+                  Grid.Row="0"
+                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Width="450" Height="40" Margin="0,0,130,0"
+                  Tag="Введите текст для поиска..."/>
+        <Button Grid.Row="0"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="110" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Search" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
+                <TextBlock Text="Поиск" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- Download and Add buttons -->
+        <Button x:Name="MVGDownloadBtn"
+                Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource Color8}"
+                Width="100" Height="35"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Margin="10,0,0,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
+                <TextBlock Text="Выгрузить" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MVGAddGroupBtn"
+                Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="150" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
+                <TextBlock Text="Добавить группу" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- Data grid quizzes -->
+        <DataGrid x:Name="MVGGroupsDataGrid" ItemsSource="{Binding Groups}"
+                  Style="{StaticResource DataGridStyle1}" 
+                  CellStyle="{StaticResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
+                  RowStyle="{StaticResource DataGridRowStyle1}" 
+            Grid.Row="4" Width="1000">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
+                                    Binding="{Binding }"/>
+                <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
+                                    Binding="{Binding }"/>
+                <DataGridTextColumn Header="Студенты" IsReadOnly="True" Width="*"
+                                    Binding="{Binding }"/>
+                <DataGridTextColumn Header="События" IsReadOnly="True" Width="*"
+                                    Binding="{Binding }"/>
+
+                <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Style="{StaticResource GridControlButton}" 
+                                        Background="{StaticResource RemoveColor1}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource SettingsColor1}"
+                                        Margin="5,0,0,0">
+                                    <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}"
+                                        Margin="5,0,0,0">
+                                    <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
