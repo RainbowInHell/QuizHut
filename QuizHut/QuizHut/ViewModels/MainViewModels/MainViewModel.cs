@@ -50,6 +50,7 @@
         public ViewModel CurrentView => navigationService.CurrentView;
 
         public bool IsLoggedIn => userAccountService.IsLoggedIn;
+        public bool IsLoggedIn => true;
 
         private string title = HomeViewModel.Title;
         public string Title 

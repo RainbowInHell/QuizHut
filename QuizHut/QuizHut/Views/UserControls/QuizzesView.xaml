@@ -6,31 +6,34 @@
              xmlns:local="clr-namespace:QuizHut.Views.UserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000"
+             d:Height="600" d:Width="1000"
              Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="70"/>
+            <RowDefinition Height="5"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <!-- Counter TextBlock -->
         <TextBlock Grid.Row="0" 
-                   FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   FontSize="22" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
                    Text="Кол-во тестов: 0"/>
- 
+
+        <Border Background="{StaticResource Color6Light}" Grid.Row="2" Panel.ZIndex="0"/>
+
         <!-- FilterBy category textBox-->
         <TextBox  x:Name="MVSQFilterTB"
                   Style="{StaticResource textBoxStyle}"
-                  Grid.Row="0"
+                  Grid.Row="2"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="420" Height="35" Margin="0,0,160,0"
                   Tag="Фильтровать по категории..."/>
-        <Button Grid.Row="0"
+        <Button Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="140" Height="35"
@@ -38,10 +41,6 @@
                 Margin="0,0,10,0"
                 Content="Выбрать категорию" 
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="13" FontWeight="SemiBold"/>
-
-        <Border Background="{StaticResource Color6Light}" Grid.Row="2">
-            
-        </Border>
         <!-- Download and Add buttons -->
         <Button x:Name="MVQDownloadBtn"
                 Grid.Row="2"
@@ -58,7 +57,7 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
-        <Button x:Name="MVSDownloadBtn"
+        <Button x:Name="MVQAddQuizBtn"
                 Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
@@ -75,17 +74,17 @@
         </Button>
 
         <!-- Search -->
-        <TextBlock Grid.Row="2" 
+        <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,590,0"
                    Text="Поиск:"/>
         <TextBox  x:Name="MVQSearchTB"
                   Style="{StaticResource textBoxStyle}"
-                  Grid.Row="2"
+                  Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="450" Height="40" Margin="0,0,130,0"
                   Tag="Введите текст для поиска..."/>
-        <Button Grid.Row="2"
+        <Button Grid.Row="0"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="110" Height="40"
@@ -99,5 +98,50 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
+
+        <!-- Data grid quizzes -->
+        <DataGrid x:Name="MVQQuizzesDataGrid" ItemsSource="{Binding Tests}"
+                  Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
+            Grid.Row="4" Width="1000">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
+                                    Binding="{Binding name}"/>
+                <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
+                                    Binding="{Binding createdOn}"/>
+                <DataGridTemplateColumn Header="Назначен ли" IsReadOnly="True" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Ellipse Width="15" Height="15">
+                                <Ellipse.Style>
+                                    <Style TargetType="{x:Type Ellipse}">
+                                        <Setter Property="Fill" Value="Red"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding isAssigned}" Value="False">
+                                                <Setter Property="Fill" Value="Green"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Ellipse.Style>
+                            </Ellipse>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Style="{StaticResource GridRemoveButton}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                                <Button Style="{StaticResource GridEditButton}" Margin="5,0,0,0">
+                                    <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

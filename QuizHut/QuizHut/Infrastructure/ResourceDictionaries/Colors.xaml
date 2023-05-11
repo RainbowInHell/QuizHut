@@ -12,8 +12,8 @@
     <SolidColorBrush x:Key="SecondaryActiveColor" Color="#6D6D6D"/>
     <SolidColorBrush x:Key="menuOverColor" Color="#661995"/>
     <SolidColorBrush x:Key="ActiveColor3" Color="#FFEEFB"/>
-    <SolidColorBrush x:Key="AttentionColor1" Color="#D32F2F"/>
-    <SolidColorBrush x:Key="AttentionColor11" Color="#B71C1C"/>
+    <SolidColorBrush x:Key="RemoveColor1" Color="#D32F2F"/>
+    <SolidColorBrush x:Key="EditColor1" Color="#00FF00"/>
 
     <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>
@@ -36,6 +36,8 @@
     <SolidColorBrush x:Key="Color6Light" Color="#BCD2fE"/>
     
     <SolidColorBrush x:Key="Color7" Color="#FF93AC"/>
+    <SolidColorBrush x:Key="Color7Light" Color="#FFBBCB"/>
+    
     <SolidColorBrush x:Key="Color8" Color="#FA240A"/>
     <SolidColorBrush x:Key="Color9" Color="#C122C9"/>
 
