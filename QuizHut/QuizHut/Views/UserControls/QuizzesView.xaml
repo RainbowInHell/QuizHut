@@ -3,11 +3,101 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuizHut.Views.UserControls"
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Background="LavenderBlush">
+             d:DesignHeight="600" d:DesignWidth="1000"
+             Background="Transparent">
     <Grid>
-        <TextBlock Text="Quizzes View" FontSize="130"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- Counter TextBlock -->
+        <TextBlock Grid.Row="0" 
+                   FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                   Text="Кол-во тестов: 0"/>
+ 
+        <!-- FilterBy category textBox-->
+        <TextBox  x:Name="MVSQFilterTB"
+                  Style="{StaticResource textBoxStyle}"
+                  Grid.Row="0"
+                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Width="420" Height="35" Margin="0,0,160,0"
+                  Tag="Фильтровать по категории..."/>
+        <Button Grid.Row="0"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="140" Height="35"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Content="Выбрать категорию" 
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="13" FontWeight="SemiBold"/>
+
+        <Border Background="{StaticResource Color6Light}" Grid.Row="2">
+            
+        </Border>
+        <!-- Download and Add buttons -->
+        <Button x:Name="MVQDownloadBtn"
+                Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource Color8}"
+                Width="100" Height="35"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Margin="10,0,0,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
+                <TextBlock Text="Выгрузить" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="MVSDownloadBtn"
+                Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="130" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Margin="130,0,0,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
+                <TextBlock Text="Добавить тест" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+
+        <!-- Search -->
+        <TextBlock Grid.Row="2" 
+                   FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,590,0"
+                   Text="Поиск:"/>
+        <TextBox  x:Name="MVQSearchTB"
+                  Style="{StaticResource textBoxStyle}"
+                  Grid.Row="2"
+                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  Width="450" Height="40" Margin="0,0,130,0"
+                  Tag="Введите текст для поиска..."/>
+        <Button Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource PrimaryActiveColor}"
+                Width="110" Height="40"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,10,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Search" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
+                <TextBlock Text="Поиск" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

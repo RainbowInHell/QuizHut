@@ -27,29 +27,35 @@
         <TextBlock Grid.Row="0" 
                    FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="Кол-во: 0"/>
+                   Text="Кол-во студентов: 0"/>
 
         <!-- FilterBy textBox-->
         <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,540,0"
-                   Text="Поиск по:"/>
+                   Text="Поиск:"/>
         <TextBox  x:Name="MVSSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="420" Height="35" Margin="0,0,110,0"
-                  Tag="Выберите критерий и введите текст для поиска..."/>
+                  Tag="Введите текст для поиска..."/>
         <Button Grid.Row="0"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="90" Height="35"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,10,0"
-                Content="Поиск" 
-                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold"/>
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Search" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
+                <TextBlock Text="Поиск" 
+                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
 
-        <!-- Add email textBox -->
+        <!-- Download data-->
         <Button x:Name="MVSDownloadBtn"
                 Grid.Row="1"
                 Template="{StaticResource MainButtonTemplate}"
@@ -65,6 +71,7 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
+        <!-- Add email textBox -->
         <TextBox x:Name="MVSAddStudTB" Grid.Row="1"
                  Style="{StaticResource textBoxStyle}"
                  Height="40" Width="500" Margin="0,0,150,0"
