@@ -2,13 +2,12 @@
 {
     using System.Threading.Tasks;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.DAL.Entities;
 
     public interface IUserAccountService
     {
-        bool IsLoggedIn { get; }
-
-        event Action StateChanged;
+        IAccountStore CurrentUser { get; set; }
 
         Task<bool> RegisterAsync(ApplicationUser newUser, string password);
 

@@ -1,8 +1,9 @@
-﻿namespace QuizHut.DAL.Common.Repositories
+﻿namespace QuizHut.DLL.Repositories.Contracts
 {
     using QuizHut.DAL.Common.Models;
 
-    public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity> where TEntity : class, IDeletableEntity
+    public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity> 
+        where TEntity : class, IDeletableEntity
     {
         IQueryable<TEntity> AllWithDeleted();
 

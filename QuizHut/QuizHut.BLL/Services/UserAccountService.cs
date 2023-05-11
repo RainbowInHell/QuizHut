@@ -4,36 +4,29 @@
 
     using Microsoft.AspNetCore.Identity;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DAL.Entities;
 
     public class UserAccountService : IUserAccountService
     {
-        private readonly IAccountStore accountStore;
+        private IAccountStore accountStore;
 
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IEmailSenderService emailSender;
-
-        public bool IsLogggedIn
-        {
-            get => accountStore.IsLoggedIn;
-            private set
-            {
-                accountStore.IsLoggedIn = value;
-                StateChanged?.Invoke();
-            }
-        }
-
-        public bool IsLoggedIn => IsLogggedIn != false;
-
-        public event Action StateChanged;
 
         public UserAccountService(UserManager<ApplicationUser> userManager, IEmailSenderService emailSender, IAccountStore accountStore)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
             this.accountStore = accountStore;
+        }
+
+        public IAccountStore CurrentUser 
+        {
+            get => accountStore;
+            set => accountStore = value;
         }
 
         public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
@@ -45,7 +38,6 @@
             return result.Succeeded;
         }
 
-        //Sparf, "!A#1dfggg"
         public async Task<bool> LoginAsync(string email, string password)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -57,7 +49,7 @@
 
             var isRightPassword = await userManager.CheckPasswordAsync(user, password);
 
-            IsLogggedIn = isRightPassword ? true : false;
+            CurrentUser.IsLoggedIn = isRightPassword ? true : false;
 
             return isRightPassword;
         }
@@ -106,7 +98,7 @@
 
         public void Logout()
         {
-            IsLogggedIn = false;
+            CurrentUser.IsLoggedIn = false;
         }
     }
 }

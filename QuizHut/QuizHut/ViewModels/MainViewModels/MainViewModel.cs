@@ -12,14 +12,14 @@
     
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, ISimpleTraderViewModelFactory traderViewModelFactory, IUserAccountService userAccountService)
+        public MainViewModel(INavigationService navigationService, IViewModelFactory traderViewModelFactory, IUserAccountService userAccountService)
         {
             this.navigationService = navigationService;
             this.traderViewModelFactory = traderViewModelFactory;
             this.userAccountService = userAccountService;
 
             navigationService.StateChanged += NavigationService_StateChanged;
-            userAccountService.StateChanged += UserAccountService_StateChanged;
+            userAccountService.CurrentUser.StateChanged += UserAccountService_StateChanged;
 
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
             NavigationCommand.Execute(ViewType.Authorization);
@@ -39,7 +39,7 @@
 
         #region Fields and properties
 
-        private readonly ISimpleTraderViewModelFactory traderViewModelFactory;
+        private readonly IViewModelFactory traderViewModelFactory;
 
         private readonly INavigationService navigationService;
 
@@ -47,14 +47,7 @@
 
         public ViewModel CurrentView => navigationService.CurrentView;
 
-        public bool IsLoggedIn => userAccountService.IsLoggedIn;
-
-        //private bool isLoggedIn = false;
-        //public bool IsLoggedIn 
-        //{
-        //    get => isLoggedIn; 
-        //    set => Set(ref  isLoggedIn, value);
-        //}
+        public bool IsLoggedIn => userAccountService.CurrentUser.IsLoggedIn;
 
         private string caption;
         public string Caption 
@@ -104,7 +97,7 @@
         public override void Dispose()
         {
             navigationService.StateChanged -= NavigationService_StateChanged;
-            userAccountService.StateChanged -= UserAccountService_StateChanged;
+            userAccountService.CurrentUser.StateChanged -= UserAccountService_StateChanged;
 
             base.Dispose();
         }

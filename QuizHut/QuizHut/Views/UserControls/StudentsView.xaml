@@ -27,7 +27,7 @@
         <TextBlock Grid.Row="0" 
                    FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="Кол-во: 0"/>
+                   Text="{Binding Students.Count, Mode=OneWay, StringFormat='Кол-во: {0}'}"/>
 
         <!-- FilterBy textBox-->
         <TextBlock Grid.Row="0" 
@@ -38,16 +38,24 @@
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="100" Height="35"
                   Margin="0,0,535,0"
-                  Tag="Критерий...">
-
+                  Tag="Критерий..."
+                  ItemsSource="{Binding SearchCriterias}"
+                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}">
+            <!--DisplayMemberPath="Name">-->
+            <!--<ComboBoxItem Content="Полное имя"/>
+            <ComboBoxItem Content="Имя"/>
+            <ComboBoxItem Content="Фамилия"/>
+            <ComboBoxItem Content="Почта"/>-->
         </ComboBox>
         <TextBox  x:Name="MVSSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="420" Height="35" Margin="0,0,110,0"
-                  Tag="Выберите критерий и введите текст для поиска..."/>
+                  Tag="Выберите критерий и введите текст для поиска..."
+                  Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="0"
+                Command="{Binding SearchCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="90" Height="35"
@@ -61,8 +69,10 @@
                  Style="{StaticResource textBoxStyle}"
                  Height="40" Width="500" Margin="150,0,0,0"
                  HorizontalAlignment="Left" VerticalAlignment="Center"
-                 Tag="Email"/>
+                 Tag="Email"
+                 Text="{Binding StudentEmailToAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="1"
+                Command="{Binding AddStudentToTeacherListCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="100" Height="40"
@@ -80,11 +90,10 @@
 
         <!-- Data grid students -->
         <DataGrid x:Name="MVSStudentDataGrid" ItemsSource="{Binding Students}"
+                  SelectedItem="{Binding SelectedStudent}"
                   Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
             Grid.Row="3" Margin="5">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"
-                                    Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
                                     Binding="{Binding FullName}"/>
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
@@ -94,7 +103,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource GridRemoveButton}">
+                                <Button Style="{StaticResource GridRemoveButton}" 
+                                    Command="{Binding DataContext.RemoveStudentFromTeacherListCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                             </StackPanel>

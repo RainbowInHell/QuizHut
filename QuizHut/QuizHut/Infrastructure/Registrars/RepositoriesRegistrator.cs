@@ -3,9 +3,9 @@
     using Microsoft.Extensions.DependencyInjection;
 
     using QuizHut.DAL.Common;
-    using QuizHut.DAL.Common.Repositories;
-    using QuizHut.DAL.EntityFramework;
     using QuizHut.DAL.Repositories;
+    using QuizHut.DLL.Common;
+    using QuizHut.DLL.Repositories.Contracts;
 
     public static class RepositoriesRegistrator
     {

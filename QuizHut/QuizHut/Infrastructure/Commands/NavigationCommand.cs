@@ -11,9 +11,9 @@
         public event EventHandler CanExecuteChanged;
 
         private readonly INavigationService navigationService;
-        private readonly ISimpleTraderViewModelFactory viewModelFactory;
+        private readonly IViewModelFactory viewModelFactory;
 
-        public NavigationCommand(INavigationService navigationService, ISimpleTraderViewModelFactory viewModelFactory)
+        public NavigationCommand(INavigationService navigationService, IViewModelFactory viewModelFactory)
         {
             this.navigationService = navigationService;
             this.viewModelFactory = viewModelFactory;
