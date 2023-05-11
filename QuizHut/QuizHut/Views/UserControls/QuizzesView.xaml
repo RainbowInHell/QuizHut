@@ -24,8 +24,6 @@
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
                    Text="Кол-во тестов: 0"/>
 
-        <Border Background="{StaticResource Color6Light}" Grid.Row="2" Panel.ZIndex="0"/>
-
         <!-- FilterBy category textBox-->
         <TextBox  x:Name="MVSQFilterTB"
                   Style="{StaticResource textBoxStyle}"
