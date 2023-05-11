@@ -46,6 +46,9 @@
             <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
                 <usercontrols:StudentsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:CreateGroupViewModel}">
+                <usercontrols:CreateGroupView/>
+            </DataTemplate>
             
             <vm:ViewModelLocator x:Key="Locator"/>
 

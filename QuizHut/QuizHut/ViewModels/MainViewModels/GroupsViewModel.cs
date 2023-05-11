@@ -1,10 +1,14 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System.Windows.Input;
+
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
     using FontAwesome.Sharp;
 
+    using QuizHut.Infrastructure.Commands;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -145,5 +149,16 @@
 
             Groups = new(groups);
         }
+
+        public GroupsViewModel(IRenavigator createGroupRenavigator) 
+        {
+            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator);
+        }
+
+        #region Commands
+
+        public ICommand NavigateCreateGroupCommand { get; }
+
+        #endregion
     }
 }

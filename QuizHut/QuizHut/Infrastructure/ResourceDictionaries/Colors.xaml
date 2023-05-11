@@ -6,6 +6,7 @@
     <SolidColorBrush x:Key="PrimaryMainViewBackround" Color="#FFDDF7"/>
     <SolidColorBrush x:Key="SecondaryMainViewBackround" Color="#481269"/>
     <SolidColorBrush x:Key="MainViewBackground3" Color="#dcb6f3"/>
+    <SolidColorBrush x:Key="MainViewBackground4" Color="#F7F7F7"/>
     <SolidColorBrush x:Key="DataGridHeadersBackgroundColor1" Color="#C1C2C6"/>
 
     <!-- Controls colors -->
@@ -17,6 +18,8 @@
     <SolidColorBrush x:Key="RemoveColor1" Color="#D32F2F"/>
     <SolidColorBrush x:Key="EditColor1" Color="#00FF00"/>
     <SolidColorBrush x:Key="SettingsColor1" Color="#004CFF"/>
+
+    <SolidColorBrush x:Key="IconColor1" Color="#FFC200"/>
 
     <!-- Text colors-->
     <SolidColorBrush x:Key="PrimaryFontColor" Color="#333333"/>

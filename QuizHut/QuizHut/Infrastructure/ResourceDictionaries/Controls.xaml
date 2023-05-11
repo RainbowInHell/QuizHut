@@ -289,7 +289,16 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryErrorMessageColor}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
-    
+
+    <!-- Style that defined error message textBlock-->
+    <Style x:Key="MainTextBlock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
     <!-- Template for menuButton -->
     <Style x:Key="MenuButton" TargetType="RadioButton">
         <!-- Normal button style -->

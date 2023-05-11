@@ -73,7 +73,8 @@
                 Width="150" Height="40"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,10,0"
-                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                Command="{Binding NavigateCreateGroupCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
                 <TextBlock Text="Добавить группу" 
