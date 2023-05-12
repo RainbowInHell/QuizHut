@@ -9,7 +9,6 @@
         xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
         
         Title="MainView" Height="700" Width="1300"
-        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
         
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"

@@ -1,18 +1,17 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
-    using System.Windows.Input;
-
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
+    using System.Windows.Input;
 
     using FontAwesome.Sharp;
-
-    using QuizHut.Infrastructure.Commands;
-    using QuizHut.Infrastructure.Services.Contracts;
+    
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
 
@@ -24,16 +23,23 @@
 
         private readonly IGroupsService groupsService;
 
-        public GroupsViewModel(IGroupsService groupsService)
+        private readonly ISharedDataStore sharedDataStore;
+
+        public GroupsViewModel(
+            IGroupsService groupsService, 
+            IRenavigator createGroupRenavigator, 
+            IGroupSettingsTypeService groupSettingsTypeService,
+            ISharedDataStore sharedDataStore)
         {
             this.groupsService = groupsService;
+            this.sharedDataStore = sharedDataStore;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            GoToCreateGroupCommandAsync = new ActionCommandAsync(OnGoToCreateGroupCommandExecutedAsync, CanGoToCreateGroupCommandExecute);
-            GoToEditGroupNameCommandAsync = new ActionCommandAsync(OnGoToEditGroupNameCommandAsyncExecute, CanGoToEditGroupNameCommandAsyncExecute);
-            GoToGroupSettingsCommandAsync = new ActionCommandAsync(OnGoToGroupSettingsCommandAsyncExecute, CanGoToGroupSettingsCommandAsyncExecute);
             DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
+
+            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
+            NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
         }
 
         #region FieldsAndProperties
@@ -48,7 +54,11 @@
         private GroupListViewModel selectedGroup;
         public GroupListViewModel SelectedGroup
         {
-            get => selectedGroup;
+            get
+            {
+                sharedDataStore.SelectedGroupId = selectedGroup is null ? null : selectedGroup.Id;
+                return selectedGroup;
+            }
             set => Set(ref selectedGroup, value);
         }
 
@@ -87,42 +97,6 @@
 
         #endregion
 
-        #region GoToCreateGroupCommand
-
-        public ICommandAsync GoToCreateGroupCommandAsync { get; }
-
-        private bool CanGoToCreateGroupCommandExecute(object p) => true;
-
-        private async Task OnGoToCreateGroupCommandExecutedAsync(object p)
-        {
-        }
-
-        #endregion
-
-        #region GoToEditGroupNameCommand
-
-        public ICommandAsync GoToEditGroupNameCommandAsync { get; }
-
-        private bool CanGoToEditGroupNameCommandAsyncExecute(object p) => true;
-
-        private async Task OnGoToEditGroupNameCommandAsyncExecute(object p)
-        {
-        }
-
-        #endregion
-
-        #region GoToGroupSettingsCommand
-
-        public ICommandAsync GoToGroupSettingsCommandAsync { get; }
-
-        private bool CanGoToGroupSettingsCommandAsyncExecute(object p) => true;
-
-        private async Task OnGoToGroupSettingsCommandAsyncExecute(object p)
-        {
-        }
-
-        #endregion
-
         #region DeleteGroupCommand
 
         public ICommandAsync DeleteGroupCommandAsync { get; }
@@ -138,6 +112,10 @@
 
         #endregion
 
+        public ICommand NavigateCreateGroupCommand { get; }
+
+        public ICommand NavigateEditGroupCommand { get; }
+
         private async Task LoadGroupsData(
             //remove
             string creatorId = "aa0f4db3-d1a4-4dbe-a1a5-45313b2f88c3",
@@ -149,16 +127,5 @@
 
             Groups = new(groups);
         }
-
-        public GroupsViewModel(IRenavigator createGroupRenavigator) 
-        {
-            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator);
-        }
-
-        #region Commands
-
-        public ICommand NavigateCreateGroupCommand { get; }
-
-        #endregion
     }
 }

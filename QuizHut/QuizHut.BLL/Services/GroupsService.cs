@@ -70,7 +70,7 @@
         public async Task DeleteAsync(string groupId)
         {
             var group = await repository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.Id == groupId)
                 .FirstOrDefaultAsync();
             repository.Delete(group);
@@ -89,7 +89,7 @@
 
         public async Task UpdateNameAsync(string groupId, string newName)
         {
-            var group = await repository.AllAsNoTracking().Where(x => x.Id == groupId).FirstOrDefaultAsync();
+            var group = await repository.All().Where(x => x.Id == groupId).FirstOrDefaultAsync();
             group.Name = newName;
             repository.Update(group);
             await repository.SaveChangesAsync();
@@ -145,7 +145,7 @@
             string searchCriteria = null,
             string searchText = null)
         {
-            var query = repository.AllAsNoTracking();
+            var query = repository.All();
 
             if (creatorId != null)
             {

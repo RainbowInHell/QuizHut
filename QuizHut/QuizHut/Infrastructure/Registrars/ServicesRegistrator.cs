@@ -10,7 +10,6 @@
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
-    
     using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.Services;
@@ -40,6 +39,8 @@
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
             services.AddSingleton<IAccountStore, AccountStore>();
+            services.AddSingleton<IGroupSettingsTypeService, GroupSettingsTypeService>();
+            services.AddSingleton<ISharedDataStore, SharedDataStore>();
 
             return services;
         }
