@@ -83,11 +83,13 @@
                      Tag="Введите название группы..."
                      MaxLength="50" Height="50"
                      FontFamily="{StaticResource Manrope}" FontSize="18"
-                     Style="{StaticResource textBoxStyle}">
+                     Style="{StaticResource textBoxStyle}"
+                     Text="{Binding GroupNameToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </TextBox>
             
             <!-- Add group and Cancel buttons -->
             <Button x:Name="CGVAddGroupBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding CreateGroupCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         Margin="10,0,0,0" HorizontalAlignment="Left"
@@ -109,6 +111,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="CGVSaveGroupNameBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding UpdateGroupNameCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         Margin="10,0,0,0" HorizontalAlignment="Left"

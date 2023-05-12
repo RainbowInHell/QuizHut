@@ -3,11 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuizHut.Views.UserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -22,7 +28,7 @@
         <TextBlock Grid.Row="0" 
                    FontSize="22" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
-                   Text="Кол-во групп: 0"/>
+                   Text="{Binding Groups.Count, Mode=OneWay, StringFormat='Кол-во: {0}'}"/>
 
         <!-- Search -->
         <TextBlock Grid.Row="0" 
@@ -85,6 +91,7 @@
 
         <!-- Data grid quizzes -->
         <DataGrid x:Name="MVGGroupsDataGrid" ItemsSource="{Binding Groups}"
+                  SelectedItem="{Binding SelectedGroup}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -92,29 +99,33 @@
             Grid.Row="4" Width="1000">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding CreatedOnDate}"/>
                 <DataGridTextColumn Header="Студенты" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding StudentsCount}"/>
                 <DataGridTextColumn Header="События" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding EventsCount}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Button Style="{StaticResource GridControlButton}" 
-                                        Background="{StaticResource RemoveColor1}">
-                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
+                                        Background="{StaticResource EditColor1}"
+                                        Command="{Binding DataContext.NavigateEditGroupCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource SettingsColor1}"
-                                        Margin="5,0,0,0" Command="{Binding DataContext.NavigateEditGroupCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                <Button Style="{StaticResource GridControlButton}" 
+                                        Background="{StaticResource SettingsColor1}"
+                                        Margin="5,0,0,0">
                                     <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}"
-                                        Margin="5,0,0,0">
-                                    <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
+                                <Button Style="{StaticResource GridControlButton}" 
+                                        Background="{StaticResource RemoveColor1}"
+                                        Margin="5,0,0,0"
+                                        Command="{Binding DataContext.DeleteGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

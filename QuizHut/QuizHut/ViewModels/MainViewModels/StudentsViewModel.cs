@@ -6,6 +6,7 @@
 
     using FontAwesome.Sharp;
 
+    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -92,6 +93,21 @@
 
         #endregion
 
+        #region SearchCommandAsync
+
+        public ICommandAsync SearchCommandAsync { get; }
+
+        private bool CanSearchCommandAsyncExecute(object p) => true;
+
+        private async Task OnSearchCommandAsyncExecute(object p)
+        {
+            var searchCriteria = SearchCriteria is null ? null : SearchCriteriasInEnglish[SearchCriteria];
+
+            await LoadStudentsData(searchCriteria: searchCriteria, searchText: SearchText);
+        }
+
+        #endregion
+
         #region AddStudentToTeacherListCommandAsync
 
         public ICommandAsync AddStudentToTeacherListCommandAsync { get; }
@@ -100,7 +116,7 @@
 
         private async Task OnAddStudentToTeacherListCommandExecute(object p)
         {
-            var partisipantIsAdded = await studentService.AddStudentAsync(StudentEmailToAdd, "aa0f4db3-d1a4-4dbe-a1a5-45313b2f88c3");
+            var partisipantIsAdded = await studentService.AddStudentAsync(StudentEmailToAdd, AccountStore.CurrentAdminId);
 
             if (partisipantIsAdded)
             {
@@ -118,34 +134,20 @@
 
         private async Task OnRemoveStudentFromTeacherListCommandExecute(object p)
         {
-            await studentService.DeleteFromTeacherListAsync(SelectedStudent.Id, "aa0f4db3-d1a4-4dbe-a1a5-45313b2f88c3");
+            await studentService.DeleteFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
 
             await LoadStudentsData();
         }
 
         #endregion
 
-        #region SearchCommandAsync
-
-        public ICommandAsync SearchCommandAsync { get; }
-
-        private bool CanSearchCommandAsyncExecute(object p) => true;
-
-        private async Task OnSearchCommandAsyncExecute(object p)
-        {
-            var serachCriteria = SearchCriteria is null ? null : SearchCriteriasInEnglish[SearchCriteria];
-
-           await LoadStudentsData(searchCriteria: serachCriteria, searchText: SearchText);
-        }
-
-        #endregion
-
-        private async Task LoadStudentsData(string teacherId = "aa0f4db3-d1a4-4dbe-a1a5-45313b2f88c3",
+        private async Task LoadStudentsData(
+            string teacherId = null,
             string groupId = null,
             string searchCriteria = null,
             string searchText = null)
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(teacherId, groupId, searchCriteria, searchText);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, groupId, searchCriteria, searchText);
 
             Students = new(students);
         }

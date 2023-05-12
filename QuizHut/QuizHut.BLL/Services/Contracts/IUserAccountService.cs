@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
 
     using QuizHut.BLL.Helpers.Contracts;
-    using QuizHut.DAL.Entities;
+    using QuizHut.DLL.Entities;
 
     public interface IUserAccountService
     {

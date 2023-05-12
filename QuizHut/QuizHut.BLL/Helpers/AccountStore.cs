@@ -4,6 +4,8 @@
 
     public class AccountStore : IAccountStore
     {
+        public static string CurrentAdminId;
+
         private bool isLoggedIn;
         public bool IsLoggedIn
         {

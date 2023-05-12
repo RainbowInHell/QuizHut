@@ -100,15 +100,19 @@
         private static GroupsViewModel CreateGroupsViewModel(IServiceProvider services)
         {
             return new GroupsViewModel(
+                services.GetRequiredService<IGroupsService>(),
                 services.GetRequiredService<ViewModelRenavigate<CreateGroupViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>());
+                services.GetRequiredService<IGroupSettingsTypeService>(),
+                services.GetRequiredService<ISharedDataStore>());
         }
 
         private static CreateGroupViewModel CreateCreateGroupViewModell(IServiceProvider services)
         {
             return new CreateGroupViewModel(
+                services.GetRequiredService<IGroupsService>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>());
+                services.GetRequiredService<IGroupSettingsTypeService>(),
+                services.GetRequiredService<ISharedDataStore>());
         }
     }
 }

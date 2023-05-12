@@ -50,8 +50,6 @@
                 <usercontrols:CreateGroupView/>
             </DataTemplate>
             
-            <vm:ViewModelLocator x:Key="Locator"/>
-
             <converters:RadioButtonConverter x:Key="RadioButtonConverter"/>
 
             <ResourceDictionary.MergedDictionaries>

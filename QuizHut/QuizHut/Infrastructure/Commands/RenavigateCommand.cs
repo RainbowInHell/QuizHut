@@ -11,7 +11,7 @@
 
         private IGroupSettingsTypeService groupSettingsTypeService;
 
-        private readonly GroupViewType groupViewType;
+        private readonly GroupViewType? groupViewType;
 
         public RenavigateCommand(IRenavigator renavigator)
         {
