@@ -19,7 +19,7 @@
         private readonly CreateViewModel<EventsViewModel> createEventViewModel;
 
         private readonly CreateViewModel<GroupsViewModel> createGroupViewModel;
-        private readonly CreateViewModel<CreateGroupViewModel> createCreateGroupViewModel;
+        private readonly CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel;
         
         private readonly CreateViewModel<QuizzesViewModel> createQuizViewModel;
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
@@ -36,7 +36,7 @@
                                             CreateViewModel<EventsViewModel> createEventViewModel,
 
                                             CreateViewModel<GroupsViewModel> createGroupViewModel,
-                                            CreateViewModel<CreateGroupViewModel> createCreateGroupViewModel,
+                                            CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel,
 
                                             CreateViewModel<QuizzesViewModel> createQuizViewModel,
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
@@ -53,7 +53,7 @@
             this.createEventViewModel = createEventViewModel;
 
             this.createGroupViewModel = createGroupViewModel;
-            this.createCreateGroupViewModel = createCreateGroupViewModel;
+            this.createGroupActionsViewModel = createGroupActionsViewModel;
 
             this.createQuizViewModel = createQuizViewModel;
             this.createResultViewModel = createResultViewModel;
@@ -83,8 +83,8 @@
 
                 case ViewType.Group:
                     return createGroupViewModel();
-                case ViewType.CreateGroup:
-                    return createCreateGroupViewModel();
+                case ViewType.GroupActions:
+                    return createGroupActionsViewModel();
 
                 case ViewType.Quiz:
                     return createQuizViewModel();

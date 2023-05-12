@@ -2,9 +2,9 @@
 {
     using System.Windows.Controls;
 
-    public partial class CreateGroupView : UserControl
+    public partial class GroupActionsView : UserControl
     {
-        public CreateGroupView()
+        public GroupActionsView()
         {
             InitializeComponent();
         }

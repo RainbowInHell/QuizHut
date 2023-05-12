@@ -11,7 +11,7 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
-    class CreateGroupViewModel : ViewModel
+    class GroupActionsViewModel : ViewModel
     {
         private readonly IGroupsService groupsService;
 
@@ -19,7 +19,7 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        public CreateGroupViewModel(
+        public GroupActionsViewModel(
             IGroupsService groupsService,
             IRenavigator groupRenavigator,
             IGroupSettingsTypeService groupSettingsTypeService,

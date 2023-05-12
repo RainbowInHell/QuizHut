@@ -17,7 +17,7 @@
         Event,
 
         Group,
-        CreateGroup,
+        GroupActions,
 
         Quiz,
         Result,
