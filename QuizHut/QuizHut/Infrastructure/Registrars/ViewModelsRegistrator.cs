@@ -10,8 +10,9 @@
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
-    using QuizHut.ViewModels.LoginViewModels;
+    using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
+    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
 
     public static class ViewModelsRegistrator
     {
