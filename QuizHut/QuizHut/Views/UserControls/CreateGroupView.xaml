@@ -41,9 +41,37 @@
 
             <!-- Title textBlock -->
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Style="{StaticResource MainTextBlock}"
-                       Text="Создание группы"/>
+                       Text="Создание группы">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
             
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Изменение названия">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
             <!-- Description textBlock -->
             <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
@@ -59,25 +87,57 @@
             </TextBox>
             
             <!-- Add group and Cancel buttons -->
-            <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
-                <Button x:Name="CGVAddGroupBtn"
+            <Button x:Name="CGVAddGroupBtn" Grid.Row="5" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
-                        Margin="10,0,0,0"
+                        Margin="10,0,0,0" HorizontalAlignment="Left"
                         Width="250" Height="45"
                         VerticalAlignment="Center"
                         Content="Добавить группу"
-                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"/>
-                <Button x:Name="CGVCancelBtn"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="CGVSaveGroupNameBtn" Grid.Row="5" Grid.Column="1"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource PrimaryActiveColor}"
+                        Margin="10,0,0,0" HorizontalAlignment="Left"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Сохранить"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="CGVCancelBtn" Grid.Row="5" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}"
-                        Margin="50,0,0,0"
+                        Margin="0,0,10,0" HorizontalAlignment="Right"
                         Width="250" Height="45"
                         VerticalAlignment="Center"
                         Content="Назад"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
                         Command="{Binding NavigateGroupCommand}"/>
-            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

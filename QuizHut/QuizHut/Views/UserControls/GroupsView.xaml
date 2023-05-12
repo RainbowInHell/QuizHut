@@ -109,7 +109,7 @@
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource SettingsColor1}"
-                                        Margin="5,0,0,0">
+                                        Margin="5,0,0,0" Command="{Binding DataContext.NavigateEditGroupCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}"

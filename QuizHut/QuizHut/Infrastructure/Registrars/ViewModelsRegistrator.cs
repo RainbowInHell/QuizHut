@@ -7,6 +7,7 @@
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Services;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.LoginViewModels;
@@ -99,13 +100,15 @@
         private static GroupsViewModel CreateGroupsViewModel(IServiceProvider services)
         {
             return new GroupsViewModel(
-                services.GetRequiredService<ViewModelRenavigate<CreateGroupViewModel>>());
+                services.GetRequiredService<ViewModelRenavigate<CreateGroupViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>());
         }
 
         private static CreateGroupViewModel CreateCreateGroupViewModell(IServiceProvider services)
         {
             return new CreateGroupViewModel(
-                services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>());
+                services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>());
         }
     }
 }

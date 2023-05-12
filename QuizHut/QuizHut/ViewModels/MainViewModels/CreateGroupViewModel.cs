@@ -8,15 +8,39 @@
 
     class CreateGroupViewModel : ViewModel
     {
-        public CreateGroupViewModel(IRenavigator groupRenavigator) 
+        private readonly IGroupSettingsTypeService groupSettingsTypeService;
+
+        public CreateGroupViewModel(IRenavigator groupRenavigator, IGroupSettingsTypeService groupSettingsTypeService) 
         { 
+            this.groupSettingsTypeService = groupSettingsTypeService;
+
+            groupSettingsTypeService.StateChanged += GroupSettingsTypeService_StateChanged;
+
             NavigateGroupCommand = new RenavigateCommand(groupRenavigator);
         }
+
+        #region Fields and properties
+
+        public GroupViewType? GroupViewType => groupSettingsTypeService.GroupViewType;
+
+        #endregion
 
         #region Commands
 
         public ICommand NavigateGroupCommand { get; }
 
         #endregion
+
+        private void GroupSettingsTypeService_StateChanged()
+        {
+            OnPropertyChanged(nameof(GroupViewType));
+        }
+
+        public override void Dispose()
+        {
+            groupSettingsTypeService.StateChanged -= GroupSettingsTypeService_StateChanged;
+
+            base.Dispose();
+        }
     }
 }

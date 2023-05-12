@@ -14,14 +14,20 @@
         public static string Title { get; } = "Группы";
         public static IconChar IconChar { get; } = IconChar.PeopleGroup;
 
-        public GroupsViewModel(IRenavigator createGroupRenavigator) 
+        private readonly IGroupSettingsTypeService groupSettingsTypeService;
+
+        public GroupsViewModel(IRenavigator createGroupRenavigator, IGroupSettingsTypeService groupSettingsTypeService) 
         {
-            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator);
+            this.groupSettingsTypeService = groupSettingsTypeService;
+
+            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
+            NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
         }
 
         #region Commands
 
         public ICommand NavigateCreateGroupCommand { get; }
+        public ICommand NavigateEditGroupCommand { get; }
 
         #endregion
     }

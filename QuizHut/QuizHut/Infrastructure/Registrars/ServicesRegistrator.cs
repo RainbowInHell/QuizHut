@@ -37,6 +37,7 @@
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
             services.AddSingleton<IAccountStore, AccountStore>();
+            services.AddSingleton<IGroupSettingsTypeService, GroupSettingsTypeService>();
 
             return services;
         }

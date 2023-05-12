@@ -9,9 +9,20 @@
     {
         private readonly IRenavigator renavigator;
 
+        private IGroupSettingsTypeService groupSettingsTypeService;
+
+        private readonly GroupViewType groupViewType;
+
         public RenavigateCommand(IRenavigator renavigator)
         {
             this.renavigator = renavigator;
+        }
+
+        public RenavigateCommand(IRenavigator renavigator, GroupViewType groupViewType, IGroupSettingsTypeService groupSettingsTypeService)
+        {
+            this.renavigator = renavigator;
+            this.groupViewType = groupViewType;
+            this.groupSettingsTypeService = groupSettingsTypeService;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -24,6 +35,11 @@
         public override void Execute(object parameter)
         {
             renavigator.Renavigate();
+
+            if (groupViewType != null)
+            {
+                groupSettingsTypeService.GroupViewType = groupViewType;
+            }
         }
     }
 }
