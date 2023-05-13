@@ -18,6 +18,7 @@
         public async Task CreateStudentGroupAsync(string groupId, string studentId)
         {
             var studentGroup = new StudentGroup() { GroupId = groupId, StudentId = studentId };
+
             var studentExists = await repository
                 .AllAsNoTracking()
                 .Where(x => x.GroupId == groupId && x.StudentId == studentId)

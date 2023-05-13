@@ -17,11 +17,10 @@
     class StudentsViewModel : ViewModel, IMenuView
     {
         public static string Title { get; } = "Учащиеся";
+
         public static IconChar IconChar { get; } = IconChar.UserGroup;
 
-        private readonly IStudentService studentService;
-
-        private readonly Dictionary<string, string> SearchCriteriasInEnglish = new Dictionary<string, string>()
+        public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
             { "Полное имя", "FullName" },
             { "Имя", "FirstName" },
@@ -29,7 +28,9 @@
             { "Почта", "Email" }
         };
 
-        public StudentsViewModel(IStudentService studentService)
+        private readonly IStudentsService studentService;
+
+        public StudentsViewModel(IStudentsService studentService)
         {
             this.studentService = studentService;
 
@@ -40,8 +41,6 @@
         }
 
         #region FieldsAndProperties
-
-        public ObservableCollection<string> SearchCriterias => new(SearchCriteriasInEnglish.Keys);
 
         private string studentEmailToAdd;
         public string StudentEmailToAdd
@@ -101,9 +100,7 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            var searchCriteria = SearchCriteria is null ? null : SearchCriteriasInEnglish[SearchCriteria];
-
-            await LoadStudentsData(searchCriteria: searchCriteria, searchText: SearchText);
+            await LoadStudentsData(SearchCriteriasInEnglish[SearchCriteria], SearchText);
         }
 
         #endregion
@@ -112,7 +109,7 @@
 
         public ICommandAsync AddStudentToTeacherListCommandAsync { get; }
 
-        private bool CanAddStudentToTeacherListCommandExecute(object p) => true;
+        private bool CanAddStudentToTeacherListCommandExecute(object p) => !string.IsNullOrEmpty(StudentEmailToAdd);
 
         private async Task OnAddStudentToTeacherListCommandExecute(object p)
         {
@@ -141,13 +138,9 @@
 
         #endregion
 
-        private async Task LoadStudentsData(
-            string teacherId = null,
-            string groupId = null,
-            string searchCriteria = null,
-            string searchText = null)
+        private async Task LoadStudentsData(string searchCriteria = null, string searchText = null)
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, groupId, searchCriteria, searchText);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, searchCriteria: searchCriteria, searchText: searchText);
 
             Students = new(students);
         }

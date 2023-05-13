@@ -5,7 +5,8 @@
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
-    
+
+    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -18,7 +19,7 @@
     class GroupsViewModel : ViewModel, IMenuView
     {
         public static string Title { get; } = "Группы";
-        
+
         public static IconChar IconChar { get; } = IconChar.PeopleGroup;
 
         private readonly IGroupsService groupsService;
@@ -26,22 +27,22 @@
         private readonly ISharedDataStore sharedDataStore;
 
         public GroupsViewModel(
-            IGroupsService groupsService, 
-            IRenavigator createGroupRenavigator, 
-            IRenavigator groupSettingRenavigator, 
-            IGroupSettingsTypeService groupSettingsTypeService,
-            ISharedDataStore sharedDataStore)
+            IGroupsService groupsService,
+            ISharedDataStore sharedDataStore,
+            IRenavigator createGroupRenavigator,
+            IRenavigator groupSettingRenavigator,
+            IGroupSettingsTypeService groupSettingsTypeService)
         {
             this.groupsService = groupsService;
             this.sharedDataStore = sharedDataStore;
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
-
             NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
             NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
+
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -70,6 +71,16 @@
             get => searchText;
             set => Set(ref searchText, value);
         }
+
+        #endregion
+
+        #region NavigationCommands
+
+        public ICommand NavigateCreateGroupCommand { get; }
+
+        public ICommand NavigateEditGroupCommand { get; }
+
+        public ICommand NavigateGroupSettingsCommand { get; }
 
         #endregion
 
@@ -114,20 +125,9 @@
 
         #endregion
 
-        public ICommand NavigateCreateGroupCommand { get; }
-
-        public ICommand NavigateEditGroupCommand { get; }
-
-        public ICommand NavigateGroupSettingsCommand { get; }
-
-        private async Task LoadGroupsData(
-            //remove
-            string creatorId = "aa0f4db3-d1a4-4dbe-a1a5-45313b2f88c3",
-            string eventId = null,
-            string searchCriteria = null,
-            string searchText = null)
+        private async Task LoadGroupsData(string searchCriteria = null, string searchText = null)
         {
-            var groups = await groupsService.GetAllAsync<GroupListViewModel>(creatorId, eventId, searchCriteria, searchText);
+            var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(AccountStore.CurrentAdminId, searchCriteria: searchCriteria, searchText: searchText);
 
             Groups = new(groups);
         }

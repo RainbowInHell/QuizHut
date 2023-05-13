@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -10,6 +11,12 @@
              d:Height="300" Width="600" 
              HorizontalAlignment="Left" VerticalAlignment="Top"
              Margin="150,50,0,0">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
@@ -28,11 +35,11 @@
             </Style.Triggers>
         </Style>
     </UserControl.Style>
-    
+
     <UserControl.Effect>
         <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
     </UserControl.Effect>
-    
+
     <Border Background="{StaticResource MainViewBackground4}"
             CornerRadius="15">
         <Grid>
@@ -51,7 +58,7 @@
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
-            
+
             <!-- Icon -->
             <fa:IconImage Grid.Row="1" Grid.Column="1"
                           Width="45" Height="45" HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -79,7 +86,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            
+
             <TextBlock Grid.Row="2" Grid.Column="1"
                        Text="Изменение названия">
                 <TextBlock.Style>
@@ -150,7 +157,7 @@
             <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
                        Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold"/>
-            
+
             <!-- Input textBox or itemsSource -->
             <TextBox x:Name="GAVGroupNameTextBox"
                      Grid.Row="4" Grid.Column="1"
@@ -371,7 +378,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="GAVAddStudentsBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding }"
+                        Command="{Binding AssignStudentsToGroupCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"
