@@ -6,9 +6,11 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
@@ -118,7 +120,8 @@
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource SettingsColor1}"
-                                        Margin="5,0,0,0">
+                                        Margin="5,0,0,0"
+                                        Command="{Binding DataContex.NavigateGroupSettingsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" 

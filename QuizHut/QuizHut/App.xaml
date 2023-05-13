@@ -44,6 +44,9 @@
             <DataTemplate DataType="{x:Type mvgvm:GroupActionsViewModel}">
                 <mguc:GroupActionsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type mvgvm:GroupSettingsViewModel}">
+                <mguc:GroupSettingsView/>
+            </DataTemplate>
             
             <DataTemplate DataType="{x:Type mvvm:CategoriesViewModel}">
                 <muc:CategoriesView/>

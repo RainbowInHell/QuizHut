@@ -28,6 +28,7 @@
         public GroupsViewModel(
             IGroupsService groupsService, 
             IRenavigator createGroupRenavigator, 
+            IRenavigator groupSettingRenavigator, 
             IGroupSettingsTypeService groupSettingsTypeService,
             ISharedDataStore sharedDataStore)
         {
@@ -40,6 +41,7 @@
 
             NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
             NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
+            NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
         }
 
         #region FieldsAndProperties
@@ -115,6 +117,8 @@
         public ICommand NavigateCreateGroupCommand { get; }
 
         public ICommand NavigateEditGroupCommand { get; }
+
+        public ICommand NavigateGroupSettingsCommand { get; }
 
         private async Task LoadGroupsData(
             //remove

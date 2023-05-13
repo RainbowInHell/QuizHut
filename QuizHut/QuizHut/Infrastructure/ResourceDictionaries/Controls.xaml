@@ -126,6 +126,31 @@
     </ControlTemplate>
 
     <!--
+        Template for button definition with rounded edges by 15 points and hand cursor
+    -->
+    <ControlTemplate x:Key="MainButtonTemplate2" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    CornerRadius="15"
+                    Cursor="Hand"
+                    Background="{TemplateBinding Background}"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}"
+                    Opacity="1">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder"  Value="0.9" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--
         A style for TexBox that makes textBox rounded by 15 points, 
         adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
         properties that makes textBox focused in PrimaryActiveColor.

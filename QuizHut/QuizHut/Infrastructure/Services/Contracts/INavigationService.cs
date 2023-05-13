@@ -18,6 +18,7 @@
 
         Group,
         GroupActions,
+        GroupSettings,
 
         Quiz,
         Result,
