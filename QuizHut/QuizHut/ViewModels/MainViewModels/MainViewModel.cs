@@ -16,7 +16,6 @@
         public MainViewModel(INavigationService navigationService, IViewModelFactory traderViewModelFactory, IUserAccountService userAccountService)
         {
             this.navigationService = navigationService;
-            this.traderViewModelFactory = traderViewModelFactory;
             this.userAccountService = userAccountService;
 
             navigationService.StateChanged += NavigationService_StateChanged;
@@ -40,8 +39,6 @@
         }
 
         #region Fields and properties
-
-        private readonly IViewModelFactory traderViewModelFactory;
 
         private readonly INavigationService navigationService;
 

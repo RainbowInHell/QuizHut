@@ -5,8 +5,8 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
-    using QuizHut.DAL.Entities;
-    using QuizHut.DAL.EntityFramework;
+    using QuizHut.DLL.Entities;
+    using QuizHut.DLL.EntityFramework;
 
     public static class DatabaseRegistrator
     {

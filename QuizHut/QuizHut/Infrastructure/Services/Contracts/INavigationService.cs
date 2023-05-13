@@ -15,7 +15,11 @@
         Home,
         Category,
         Event,
+
         Group,
+        GroupActions,
+        GroupSettings,
+
         Quiz,
         Result,
         Student,

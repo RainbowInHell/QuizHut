@@ -4,8 +4,9 @@
 
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
-    using QuizHut.ViewModels.LoginViewModels;
+    using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
+    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {
@@ -17,24 +18,32 @@
         private readonly CreateViewModel<HomeViewModel> createHomeViewModel;
         private readonly CreateViewModel<CategoriesViewModel> createCategoryViewModel;
         private readonly CreateViewModel<EventsViewModel> createEventViewModel;
+
         private readonly CreateViewModel<GroupsViewModel> createGroupViewModel;
+        private readonly CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel;
+        private readonly CreateViewModel<GroupSettingsViewModel> createGroupSettingsViewModel;
+        
         private readonly CreateViewModel<QuizzesViewModel> createQuizViewModel;
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
         private readonly CreateViewModel<UserProfileViewModel> createUserProfileViewModel;
 
-        public ViewModelFactory(CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel, 
-                                            CreateViewModel<StudentRegistrationViewModel> createStudentRegistrationViewModel, 
-                                            CreateViewModel<TeacherRegistrationViewModel> createTeacherRegistrationViewModel, 
-                                            CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel, 
+        public ViewModelFactory(CreateViewModel<AuthorizationViewModel> createAuthorizationViewModel,
+                                            CreateViewModel<StudentRegistrationViewModel> createStudentRegistrationViewModel,
+                                            CreateViewModel<TeacherRegistrationViewModel> createTeacherRegistrationViewModel,
+                                            CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel,
 
-                                            CreateViewModel<HomeViewModel> createHomeViewModel, 
-                                            CreateViewModel<CategoriesViewModel> createCategoryViewModel, 
-                                            CreateViewModel<EventsViewModel> createEventViewModel, 
-                                            CreateViewModel<GroupsViewModel> createGroupViewModel, 
-                                            CreateViewModel<QuizzesViewModel> createQuizViewModel, 
-                                            CreateViewModel<ResultsViewModel> createResultViewModel, 
-                                            CreateViewModel<StudentsViewModel> createStudentViewModel, 
+                                            CreateViewModel<HomeViewModel> createHomeViewModel,
+                                            CreateViewModel<CategoriesViewModel> createCategoryViewModel,
+                                            CreateViewModel<EventsViewModel> createEventViewModel,
+
+                                            CreateViewModel<GroupsViewModel> createGroupViewModel,
+                                            CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel,
+                                            CreateViewModel<GroupSettingsViewModel> createGroupSettingsViewModel,
+
+                                            CreateViewModel<QuizzesViewModel> createQuizViewModel,
+                                            CreateViewModel<ResultsViewModel> createResultViewModel,
+                                            CreateViewModel<StudentsViewModel> createStudentViewModel,
                                             CreateViewModel<UserProfileViewModel> createUserProfileViewModel)
         {
             this.createAuthorizationViewModel = createAuthorizationViewModel;
@@ -45,7 +54,11 @@
             this.createHomeViewModel = createHomeViewModel;
             this.createCategoryViewModel = createCategoryViewModel;
             this.createEventViewModel = createEventViewModel;
+
             this.createGroupViewModel = createGroupViewModel;
+            this.createGroupActionsViewModel = createGroupActionsViewModel;
+            this.createGroupSettingsViewModel = createGroupSettingsViewModel;
+
             this.createQuizViewModel = createQuizViewModel;
             this.createResultViewModel = createResultViewModel;
             this.createStudentViewModel = createStudentViewModel;
@@ -71,8 +84,14 @@
                     return createCategoryViewModel();
                 case ViewType.Event:
                     return createEventViewModel();
+
                 case ViewType.Group:
                     return createGroupViewModel();
+                case ViewType.GroupActions:
+                    return createGroupActionsViewModel();
+                case ViewType.GroupSettings:
+                    return createGroupSettingsViewModel();
+
                 case ViewType.Quiz:
                     return createQuizViewModel();
                 case ViewType.Result:

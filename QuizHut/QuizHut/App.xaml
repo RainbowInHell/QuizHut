@@ -1,53 +1,62 @@
 ﻿<Application x:Class="QuizHut.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuizHut" 
-             xmlns:vm="clr-namespace:QuizHut.ViewModels" 
-             xmlns:lvvm="clr-namespace:QuizHut.ViewModels.LoginViewModels" 
+             xmlns:local="clr-namespace:QuizHut"  
+             xmlns:svvm="clr-namespace:QuizHut.ViewModels.StartViewModels" 
              xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels" 
-             xmlns:usercontrols="clr-namespace:QuizHut.Views.UserControls"
+             xmlns:mvgvm="clr-namespace:QuizHut.ViewModels.MainViewModels.GroupViewModels" 
+             xmlns:suc="clr-namespace:QuizHut.Views.UserControls.StartUserControls"
+             xmlns:muc="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
+             xmlns:mguc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls"
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type lvvm:StudentRegistrationViewModel}">
-                <usercontrols:StudentRegistrationView/>
+            <DataTemplate DataType="{x:Type svvm:StudentRegistrationViewModel}">
+                <suc:StudentRegistrationView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type lvvm:AuthorizationViewModel}">
-                <usercontrols:AuthorizationView/>
+            <DataTemplate DataType="{x:Type svvm:AuthorizationViewModel}">
+                <suc:AuthorizationView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type lvvm:ResetPasswordViewModel}">
-                <usercontrols:ResetPasswordView/>
+            <DataTemplate DataType="{x:Type svvm:ResetPasswordViewModel}">
+                <suc:ResetPasswordView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type lvvm:TeacherRegistrationViewModel}">
-                <usercontrols:TeacherRegistrationView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:HomeViewModel}">
-                <usercontrols:HomeView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:UserProfileViewModel}">
-                <usercontrols:UserProfileView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:ResultsViewModel}">
-                <usercontrols:ResultsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:EventsViewModel}">
-                <usercontrols:EventsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:GroupsViewModel}">
-                <usercontrols:GroupsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:CategoriesViewModel}">
-                <usercontrols:CategoriesView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:QuizzesViewModel}">
-                <usercontrols:QuizzesView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
-                <usercontrols:StudentsView/>
+            <DataTemplate DataType="{x:Type svvm:TeacherRegistrationViewModel}">
+                <suc:TeacherRegistrationView/>
             </DataTemplate>
             
-            <vm:ViewModelLocator x:Key="Locator"/>
+            <DataTemplate DataType="{x:Type mvvm:HomeViewModel}">
+                <muc:HomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:UserProfileViewModel}">
+                <muc:UserProfileView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:ResultsViewModel}">
+                <muc:ResultsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:EventsViewModel}">
+                <muc:EventsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type mvgvm:GroupsViewModel}">
+                <mguc:GroupsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvgvm:GroupActionsViewModel}">
+                <mguc:GroupActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvgvm:GroupSettingsViewModel}">
+                <mguc:GroupSettingsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type mvvm:CategoriesViewModel}">
+                <muc:CategoriesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:QuizzesViewModel}">
+                <muc:QuizzesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
+                <muc:StudentsView/>
+            </DataTemplate>
 
             <converters:RadioButtonConverter x:Key="RadioButtonConverter"/>
 

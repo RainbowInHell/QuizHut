@@ -126,6 +126,31 @@
     </ControlTemplate>
 
     <!--
+        Template for button definition with rounded edges by 15 points and hand cursor
+    -->
+    <ControlTemplate x:Key="MainButtonTemplate2" TargetType="Button">
+        <Border x:Name="btnBorder"
+                    CornerRadius="15"
+                    Cursor="Hand"
+                    Background="{TemplateBinding Background}"
+                    Height="{TemplateBinding Height}"
+                    Width="{TemplateBinding Width}"
+                    Opacity="1">
+            <ContentControl FontFamily="{StaticResource Manrope}"
+                                FontSize="{TemplateBinding FontSize}"
+                                FontWeight="{TemplateBinding FontWeight}"
+                                Foreground="{TemplateBinding Foreground}"
+                                VerticalAlignment="Center" HorizontalAlignment="Center"
+                                Content="{TemplateBinding Content}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="btnBorder"  Value="0.9" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!--
         A style for TexBox that makes textBox rounded by 15 points, 
         adds a watermark and triggers on the MouseOver and IsKeyboardFocused 
         properties that makes textBox focused in PrimaryActiveColor.
@@ -289,7 +314,16 @@
         <Setter Property="Foreground" Value="{StaticResource PrimaryErrorMessageColor}"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
-    
+
+    <!-- Style that defined error message textBlock-->
+    <Style x:Key="MainTextBlock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource Manrope}"/>
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
     <!-- Template for menuButton -->
     <Style x:Key="MenuButton" TargetType="RadioButton">
         <!-- Normal button style -->
@@ -424,33 +458,8 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
-    <!-- Style defined gridRemove button -->
-    <Style x:Key="GridRemoveButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource RemoveColor1}"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="Foreground" Value="{StaticResource SecondaryFontColor}"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Opacity" Value="0.7"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="5" Padding="5" BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Opacity" Value="1"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="GridEditButton" TargetType="Button">
-        <Setter Property="Background" Value="{StaticResource EditColor1}"/>
+    <!-- Style defined grid control button -->
+    <Style x:Key="GridControlButton" TargetType="Button">
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="Foreground" Value="{StaticResource SecondaryFontColor}"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -492,7 +501,6 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
-        <Setter Property="Margin" Value="0 10 0 0"/>
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="SelectionUnit" Value="FullRow"/>
         <Setter Property="CanUserAddRows" Value="False"/>
@@ -523,10 +531,11 @@
     </Style>
     <Style x:Key="DataGridColumnHeaderStyle1" TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{StaticResource DataGridHeadersBackgroundColor1}"/>
+        <Setter Property="Height" Value="30"/>
         <Setter Property="Foreground" Value="{StaticResource PrimaryFontColor}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Margin" Value="10,0,0,5"/>
+        <Setter Property="Margin" Value="0,0,0,5"/>
     </Style>
     <Style x:Key="DataGridRowStyle1" TargetType="{x:Type DataGridRow}">
         <Setter Property="Background" Value="White"/>

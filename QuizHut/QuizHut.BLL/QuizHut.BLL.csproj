@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QuizHut.DAL\QuizHut.DLL.csproj" />
+    <ProjectReference Include="..\QuizHut.DLL\QuizHut.DLL.csproj" />
   </ItemGroup>
 
 </Project>

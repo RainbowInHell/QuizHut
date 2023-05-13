@@ -7,10 +7,12 @@
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Services;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
-    using QuizHut.ViewModels.LoginViewModels;
+    using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
+    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -25,7 +27,11 @@
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => services.GetRequiredService<EventsViewModel>());
-            services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => services.GetRequiredService<GroupsViewModel>());
+
+            services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => CreateGroupsViewModel(services));
+            services.AddSingleton<CreateViewModel<GroupActionsViewModel>>(services => () => CreateGroupActionsViewModel(services));
+            services.AddSingleton<CreateViewModel<GroupSettingsViewModel>>(services => () => CreateGroupSettingsViewModel(services));
+
             services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => services.GetRequiredService<CategoriesViewModel>());
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
@@ -35,7 +41,11 @@
             services.AddTransient<UserProfileViewModel>();
             services.AddTransient<ResultsViewModel>();
             services.AddTransient<EventsViewModel>();
+
             services.AddTransient<GroupsViewModel>();
+            services.AddTransient<GroupActionsViewModel>();
+            services.AddTransient<GroupSettingsViewModel>();
+            
             services.AddTransient<CategoriesViewModel>();
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<StudentsViewModel>();
@@ -47,6 +57,10 @@
             services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
             services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
+
+            services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<GroupSettingsViewModel>>();
 
             return services;
         }
@@ -85,6 +99,33 @@
                 services.GetRequiredService<RegisterRequestValidator>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>());
+        }
+
+        private static GroupsViewModel CreateGroupsViewModel(IServiceProvider services)
+        {
+            return new GroupsViewModel(
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>(),
+                services.GetRequiredService<ISharedDataStore>());
+        }
+
+        private static GroupActionsViewModel CreateGroupActionsViewModel(IServiceProvider services)
+        {
+            return new GroupActionsViewModel(
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>(),
+                services.GetRequiredService<ISharedDataStore>());
+        }
+
+        private static GroupSettingsViewModel CreateGroupSettingsViewModel(IServiceProvider services)
+        {
+            return new GroupSettingsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>());
         }
     }
 }

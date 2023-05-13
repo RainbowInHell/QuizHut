@@ -5,7 +5,7 @@
     using System.Reflection;
 
     using QuizHut.BLL.Expression.Contracts;
-    using QuizHut.DAL.Common.Enumerations;
+    using QuizHut.DLL.Common.Enumerations;
 
     public class ExpressionBuilder : IExpressionBuilder
     {
