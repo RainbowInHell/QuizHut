@@ -1,13 +1,19 @@
 ﻿<Application x:Class="QuizHut.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:QuizHut"  
+             
              xmlns:svvm="clr-namespace:QuizHut.ViewModels.StartViewModels" 
-             xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels" 
-             xmlns:mvgvm="clr-namespace:QuizHut.ViewModels.MainViewModels.GroupViewModels" 
+             xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels"
+             
              xmlns:suc="clr-namespace:QuizHut.Views.UserControls.StartUserControls"
              xmlns:muc="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
+             
+             xmlns:mvgvm="clr-namespace:QuizHut.ViewModels.MainViewModels.GroupViewModels" 
              xmlns:mguc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls"
+             
+             xmlns:mvcvm="clr-namespace:QuizHut.ViewModels.MainViewModels.CategoryViewModels" 
+             xmlns:mcuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.CategoryUserControls"
+             
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
     <Application.Resources>
@@ -48,9 +54,10 @@
                 <mguc:GroupSettingsView/>
             </DataTemplate>
             
-            <DataTemplate DataType="{x:Type mvvm:CategoriesViewModel}">
-                <muc:CategoriesView/>
+            <DataTemplate DataType="{x:Type mvcvm:CategoriesViewModel}">
+                <mcuc:CategoriesView/>
             </DataTemplate>
+            
             <DataTemplate DataType="{x:Type mvvm:QuizzesViewModel}">
                 <muc:QuizzesView/>
             </DataTemplate>

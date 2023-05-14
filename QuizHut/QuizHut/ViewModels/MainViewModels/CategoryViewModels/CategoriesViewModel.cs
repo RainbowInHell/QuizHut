@@ -1,4 +1,4 @@
-﻿namespace QuizHut.ViewModels.MainViewModels
+﻿namespace QuizHut.ViewModels.MainViewModels.CategoryViewModels
 {
     using FontAwesome.Sharp;
 

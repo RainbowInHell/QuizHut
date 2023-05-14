@@ -7,6 +7,7 @@
     using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
     using QuizHut.ViewModels.MainViewModels.GroupViewModels;
+    using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {
