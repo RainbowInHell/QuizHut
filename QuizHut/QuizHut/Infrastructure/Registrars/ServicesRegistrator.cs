@@ -30,7 +30,7 @@
 
             services.AddTransient<IEmailSenderService, EmailSenderService>();
             services.AddTransient<IUserAccountService, UserAccountService>();
-            services.AddTransient<IStudentService, StudentService>();
+            services.AddTransient<IStudentsService, StudentsService>();
             services.AddTransient<IGroupsService, GroupsService>();
             services.AddTransient<IStudentsGroupsService, StudentsGroupsService>();
             services.AddTransient<IEventsGroupsService, EventsGroupsService>();

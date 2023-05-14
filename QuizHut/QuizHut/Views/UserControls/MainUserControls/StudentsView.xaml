@@ -42,7 +42,7 @@
                   Width="100" Height="35"
                   Margin="0,0,535,0"
                   Tag="Критерий..."
-                  ItemsSource="{Binding SearchCriterias}"
+                  ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
                   SelectedItem="{Binding SearchCriteria, Mode=TwoWay}">
         </ComboBox>
         <TextBox  x:Name="MVSSearchTB"

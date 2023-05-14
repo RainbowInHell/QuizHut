@@ -5,5 +5,7 @@
     public class SharedDataStore : ISharedDataStore
     {
         public string SelectedGroupId { get; set; }
+
+        public string SelectedCategoryId { get; set; }
     }
 }

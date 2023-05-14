@@ -45,7 +45,7 @@
             services.AddTransient<GroupsViewModel>();
             services.AddTransient<GroupActionsViewModel>();
             services.AddTransient<GroupSettingsViewModel>();
-            
+
             services.AddTransient<CategoriesViewModel>();
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<StudentsViewModel>();
@@ -105,24 +105,29 @@
         {
             return new GroupsViewModel(
                 services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>(),
-                services.GetRequiredService<ISharedDataStore>());
+                services.GetRequiredService<IGroupSettingsTypeService>());
         }
 
         private static GroupActionsViewModel CreateGroupActionsViewModel(IServiceProvider services)
         {
             return new GroupActionsViewModel(
                 services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<IStudentsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>(),
-                services.GetRequiredService<ISharedDataStore>());
+                services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
+                services.GetRequiredService<IGroupSettingsTypeService>());
         }
 
         private static GroupSettingsViewModel CreateGroupSettingsViewModel(IServiceProvider services)
         {
             return new GroupSettingsViewModel(
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<IStudentsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<IGroupSettingsTypeService>());
