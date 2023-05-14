@@ -39,7 +39,7 @@
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();
             services.AddSingleton<IAccountStore, AccountStore>();
-            services.AddSingleton<IGroupSettingsTypeService, GroupSettingsTypeService>();
+            services.AddSingleton<IViewDisplayTypeService, ViewDisplayTypeService>();
             services.AddSingleton<ISharedDataStore, SharedDataStore>();
 
             return services;

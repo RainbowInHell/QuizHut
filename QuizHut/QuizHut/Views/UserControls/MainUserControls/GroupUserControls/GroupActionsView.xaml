@@ -20,16 +20,16 @@
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                     <Setter Property="Height" Value="300"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                     <Setter Property="Height" Value="300"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                     <Setter Property="Height" Value="400"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                     <Setter Property="Height" Value="400"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -70,16 +70,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -88,20 +88,20 @@
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Изменение названия">
+                       Text="Изменение названия группы">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -114,16 +114,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -136,16 +136,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -168,16 +168,16 @@
                 <TextBox.Style>
                     <Style TargetType="TextBox" BasedOn="{StaticResource textBoxStyle}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -205,16 +205,16 @@
                 <ScrollViewer.Style>
                     <Style TargetType="ScrollViewer">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -241,16 +241,16 @@
                 <ScrollViewer.Style>
                     <Style TargetType="ScrollViewer">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -333,16 +333,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -361,16 +361,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -389,16 +389,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -417,16 +417,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="0">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="1">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="2">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding GroupViewType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>

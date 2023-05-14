@@ -33,9 +33,9 @@
             services.AddSingleton<CreateViewModel<GroupActionsViewModel>>(services => () => CreateGroupActionsViewModel(services));
             services.AddSingleton<CreateViewModel<GroupSettingsViewModel>>(services => () => CreateGroupSettingsViewModel(services));
 
-            services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => services.GetRequiredService<CategoriesViewModel>());
-            services.AddSingleton<CreateViewModel<CategoryActionsViewModel>>(services => () => services.GetRequiredService<CategoryActionsViewModel>());
-            services.AddSingleton<CreateViewModel<CategorySettingsViewModel>>(services => () => services.GetRequiredService<CategorySettingsViewModel>());
+            services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => CreateCategoriesViewModel(services));
+            services.AddSingleton<CreateViewModel<CategoryActionsViewModel>>(services => () => CreateCategoryActionsViewModel(services));
+            services.AddSingleton<CreateViewModel<CategorySettingsViewModel>>(services => () => CreateCategorySettingsViewModel(services));
 
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
@@ -68,6 +68,10 @@
             services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<GroupSettingsViewModel>>();
+
+            services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<CategorySettingsViewModel>>();
 
             return services;
         }
@@ -115,7 +119,7 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>());
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static GroupActionsViewModel CreateGroupActionsViewModel(IServiceProvider services)
@@ -126,7 +130,7 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>());
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static GroupSettingsViewModel CreateGroupSettingsViewModel(IServiceProvider services)
@@ -137,7 +141,30 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
-                services.GetRequiredService<IGroupSettingsTypeService>());
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static CategoriesViewModel CreateCategoriesViewModel(IServiceProvider services)
+        {
+            return new CategoriesViewModel(
+                services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static CategorySettingsViewModel CreateCategorySettingsViewModel(IServiceProvider services)
+        {
+            return new CategorySettingsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static CategoryActionsViewModel CreateCategoryActionsViewModel(IServiceProvider services)
+        {
+            return new CategoryActionsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<CategoriesViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
     }
 }

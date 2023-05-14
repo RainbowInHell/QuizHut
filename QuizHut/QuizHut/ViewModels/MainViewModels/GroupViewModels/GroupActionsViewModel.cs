@@ -22,7 +22,7 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        private readonly IGroupSettingsTypeService groupSettingsTypeService;
+        private readonly IViewDisplayTypeService viewDisplayTypeService;
 
         public GroupActionsViewModel(
             IGroupsService groupsService,
@@ -30,14 +30,14 @@
             ISharedDataStore sharedDataStore,
             IRenavigator groupRenavigator,
             IRenavigator groupSettingRenavigator,
-            IGroupSettingsTypeService groupSettingsTypeService)
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.studentService = studentService;
             this.groupsService = groupsService;
-            this.groupSettingsTypeService = groupSettingsTypeService;
+            this.viewDisplayTypeService = viewDisplayTypeService;
             this.sharedDataStore = sharedDataStore;
 
-            groupSettingsTypeService.StateChanged += GroupSettingsTypeService_StateChanged;
+            viewDisplayTypeService.StateChanged += ViewDisplayTypeService_StateChanged;
 
             NavigateGroupCommand = new RenavigateCommand(groupRenavigator);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
@@ -50,7 +50,7 @@
 
         #region Fields and properties
 
-        public GroupViewType? GroupViewType => groupSettingsTypeService.GroupViewType;
+        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
 
         private string groupNameToCreate;
         public string GroupNameToCreate
@@ -146,14 +146,14 @@
             Students = new(students);
         }
 
-        private void GroupSettingsTypeService_StateChanged()
+        private void ViewDisplayTypeService_StateChanged()
         {
-            OnPropertyChanged(nameof(GroupViewType));
+            OnPropertyChanged(nameof(ViewDisplayType));
         }
 
         public override void Dispose()
         {
-            groupSettingsTypeService.StateChanged -= GroupSettingsTypeService_StateChanged;
+            viewDisplayTypeService.StateChanged -= ViewDisplayTypeService_StateChanged;
 
             base.Dispose();
         }

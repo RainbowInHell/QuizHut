@@ -29,15 +29,15 @@
         public GroupsViewModel(
             IGroupsService groupsService,
             ISharedDataStore sharedDataStore,
-            IRenavigator createGroupRenavigator,
+            IRenavigator groupActionsRenavigator,
             IRenavigator groupSettingRenavigator,
-            IGroupSettingsTypeService groupSettingsTypeService)
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.groupsService = groupsService;
             this.sharedDataStore = sharedDataStore;
 
-            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
-            NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
+            NavigateCreateGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateEditGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);

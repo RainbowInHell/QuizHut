@@ -2,17 +2,18 @@
 {
     using System;
 
-    public enum GroupViewType
+    public enum ViewDisplayType
     {
         Create,
         Edit,
         AddStudents,
-        AddEvents
+        AddEvents,
+        AddQuizzes
     }
 
-    public interface IGroupSettingsTypeService
+    public interface IViewDisplayTypeService
     {
-        GroupViewType? GroupViewType { get; set; }
+        ViewDisplayType? ViewDisplayType { get; set; }
 
         event Action StateChanged;
     }

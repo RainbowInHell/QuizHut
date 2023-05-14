@@ -57,6 +57,12 @@
             <DataTemplate DataType="{x:Type mvcvm:CategoriesViewModel}">
                 <mcuc:CategoriesView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type mvcvm:CategoryActionsViewModel}">
+                <mcuc:CategoryActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvcvm:CategorySettingsViewModel}">
+                <mcuc:CategorySettingsView/>
+            </DataTemplate>
             
             <DataTemplate DataType="{x:Type mvvm:QuizzesViewModel}">
                 <muc:QuizzesView/>

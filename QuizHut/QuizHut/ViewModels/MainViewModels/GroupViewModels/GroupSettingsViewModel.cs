@@ -26,14 +26,14 @@
             ISharedDataStore sharedDataStore,
             IRenavigator addStudentRenavigator, 
             IRenavigator addEventsRenavigator, 
-            IGroupSettingsTypeService groupSettingsTypeService)
+            IViewDisplayTypeService groupSettingsTypeService)
         {
             this.groupsService = groupsService;
             this.studentService = studentService;
             this.sharedDataStore = sharedDataStore;
 
-            NavigateAddStudentsCommand = new RenavigateCommand(addStudentRenavigator, GroupViewType.AddStudents, groupSettingsTypeService);
-            NavigateAddEventsCommand = new RenavigateCommand(addEventsRenavigator, GroupViewType.AddEvents, groupSettingsTypeService);
+            NavigateAddStudentsCommand = new RenavigateCommand(addStudentRenavigator, ViewDisplayType.AddStudents, groupSettingsTypeService);
+            NavigateAddEventsCommand = new RenavigateCommand(addEventsRenavigator, ViewDisplayType.AddEvents, groupSettingsTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             DeleteStudentFromGroupCommandAsync = new ActionCommandAsync(OnDeleteStudentFromGroupCommandExecutedAsync, CanDeleteStudentFromGroupCommandExecute);

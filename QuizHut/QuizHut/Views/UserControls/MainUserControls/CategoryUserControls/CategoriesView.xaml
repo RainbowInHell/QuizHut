@@ -103,9 +103,7 @@
                                     Binding="{Binding }"/>
                 <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
                                     Binding="{Binding }"/>
-                <DataGridTextColumn Header="Студенты" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
-                <DataGridTextColumn Header="События" IsReadOnly="True" Width="*"
+                <DataGridTextColumn Header="Тестов" IsReadOnly="True" Width="*"
                                     Binding="{Binding }"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
