@@ -37,14 +37,15 @@
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,590,0"
                    Text="Поиск:"/>
-        <TextBox  x:Name="MVQSearchTB"
+        <TextBox  x:Name="MVGSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="450" Height="40" Margin="0,0,130,0"
                   Tag="Введите текст для поиска..."
                   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Row="0"
+        <Button x:Name="MVGSearchBtn"
+                Grid.Row="0"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="110" Height="40"

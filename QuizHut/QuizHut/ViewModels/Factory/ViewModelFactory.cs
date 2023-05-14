@@ -17,7 +17,11 @@
         private readonly CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel;
 
         private readonly CreateViewModel<HomeViewModel> createHomeViewModel;
+
         private readonly CreateViewModel<CategoriesViewModel> createCategoryViewModel;
+        private readonly CreateViewModel<CategoryActionsViewModel> createCategoryActionsViewModel;
+        private readonly CreateViewModel<CategorySettingsViewModel> createCategorySettingsViewModel;
+
         private readonly CreateViewModel<EventsViewModel> createEventViewModel;
 
         private readonly CreateViewModel<GroupsViewModel> createGroupViewModel;
@@ -35,7 +39,10 @@
                                             CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel,
 
                                             CreateViewModel<HomeViewModel> createHomeViewModel,
+
                                             CreateViewModel<CategoriesViewModel> createCategoryViewModel,
+                                            CreateViewModel<CategoryActionsViewModel> createCategoryActionsViewModel,
+                                            CreateViewModel<CategorySettingsViewModel> createCategorySettingsViewModel,
                                             CreateViewModel<EventsViewModel> createEventViewModel,
 
                                             CreateViewModel<GroupsViewModel> createGroupViewModel,
@@ -53,7 +60,11 @@
             this.createResetPasswordViewModel = createResetPasswordViewModel;
 
             this.createHomeViewModel = createHomeViewModel;
+
             this.createCategoryViewModel = createCategoryViewModel;
+            this.createCategoryActionsViewModel = createCategoryActionsViewModel;
+            this.createCategorySettingsViewModel = createCategorySettingsViewModel;
+
             this.createEventViewModel = createEventViewModel;
 
             this.createGroupViewModel = createGroupViewModel;
@@ -68,42 +79,32 @@
 
         public ViewModel CreateViewModel(ViewType viewType)
         {
-            switch (viewType)
+            return viewType switch
             {
-                case ViewType.Authorization:
-                    return createAuthorizationViewModel();
-                case ViewType.StudentRegistration:
-                    return createStudentRegistrationViewModel();
-                case ViewType.TeacherRegistration:
-                    return createTeacherRegistrationViewModel();
-                case ViewType.ResetPassword:
-                    return createResetPasswordViewModel();
+                ViewType.Authorization => createAuthorizationViewModel(),
+                ViewType.StudentRegistration => createStudentRegistrationViewModel(),
+                ViewType.TeacherRegistration => createTeacherRegistrationViewModel(),
+                ViewType.ResetPassword => createResetPasswordViewModel(),
 
-                case ViewType.Home:
-                    return createHomeViewModel();
-                case ViewType.Category:
-                    return createCategoryViewModel();
-                case ViewType.Event:
-                    return createEventViewModel();
+                ViewType.Home => createHomeViewModel(),
 
-                case ViewType.Group:
-                    return createGroupViewModel();
-                case ViewType.GroupActions:
-                    return createGroupActionsViewModel();
-                case ViewType.GroupSettings:
-                    return createGroupSettingsViewModel();
+                ViewType.Category => createCategoryViewModel(),
+                ViewType.CategoryActions => createCategoryActionsViewModel(),
+                ViewType.CategorySettings => createCategorySettingsViewModel(),
 
-                case ViewType.Quiz:
-                    return createQuizViewModel();
-                case ViewType.Result:
-                    return createResultViewModel();
-                case ViewType.Student:
-                    return createStudentViewModel();
-                case ViewType.UserProfile:
-                    return createUserProfileViewModel();
-                default:
-                    throw new ArgumentException("The ViewType does not have a ViewModel.", nameof(viewType));
-            }
+                ViewType.Event => createEventViewModel(),
+
+                ViewType.Group => createGroupViewModel(),
+                ViewType.GroupActions => createGroupActionsViewModel(),
+                ViewType.GroupSettings => createGroupSettingsViewModel(),
+
+                ViewType.Quiz => createQuizViewModel(),
+                ViewType.Result => createResultViewModel(),
+                ViewType.Student => createStudentViewModel(),
+                ViewType.UserProfile => createUserProfileViewModel(),
+
+                _ => throw new ArgumentException("The ViewType does not have a ViewModel.", nameof(viewType)),
+            };
         }
     }
 }

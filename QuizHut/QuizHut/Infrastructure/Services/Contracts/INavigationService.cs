@@ -13,7 +13,11 @@
         ResetPassword,
 
         Home,
+
         Category,
+        CategoryActions,
+        CategorySettings,
+
         Event,
 
         Group,

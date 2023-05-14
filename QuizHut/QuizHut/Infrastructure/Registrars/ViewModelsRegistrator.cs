@@ -34,6 +34,9 @@
             services.AddSingleton<CreateViewModel<GroupSettingsViewModel>>(services => () => CreateGroupSettingsViewModel(services));
 
             services.AddSingleton<CreateViewModel<CategoriesViewModel>>(services => () => services.GetRequiredService<CategoriesViewModel>());
+            services.AddSingleton<CreateViewModel<CategoryActionsViewModel>>(services => () => services.GetRequiredService<CategoryActionsViewModel>());
+            services.AddSingleton<CreateViewModel<CategorySettingsViewModel>>(services => () => services.GetRequiredService<CategorySettingsViewModel>());
+
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
@@ -48,6 +51,9 @@
             services.AddTransient<GroupSettingsViewModel>();
 
             services.AddTransient<CategoriesViewModel>();
+            services.AddTransient<CategoryActionsViewModel>();
+            services.AddTransient<CategorySettingsViewModel>();
+
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<StudentsViewModel>();
 
