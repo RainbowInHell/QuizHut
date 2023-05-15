@@ -1,4 +1,4 @@
-﻿namespace QuizHut.Views.UserControls.MainUserControls
+﻿namespace QuizHut.Views.UserControls.MainUserControls.CategoryUserControls
 {
     using System.Windows.Controls;
 

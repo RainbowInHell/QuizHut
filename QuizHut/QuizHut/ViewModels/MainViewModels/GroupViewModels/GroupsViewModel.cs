@@ -29,15 +29,15 @@
         public GroupsViewModel(
             IGroupsService groupsService,
             ISharedDataStore sharedDataStore,
-            IRenavigator createGroupRenavigator,
+            IRenavigator groupActionsRenavigator,
             IRenavigator groupSettingRenavigator,
-            IGroupSettingsTypeService groupSettingsTypeService)
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.groupsService = groupsService;
             this.sharedDataStore = sharedDataStore;
 
-            NavigateCreateGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Create, groupSettingsTypeService);
-            NavigateEditGroupCommand = new RenavigateCommand(createGroupRenavigator, GroupViewType.Edit, groupSettingsTypeService);
+            NavigateCreateGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateEditGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
@@ -84,7 +84,7 @@
 
         #endregion
 
-        #region LoadDataCommand
+        #region LoadDataCommandAsync
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
@@ -97,7 +97,7 @@
 
         #endregion
 
-        #region SearchCommand
+        #region SearchCommandAsync
 
         public ICommandAsync SearchCommandAsync { get; }
 
@@ -105,12 +105,12 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadGroupsData(searchCriteria: "Name", searchText: SearchText);
+            await LoadGroupsData("Name", SearchText);
         }
 
         #endregion
 
-        #region DeleteGroupCommand
+        #region DeleteGroupCommandAsync
 
         public ICommandAsync DeleteGroupCommandAsync { get; }
 

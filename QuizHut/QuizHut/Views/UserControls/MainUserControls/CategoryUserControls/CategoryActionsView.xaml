@@ -1,14 +1,14 @@
-﻿<UserControl x:Class="QuizHut.Views.UserControls.MainUserControls.GroupUserControls.GroupActionsView"
+﻿<UserControl x:Class="QuizHut.Views.UserControls.MainUserControls.CategoryUserControls.CategoryActionsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls" 
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.CategoryUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
              mc:Ignorable="d" 
-             d:Height="300" Width="600" 
+             d:Height="300" Width="600"
              HorizontalAlignment="Left" VerticalAlignment="Top"
              Margin="150,50,0,0">
 
@@ -26,10 +26,7 @@
                 <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                     <Setter Property="Height" Value="300"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                    <Setter Property="Height" Value="400"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                     <Setter Property="Height" Value="400"/>
                 </DataTrigger>
             </Style.Triggers>
@@ -66,7 +63,7 @@
 
             <!-- Title textBlocks -->
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Создание группы">
+                       Text="Создание категории">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
@@ -76,10 +73,7 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -88,7 +82,7 @@
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Изменение названия группы">
+                       Text="Изменение названия категории">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
@@ -98,10 +92,7 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -110,7 +101,7 @@
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Назначение студентов">
+                       Text="Назначение тестов">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
@@ -120,32 +111,7 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-
-            <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Назначение событий для {название группы}">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -159,12 +125,12 @@
                        Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold"/>
 
             <!-- Input textBox or itemsSource -->
-            <TextBox x:Name="GAVGroupNameTextBox"
+            <TextBox x:Name="СAVCategoryNameTextBox"
                      Grid.Row="4" Grid.Column="1"
-                     Tag="Введите название группы..."
+                     Tag="Введите название категории..."
                      MaxLength="50" Height="50"
                      FontFamily="{StaticResource Manrope}" FontSize="18"
-                     Text="{Binding GroupNameToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                     Text="{Binding CategoryNameToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBox.Style>
                     <Style TargetType="TextBox" BasedOn="{StaticResource textBoxStyle}">
                         <Style.Triggers>
@@ -174,10 +140,7 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -185,19 +148,18 @@
                 </TextBox.Style>
             </TextBox>
             <!-- List of students -->
-            <ScrollViewer x:Name="GAVStudentsSV" 
+            <ScrollViewer x:Name="CAVQuizzesSV" 
                           Grid.Row="4" Grid.Column="1"
                           CanContentScroll="False"
                           Background="Transparent"
                           Margin="0,5,0,5"
                           Foreground="{StaticResource PrimaryFontColor}">
-                <ItemsControl ItemsSource="{Binding Students}">
+                <ItemsControl ItemsSource="{Binding Quizzes}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,5">
                                 <CheckBox IsChecked="{Binding IsAssigned}"/>
-                                <TextBlock Text="{Binding FullName}" Margin="10,0"/>
-                                <TextBlock Text="{Binding Email}" Margin="10,0"/>
+                                <TextBlock Text="{Binding Name}" Margin="10,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -211,57 +173,18 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ScrollViewer.Style>
-            </ScrollViewer>
-            <!-- List of events -->
-            <ScrollViewer x:Name="GAVEventsSV" 
-                          Grid.Row="4" Grid.Column="1"
-                          CanContentScroll="False"
-                          Background="Transparent"
-                          Margin="0,5,0,5"
-                          Foreground="{StaticResource PrimaryFontColor}">
-                <ItemsControl ItemsSource="{Binding Students}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <CheckBox IsChecked="{Binding IsAssigned}"/>
-                                <TextBlock Text="{Binding FullName}" Margin="10,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ScrollViewer.Style>
-                    <Style TargetType="ScrollViewer">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </ScrollViewer.Style>
             </ScrollViewer>
-            <!--<StackPanel x:Name="GAVNoStudentsSP"
+            <!--<StackPanel x:Name="CAVNoQuizzesSP"
                 Grid.Row="4" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}"
-                           Text="В данный момент нет студентов" FontSize="14" FontWeight="SemiBold"/>
-                <Button x:Name="GAVNavigateStudentBtn"
+                           Text="В данный момент нет тестов" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="CAVNavigateQuizBtn"
                     Margin="0,5,0,0"
                     Command="{Binding }"
                     Foreground="{StaticResource SettingsColor1}"
@@ -278,41 +201,10 @@
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
+                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-            </StackPanel>-->
-            <!--<StackPanel x:Name="GAVNoEventsSP"
-                Grid.Row="4" Grid.Column="1">
-                <TextBlock Style="{StaticResource MainTextBlock}"
-                           Text="В данный момент нет событий" FontSize="14" FontWeight="SemiBold"/>
-                <Button x:Name="GAVNavigateEventBtn"
-                    Margin="0,5,0,0"
-                    Command="{Binding }"
-                    Foreground="{StaticResource SettingsColor1}"
-                    FontWeight="DemiBold"
-                    FontSize="14"
-                    HorizontalAlignment="Left"
-                    Template="{StaticResource ButtonTemplate3}">
-                    <Button.Content>
-                        <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Хотите добавить?
-                        </TextBlock>
-                    </Button.Content>
-                </Button>
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="1">
+                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -321,14 +213,14 @@
             </StackPanel>-->
 
             <!-- Add group and Cancel buttons -->
-            <Button x:Name="GAVAddGroupBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding CreateGroupCommandAsync}"
+            <Button x:Name="CAVAddCategoryBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding CreateCategoryCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
                         HorizontalAlignment="Left"
                         Width="250" Height="45"
                         VerticalAlignment="Center"
-                        Content="Добавить группу"
+                        Content="Добавить категорию"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -339,18 +231,15 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVSaveGroupNameBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding UpdateGroupNameCommandAsync}"
+            <Button x:Name="СAVSaveCategoryNameBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding UpdateCategoryNameCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
                         HorizontalAlignment="Left"
@@ -367,24 +256,21 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVAddStudentsBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding AssignStudentsToGroupCommandAsync}"
+            <Button x:Name="CAVAddquizzesBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding AssignQuizzesToCategoryCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"
                         Width="250" Height="45"
                         VerticalAlignment="Center"
-                        Content="Добавить студентов"
+                        Content="Добавить тесты"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
                 <Button.Style>
                     <Style TargetType="Button">
@@ -395,45 +281,15 @@
                             <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-            </Button>
-            <Button x:Name="GAVAddEventsBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding }"
-                        Template="{StaticResource MainButtonTemplate}"
-                        Background="{StaticResource PrimaryActiveColor}" 
-                        HorizontalAlignment="Left"
-                        Width="250" Height="45"
-                        VerticalAlignment="Center"
-                        Content="Добавить события"
-                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="2">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="3">
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVCancelBtn" Grid.Row="5" Grid.Column="1"
+
+            <Button x:Name="СAVCancelBtn" Grid.Row="5" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"
@@ -441,7 +297,7 @@
                         VerticalAlignment="Center"
                         Content="Назад"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
-                        Command="{Binding NavigateGroupCommand}"/>
+                        Command="{Binding NavigateCategoryCommand}"/>
         </Grid>
     </Border>
 </UserControl>

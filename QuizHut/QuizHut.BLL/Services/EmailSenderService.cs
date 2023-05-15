@@ -2,8 +2,6 @@
 {
     using System.Threading.Tasks;
 
-    using Microsoft.Extensions.Configuration;
-
     using QuizHut.BLL.Services.Contracts;
 
     using SendGrid;
@@ -13,19 +11,16 @@
     {
         private readonly ISendGridClient sendGridClient;
 
-        private readonly IConfiguration configuration;
-
-        public EmailSenderService(ISendGridClient sendGridClient, IConfiguration configuration)
+        public EmailSenderService(ISendGridClient sendGridClient)
         {
             this.sendGridClient = sendGridClient;
-            this.configuration = configuration;
         }
 
         public async Task<Response> SendEmailAsync(string toEmail, string subject, string body)
         {
             var message = new SendGridMessage()
             {
-                From = new EmailAddress(configuration.GetValue<string>("EmailSender:FromEmail")),
+                From = new EmailAddress(Environment.GetEnvironmentVariable("QH_SENDGRID_APIKEY", EnvironmentVariableTarget.User)),
                 Subject = subject,
                 PlainTextContent = body
             };

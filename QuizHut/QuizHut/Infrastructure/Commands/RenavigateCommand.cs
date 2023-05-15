@@ -9,20 +9,20 @@
     {
         private readonly IRenavigator renavigator;
 
-        private IGroupSettingsTypeService groupSettingsTypeService;
+        private IViewDisplayTypeService viewDisplayTypeService;
 
-        private readonly GroupViewType? groupViewType;
+        private readonly ViewDisplayType? viewDisplayType;
 
         public RenavigateCommand(IRenavigator renavigator)
         {
             this.renavigator = renavigator;
         }
 
-        public RenavigateCommand(IRenavigator renavigator, GroupViewType groupViewType, IGroupSettingsTypeService groupSettingsTypeService)
+        public RenavigateCommand(IRenavigator renavigator, ViewDisplayType viewDisplayType, IViewDisplayTypeService viewDisplayTypeService)
         {
             this.renavigator = renavigator;
-            this.groupViewType = groupViewType;
-            this.groupSettingsTypeService = groupSettingsTypeService;
+            this.viewDisplayType = viewDisplayType;
+            this.viewDisplayTypeService = viewDisplayTypeService;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -36,9 +36,9 @@
         {
             renavigator.Renavigate();
 
-            if (groupViewType != null)
+            if (viewDisplayType != null)
             {
-                groupSettingsTypeService.GroupViewType = groupViewType;
+                viewDisplayTypeService.ViewDisplayType = viewDisplayType;
             }
         }
     }

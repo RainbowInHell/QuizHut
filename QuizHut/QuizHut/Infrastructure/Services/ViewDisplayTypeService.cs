@@ -4,15 +4,15 @@
 
     using QuizHut.Infrastructure.Services.Contracts;
 
-    internal class GroupSettingsTypeService : IGroupSettingsTypeService
+    internal class ViewDisplayTypeService : IViewDisplayTypeService
     {
-        private GroupViewType? groupViewType;
-        public GroupViewType? GroupViewType
+        private ViewDisplayType? viewDisplayType;
+        public ViewDisplayType? ViewDisplayType
         {
-            get => groupViewType;
+            get => viewDisplayType;
             set
             {
-                groupViewType = value;
+                viewDisplayType = value;
                 StateChanged?.Invoke();
             }
         }
