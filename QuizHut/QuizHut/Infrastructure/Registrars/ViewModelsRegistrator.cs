@@ -28,7 +28,10 @@
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => services.GetRequiredService<HomeViewModel>());
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
-            services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => services.GetRequiredService<EventsViewModel>());
+
+            services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
+            services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
+            services.AddSingleton<CreateViewModel<EventSettingsViewModel>>(services => () => CreateEventSettingsViewModel(services));
 
             services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => CreateGroupsViewModel(services));
             services.AddSingleton<CreateViewModel<GroupActionsViewModel>>(services => () => CreateGroupActionsViewModel(services));
@@ -45,7 +48,10 @@
             services.AddTransient<HomeViewModel>();
             services.AddTransient<UserProfileViewModel>();
             services.AddTransient<ResultsViewModel>();
+
             services.AddTransient<EventsViewModel>();
+            services.AddTransient<EventActionsViewModel>();
+            services.AddTransient<EventSettingsViewModel>();
 
             services.AddTransient<GroupsViewModel>();
             services.AddTransient<GroupActionsViewModel>();
@@ -66,12 +72,16 @@
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
             services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
 
-            services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<EventsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<EventActionsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<EventSettingsViewModel>>();
+
             services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<GroupSettingsViewModel>>();
 
-            services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategorySettingsViewModel>>();
 
             return services;
@@ -173,6 +183,30 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoriesViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static EventsViewModel CreateEventsViewModel(IServiceProvider services)
+        {
+            return new EventsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static EventActionsViewModel CreateEventActionsViewModel(IServiceProvider services)
+        {
+            return new EventActionsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<EventsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static EventSettingsViewModel CreateEventSettingsViewModel(IServiceProvider services)
+        {
+            return new EventSettingsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
     }
