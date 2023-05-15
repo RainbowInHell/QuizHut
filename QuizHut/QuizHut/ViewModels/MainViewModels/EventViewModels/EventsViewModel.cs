@@ -1,4 +1,4 @@
-﻿namespace QuizHut.ViewModels.MainViewModels
+﻿namespace QuizHut.ViewModels.MainViewModels.EventViewModels
 {
     using FontAwesome.Sharp;
 

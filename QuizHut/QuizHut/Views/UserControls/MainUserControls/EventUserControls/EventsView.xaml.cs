@@ -1,4 +1,4 @@
-﻿namespace QuizHut.Views.UserControls.MainUserControls
+﻿namespace QuizHut.Views.UserControls.MainUserControls.EventUserControls
 {
     using System.Windows.Controls;
 

@@ -14,6 +14,9 @@
              xmlns:mvcvm="clr-namespace:QuizHut.ViewModels.MainViewModels.CategoryViewModels" 
              xmlns:mcuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.CategoryUserControls"
              
+             xmlns:mvevm="clr-namespace:QuizHut.ViewModels.MainViewModels.EventViewModels" 
+             xmlns:meuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls"
+             
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
     <Application.Resources>
@@ -40,8 +43,9 @@
             <DataTemplate DataType="{x:Type mvvm:ResultsViewModel}">
                 <muc:ResultsView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:EventsViewModel}">
-                <muc:EventsView/>
+            
+            <DataTemplate DataType="{x:Type mvevm:EventsViewModel}">
+                <meuc:EventsView/>
             </DataTemplate>
             
             <DataTemplate DataType="{x:Type mvgvm:GroupsViewModel}">
