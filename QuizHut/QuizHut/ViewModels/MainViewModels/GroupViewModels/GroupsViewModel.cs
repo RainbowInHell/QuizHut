@@ -84,7 +84,7 @@
 
         #endregion
 
-        #region LoadDataCommand
+        #region LoadDataCommandAsync
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
@@ -97,7 +97,7 @@
 
         #endregion
 
-        #region SearchCommand
+        #region SearchCommandAsync
 
         public ICommandAsync SearchCommandAsync { get; }
 
@@ -105,12 +105,12 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadGroupsData(searchCriteria: "Name", searchText: SearchText);
+            await LoadGroupsData("Name", SearchText);
         }
 
         #endregion
 
-        #region DeleteGroupCommand
+        #region DeleteGroupCommandAsync
 
         public ICommandAsync DeleteGroupCommandAsync { get; }
 

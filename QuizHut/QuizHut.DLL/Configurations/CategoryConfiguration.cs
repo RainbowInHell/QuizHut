@@ -11,7 +11,8 @@
         {
             category.HasMany(c => c.Quizzes)
                 .WithOne(q => q.Category)
-                .HasForeignKey(q => q.CategoryId);
+                .HasForeignKey(q => q.CategoryId)
+                .IsRequired(false);
 
             category.Property(c => c.Name)
                 .HasMaxLength(50)

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -10,6 +11,11 @@
              d:Height="600" d:Width="1000"
              Background="Transparent">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -91,8 +97,9 @@
         </Button>
 
         <!-- Data grid quizzes -->
-        <DataGrid x:Name="MVCCategoriesDataGrid" ItemsSource="{Binding }"
-                  SelectedItem="{Binding SelectedGroup}"
+        <DataGrid x:Name="MVCCategoriesDataGrid" 
+                  ItemsSource="{Binding Categories}"
+                  SelectedItem="{Binding SelectedCategory}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -100,11 +107,11 @@
             Grid.Row="4" Width="1000">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding CreatedOnDate}"/>
                 <DataGridTextColumn Header="Тестов" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding QuizzesCount}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>

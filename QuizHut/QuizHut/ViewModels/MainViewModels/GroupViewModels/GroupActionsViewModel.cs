@@ -89,7 +89,7 @@
 
         #endregion
 
-        #region CreateGroupCommand
+        #region CreateGroupCommandAsync
 
         public ICommandAsync CreateGroupCommandAsync { get; }
 
@@ -104,7 +104,7 @@
 
         #endregion
 
-        #region UpdateGroupNameCommand
+        #region UpdateGroupNameCommandAsync
 
         public ICommandAsync UpdateGroupNameCommandAsync { get; }
 
@@ -139,9 +139,9 @@
 
         #endregion
 
-        private async Task LoadStudentsData(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroupId, searchCriteria, searchText);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroupId);
 
             Students = new(students);
         }

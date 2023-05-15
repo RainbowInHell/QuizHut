@@ -19,7 +19,8 @@
 
             quiz.HasOne(q => q.Event)
                 .WithOne(p => p.Quiz)
-                .HasForeignKey<Quiz>(q => q.EventId);
+                .HasForeignKey<Quiz>(q => q.EventId)
+                .IsRequired(false);
 
             quiz.Property(q => q.Name)
                 .HasMaxLength(1000)

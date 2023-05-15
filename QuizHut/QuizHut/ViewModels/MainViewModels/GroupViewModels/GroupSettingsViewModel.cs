@@ -24,8 +24,8 @@
             IGroupsService groupsService,
             IStudentsService studentService,
             ISharedDataStore sharedDataStore,
-            IRenavigator addStudentRenavigator, 
-            IRenavigator addEventsRenavigator, 
+            IRenavigator addStudentRenavigator,
+            IRenavigator addEventsRenavigator,
             IViewDisplayTypeService groupSettingsTypeService)
         {
             this.groupsService = groupsService;

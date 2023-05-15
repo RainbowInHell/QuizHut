@@ -11,7 +11,8 @@
         {
             eventEntity.HasOne(e => e.Quiz)
                 .WithOne(q => q.Event)
-                .HasForeignKey<Event>(e => e.QuizId);
+                .HasForeignKey<Event>(e => e.QuizId)
+                .IsRequired(false);
 
             eventEntity.HasMany(e => e.EventsGroups)
                 .WithOne(eg => eg.Event)

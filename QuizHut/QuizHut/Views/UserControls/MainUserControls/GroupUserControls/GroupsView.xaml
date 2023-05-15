@@ -95,7 +95,8 @@
         </Button>
 
         <!-- Data grid quizzes -->
-        <DataGrid x:Name="MVGGroupsDataGrid" ItemsSource="{Binding Groups}"
+        <DataGrid x:Name="MVGGroupsDataGrid" 
+                  ItemsSource="{Binding Groups}"
                   SelectedItem="{Binding SelectedGroup}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 

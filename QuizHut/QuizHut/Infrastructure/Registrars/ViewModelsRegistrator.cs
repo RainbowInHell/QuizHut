@@ -147,6 +147,8 @@
         private static CategoriesViewModel CreateCategoriesViewModel(IServiceProvider services)
         {
             return new CategoriesViewModel(
+                services.GetRequiredService<ICategoriesService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
@@ -155,6 +157,9 @@
         private static CategorySettingsViewModel CreateCategorySettingsViewModel(IServiceProvider services)
         {
             return new CategorySettingsViewModel(
+                services.GetRequiredService<ICategoriesService>(),
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
@@ -162,6 +167,9 @@
         private static CategoryActionsViewModel CreateCategoryActionsViewModel(IServiceProvider services)
         {
             return new CategoryActionsViewModel(
+                services.GetRequiredService<ICategoriesService>(),
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoriesViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());

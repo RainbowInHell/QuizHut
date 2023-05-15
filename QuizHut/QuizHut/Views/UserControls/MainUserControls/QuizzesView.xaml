@@ -3,11 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -98,7 +105,7 @@
         </Button>
 
         <!-- Data grid quizzes -->
-        <DataGrid x:Name="MVQQuizzesDataGrid" ItemsSource="{Binding Tests}"
+        <DataGrid x:Name="MVQQuizzesDataGrid" ItemsSource="{Binding Quizzes}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -106,21 +113,18 @@
             Grid.Row="4" Width="1000">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
-                                    Binding="{Binding name}"/>
+                                    Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
-                                    Binding="{Binding createdOn}"/>
+                                    Binding="{Binding CreatedOnDate}"/>
+                <DataGridTextColumn Header="Категория" IsReadOnly="True" Width="*"
+                                    Binding="{Binding CategoryName}"/>
                 <DataGridTemplateColumn Header="Назначен ли" IsReadOnly="True" Width="150">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Ellipse Width="15" Height="15">
                                 <Ellipse.Style>
                                     <Style TargetType="{x:Type Ellipse}">
-                                        <Setter Property="Fill" Value="Red"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding isAssigned}" Value="False">
-                                                <Setter Property="Fill" Value="Green"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
+                                        <Setter Property="Fill" Value="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                     </Style>
                                 </Ellipse.Style>
                             </Ellipse>
