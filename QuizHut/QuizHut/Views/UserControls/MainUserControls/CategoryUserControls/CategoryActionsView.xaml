@@ -263,7 +263,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="CAVAddquizzesBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="CAVAddQuizzesBtn" Grid.Row="5" Grid.Column="1"
                         Command="{Binding AssignQuizzesToCategoryCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"

@@ -8,7 +8,8 @@
         Edit,
         AddStudents,
         AddEvents,
-        AddQuizzes
+        AddQuizzes,
+        AddGroups,
     }
 
     public interface IViewDisplayTypeService

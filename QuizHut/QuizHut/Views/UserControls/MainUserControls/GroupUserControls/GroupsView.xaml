@@ -71,9 +71,9 @@
                 Margin="10,0,0,0"
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
             <StackPanel Orientation="Horizontal">
-                <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
+                <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
                 <TextBlock Text="Выгрузить" 
-                           FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                           FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="SemiBold"
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>

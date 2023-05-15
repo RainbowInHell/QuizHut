@@ -19,6 +19,8 @@
         CategorySettings,
 
         Event,
+        EventActions,
+        EventSettings,
 
         Group,
         GroupActions,

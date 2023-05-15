@@ -1,0 +1,499 @@
+﻿<UserControl x:Class="QuizHut.Views.UserControls.MainUserControls.EventUserControls.EventActionsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
+             
+             mc:Ignorable="d" 
+             d:Height="600" Width="600"
+             HorizontalAlignment="Left" VerticalAlignment="Top"
+             d:Margin="150,50,0,0">
+
+    <UserControl.Style>
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                    <Setter Property="Height" Value="600"/>
+                    <Setter Property="Margin" Value="150,0,0,0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                    <Setter Property="Height" Value="600"/>
+                    <Setter Property="Margin" Value="150,0,0,0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                    <Setter Property="Height" Value="400"/>
+                    <Setter Property="Margin" Value="150,50,0,0"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                    <Setter Property="Height" Value="400"/>
+                    <Setter Property="Margin" Value="150,50,0,0"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+
+    <UserControl.Effect>
+        <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
+    </UserControl.Effect>
+
+    <Border Background="{StaticResource MainViewBackground4}"
+            CornerRadius="15">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="15"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="55"/>
+                <RowDefinition Height="15"/>
+            </Grid.RowDefinitions>
+
+            <!-- Icon -->
+            <fa:IconImage Grid.Row="1" Grid.Column="1"
+                          Width="45" Height="45" HorizontalAlignment="Left" VerticalAlignment="Center"
+                          Icon="FolderPlus" Foreground="{StaticResource IconColor1}"/>
+
+            <!-- Title textBlocks -->
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Создание события">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Изменение события">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Назначение групп для тестирования">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <TextBlock Grid.Row="2" Grid.Column="1"
+                       Text="Назначение теста для события">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- Description textBlock -->
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Выберите группы для назначения на это событие" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Выберите только один тест для назначения на это событие" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- Input data or itemsSource -->
+            <controls:EventInfoUserControl x:Name="EAVEventDataUC"
+                                           Grid.Row="4" Grid.Column="1">
+                <controls:EventInfoUserControl.Style>
+                    <Style TargetType="controls:EventInfoUserControl">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:EventInfoUserControl.Style>
+            </controls:EventInfoUserControl>
+            <!-- List of groups -->
+            <ScrollViewer x:Name="EAVGroupsSV" 
+                          Grid.Row="4" Grid.Column="1"
+                          CanContentScroll="False"
+                          Background="Transparent"
+                          Margin="0,5,0,5"
+                          Foreground="{StaticResource PrimaryFontColor}">
+                <ItemsControl ItemsSource="{Binding Quizzes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <CheckBox IsChecked="{Binding IsAssigned}"/>
+                                <TextBlock Text="{Binding Name}" Margin="10,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+            </ScrollViewer>
+            <!-- List of quizzes -->
+            <ScrollViewer x:Name="EAVQuizzesSV" 
+                          Grid.Row="4" Grid.Column="1"
+                          CanContentScroll="False"
+                          Background="Transparent"
+                          Margin="0,5,0,5"
+                          Foreground="{StaticResource PrimaryFontColor}">
+                <ItemsControl ItemsSource="{Binding Quizzes}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                                <CheckBox IsChecked="{Binding IsAssigned}"/>
+                                <TextBlock Text="{Binding Name}" Margin="10,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ScrollViewer.Style>
+                    <Style TargetType="ScrollViewer">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ScrollViewer.Style>
+            </ScrollViewer>
+            <!--<StackPanel x:Name="EAVNoGroupsSP"
+                Grid.Row="4" Grid.Column="1">
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           Text="В данный момент нет групп" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="EAVNavigateGroupBtn"
+                    Margin="0,5,0,0"
+                    Command="{Binding }"
+                    Foreground="{StaticResource SettingsColor1}"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    Template="{StaticResource ButtonTemplate3}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Хотите добавить?
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Groups.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Groups.Count}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>-->
+            <!--<StackPanel x:Name="EAVNoQuizzesSP"
+                Grid.Row="4" Grid.Column="1">
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           Text="В данный момент нет тестов" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="EAVNavigateQuizBtn"
+                    Margin="0,5,0,0"
+                    Command="{Binding }"
+                    Foreground="{StaticResource SettingsColor1}"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    Template="{StaticResource ButtonTemplate3}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Хотите добавить?
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>-->
+
+            <!-- Add group and Cancel buttons -->
+            <Button x:Name="EAVAddEventBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding CreateGroupCommandAsync}"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource PrimaryActiveColor}" 
+                        HorizontalAlignment="Left"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Добавить событие"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="EAVSaveEventDataBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding UpdateCategoryNameCommandAsync}"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource PrimaryActiveColor}" 
+                        HorizontalAlignment="Left"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Сохранить"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="EAVAssignGroupsBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding AssignQuizzesToCategoryCommandAsync}"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource PrimaryActiveColor}"
+                        HorizontalAlignment="Left"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Назначить группы"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="EAVAssignTestBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding AssignQuizzesToCategoryCommandAsync}"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource PrimaryActiveColor}"
+                        HorizontalAlignment="Left"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Назначить тест"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+
+            <Button x:Name="СAVCancelBtn" Grid.Row="5" Grid.Column="1"
+                        Template="{StaticResource MainButtonTemplate}"
+                        Background="{StaticResource SecondaryActiveColor}" 
+                        HorizontalAlignment="Right"
+                        Width="250" Height="45"
+                        VerticalAlignment="Center"
+                        Content="Назад"
+                        Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
+                        Command="{Binding NavigateEventCommand}"/>
+        </Grid>
+    </Border>
+</UserControl>

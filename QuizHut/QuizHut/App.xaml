@@ -47,6 +47,12 @@
             <DataTemplate DataType="{x:Type mvevm:EventsViewModel}">
                 <meuc:EventsView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type mvevm:EventActionsViewModel}">
+                <meuc:EventActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvevm:EventSettingsViewModel}">
+                <meuc:EventSettingsView/>
+            </DataTemplate>
             
             <DataTemplate DataType="{x:Type mvgvm:GroupsViewModel}">
                 <mguc:GroupsView/>

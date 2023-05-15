@@ -24,6 +24,8 @@
         private readonly CreateViewModel<CategorySettingsViewModel> createCategorySettingsViewModel;
 
         private readonly CreateViewModel<EventsViewModel> createEventViewModel;
+        private readonly CreateViewModel<EventActionsViewModel> createEventActionsViewModel;
+        private readonly CreateViewModel<EventSettingsViewModel> createEventSettingsViewModel;
 
         private readonly CreateViewModel<GroupsViewModel> createGroupViewModel;
         private readonly CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel;
@@ -44,7 +46,10 @@
                                             CreateViewModel<CategoriesViewModel> createCategoryViewModel,
                                             CreateViewModel<CategoryActionsViewModel> createCategoryActionsViewModel,
                                             CreateViewModel<CategorySettingsViewModel> createCategorySettingsViewModel,
+
                                             CreateViewModel<EventsViewModel> createEventViewModel,
+                                            CreateViewModel<EventActionsViewModel> createEventActionsViewModel,
+                                            CreateViewModel<EventSettingsViewModel> createEventSettingsViewModel,
 
                                             CreateViewModel<GroupsViewModel> createGroupViewModel,
                                             CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel,
@@ -67,6 +72,8 @@
             this.createCategorySettingsViewModel = createCategorySettingsViewModel;
 
             this.createEventViewModel = createEventViewModel;
+            this.createEventActionsViewModel = createEventActionsViewModel;
+            this.createEventSettingsViewModel = createEventSettingsViewModel;
 
             this.createGroupViewModel = createGroupViewModel;
             this.createGroupActionsViewModel = createGroupActionsViewModel;
@@ -94,6 +101,8 @@
                 ViewType.CategorySettings => createCategorySettingsViewModel(),
 
                 ViewType.Event => createEventViewModel(),
+                ViewType.EventActions => createEventActionsViewModel(),
+                ViewType.EventSettings => createEventSettingsViewModel(),
 
                 ViewType.Group => createGroupViewModel(),
                 ViewType.GroupActions => createGroupActionsViewModel(),
