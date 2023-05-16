@@ -1,8 +1,9 @@
-﻿using QuizHut.BLL.Helpers.Contracts;
-using TimeZoneConverter;
-
-namespace QuizHut.BLL.Helpers
+﻿namespace QuizHut.BLL.Helpers
 {
+    using QuizHut.BLL.Helpers.Contracts;
+    
+    using TimeZoneConverter;
+
     public class DateTimeConverter : IDateTimeConverter
     {
         public const string TimeZoneIana = "Europe/Minsk";

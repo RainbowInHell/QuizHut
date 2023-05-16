@@ -362,7 +362,8 @@ namespace QuizHut.DLL.Migrations
                         name: "FK_Quizzes_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_Quizzes_Events_EventId",
                         column: x => x.EventId,

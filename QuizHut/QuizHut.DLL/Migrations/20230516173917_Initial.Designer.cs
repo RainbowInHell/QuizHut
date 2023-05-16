@@ -11,7 +11,7 @@ using QuizHut.DLL.EntityFramework;
 namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230516140941_Initial")]
+    [Migration("20230516173917_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -727,7 +727,8 @@ namespace QuizHut.DLL.Migrations
                 {
                     b.HasOne("QuizHut.DLL.Entities.Category", "Category")
                         .WithMany("Quizzes")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("QuizHut.DLL.Entities.ApplicationUser", "Creator")
                         .WithMany("CreatedQuizzes")
