@@ -15,6 +15,7 @@
     using QuizHut.ViewModels.MainViewModels.GroupViewModels;
     using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
+    using QuizHut.ViewModels.MainViewModels.QuizViewModels;
     using QuizHut.BLL.Helpers.Contracts;
 
     public static class ViewModelsRegistrator

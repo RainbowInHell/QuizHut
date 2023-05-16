@@ -4,7 +4,7 @@ using QuizHut.Infrastructure.Commands.Base.Contracts;
 using QuizHut.Infrastructure.EntityViewModels.Events;
 using System.Threading.Tasks;
 
-namespace QuizHut.ViewModels.MainViewModels
+namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
