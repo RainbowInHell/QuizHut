@@ -6,6 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
@@ -57,13 +58,15 @@
             </StackPanel>
         </Button>
 
-        <!-- FilterBy category textBox-->
-        <TextBox  x:Name="MVQFilterTB"
-                  Style="{StaticResource textBoxStyle}"
+        <!-- FilterBy category comboBox-->
+        <TextBlock Grid.Row="2" 
+                   FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,470,0"
+                   Text="Фильтр по категории:"/>
+        <ComboBox  x:Name="MVQFilterCMB"
                   Grid.Row="2"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="420" Height="35" Margin="0,0,160,0"
-                  Tag="Фильтровать по категории..."/>
+                  Width="300" Height="35" Margin="0,0,160,0"/>
         <Button Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
