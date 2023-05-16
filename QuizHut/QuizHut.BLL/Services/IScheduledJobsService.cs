@@ -1,21 +1,21 @@
 ﻿namespace QuizHut.BLL.Services
 {
     using Microsoft.EntityFrameworkCore;
-    
+
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DLL.Common.Enumerations;
+    using QuizHut.DLL.Common;
     using QuizHut.DLL.Entities;
     using QuizHut.DLL.Repositories.Contracts;
 
     public class ScheduledJobsService : IScheduledJobsService
     {
-        private readonly IDeletableEntityRepository<ScheduledJob> repository;
+        private readonly IRepository<ScheduledJob> repository;
     
-        private readonly IDeletableEntityRepository<Event> eventRepository;
+        private readonly IRepository<Event> eventRepository;
 
         public ScheduledJobsService(
-            IDeletableEntityRepository<ScheduledJob> repository,
-            IDeletableEntityRepository<Event> eventRepository)
+            IRepository<ScheduledJob> repository,
+            IRepository<Event> eventRepository)
         {
             this.repository = repository;
             this.eventRepository = eventRepository;

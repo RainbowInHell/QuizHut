@@ -1,4 +1,4 @@
-﻿namespace QuizHut.DLL.Common.Enumerations
+﻿namespace QuizHut.DLL.Common
 {
     public enum Status
     {

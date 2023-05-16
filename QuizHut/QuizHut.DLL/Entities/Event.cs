@@ -1,16 +1,15 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Enumerations;
-    using QuizHut.DLL.Common.Models;
+    using QuizHut.DLL.Common;
 
-    public class Event : BaseDeletableModel<string>
+    public class Event : BaseEntity<string>
     {
         public Event()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Results = new HashSet<Result>();
-            this.EventsGroups = new HashSet<EventGroup>();
-            this.ScheduledJobs = new HashSet<ScheduledJob>();
+            Id = Guid.NewGuid().ToString();
+            Results = new HashSet<Result>();
+            EventsGroups = new HashSet<EventGroup>();
+            ScheduledJobs = new HashSet<ScheduledJob>();
         }
 
         public string Name { get; set; }
@@ -25,11 +24,11 @@
 
         public TimeSpan DurationOfActivity { get; set; }
 
-        public string QuizId { get; set; }
+        public string? QuizId { get; set; }
+
+        public string? QuizName { get; set; }
 
         public virtual Quiz Quiz { get; set; }
-
-        public string QuizName { get; set; }
 
         public virtual ICollection<Result> Results { get; set; }
 

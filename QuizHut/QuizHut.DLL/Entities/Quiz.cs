@@ -1,13 +1,11 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class Quiz : BaseDeletableModel<string>
+    public class Quiz : BaseEntity<string>
     {
         public Quiz()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Questions = new HashSet<Question>();
+            Id = Guid.NewGuid().ToString();
+            Questions = new HashSet<Question>();
         }
 
         public string Name { get; set; }
@@ -20,7 +18,7 @@
 
         public virtual ApplicationUser Creator { get; set; }
 
-        public string CategoryId { get; set; }
+        public string? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
@@ -28,7 +26,7 @@
 
         public virtual Password Password { get; set; }
 
-        public string EventId { get; set; }
+        public string? EventId { get; set; }
 
         public virtual Event Event { get; set; }
 

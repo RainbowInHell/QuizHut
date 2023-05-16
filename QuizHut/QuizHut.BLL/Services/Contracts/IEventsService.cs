@@ -1,6 +1,6 @@
 ﻿namespace QuizHut.BLL.Services.Contracts
 {
-    using QuizHut.DLL.Common.Enumerations;
+    using QuizHut.DLL.Common;
 
     public interface IEventsService
     {

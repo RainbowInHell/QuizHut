@@ -9,7 +9,6 @@
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             return services;

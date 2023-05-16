@@ -1,13 +1,11 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class Category : BaseDeletableModel<string>
+    public class Category : BaseEntity<string>
     {
         public Category()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Quizzes = new HashSet<Quiz>();
+            Id = Guid.NewGuid().ToString();
+            Quizzes = new HashSet<Quiz>();
         }
 
         public string Name { get; set; }

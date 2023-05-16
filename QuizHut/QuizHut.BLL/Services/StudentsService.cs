@@ -10,12 +10,12 @@
 
     public class StudentsService : IStudentsService
     {
-        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IRepository<ApplicationUser> userRepository;
 
         private readonly IExpressionBuilder expressionBuilder;
 
         public StudentsService(
-            IDeletableEntityRepository<ApplicationUser> userRepository,
+            IRepository<ApplicationUser> userRepository,
             IExpressionBuilder expressionBuilder)
         {
             this.userRepository = userRepository;

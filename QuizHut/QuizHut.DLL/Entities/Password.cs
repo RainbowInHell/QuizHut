@@ -1,8 +1,6 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class Password : BaseModel<int>
+    public class Password : BaseEntity<int>
     {
         public string Content { get; set; }
 

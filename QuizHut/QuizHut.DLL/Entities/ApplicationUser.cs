@@ -2,9 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity;
 
-    using QuizHut.DLL.Common.Models.Contracts;
-
-    public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class ApplicationUser : IdentityUser
     {
         public ApplicationUser()
         {
@@ -34,7 +32,7 @@
 
         public DateTime? DeletedOn { get; set; }
 
-        public string TeacherId { get; set; }
+        public string? TeacherId { get; set; }
 
         public virtual ApplicationUser Teacher { get; set; }
 

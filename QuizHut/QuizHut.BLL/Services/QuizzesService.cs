@@ -10,12 +10,12 @@
 
     public class QuizzesService : IQuizzesService
     {
-        private readonly IDeletableEntityRepository<Quiz> quizRepository;
+        private readonly IRepository<Quiz> quizRepository;
 
         private readonly IExpressionBuilder expressionBuilder;
 
         public QuizzesService(
-            IDeletableEntityRepository<Quiz> quizRepository,
+            IRepository<Quiz> quizRepository,
             IExpressionBuilder expressionBuilder)
         {
             this.quizRepository = quizRepository;

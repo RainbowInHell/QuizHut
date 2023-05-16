@@ -8,7 +8,7 @@
     using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DLL.Common.Enumerations;
+    using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;

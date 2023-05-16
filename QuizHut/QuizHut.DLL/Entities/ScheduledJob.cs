@@ -1,9 +1,12 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class ScheduledJob : BaseDeletableModel<int>
+    public class ScheduledJob : BaseEntity<string>
     {
+        public ScheduledJob()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
         public string JobId { get; set; }
 
         public bool IsActivationJob { get; set; }

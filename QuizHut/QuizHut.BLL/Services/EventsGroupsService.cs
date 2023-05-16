@@ -8,9 +8,9 @@
 
     public class EventsGroupsService : IEventsGroupsService
     {
-        private readonly IDeletableEntityRepository<EventGroup> repository;
+        private readonly IRepository<EventGroup> repository;
 
-        public EventsGroupsService(IDeletableEntityRepository<EventGroup> repository)
+        public EventsGroupsService(IRepository<EventGroup> repository)
         {
             this.repository = repository;
         }
@@ -22,15 +22,18 @@
                 .Where(x => x.GroupId == groupId && x.EventId == eventId)
                 .FirstOrDefaultAsync();
 
-            if (deletedEventGroup != null)
-            {
-                repository.Undelete(deletedEventGroup);
-            }
-            else
-            {
-                var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
-                await repository.AddAsync(eventGroup);
-            }
+            //if (deletedEventGroup != null)
+            //{
+            //    repository.Undelete(deletedEventGroup);
+            //}
+            //else
+            //{
+            //    var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
+            //    await repository.AddAsync(eventGroup);
+            //}
+
+            var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
+            await repository.AddAsync(eventGroup);
 
             await repository.SaveChangesAsync();
         }

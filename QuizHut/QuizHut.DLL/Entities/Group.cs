@@ -1,14 +1,12 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class Group : BaseDeletableModel<string>
+    public class Group : BaseEntity<string>
     {
         public Group()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.StudentsGroups = new HashSet<StudentGroup>();
-            this.EventsGroups = new HashSet<EventGroup>();
+            Id = Guid.NewGuid().ToString();
+            StudentsGroups = new HashSet<StudentGroup>();
+            EventsGroups = new HashSet<EventGroup>();
         }
 
         public string Name { get; set; }

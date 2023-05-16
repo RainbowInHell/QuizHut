@@ -3,20 +3,20 @@
     using System.Globalization;
 
     using Microsoft.EntityFrameworkCore;
-    
+
     using QuizHut.BLL.Expression.Contracts;
     using QuizHut.BLL.Helpers;
     using QuizHut.BLL.MapperConfig;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DLL.Common.Enumerations;
+    using QuizHut.DLL.Common;
     using QuizHut.DLL.Entities;
     using QuizHut.DLL.Repositories.Contracts;
-    
+
     using TimeZoneConverter;
 
     public class EventsService : IEventsService
     {
-        private readonly IDeletableEntityRepository<Event> repository;
+        private readonly IRepository<Event> repository;
 
         private readonly IQuizzesService quizService;
 
@@ -27,7 +27,7 @@
         private readonly IExpressionBuilder expressionBuilder;
 
         public EventsService(
-            IDeletableEntityRepository<Event> repository,
+            IRepository<Event> repository,
             IQuizzesService quizService,
             IEventsGroupsService eventsGroupsService,
             IScheduledJobsService scheduledJobsService,

@@ -10,7 +10,7 @@
 
     public class GroupsService : IGroupsService
     {
-        private readonly IDeletableEntityRepository<Group> repository;
+        private readonly IRepository<Group> repository;
 
         private readonly IStudentsGroupsService studentsGroupsService;
                 
@@ -19,7 +19,7 @@
         private readonly IExpressionBuilder expressionBuilder;
 
         public GroupsService(
-            IDeletableEntityRepository<Group> repository,
+            IRepository<Group> repository,
             IStudentsGroupsService studentsGroupsService,
             IEventsGroupsService eventsGroupsService,
             IExpressionBuilder expressionBuilder)

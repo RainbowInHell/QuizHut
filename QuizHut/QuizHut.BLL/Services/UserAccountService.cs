@@ -52,12 +52,13 @@
 
             CurrentUser.IsLoggedIn = isRightPassword ? true : false;
 
-            var roles = await userManager.GetRolesAsync(user);
+            //var roles = await userManager.GetRolesAsync(user);
 
-            if (roles.Contains("Admin"))
-            {
-                AccountStore.CurrentAdminId = user.Id;
-            }
+            //if (roles.Contains("Admin"))
+            //{
+            //    AccountStore.CurrentAdminId = user.Id;
+            //}
+            AccountStore.CurrentAdminId = user.Id;
 
             return isRightPassword;
         }

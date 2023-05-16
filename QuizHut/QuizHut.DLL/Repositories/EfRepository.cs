@@ -24,8 +24,8 @@
 
         public virtual async Task AddAsync(TEntity entity) => await DbSet.AddAsync(entity);
 
-        public virtual void Update(TEntity entity) => DbSet.Update(entity);
-        //public virtual void Update(TEntity entity) => DbSet.Entry(entity).State = EntityState.Modified;
+        //public virtual void Update(TEntity entity) => DbSet.Update(entity);
+        public virtual void Update(TEntity entity) => DbSet.Entry(entity).State = EntityState.Modified;
 
         public virtual void Delete(TEntity entity) => DbSet.Remove(entity);
 

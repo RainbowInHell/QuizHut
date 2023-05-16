@@ -29,7 +29,7 @@
                 opt.EnableSensitiveDataLogging();
             });
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>(opt =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.Password.RequireDigit = true;
                 opt.Password.RequireLowercase = false;

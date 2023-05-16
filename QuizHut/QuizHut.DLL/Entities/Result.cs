@@ -1,12 +1,10 @@
 ﻿namespace QuizHut.DLL.Entities
 {
-    using QuizHut.DLL.Common.Models;
-
-    public class Result : BaseDeletableModel<string>
+    public class Result : BaseEntity<string>
     {
         public Result()
         {
-            this.Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString();
         }
 
         public int Points { get; set; }

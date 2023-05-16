@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace QuizHut.DLL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialWithPomelo : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,10 +21,6 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -94,12 +90,11 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Content = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false)
+                    Content = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     QuizId = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,7 +123,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -143,17 +138,24 @@ namespace QuizHut.DLL.Migrations
                     ClaimType = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ClaimValue = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ApplicationUserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -168,17 +170,24 @@ namespace QuizHut.DLL.Migrations
                     ProviderDisplayName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ApplicationUserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -189,6 +198,8 @@ namespace QuizHut.DLL.Migrations
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ApplicationUserId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -199,13 +210,18 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -230,7 +246,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -240,14 +256,11 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,7 +270,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -267,21 +280,18 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ActivationDateAndTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     DurationOfActivity = table.Column<TimeSpan>(type: "time(6)", nullable: false),
-                    QuizId = table.Column<string>(type: "longtext", nullable: false)
+                    QuizId = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    QuizName = table.Column<string>(type: "longtext", nullable: false)
+                    QuizName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,7 +301,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -301,14 +311,11 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -318,7 +325,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -328,22 +335,19 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Timer = table.Column<int>(type: "int", nullable: true),
                     CreatorId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CategoryId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    CategoryId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordId = table.Column<int>(type: "int", nullable: true),
-                    EventId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    EventId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -353,19 +357,17 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.CreatorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Quizzes_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Quizzes_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Quizzes_Passwords_PasswordId",
                         column: x => x.PasswordId,
@@ -391,10 +393,7 @@ namespace QuizHut.DLL.Migrations
                     QuizName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     EventActivationDateAndTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -404,13 +403,13 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Results_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -418,17 +417,14 @@ namespace QuizHut.DLL.Migrations
                 name: "ScheduledJobs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     JobId = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActivationJob = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     EventId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -438,7 +434,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -446,32 +442,29 @@ namespace QuizHut.DLL.Migrations
                 name: "EventsGroups",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     EventId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     GroupId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Id = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventsGroups", x => new { x.EventId, x.GroupId });
+                    table.PrimaryKey("PK_EventsGroups", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EventsGroups_Events_EventId",
                         column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EventsGroups_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -479,26 +472,29 @@ namespace QuizHut.DLL.Migrations
                 name: "StudentsGroups",
                 columns: table => new
                 {
+                    Id = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     StudentId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     GroupId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentsGroups", x => new { x.StudentId, x.GroupId });
+                    table.PrimaryKey("PK_StudentsGroups", x => x.Id);
                     table.ForeignKey(
                         name: "FK_StudentsGroups_AspNetUsers_StudentId",
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StudentsGroups_Groups_GroupId",
                         column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -508,15 +504,12 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Text = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Number = table.Column<int>(type: "int", nullable: false),
                     QuizId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -526,7 +519,7 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.QuizId,
                         principalTable: "Quizzes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -536,15 +529,12 @@ namespace QuizHut.DLL.Migrations
                 {
                     Id = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Text = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                    Text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsRightAnswer = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: false),
+                    IsRightAnswer = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     QuestionId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -554,14 +544,9 @@ namespace QuizHut.DLL.Migrations
                         column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Answers_IsDeleted",
-                table: "Answers",
-                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
@@ -574,15 +559,15 @@ namespace QuizHut.DLL.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoles_IsDeleted",
-                table: "AspNetRoles",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_ApplicationUserId",
+                table: "AspNetUserClaims",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -590,9 +575,19 @@ namespace QuizHut.DLL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_ApplicationUserId",
+                table: "AspNetUserLogins",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_ApplicationUserId",
+                table: "AspNetUserRoles",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
@@ -603,11 +598,6 @@ namespace QuizHut.DLL.Migrations
                 name: "EmailIndex",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_IsDeleted",
-                table: "AspNetUsers",
-                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_TeacherId",
@@ -626,19 +616,14 @@ namespace QuizHut.DLL.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_IsDeleted",
-                table: "Categories",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Events_CreatorId",
                 table: "Events",
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Events_IsDeleted",
-                table: "Events",
-                column: "IsDeleted");
+                name: "IX_EventsGroups_EventId",
+                table: "EventsGroups",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventsGroups_GroupId",
@@ -646,30 +631,9 @@ namespace QuizHut.DLL.Migrations
                 column: "GroupId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventsGroups_IsDeleted",
-                table: "EventsGroups",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Groups_CreatorId",
                 table: "Groups",
                 column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Groups_IsDeleted",
-                table: "Groups",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Passwords_Content",
-                table: "Passwords",
-                column: "Content",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Questions_IsDeleted",
-                table: "Questions",
-                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
@@ -693,11 +657,6 @@ namespace QuizHut.DLL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Quizzes_IsDeleted",
-                table: "Quizzes",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Quizzes_PasswordId",
                 table: "Quizzes",
                 column: "PasswordId",
@@ -707,11 +666,6 @@ namespace QuizHut.DLL.Migrations
                 name: "IX_Results_EventId",
                 table: "Results",
                 column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Results_IsDeleted",
-                table: "Results",
-                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Results_StudentId",
@@ -724,14 +678,14 @@ namespace QuizHut.DLL.Migrations
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ScheduledJobs_IsDeleted",
-                table: "ScheduledJobs",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_StudentsGroups_GroupId",
                 table: "StudentsGroups",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StudentsGroups_StudentId",
+                table: "StudentsGroups",
+                column: "StudentId");
         }
 
         /// <inheritdoc />

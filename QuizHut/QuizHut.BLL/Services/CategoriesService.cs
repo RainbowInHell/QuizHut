@@ -10,15 +10,15 @@
 
     public class CategoriesService : ICategoriesService
     {
-        private readonly IDeletableEntityRepository<Category> repository;
+        private readonly IRepository<Category> repository;
 
-        private readonly IDeletableEntityRepository<Quiz> quizRepository;
+        private readonly IRepository<Quiz> quizRepository;
 
         private readonly IExpressionBuilder expressionBuilder;
 
         public CategoriesService(
-            IDeletableEntityRepository<Category> repository,
-            IDeletableEntityRepository<Quiz> quizRepository,
+            IRepository<Category> repository,
+            IRepository<Quiz> quizRepository,
             IExpressionBuilder expressionBuilder)
         {
             this.repository = repository;
