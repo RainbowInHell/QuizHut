@@ -10,7 +10,7 @@
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
-
+    
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>

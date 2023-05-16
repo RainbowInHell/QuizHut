@@ -60,6 +60,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
+
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -133,6 +134,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
+
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
