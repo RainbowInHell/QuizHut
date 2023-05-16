@@ -105,7 +105,7 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadGroupsData("Name", SearchText);
+            await LoadGroupsData(SearchText);
         }
 
         #endregion
@@ -125,9 +125,9 @@
 
         #endregion
 
-        private async Task LoadGroupsData(string searchCriteria = null, string searchText = null)
+        private async Task LoadGroupsData(string searchText = null)
         {
-            var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(AccountStore.CurrentAdminId, searchCriteria: searchCriteria, searchText: searchText);
+            var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(AccountStore.CurrentAdminId, searchText: searchText);
 
             Groups = new(groups);
         }

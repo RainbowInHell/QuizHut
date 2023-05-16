@@ -9,6 +9,7 @@
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
+    using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
@@ -16,20 +17,24 @@
     {
         private readonly IGroupsService groupsService;
 
-        private readonly IStudentsService studentService;
+        private readonly IEventsService eventsService;
+
+        private readonly IStudentsService studentsService;
 
         private readonly ISharedDataStore sharedDataStore;
 
         public GroupSettingsViewModel(
             IGroupsService groupsService,
-            IStudentsService studentService,
+            IEventsService eventsService,
+            IStudentsService studentsService,
             ISharedDataStore sharedDataStore,
             IRenavigator addStudentRenavigator,
             IRenavigator addEventsRenavigator,
             IViewDisplayTypeService groupSettingsTypeService)
         {
             this.groupsService = groupsService;
-            this.studentService = studentService;
+            this.eventsService = eventsService;
+            this.studentsService = studentsService;
             this.sharedDataStore = sharedDataStore;
 
             NavigateAddStudentsCommand = new RenavigateCommand(addStudentRenavigator, ViewDisplayType.AddStudents, groupSettingsTypeService);
@@ -37,6 +42,7 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             DeleteStudentFromGroupCommandAsync = new ActionCommandAsync(OnDeleteStudentFromGroupCommandExecutedAsync, CanDeleteStudentFromGroupCommandExecute);
+            DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync, CanDeleteEventFromGroupCommandExecute);
         }
 
         #region Fields and properties
@@ -48,11 +54,25 @@
             set => Set(ref students, value);
         }
 
+        public ObservableCollection<EventsAssignViewModel> events;
+        public ObservableCollection<EventsAssignViewModel> Events
+        {
+            get => events;
+            set => Set(ref events, value);
+        }
+
         private StudentViewModel selectedStudent;
         public StudentViewModel SelectedStudent
         {
             get => selectedStudent;
             set => Set(ref selectedStudent, value);
+        }
+
+        private EventsAssignViewModel selectedEvent;
+        public EventsAssignViewModel SelectedEvent
+        {
+            get => selectedEvent;
+            set => Set(ref selectedEvent, value);
         }
 
         #endregion
@@ -73,12 +93,14 @@
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
+            await LoadEventsData();
+
             await LoadStudentsData();
         }
 
         #endregion
 
-        #region DeleteStudentFromGroupCommand
+        #region DeleteStudentFromGroupCommandAsync
 
         public ICommandAsync DeleteStudentFromGroupCommandAsync { get; }
 
@@ -93,11 +115,33 @@
 
         #endregion
 
+        #region DeleteEventFromGroupCommandAsync
+
+        public ICommandAsync DeleteEventFromGroupCommandAsync { get; }
+
+        private bool CanDeleteEventFromGroupCommandExecute(object p) => true;
+
+        private async Task OnDeleteEventFromGroupCommandExecutedAsync(object p)
+        {
+            await groupsService.DeleteEventFromGroupAsync(sharedDataStore.SelectedGroupId, SelectedEvent.Id);
+
+            await LoadEventsData();
+        }
+
+        #endregion
+
         private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroupId);
+            var students = await studentsService.GetAllByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroupId);
 
             Students = new(students);
+        }
+
+        private async Task LoadEventsData()
+        {
+            var events = await eventsService.GetAllByGroupIdAsync<EventsAssignViewModel>(sharedDataStore.SelectedGroupId);
+
+            Events = new(events);
         }
     }
 }

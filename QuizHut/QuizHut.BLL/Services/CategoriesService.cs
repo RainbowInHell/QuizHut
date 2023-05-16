@@ -21,14 +21,12 @@
             IDeletableEntityRepository<Quiz> quizRepository,
             IExpressionBuilder expressionBuilder)
         {
-            this.expressionBuilder = expressionBuilder;
             this.repository = repository;
             this.quizRepository = quizRepository;
+            this.expressionBuilder = expressionBuilder;
         }
 
-        public async Task<IEnumerable<T>> GetAllCategories<T>(
-            string creatorId,
-            string searchText = null)
+        public async Task<IEnumerable<T>> GetAllCategories<T>(string creatorId, string searchText = null)
         {
             var query = repository
                 .AllAsNoTracking()
@@ -44,24 +42,6 @@
                 .OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<T>> GetAllByCreatorIdAsync<T>(string creatorId)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.CreatorId == creatorId)
-                .To<T>()
-                .ToListAsync();
-        }
-
-        public async Task<T> GetByIdAsync<T>(string id)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
         }
 
         public async Task AssignQuizzesToCategoryAsync(string id, IEnumerable<string> quizzesIds)

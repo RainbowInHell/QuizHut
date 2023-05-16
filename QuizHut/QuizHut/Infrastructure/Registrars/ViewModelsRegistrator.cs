@@ -15,6 +15,7 @@
     using QuizHut.ViewModels.MainViewModels.GroupViewModels;
     using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
+    using QuizHut.BLL.Helpers.Contracts;
 
     public static class ViewModelsRegistrator
     {
@@ -137,6 +138,7 @@
         {
             return new GroupActionsViewModel(
                 services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IStudentsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
@@ -148,6 +150,7 @@
         {
             return new GroupSettingsViewModel(
                 services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IStudentsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
@@ -189,6 +192,9 @@
         private static EventsViewModel CreateEventsViewModel(IServiceProvider services)
         {
             return new EventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IDateTimeConverter>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
@@ -197,6 +203,10 @@
         private static EventActionsViewModel CreateEventActionsViewModel(IServiceProvider services)
         {
             return new EventActionsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<EventsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
@@ -205,6 +215,10 @@
         private static EventSettingsViewModel CreateEventSettingsViewModel(IServiceProvider services)
         {
             return new EventSettingsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());

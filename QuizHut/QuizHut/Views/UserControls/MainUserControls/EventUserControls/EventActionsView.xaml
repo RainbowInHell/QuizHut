@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
@@ -12,6 +13,11 @@
              HorizontalAlignment="Left" VerticalAlignment="Top"
              d:Margin="150,50,0,0">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
@@ -246,7 +252,7 @@
                           Background="Transparent"
                           Margin="0,5,0,5"
                           Foreground="{StaticResource PrimaryFontColor}">
-                <ItemsControl ItemsSource="{Binding Quizzes}">
+                <ItemsControl ItemsSource="{Binding Groups}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,5">
@@ -371,9 +377,9 @@
                 </StackPanel.Style>
             </StackPanel>-->
 
-            <!-- Add group and Cancel buttons -->
+            <!-- Add event and Cancel buttons -->
             <Button x:Name="EAVAddEventBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding CreateGroupCommandAsync}"
+                        Command="{Binding CreateEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
                         HorizontalAlignment="Left"
@@ -401,7 +407,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="EAVSaveEventDataBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding UpdateCategoryNameCommandAsync}"
+                        Command="{Binding UpdateEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
                         HorizontalAlignment="Left"
@@ -429,7 +435,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="EAVAssignGroupsBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding AssignQuizzesToCategoryCommandAsync}"
+                        Command="{Binding AssignGroupsToEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"
@@ -457,7 +463,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="EAVAssignTestBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding AssignQuizzesToCategoryCommandAsync}"
+                        Command="{Binding AssignQuizToEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"

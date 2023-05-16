@@ -1,14 +1,12 @@
-﻿using AutoMapper;
-using QuizHut.BLL.MapperConfig.Contracts;
-using QuizHut.DLL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizHut.Infrastructure.EntityViewModels.Quizzes
+﻿namespace QuizHut.Infrastructure.EntityViewModels.Quizzes
 {
+    using System;
+
+    using AutoMapper;
+    
+    using QuizHut.BLL.MapperConfig.Contracts;
+    using QuizHut.DLL.Entities;
+
     public class QuizListViewModel : IMapFrom<Quiz>, IHaveCustomMappings
     {
         public string Id { get; set; }

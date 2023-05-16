@@ -36,7 +36,7 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             AddStudentToTeacherListCommandAsync = new ActionCommandAsync(OnAddStudentToTeacherListCommandExecute, CanAddStudentToTeacherListCommandExecute);
-            RemoveStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnRemoveStudentFromTeacherListCommandExecute, CanRemoveStudentFromTeacherListCommandExecute);
+            DeleteStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnDeleteStudentFromTeacherListCommandExecute, CanDeleteStudentFromTeacherListCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
         }
 
@@ -123,13 +123,13 @@
 
         #endregion
 
-        #region RemoveStudentFromTeacherListCommandAsync
+        #region DeleteStudentFromTeacherListCommandAsync
 
-        public ICommandAsync RemoveStudentFromTeacherListCommandAsync { get; }
+        public ICommandAsync DeleteStudentFromTeacherListCommandAsync { get; }
 
-        private bool CanRemoveStudentFromTeacherListCommandExecute(object p) => true;
+        private bool CanDeleteStudentFromTeacherListCommandExecute(object p) => true;
 
-        private async Task OnRemoveStudentFromTeacherListCommandExecute(object p)
+        private async Task OnDeleteStudentFromTeacherListCommandExecute(object p)
         {
             await studentService.DeleteFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
 

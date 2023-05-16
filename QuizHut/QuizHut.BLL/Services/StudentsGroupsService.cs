@@ -20,7 +20,7 @@
             var studentGroup = new StudentGroup() { GroupId = groupId, StudentId = studentId };
 
             var studentExists = await repository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.GroupId == groupId && x.StudentId == studentId)
                 .FirstOrDefaultAsync()
                 != null;
@@ -35,11 +35,12 @@
         public async Task DeleteAsync(string groupId, string studentId)
         {
             var studentGroup = await repository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.GroupId == groupId && x.StudentId == studentId)
                 .FirstOrDefaultAsync();
 
             repository.Delete(studentGroup);
+
             await repository.SaveChangesAsync();
         }
     }

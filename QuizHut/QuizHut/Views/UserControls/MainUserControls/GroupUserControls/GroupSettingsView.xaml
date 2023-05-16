@@ -49,7 +49,7 @@
         <ScrollViewer CanContentScroll="False" 
                       Grid.Row="1" MaxHeight="250">
             <DataGrid x:Name="GSVEventsDataGrid" ItemsSource="{Binding Events}"
-                  SelectedItem="{Binding SelectedGroup}"
+                  SelectedItem="{Binding SelectedEvent}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -59,9 +59,7 @@
                   RowHeight="25">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
-                                    Binding="{Binding FullName}"/>
-                    <DataGridTextColumn Header="Назначено" IsReadOnly="True" Width="*"
-                                    Binding="{Binding Email}"/>
+                                    Binding="{Binding Name}"/>
 
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="150">
                         <DataGridTemplateColumn.CellTemplate>
@@ -70,7 +68,7 @@
                                     <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource RemoveColor1}"
                                         Margin="5,0,0,0"
-                                        Command="{Binding DataContext.DeleteGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        Command="{Binding DataContext.DeleteEventFromGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
                                 </StackPanel>

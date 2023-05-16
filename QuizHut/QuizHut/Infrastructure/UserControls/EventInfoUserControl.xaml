@@ -31,7 +31,8 @@
                        Text="Название:" Margin="0,0,0,5"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="50" FontSize="16" MaxLength="50"
-                     Tag="Введите название группы..."/>
+                     Tag="Введите название группы..."
+                     Text="{Binding EventNameToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         
         <!-- Activation date block -->
@@ -40,7 +41,8 @@
                        Text="Дата активации:" Margin="0,0,0,5"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="50" FontSize="16" MaxLength="10"
-                     Tag="dd/MM/yyyy"/>
+                     Tag="dd/MM/yyyy"
+                     Text="{Binding EventActivationDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         
         <!-- Activate From/To blocks-->
@@ -49,14 +51,16 @@
                        Text="Доступен с: (00:00)" Margin="0,0,0,5"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="50" FontSize="16" MaxLength="5"
-                     Tag="HH:mm"/>
+                     Tag="HH:mm"
+                     Text="{Binding EventAvaliableFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="1" Margin="2,0,0,0">
             <TextBlock Style="{StaticResource MainTextBlock}" FontSize="16" FontWeight="Bold"
                        Text="До: (23:59)" Margin="0,0,0,5"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="50" FontSize="16" MaxLength="5"
-                     Tag="HH:mm"/>
+                     Tag="HH:mm"
+                     Text="{Binding EventAvaliableTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
         <TextBlock Grid.Row="5" Grid.ColumnSpan="2"

@@ -23,8 +23,11 @@
                 .HasForeignKey(r => r.EventId);
 
             eventEntity.Property(g => g.Name)
-           .HasMaxLength(50)
-           .IsRequired();
+                .HasMaxLength(50)
+                .IsRequired();
+
+            eventEntity.Property(g => g.QuizName)
+                .IsRequired(false);
         }
     }
 }

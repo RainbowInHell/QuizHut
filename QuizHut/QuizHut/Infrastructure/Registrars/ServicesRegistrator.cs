@@ -56,6 +56,9 @@
             services.AddTransient<IStudentsGroupsService, StudentsGroupsService>();
             services.AddTransient<IEventsGroupsService, EventsGroupsService>();
             services.AddTransient<IQuizzesService, QuizzesService>();
+            services.AddTransient<IEventsService, EventsService>();
+            services.AddTransient<IScheduledJobsService, ScheduledJobsService>();
+            services.AddTransient<IDateTimeConverter, DateTimeConverter>();
             services.AddTransient<IExpressionBuilder, ExpressionBuilder>();
 
             services.AddSingleton<INavigationService, NavigationService>();

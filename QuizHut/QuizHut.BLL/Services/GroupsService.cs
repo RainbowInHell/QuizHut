@@ -30,11 +30,7 @@
             this.expressionBuilder = expressionBuilder;
         }
 
-        public async Task<IList<T>> GetAllGroupsAsync<T>(
-            string creatorId = null,
-            string eventId = null,
-            string searchCriteria = null,
-            string searchText = null)
+        public async Task<IList<T>> GetAllGroupsAsync<T>(string creatorId = null, string eventId = null, string searchText = null)
         {
             var query = repository.AllAsNoTracking();
 
@@ -48,9 +44,9 @@
                 query = query.Where(x => !x.EventsGroups.Any(x => x.EventId == eventId));
             }
 
-            if (searchCriteria != null && searchText != null)
+            if (searchText != null)
             {
-                var filter = expressionBuilder.GetExpression<Group>(searchCriteria, searchText);
+                var filter = expressionBuilder.GetExpression<Group>("Name", searchText);
                 query = query.Where(filter);
             }
 
@@ -64,24 +60,6 @@
                 .Where(x => x.EventsGroups.Any(x => x.EventId == eventId))
                 .To<T>()
                 .ToListAsync();
-        }
-
-        public async Task<T> GetGroupModelAsync<T>(string groupId)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.Id == groupId)
-                .To<T>()
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<T> GetEventsFirstGroupAsync<T>(string eventId)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.EventsGroups.Any(x => x.EventId == eventId))
-                .To<T>()
-                .FirstOrDefaultAsync();
         }
 
         public async Task<string> CreateGroupAsync(string name, string creatorId)

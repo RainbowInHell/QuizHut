@@ -3,13 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls" 
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
              mc:Ignorable="d" 
              d:Height="600" d:Width="1000"
              Background="Transparent">
-    
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -33,7 +39,9 @@
                    Text="Поиск по:"/>
         <ComboBox Grid.Row="0"
                   Width="100" Height="40"
-                  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,585,0"/>
+                  VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,585,0"
+                  ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
+                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"/>
         <TextBox  x:Name="MVESearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
@@ -94,7 +102,7 @@
 
         <!-- Data grid quizzes -->
         <DataGrid x:Name="MVEEventsDataGrid" ItemsSource="{Binding Events}"
-                  SelectedItem="{Binding SelectedGroup}"
+                  SelectedItem="{Binding SelectedEvent}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -104,11 +112,11 @@
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Начало" IsReadOnly="True" Width="*"
-                                    Binding="{Binding CreatedOnDate}"/>
+                                    Binding="{Binding StartDate}"/>
                 <DataGridTextColumn Header="Длительность" IsReadOnly="True" Width="*"
-                                    Binding="{Binding StudentsCount}"/>
+                                    Binding="{Binding Duration}"/>
                 <DataGridTextColumn Header="Статус" IsReadOnly="True" Width="*"
-                                    Binding="{Binding EventsCount}"/>
+                                    Binding="{Binding Status}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -128,7 +136,7 @@
                                 <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource RemoveColor1}"
                                         Margin="5,0,0,0"
-                                        Command="{Binding DataContext.DeleteGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        Command="{Binding DataContext.DeleteEventCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                             </StackPanel>

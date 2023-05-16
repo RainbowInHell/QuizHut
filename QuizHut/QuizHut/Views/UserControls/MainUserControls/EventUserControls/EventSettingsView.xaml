@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"                          
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -10,6 +11,11 @@
              d:Height="600" d:Width="1000"
              Background="Transparent">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -43,7 +49,7 @@
         <ScrollViewer CanContentScroll="False" 
                       Grid.Row="1" MaxHeight="250">
             <DataGrid x:Name="ESVQuizzesDataGrid" ItemsSource="{Binding Quizzes}"
-                  SelectedItem="{Binding SelectedGroup}"
+                  SelectedItem="{Binding SelectedQuiz}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -54,7 +60,6 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
-
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -66,7 +71,7 @@
                                     <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource RemoveColor1}"
                                         Margin="5,0,0,0"
-                                        Command="{Binding DataContext.DeleteGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        Command="{Binding DataContext.DeleteQuizFromEventCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
                                 </StackPanel>
@@ -116,7 +121,7 @@
 
         <ScrollViewer CanContentScroll="False" 
                       Grid.Row="3" MaxHeight="250">
-            <DataGrid x:Name="CSVGroupsDataGrid" ItemsSource="{Binding Quizzes}"
+            <DataGrid x:Name="CSVGroupsDataGrid" ItemsSource="{Binding Groups}"
                   SelectedItem="{Binding SelectedGroup}"
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
@@ -128,7 +133,6 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
-
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -140,7 +144,7 @@
                                     <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource RemoveColor1}"
                                         Margin="5,0,0,0"
-                                        Command="{Binding DataContext.DeleteGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        Command="{Binding DataContext.DeleteEventFromGroupCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
                                 </StackPanel>

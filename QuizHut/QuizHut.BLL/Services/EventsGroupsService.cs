@@ -18,7 +18,7 @@
         public async Task CreateEventGroupAsync(string eventId, string groupId)
         {
             var deletedEventGroup = await repository
-                .AllAsNoTrackingWithDeleted()
+                .All()
                 .Where(x => x.GroupId == groupId && x.EventId == eventId)
                 .FirstOrDefaultAsync();
 
@@ -38,11 +38,12 @@
         public async Task DeleteAsync(string eventId, string groupId)
         {
             var eventGroup = await repository
-                .AllAsNoTracking()
+                .All()
                 .Where(x => x.EventId == eventId && x.GroupId == groupId)
                 .FirstOrDefaultAsync();
 
             repository.Delete(eventGroup);
+
             await repository.SaveChangesAsync();
         }
     }
