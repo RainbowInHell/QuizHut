@@ -1,9 +1,12 @@
-﻿namespace QuizHut.DLL.EntityFramework
+﻿using Microsoft.EntityFrameworkCore;
+using QuizHut.DLL.Entities;
+
+namespace QuizHut.DLL.EntityFramework
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
-    
+
     using QuizHut.DLL.Entities;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
@@ -49,7 +52,7 @@
             bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
         {
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+                return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -65,6 +68,13 @@
                 .HasOne(q => q.Password)
                 .WithOne(p => p.Quiz)
                 .HasForeignKey<Quiz>(q => q.PasswordId);
+
+            builder.Entity<Quiz>()
+                .HasOne(q => q.Category)
+                .WithMany(p => p.Quizzes)
+                .HasForeignKey(q => q.CategoryId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
