@@ -45,6 +45,9 @@
 
             services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => CreateQuizzesViewModel(services));
             services.AddSingleton<CreateViewModel<AddEditQuizViewModel>>(services => () => CreateAddEditQuizViewModel(services));
+            services.AddSingleton<CreateViewModel<AddEditQuestionViewModel>>(services => () => CreateAddEditQuestionViewModel(services));
+            services.AddSingleton<CreateViewModel<QuizSettingsViewModel>>(services => () => services.GetRequiredService<QuizSettingsViewModel>());
+            services.AddSingleton<CreateViewModel<AddEditAnswerViewModel>>(services => () => CreateAddEditAnswerViewModel(services));
 
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
@@ -67,6 +70,9 @@
 
             services.AddTransient<QuizzesViewModel>();
             services.AddTransient<AddEditQuizViewModel>();
+            services.AddTransient<AddEditQuestionViewModel>();
+            services.AddTransient<QuizSettingsViewModel>();
+            services.AddTransient<AddEditAnswerViewModel>();
 
             services.AddTransient<StudentsViewModel>();
 
@@ -87,6 +93,8 @@
 
             services.AddSingleton<ViewModelRenavigate<QuizzesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<AddEditQuizViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<AddEditQuestionViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<QuizSettingsViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
@@ -247,6 +255,22 @@
         {
             return new AddEditQuizViewModel(
                 services.GetRequiredService<ViewModelRenavigate<QuizzesViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static AddEditQuestionViewModel CreateAddEditQuestionViewModel(IServiceProvider services)
+        {
+            return new AddEditQuestionViewModel(
+                services.GetRequiredService<ViewModelRenavigate<QuizzesViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static AddEditAnswerViewModel CreateAddEditAnswerViewModel(IServiceProvider services)
+        {
+            return new AddEditAnswerViewModel(
+                services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
     }

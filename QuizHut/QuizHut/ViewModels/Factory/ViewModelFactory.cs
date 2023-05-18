@@ -34,6 +34,9 @@
         
         private readonly CreateViewModel<QuizzesViewModel> createQuizzesViewModel;
         private readonly CreateViewModel<AddEditQuizViewModel> createAddEditQuizViewModel;
+        private readonly CreateViewModel<AddEditQuestionViewModel> createAddEditQuestionViewModel;
+        private readonly CreateViewModel<QuizSettingsViewModel> createQuizSettingsViewModel;
+        private readonly CreateViewModel<AddEditAnswerViewModel> createAddEditAnswerViewModel;
 
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
@@ -60,6 +63,9 @@
 
                                             CreateViewModel<QuizzesViewModel> createQuizzesViewModel,
                                             CreateViewModel<AddEditQuizViewModel> createAddEditQuizViewModel,
+                                            CreateViewModel<AddEditQuestionViewModel> createAddEditQuestionViewModel,
+                                            CreateViewModel<QuizSettingsViewModel> createQuizSettingsViewModel,
+                                            CreateViewModel<AddEditAnswerViewModel> createAddEditAnswerViewModel,
 
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
                                             CreateViewModel<StudentsViewModel> createStudentViewModel,
@@ -86,6 +92,9 @@
 
             this.createQuizzesViewModel = createQuizzesViewModel;
             this.createAddEditQuizViewModel = createAddEditQuizViewModel;
+            this.createAddEditQuestionViewModel = createAddEditQuestionViewModel;
+            this.createQuizSettingsViewModel = createQuizSettingsViewModel;
+            this.createAddEditAnswerViewModel = createAddEditAnswerViewModel;
 
             this.createResultViewModel = createResultViewModel;
             this.createStudentViewModel = createStudentViewModel;
@@ -117,6 +126,9 @@
 
                 ViewType.Quiz => createQuizzesViewModel(),
                 ViewType.AddEditQuiz => createAddEditQuizViewModel(),
+                ViewType.AddEditQuestion => createAddEditQuestionViewModel(),
+                ViewType.QuizSettings => createQuizSettingsViewModel(),
+                ViewType.AddEditAnswer => createAddEditAnswerViewModel(),
 
                 ViewType.Result => createResultViewModel(),
                 ViewType.Student => createStudentViewModel(),

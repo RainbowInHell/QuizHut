@@ -83,7 +83,16 @@
             <DataTemplate DataType="{x:Type mvqvm:AddEditQuizViewModel}">
                 <mquc:AddEditQuizView/>
             </DataTemplate>
-            
+            <DataTemplate DataType="{x:Type mvqvm:AddEditQuestionViewModel}">
+                <mquc:AddEditQuestionView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvqvm:QuizSettingsViewModel}">
+                <mquc:QuizSettingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvqvm:AddEditAnswerViewModel}">
+                <mquc:AddEditAnswerView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
                 <muc:StudentsView/>
             </DataTemplate>

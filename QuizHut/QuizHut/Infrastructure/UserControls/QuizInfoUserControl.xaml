@@ -38,7 +38,7 @@
                 <TextBox Style="{StaticResource textBoxStyle}"
                      Height="40" Width="485"
                      Tag="Пароль..."
-                     FontSize="16" MaxLength="10"
+                     FontSize="16" MaxLength="5"
                      Text="{Binding EventActivationDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button x:Name="MVLogoutBtn" Style="{StaticResource UserOptionButton}"
                         VerticalAlignment="Center" Margin="20,0,0,0"
@@ -57,13 +57,14 @@
 
         <TextBlock Grid.Row="2"
                    Style="{StaticResource MainTextBlock}" FontSize="14" FontWeight="Medium"
-                   Text="* пароль генерируется автоматически" Margin="0,0,0,10"/>
+                   Text="* пароль генерируется автоматически, но вы можете изменить его" Margin="0,0,0,10"/>
 
         <!-- Quiz description -->
         <StackPanel Grid.Row="3"  Margin="0,0,2,0">
             <TextBlock Style="{StaticResource MainTextBlock}" FontSize="15" FontWeight="Bold"
                        Text="Описание викторины:" Margin="0,0,0,5"/>
-            <TextBox Style="{StaticResource textBoxStyle}"
+            <TextBox x:Name="QIQuizDescriptionTB"
+                     Style="{StaticResource textBoxStyle}"
                      Height="125" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"
                      VerticalContentAlignment="Top"
                      Text="{Binding EventAvaliableFrom, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

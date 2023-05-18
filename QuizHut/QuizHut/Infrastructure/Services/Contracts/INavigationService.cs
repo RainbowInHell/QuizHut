@@ -28,6 +28,9 @@
 
         Quiz,
         AddEditQuiz,
+        AddEditQuestion,
+        QuizSettings,
+        AddEditAnswer,
 
         Result,
         Student,
