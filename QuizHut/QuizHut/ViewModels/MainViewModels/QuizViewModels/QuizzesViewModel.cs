@@ -9,12 +9,14 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
+    using System.Windows.Input;
 
     using FontAwesome.Sharp;
 
     using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
@@ -47,12 +49,18 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
             IQuizzesService quizzesService,
             ICategoriesService categoriesService,
             IDateTimeConverter dateTimeConverter,
-            ISharedDataStore sharedDataStore)
+            ISharedDataStore sharedDataStore,
+            IRenavigator addQuizRenavigator,
+            IRenavigator editQuizRenavigator,
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.quizzesService = quizzesService;
             this.categoriesService = categoriesService;
             this.dateTimeConverter = dateTimeConverter;
             this.sharedDataStore = sharedDataStore;
+
+            NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateEditQuizCommand = new RenavigateCommand(editQuizRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
@@ -106,6 +114,14 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
             get => searchText;
             set => Set(ref searchText, value);
         }
+
+        #endregion
+
+        #region NavigationCommands
+
+        public ICommand NavigateAddQuizCommand { get; }
+
+        public ICommand NavigateEditQuizCommand { get; }
 
         #endregion
 

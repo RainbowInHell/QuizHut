@@ -43,7 +43,9 @@
             services.AddSingleton<CreateViewModel<CategoryActionsViewModel>>(services => () => CreateCategoryActionsViewModel(services));
             services.AddSingleton<CreateViewModel<CategorySettingsViewModel>>(services => () => CreateCategorySettingsViewModel(services));
 
-            services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => services.GetRequiredService<QuizzesViewModel>());
+            services.AddSingleton<CreateViewModel<QuizzesViewModel>>(services => () => CreateQuizzesViewModel(services));
+            services.AddSingleton<CreateViewModel<AddEditQuizViewModel>>(services => () => CreateAddEditQuizViewModel(services));
+
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
             services.AddTransient<MainViewModel>();
@@ -64,6 +66,8 @@
             services.AddTransient<CategorySettingsViewModel>();
 
             services.AddTransient<QuizzesViewModel>();
+            services.AddTransient<AddEditQuizViewModel>();
+
             services.AddTransient<StudentsViewModel>();
 
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
@@ -80,7 +84,9 @@
 
             services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
-            services.AddSingleton<ViewModelRenavigate<GroupSettingsViewModel>>();
+
+            services.AddSingleton<ViewModelRenavigate<QuizzesViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<AddEditQuizViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
@@ -224,6 +230,23 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static QuizzesViewModel CreateQuizzesViewModel(IServiceProvider services)
+        {
+            return new QuizzesViewModel(
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static AddEditQuizViewModel CreateAddEditQuizViewModel(IServiceProvider services)
+        {
+            return new AddEditQuizViewModel(
+                services.GetRequiredService<ViewModelRenavigate<QuizzesViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
     }

@@ -32,7 +32,9 @@
         private readonly CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel;
         private readonly CreateViewModel<GroupSettingsViewModel> createGroupSettingsViewModel;
         
-        private readonly CreateViewModel<QuizzesViewModel> createQuizViewModel;
+        private readonly CreateViewModel<QuizzesViewModel> createQuizzesViewModel;
+        private readonly CreateViewModel<AddEditQuizViewModel> createAddEditQuizViewModel;
+
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
         private readonly CreateViewModel<UserProfileViewModel> createUserProfileViewModel;
@@ -56,7 +58,9 @@
                                             CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel,
                                             CreateViewModel<GroupSettingsViewModel> createGroupSettingsViewModel,
 
-                                            CreateViewModel<QuizzesViewModel> createQuizViewModel,
+                                            CreateViewModel<QuizzesViewModel> createQuizzesViewModel,
+                                            CreateViewModel<AddEditQuizViewModel> createAddEditQuizViewModel,
+
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
                                             CreateViewModel<StudentsViewModel> createStudentViewModel,
                                             CreateViewModel<UserProfileViewModel> createUserProfileViewModel)
@@ -80,7 +84,9 @@
             this.createGroupActionsViewModel = createGroupActionsViewModel;
             this.createGroupSettingsViewModel = createGroupSettingsViewModel;
 
-            this.createQuizViewModel = createQuizViewModel;
+            this.createQuizzesViewModel = createQuizzesViewModel;
+            this.createAddEditQuizViewModel = createAddEditQuizViewModel;
+
             this.createResultViewModel = createResultViewModel;
             this.createStudentViewModel = createStudentViewModel;
             this.createUserProfileViewModel = createUserProfileViewModel;
@@ -109,7 +115,9 @@
                 ViewType.GroupActions => createGroupActionsViewModel(),
                 ViewType.GroupSettings => createGroupSettingsViewModel(),
 
-                ViewType.Quiz => createQuizViewModel(),
+                ViewType.Quiz => createQuizzesViewModel(),
+                ViewType.AddEditQuiz => createAddEditQuizViewModel(),
+
                 ViewType.Result => createResultViewModel(),
                 ViewType.Student => createStudentViewModel(),
                 ViewType.UserProfile => createUserProfileViewModel(),

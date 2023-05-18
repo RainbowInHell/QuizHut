@@ -491,7 +491,7 @@
                 </Button.Style>
             </Button>
 
-            <Button x:Name="СAVCancelBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVCancelBtn" Grid.Row="5" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"

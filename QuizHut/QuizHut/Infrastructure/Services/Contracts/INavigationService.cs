@@ -27,6 +27,8 @@
         GroupSettings,
 
         Quiz,
+        AddEditQuiz,
+
         Result,
         Student,
         UserProfile,
