@@ -46,7 +46,6 @@
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Tag="Введите текст для поиска..."
                   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Width="400" Height="40" Margin="0,0,130,0"
                   Tag="Введите текст для поиска..."/>
@@ -122,7 +121,9 @@
         </Button>
 
         <!-- Data grid quizzes -->
-        <DataGrid x:Name="MVQQuizzesDataGrid" ItemsSource="{Binding Quizzes}"
+        <DataGrid x:Name="MVQQuizzesDataGrid" 
+                  ItemsSource="{Binding Quizzes}"
+                  SelectedItem="{Binding SelectedQuiz}"                  
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -149,25 +150,24 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Таймер" IsReadOnly="True" Width="100"
-                                    Binding="{Binding }"/>
+                                    Binding="{Binding Timer}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource IconColor1}"
-                                        Width="80">
+                                        Width="80"
+                                        Command="{Binding DataContext.NavigateAddQuestionCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconImage Icon="SquarePlus" Style="{StaticResource GridButtonIcon}"/>
                                         <TextBlock Style="{StaticResource MainTextBlock}" FontSize="12" Foreground="{StaticResource SecondaryFontColor}"
                                                    Text="Вопрос" Margin="3,0,0,0"/>
                                     </StackPanel>
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}"
-                                        Command="{Binding DataContext.DeleteQuizCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
-                                    <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}" 
-                                        Margin="5,0,0,0">
+                                        Margin="5,0,0,0"
+                                        Command="{Binding DataContext.NavigateEditQuizCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource SettingsColor1}" 
@@ -175,7 +175,8 @@
                                     <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}"
-                                        Margin="5,0,0,0">
+                                        Margin="5,0,0,0"
+                                        Command="{Binding DataContext.DeleteQuizCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                             </StackPanel>

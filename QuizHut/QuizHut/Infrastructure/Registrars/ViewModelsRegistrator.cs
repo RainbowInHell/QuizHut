@@ -90,6 +90,7 @@
 
             services.AddSingleton<ViewModelRenavigate<GroupsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<GroupActionsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<GroupSettingsViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<QuizzesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<AddEditQuizViewModel>>();
@@ -245,8 +246,11 @@
         {
             return new QuizzesViewModel(
                 services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<ICategoriesService>(),
+                services.GetRequiredService<IDateTimeConverter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }

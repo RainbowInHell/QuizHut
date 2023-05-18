@@ -51,6 +51,7 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
             IDateTimeConverter dateTimeConverter,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizRenavigator,
+            IRenavigator addQuestionRenavigator,
             IRenavigator editQuizRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
@@ -60,6 +61,7 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
             this.sharedDataStore = sharedDataStore;
 
             NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateAddQuestionCommand = new RenavigateCommand(addQuestionRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateEditQuizCommand = new RenavigateCommand(editQuizRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
@@ -121,6 +123,8 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 
         public ICommand NavigateAddQuizCommand { get; }
 
+        public ICommand NavigateAddQuestionCommand { get; }
+
         public ICommand NavigateEditQuizCommand { get; }
 
         #endregion
@@ -167,9 +171,9 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 
         private async Task OnDeleteQuizCommandExecutedAsync(object p)
         {
-            //await quizzesService.DeleteByIdAsync(SelectedQuiz.Id);
+            await quizzesService.DeleteByIdAsync(SelectedQuiz.Id);
 
-            //await LoadQuizzesData();
+            await LoadQuizzesData();
         }
 
         #endregion
