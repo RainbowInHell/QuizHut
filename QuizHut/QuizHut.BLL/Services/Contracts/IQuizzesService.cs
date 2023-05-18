@@ -18,7 +18,15 @@
 
         Task<T> GetQuizByEventId<T>(string eventId);
 
+        Task<string> GetQuizIdByPasswordAsync(string password);
+
         Task AssignQuizToEventAsync(string eventId, string quizId);
+
+        Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password);
+
+        Task UpdateAsync(string id, string name, string description, int? timer, string password);
+
+        Task DeleteByIdAsync(string id);
 
         Task DeleteEventFromQuizAsync(string eventId, string quizId);
     }

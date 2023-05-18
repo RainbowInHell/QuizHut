@@ -9,5 +9,11 @@
         public string SelectedCategoryId { get; set; }
 
         public string SelectedEventId { get; set; }
+
+        public string SelectedQuizId { get; set; }
+
+        public string SelectedQuestionId { get; set; }
+
+        public string SelectedAnswerId { get; set; }
     }
 }

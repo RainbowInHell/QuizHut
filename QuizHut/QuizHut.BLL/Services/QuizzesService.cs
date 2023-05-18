@@ -12,13 +12,17 @@
     {
         private readonly IRepository<Quiz> quizRepository;
 
+        private readonly IRepository<Password> passwordRepository;
+
         private readonly IExpressionBuilder expressionBuilder;
 
         public QuizzesService(
             IRepository<Quiz> quizRepository,
+            IRepository<Password> passwordRepository,
             IExpressionBuilder expressionBuilder)
         {
             this.quizRepository = quizRepository;
+            this.passwordRepository = passwordRepository;
             this.expressionBuilder = expressionBuilder;
         }
 
@@ -104,6 +108,14 @@
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<string> GetQuizIdByPasswordAsync(string password)
+        {
+            return await quizRepository.AllAsNoTracking()
+                .Where(x => x.Password.Content == password)
+                .Select(x => x.Id)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task AssignQuizToEventAsync(string eventId, string quizId)
         {
             var quiz = await quizRepository
@@ -114,6 +126,74 @@
             quiz.EventId = eventId;
             quizRepository.Update(quiz);
             
+            await quizRepository.SaveChangesAsync();
+        }
+
+        public async Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password)
+        {
+            var quiz = new Quiz
+            {
+                Name = name,
+                Description = description,
+                Timer = timer,
+                CreatorId = creatorId,
+            };
+
+            var passwordEntitiy = new Password() { Content = password, QuizId = quiz.Id };
+
+            await passwordRepository.AddAsync(passwordEntitiy);
+            await passwordRepository.SaveChangesAsync();
+
+            quiz.PasswordId = passwordEntitiy.Id;
+            
+            await quizRepository.AddAsync(quiz);
+            await quizRepository.SaveChangesAsync();
+
+            return quiz.Id;
+        }
+
+        public async Task UpdateAsync(string id, string name, string description, int? timer, string password)
+        {
+            var quiz = await quizRepository
+               .All()
+               .FirstOrDefaultAsync(x => x.Id == id);
+            
+            var passwordEntity = await passwordRepository
+                .All()
+                .Where(x => x.QuizId == id)
+                .FirstOrDefaultAsync();
+
+            if (passwordEntity.Content != password)
+            {
+                passwordEntity.Content = password;
+
+                passwordRepository.Update(passwordEntity);
+                await passwordRepository.SaveChangesAsync();
+            }
+
+            quiz.Name = name;
+            quiz.Description = description;
+            quiz.Timer = timer;
+
+            quizRepository.Update(quiz);
+            await quizRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteByIdAsync(string id)
+        {
+            var quiz = await quizRepository
+                .All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var password = await passwordRepository
+                .All()
+                .Where(x => x.QuizId == id)
+                .FirstOrDefaultAsync();
+
+            passwordRepository.Delete(password);
+            quizRepository.Delete(quiz);
+
+            await passwordRepository.SaveChangesAsync();
             await quizRepository.SaveChangesAsync();
         }
 

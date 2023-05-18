@@ -4,8 +4,14 @@
     {
         string SelectedGroupId { get; set; }
 
-        public string SelectedCategoryId { get; set; }
+        string SelectedCategoryId { get; set; }
 
-        public string SelectedEventId { get; set; }
+        string SelectedEventId { get; set; }
+
+        string SelectedQuizId { get; set; }
+
+        string SelectedQuestionId { get; set; }
+
+        string SelectedAnswerId { get; set; }
     }
 }

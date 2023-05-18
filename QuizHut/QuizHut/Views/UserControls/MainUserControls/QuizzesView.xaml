@@ -30,7 +30,7 @@
         <TextBlock Grid.Row="0" 
                    FontSize="22" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
-                   Text="Кол-во тестов: 0"/>
+                   Text="{Binding Quizzes.Count, Mode=OneWay, StringFormat='Кол-во: {0}'}"/>
 
         <!-- Search -->
         <TextBlock Grid.Row="0" 
@@ -42,8 +42,10 @@
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="450" Height="40" Margin="0,0,130,0"
-                  Tag="Введите текст для поиска..."/>
+                  Tag="Введите текст для поиска..."
+                  Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="0"
+                Command="{Binding SearchCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="110" Height="40"
@@ -66,8 +68,12 @@
         <ComboBox  x:Name="MVQFilterCMB"
                   Grid.Row="2"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="300" Height="35" Margin="0,0,160,0"/>
+                  Width="300" Height="35" Margin="0,0,160,0"
+                  ItemsSource="{Binding Categories}"
+                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                  DisplayMemberPath="Name"/>
         <Button Grid.Row="2"
+                Command="{Binding SearchCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="140" Height="35"
@@ -139,7 +145,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}">
+                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}"
+                                        Command="{Binding DataContext.DeleteQuizCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}" 

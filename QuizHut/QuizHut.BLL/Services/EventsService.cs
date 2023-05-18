@@ -52,7 +52,8 @@
                 query = query.Where(x => x.CreatorId == creatorId);
             }
 
-            if (searchCriteria != null && searchText != null)
+            var emptyNameInput = searchText == null && searchCriteria == "Name";
+            if (searchCriteria != null && !emptyNameInput)
             {
                 var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
                 query = query.Where(filter);
@@ -84,6 +85,28 @@
               .OrderByDescending(x => x.CreatedOn)
               .To<T>()
               .ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllByCreatorIdAndStatus<T>(
+            Status status,
+            string creatorId,
+            string searchCriteria = null,
+            string searchText = null)
+        {
+            var query = repository
+                .AllAsNoTracking()
+                .Where(x => x.Status == status && x.CreatorId == creatorId);
+
+            if (searchCriteria != null && searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
+                query = query.Where(filter);
+            }
+
+            return await query
+                   .OrderByDescending(x => x.CreatedOn)
+                   .To<T>()
+                   .ToListAsync();
         }
 
         public async Task<IList<T>> GetAllByGroupIdAsync<T>(string groupId)

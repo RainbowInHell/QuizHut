@@ -89,7 +89,7 @@
 
         #endregion
 
-        #region CreateGroupCommandAsync
+        #region CreateCategoryCommandAsync
 
         public ICommandAsync CreateCategoryCommandAsync { get; }
 
