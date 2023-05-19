@@ -21,7 +21,7 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
 
         #endregion
 

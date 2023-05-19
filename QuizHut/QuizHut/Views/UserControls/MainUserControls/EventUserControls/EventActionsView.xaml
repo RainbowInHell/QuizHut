@@ -21,19 +21,19 @@
     <UserControl.Style>
         <Style TargetType="UserControl">
             <Style.Triggers>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                     <Setter Property="Height" Value="600"/>
                     <Setter Property="Margin" Value="150,0,0,0"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                     <Setter Property="Height" Value="600"/>
                     <Setter Property="Margin" Value="150,0,0,0"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                     <Setter Property="Height" Value="400"/>
                     <Setter Property="Margin" Value="150,50,0,0"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                     <Setter Property="Height" Value="400"/>
                     <Setter Property="Margin" Value="150,50,0,0"/>
                 </DataTrigger>
@@ -75,16 +75,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -97,16 +97,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -119,16 +119,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -141,16 +141,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -164,16 +164,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -185,16 +185,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -206,16 +206,16 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -229,16 +229,16 @@
                 <controls:EventInfoUserControl.Style>
                     <Style TargetType="controls:EventInfoUserControl">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -265,13 +265,13 @@
                 <ScrollViewer.Style>
                     <Style TargetType="ScrollViewer">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -298,16 +298,16 @@
                 <ScrollViewer.Style>
                     <Style TargetType="ScrollViewer">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -390,16 +390,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -418,16 +418,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -446,16 +446,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -474,16 +474,16 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="5">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="4">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>

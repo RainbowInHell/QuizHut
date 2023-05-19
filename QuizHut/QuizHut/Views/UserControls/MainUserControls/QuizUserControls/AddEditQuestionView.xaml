@@ -46,10 +46,10 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -62,10 +62,10 @@
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -98,10 +98,10 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -120,10 +120,10 @@
                 <Button.Style>
                     <Style TargetType="Button">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding ViewDisplayType}" Value="1">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
                         </Style.Triggers>
@@ -139,17 +139,17 @@
                         VerticalAlignment="Center"
                         Content="Назад"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
-                        Command="{Binding NavigateQuizCommand}"/>
+                        Command="{Binding NavigateQuizSettingsCommand}"/>
 
             <Button x:Name="QAEVViewQuizSettingsBtn" Grid.Row="6" Grid.Column="1"
-                        Command="{Binding NavigateQuizSettingsCommand}"
+                        Command="{Binding NavigateQuizCommand}"
                         Template="{StaticResource ButtonTemplate3}"
                         Foreground="{StaticResource PrimaryActiveColor}" Height="25"
                         VerticalAlignment="Bottom" HorizontalAlignment="Center"
                         FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Перейти к настройкам викторины
+                        Перейти к викторинам
                     </TextBlock>
                 </Button.Content>
             </Button>

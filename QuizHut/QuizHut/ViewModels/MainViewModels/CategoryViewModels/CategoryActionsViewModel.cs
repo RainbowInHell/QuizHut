@@ -50,7 +50,7 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
 
         private string categoryNameToCreate;
         public string CategoryNameToCreate
@@ -148,7 +148,7 @@
 
         private void ViewDisplayTypeService_StateChanged()
         {
-            OnPropertyChanged(nameof(ViewDisplayType));
+            OnPropertyChanged(nameof(CurrentViewDisplayType));
         }
 
         public override void Dispose()

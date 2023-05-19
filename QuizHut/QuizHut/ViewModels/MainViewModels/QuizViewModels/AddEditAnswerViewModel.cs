@@ -17,13 +17,13 @@
         {
             this.viewDisplayTypeService = viewDisplayTypeService;
 
-            NavigateNewQuestionCommand = new RenavigateCommand(newQuestionRenavigator, Infrastructure.Services.Contracts.ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateNewQuestionCommand = new RenavigateCommand(newQuestionRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingsRenavigator);
         }
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
 
         #endregion
 

@@ -156,17 +156,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource IconColor1}"
-                                        Width="80"
-                                        Command="{Binding DataContext.NavigateAddQuestionCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="SquarePlus" Style="{StaticResource GridButtonIcon}"/>
-                                        <TextBlock Style="{StaticResource MainTextBlock}" FontSize="12" Foreground="{StaticResource SecondaryFontColor}"
-                                                   Text="Вопрос" Margin="3,0,0,0"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}" 
-                                        Margin="5,0,0,0"
+                                <Button Style="{StaticResource GridControlButton}" Background="{StaticResource EditColor1}"
                                         Command="{Binding DataContext.NavigateEditQuizCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
