@@ -64,7 +64,7 @@
         {
             get
             {
-                sharedDataStore.SelectedCategoryId = selectedCategory is null ? null : selectedCategory.Id;
+                sharedDataStore.SelectedCategory = selectedCategory;
                 return selectedCategory;
             }
             set => Set(ref selectedCategory, value);

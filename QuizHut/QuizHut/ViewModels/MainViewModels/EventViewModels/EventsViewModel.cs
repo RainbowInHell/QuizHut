@@ -73,7 +73,7 @@
         {
             get
             {
-                sharedDataStore.SelectedEventId = selectedEvent is null ? null : selectedEvent.Id;
+                sharedDataStore.SelectedEvent = selectedEvent;
                 return selectedEvent;
             }
             set => Set(ref selectedEvent, value);

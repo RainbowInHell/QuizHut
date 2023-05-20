@@ -58,6 +58,8 @@
             services.AddTransient<IQuizzesService, QuizzesService>();
             services.AddTransient<IEventsService, EventsService>();
             services.AddTransient<IScheduledJobsService, ScheduledJobsService>();
+            services.AddTransient<IQuestionsService, QuestionsService>();
+            services.AddTransient<IAnswersService, AnswersService>();
             services.AddTransient<IDateTimeConverter, DateTimeConverter>();
             services.AddTransient<IExpressionBuilder, ExpressionBuilder>();
 

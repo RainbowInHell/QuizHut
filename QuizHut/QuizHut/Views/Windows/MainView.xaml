@@ -222,7 +222,7 @@
                             </StackPanel>
                         </Button>
                         <!-- User name and role -->
-                        <TextBlock Text="Александр Парфянович"
+                        <TextBlock Text="{Binding CurrentUserFullName}"
                                    FontSize="16" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    VerticalAlignment="Center"

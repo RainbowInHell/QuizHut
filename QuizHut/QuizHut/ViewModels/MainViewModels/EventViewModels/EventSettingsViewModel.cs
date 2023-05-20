@@ -109,7 +109,7 @@
 
         private async Task OnDeleteEventFromGroupCommandExecutedAsync(object p)
         {
-            await groupsService.DeleteEventFromGroupAsync(SelectedGroup.Id, sharedDataStore.SelectedEventId);
+            await groupsService.DeleteEventFromGroupAsync(SelectedGroup.Id, sharedDataStore.SelectedEvent.Id);
 
             await LoadGroupsData();
         }
@@ -124,7 +124,7 @@
 
         private async Task OnDeleteQuizFromEventCommandExecutedAsync(object p)
         {
-            await eventsService.DeleteQuizFromEventAsync(sharedDataStore.SelectedEventId, SelectedQuiz.Id);
+            await eventsService.DeleteQuizFromEventAsync(sharedDataStore.SelectedEvent.Id, SelectedQuiz.Id);
 
             await LoadQuizzesData();
         }
@@ -133,7 +133,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizz = await quizzesService.GetQuizByEventId<QuizAssignViewModel>(sharedDataStore.SelectedEventId);
+            var quizz = await quizzesService.GetQuizByEventId<QuizAssignViewModel>(sharedDataStore.SelectedEvent.Id);
             
             Quizzes = new();
 
@@ -149,7 +149,7 @@
 
         private async Task LoadGroupsData()
         {
-            var groups = await groupsService.GetAllByEventIdAsync<GroupAssignViewModel>(sharedDataStore.SelectedEventId);
+            var groups = await groupsService.GetAllByEventIdAsync<GroupAssignViewModel>(sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
         }
