@@ -85,7 +85,7 @@
             
             <!-- Add/Cancel button -->
             <Button x:Name="QAEVAddQuizBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding AssignGroupsToEventCommandAsync}"
+                        Command="{Binding CreateQuizCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"
@@ -107,7 +107,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="QAEVSaveQuizNewDataBtn" Grid.Row="5" Grid.Column="1"
-                        Command="{Binding AssignQuizToEventCommandAsync}"
+                        Command="{Binding UpdateQuizCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"

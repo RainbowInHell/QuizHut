@@ -6,7 +6,6 @@
     using System.Windows.Input;
 
     using QuizHut.BLL.Helpers;
-    using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
@@ -58,7 +57,18 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                {
+                    GroupNameToCreate = sharedDataStore.SelectedGroup.Name;
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         public ObservableCollection<StudentViewModel> students;
         public ObservableCollection<StudentViewModel> Students
@@ -95,13 +105,29 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            if (ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Create
+                &&
+                ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+            {
+                return true;
+            }
+
+            return false; 
+        }
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadStudentsData();
+            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddEvents)
+            {
+                await LoadEventsData();
+            }
 
-            await LoadEventsData();
+            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddStudents)
+            {
+                await LoadStudentsData();
+            }
         }
 
         #endregion
@@ -129,7 +155,7 @@
 
         private async Task OnUpdateGroupNameCommandExecutedAsync(object p)
         {
-            await groupsService.UpdateNameAsync(sharedDataStore.SelectedGroupId, GroupNameToCreate);
+            await groupsService.UpdateNameAsync(sharedDataStore.SelectedGroup.Id, GroupNameToCreate);
 
             NavigateGroupCommand.Execute(p);
         }
@@ -148,7 +174,7 @@
 
             if (selectedStudentIds.Any())
             {
-                await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroupId, selectedStudentIds);
+                await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedStudentIds);
             }
 
             NavigateGroupSettingsCommand.Execute(p);
@@ -168,7 +194,7 @@
 
             if (selectedEventIds.Any())
             {
-                await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroupId, selectedEventIds);
+                await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedEventIds);
             }
 
             NavigateGroupSettingsCommand.Execute(p);
@@ -178,14 +204,14 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroupId);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroupId, AccountStore.CurrentAdminId);
+            var events = await eventsService.GetAllFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, AccountStore.CurrentAdminId);
 
             Events = new(events);
         }

@@ -56,7 +56,23 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                {
+                    var timeParts = sharedDataStore.SelectedEvent.Duration.Split('-');
+
+                    EventNameToCreate = sharedDataStore.SelectedEvent.Name;
+                    EventActivationDate = sharedDataStore.SelectedEvent.StartDate;
+                    EventAvaliableFrom = timeParts[0];
+                    EventAvaliableTo = timeParts[1];
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         private string eventNameToCreate;
         public string EventNameToCreate
@@ -114,13 +130,29 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            if (ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Create
+                &&
+                ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadQuizzesData();
+            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddQuizzes)
+            {
+                await LoadQuizzesData();
+            }
 
-            await LoadGroupsData();
+            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddGroups)
+            {
+                await LoadGroupsData();
+            }
         }
 
         #endregion
@@ -186,7 +218,7 @@
                 return;
             }
 
-            await eventsService.UpdateAsync(sharedDataStore.SelectedEventId, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
+            await eventsService.UpdateAsync(sharedDataStore.SelectedEvent.Id, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
 
             NavigateEventCommand.Execute(p);
         }
@@ -203,13 +235,20 @@
         {
             var selectedQuizes = Quizzes.Where(s => s.IsAssigned).ToList();
 
-            if (selectedQuizes.Count() != 1)
+            //if (selectedQuizes.Count() != 1)
+            //{
+            //    // TODO: Error message for user
+            //    return;
+            //}
+            if (selectedQuizes.Count() != 0)
             {
-                // TODO: Error message for user
-                return;
+                foreach (var selectedQuiz in selectedQuizes)
+                {
+                    await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEvent.Id, selectedQuiz.Id);
+                }
             }
 
-            await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEventId, selectedQuizes.First().Id);
+            //await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEvent.Id, selectedQuizes.First().Id);
 
             NavigateEventSettingsCommand.Execute(p);
         }
@@ -232,7 +271,7 @@
                 return;
             }
 
-            await eventsService.AssignGroupsToEventAsync(selectedGroupIds, sharedDataStore.SelectedEventId);
+            await eventsService.AssignGroupsToEventAsync(selectedGroupIds, sharedDataStore.SelectedEvent.Id);
 
             NavigateEventSettingsCommand.Execute(p);
         }
@@ -248,7 +287,7 @@
 
         private async Task LoadGroupsData()
         {
-            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedEventId);
+            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
         }

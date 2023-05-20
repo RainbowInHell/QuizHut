@@ -83,11 +83,12 @@
                      Grid.Row="4" Grid.Column="1"
                      Style="{StaticResource textBoxStyle}"
                      Height="150" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"
-                     VerticalContentAlignment="Top"/>
-
-
+                     VerticalContentAlignment="Top"
+                     Text="{Binding QuestionDescriptionToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
             <!-- Add/Cancel button -->
             <Button x:Name="QAEVAddQuestionBtn" Grid.Row="5" Grid.Column="1"
+                        Command="{Binding CreateQuestionCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"

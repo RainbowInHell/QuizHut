@@ -1,10 +1,4 @@
-﻿using QuizHut.BLL.Helpers;
-using QuizHut.BLL.Services;
-using QuizHut.Infrastructure.Commands.Base.Contracts;
-using QuizHut.Infrastructure.EntityViewModels.Events;
-using System.Threading.Tasks;
-
-namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
+﻿namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -32,9 +26,9 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
-            { "Название", "FullName" },
-            { "Назначен", "FirstName" },
-            { "Не назначен", "LastName" }
+            { "Название", "Name" },
+            { "Назначен", "Assigned" },
+            { "Не назначен", "Unassigned" }
         };
 
         private readonly IQuizzesService quizzesService;
@@ -90,7 +84,7 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
         {
             get
             {
-                sharedDataStore.SelectedQuizId = selectedQuiz is null ? null : selectedQuiz.Id;
+                sharedDataStore.SelectedQuiz = selectedQuiz;
                 return selectedQuiz;
             }
             set => Set(ref selectedQuiz, value);
@@ -175,153 +169,6 @@ namespace QuizHut.ViewModels.MainViewModels.QuizViewModels
 
             await LoadQuizzesData();
         }
-
-        #endregion
-
-        #region CreateUpdateQuiz
-
-        //#region CreateQuizCommandAsync
-
-        //public ICommandAsync CreateQuizCommandAsync { get; }
-
-        //private bool CanCreateQuizCommandExecute(object p) => true;
-
-        //private async Task OnCreateQuizCommandExecutedAsync(object p)
-        //{
-        //    var quizWithSamePasswordId = await quizzesService.GetQuizIdByPasswordAsync("Тут проперти пароля вставить");
-
-        //    if (quizWithSamePasswordId != null)
-        //    {
-        //        // TODO: сообщение об ошибке
-        //        return;
-        //    }
-
-        //    var quizId = await quizzesService.CreateQuizAsync("имя", "описание", 69, AccountStore.CurrentAdminId, "пароль");
-
-        //    sharedDataStore.SelectedQuizId = quizId;
-
-        //    //навигация к созданию вопроса
-        //}
-
-        //#endregion
-
-        //#region UpdateQuizCommandAsync
-
-        //public ICommandAsync UpdateQuizCommandAsync { get; }
-
-        //private bool CanUpdateQuizCommandExecute(object p) => true;
-
-        //private async Task OnUpdateQuizCommandExecutedAsync(object p)
-        //{
-        //    var quizWithSamePasswordId = await quizzesService.GetQuizIdByPasswordAsync("Тут проперти пароля вставить");
-
-        //    if (quizWithSamePasswordId != null && quizWithSamePasswordId != sharedDataStore.SelectedQuizId)
-        //    {
-        //        // TODO: сообщение об ошибке
-        //        return;
-        //    }
-
-        //    await quizzesService.UpdateAsync("Id", "имя", "описание", 69, AccountStore.CurrentAdminId, "пароль");
-
-        //    //навигация к шестеренке квиза
-        //}
-
-        #endregion
-
-        #region CreateUpdateDeleteQuestion
-
-        //#region CreateQuestionCommandAsync
-
-        //public ICommandAsync CreateQuestionCommandAsync { get; }
-
-        //private bool CanCreateQuestionCommandExecute(object p) => true;
-        //private async Task OnCreateQuestionCommandExecutedAsync(object p)
-        //{
-        //    var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuizId, "ТЕКСТ ВОПРОСА ИЗ ПРОПЕРТИ");
-
-        //    sharedDataStore.SelectedQuestionId = questionId;
-
-        //    //навигация к созданию ответа
-        //}
-
-        //#region UpdateQuestionCommandAsync
-
-        //public ICommandAsync UpdateQuestionCommandAsync { get; }
-
-        //private bool CanUpdateQuestionCommandExecute(object p) => true;
-
-        //private async Task OnUpdateQuestionCommandExecutedAsync(object p)
-        //{
-        //    await questionsService.Update(sharedDataStore.SelectedQuestionId, "Новый текст");
-
-        //    //навигация на шестеренку
-        //}
-
-        //#endregion
-
-        //#endregion
-
-        //#region DeleteQuestionCommandAsync
-
-        //public ICommandAsync DeleteQuestionCommandAsync { get; }
-
-        //private bool CanDeleteQuestionCommandExecute(object p) => true;
-
-        //private async Task OnDeleteQuestionCommandExecutedAsync(object p)
-        //{
-        //    await questionsService.DeleteQuestionByIdAsync(sharedDataStore.SelectedQuestionId);
-        //}
-
-        //#endregion
-
-        #endregion
-
-        #region CreateUpdateDeleteAnswer
-
-        //#region CreateAnswerCommandAsync
-
-        //public ICommandAsync CreateAnswerCommandAsync { get; }
-
-        //private bool CanCreateAnswerCommandExecute(object p) => true;
-
-        //private async Task OnCreateAnswerCommandExecutedAsync(object p)
-        //{
-        //    await answerService.CreateAnswerAsync("текст ответа", "правильный ли вопрос", sharedDataStore.SelectedQuestionId);
-
-        //    //навигация к созданию ответа
-        //}
-
-        //#endregion
-
-        //#region UpdateAnswerCommandAsync
-
-        //public ICommandAsync UpdateAnswerCommandAsync { get; }
-
-        //private bool CanUpdateAnswerCommandExecute(object p) => true;
-
-        //private async Task OnUpdateAnswerCommandExecutedAsync(object p)
-        //{
-        //    await answerService.UpdateAsync(sharedDataStore.SelectedAnswerId, "текст ответа", "правильный ли вопрос");
-
-        //    //навигация
-        //}
-
-        //#endregion
-
-        //#region DeleteAnswerCommandAsync
-
-        //public ICommandAsync DeleteAnswerCommandAsync { get; }
-
-        //private bool CanDeleteAnswerCommandExecute(object p) => true;
-
-        //private async Task OnDeleteAnswerCommandExecutedAsync(object p)
-        //{
-        //    await answerService.DeleteAsync(sharedDataStore.SelectedAnswerId);
-
-        //    //навигация
-        //}
-
-        //#endregion
 
         #endregion
 

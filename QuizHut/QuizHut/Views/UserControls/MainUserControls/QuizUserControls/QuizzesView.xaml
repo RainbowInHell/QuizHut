@@ -41,7 +41,9 @@
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
                   Width="100" Height="35" Margin="0,0,540,0"
-                  FontFamily="{StaticResource Manrope}" FontSize="16"/>
+                  FontFamily="{StaticResource Manrope}" FontSize="16"
+                  ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
+                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"/>
         <TextBox  x:Name="MVQSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
@@ -128,7 +130,24 @@
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{StaticResource DataGridRowStyle1}" 
-            Grid.Row="4" Width="1000">
+                  Grid.Row="4" Width="1000">
+
+            <!--<DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <DataGrid x:Name="DG_myMarks" ItemsSource="{Binding Quizzes}" 
+                      GridLinesVisibility="Vertical"
+                      CanUserAddRows="False"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="English" Binding="{Binding Name}" />
+                            <DataGridTextColumn Header="Maths" Binding="{Binding Maths}" />
+                            <DataGridTextColumn Header="Science" Binding="{Binding Science}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>-->
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>

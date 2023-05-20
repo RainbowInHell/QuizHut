@@ -1,7 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.GroupViewModels
 {
     using System.Collections.ObjectModel;
-    using System.ComponentModel;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -65,7 +64,7 @@
         {
             get
             {
-                sharedDataStore.SelectedGroupId = selectedGroup is null ? null : selectedGroup.Id;
+                sharedDataStore.SelectedGroup = selectedGroup;
                 return selectedGroup;
             }
             set => Set(ref selectedGroup, value);

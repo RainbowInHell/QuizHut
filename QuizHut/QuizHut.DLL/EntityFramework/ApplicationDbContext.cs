@@ -58,6 +58,7 @@ namespace QuizHut.DLL.EntityFramework
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            //Связать убираем внешние ключи, и гооврим, что первичные он и есть внешний(не создаем доп поле)
 
             builder.Entity<Quiz>()
                 .HasOne(q => q.Event)

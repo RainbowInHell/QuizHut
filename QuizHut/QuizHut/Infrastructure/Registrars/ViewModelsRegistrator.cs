@@ -2,21 +2,23 @@
 {
     using System;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
     using QuizHut.BLL.Dto.DtoValidators;
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
-    using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
-    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
     using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
+    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
-    using QuizHut.BLL.Helpers.Contracts;
+    using QuizHut.ViewModels.StartViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -96,6 +98,8 @@
             services.AddSingleton<ViewModelRenavigate<AddEditQuizViewModel>>();
             services.AddSingleton<ViewModelRenavigate<AddEditQuestionViewModel>>();
             services.AddSingleton<ViewModelRenavigate<QuizSettingsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<AddEditAnswerViewModel>>();
+
             services.AddSingleton<ViewModelRenavigate<AddEditAnswerViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
@@ -259,21 +263,30 @@
         private static AddEditQuizViewModel CreateAddEditQuizViewModel(IServiceProvider services)
         {
             return new AddEditQuizViewModel(
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<QuizzesViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static AddEditQuestionViewModel CreateAddEditQuestionViewModel(IServiceProvider services)
         {
             return new AddEditQuestionViewModel(
+                services.GetRequiredService<IQuestionsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<QuizzesViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditAnswerViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static AddEditAnswerViewModel CreateAddEditAnswerViewModel(IServiceProvider services)
         {
             return new AddEditAnswerViewModel(
+                services.GetRequiredService<IAnswersService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditAnswerViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
