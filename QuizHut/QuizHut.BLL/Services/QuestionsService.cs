@@ -19,9 +19,10 @@
             this.quizRepository = quizRepository;
         }
 
-        public async Task<IList<T>> GetAllByQuizIdAsync<T>(string id)
+        public async Task<IList<T>> GetAllQuestionsByQuizIdAsync<T>(string id)
         {
-            return await repository.AllAsNoTracking()
+            return await repository
+                .AllAsNoTracking()
                 .Where(x => x.QuizId == id)
                 .OrderBy(x => x.Number)
                 .To<T>()
@@ -30,7 +31,7 @@
 
         public async Task<string> CreateQuestionAsync(string quizId, string questionText)
         {
-            var quiz = await quizRepository.AllAsNoTracking().Select(x => new
+            var quiz = await quizRepository.All().Select(x => new
             {
                 x.Id,
                 Questions = x.Questions.Count(),
@@ -49,10 +50,10 @@
             return question.Id;
         }
 
-        public async Task Update(string id, string text)
+        public async Task UpdateQuestionAsync(string id, string text)
         {
             var question = await repository
-                .AllAsNoTracking()
+                .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
             
             question.Text = text;
@@ -61,12 +62,12 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task UpdateAllQuestionsInQuizNumeration(string quizId)
+        public async Task UpdateAllQuestionsInQuizNumerationAsync(string quizId)
         {
             var count = 0;
 
             var questions = repository
-              .AllAsNoTracking()
+              .All()
               .Where(x => x.QuizId == quizId)
               .OrderBy(x => x.Number);
 
@@ -82,13 +83,13 @@
         public async Task DeleteQuestionByIdAsync(string id)
         {
             var question = await repository
-                .AllAsNoTracking()
+                .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
             
             repository.Delete(question);
             await repository.SaveChangesAsync();
             
-            await this.UpdateAllQuestionsInQuizNumeration(question.QuizId);
+            await UpdateAllQuestionsInQuizNumerationAsync(question.QuizId);
         }
     }
 }

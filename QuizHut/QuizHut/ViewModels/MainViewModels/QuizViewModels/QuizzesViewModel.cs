@@ -35,6 +35,8 @@
 
         private readonly ICategoriesService categoriesService;
 
+        private readonly IEventsService eventsService;
+
         private readonly IDateTimeConverter dateTimeConverter;
 
         private readonly ISharedDataStore sharedDataStore;
@@ -42,21 +44,25 @@
         public QuizzesViewModel(
             IQuizzesService quizzesService,
             ICategoriesService categoriesService,
+            IEventsService eventsService,
             IDateTimeConverter dateTimeConverter,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizRenavigator,
             IRenavigator addQuestionRenavigator,
             IRenavigator editQuizRenavigator,
+            IRenavigator quizSettingRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.quizzesService = quizzesService;
             this.categoriesService = categoriesService;
+            this.eventsService = eventsService;
             this.dateTimeConverter = dateTimeConverter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateAddQuestionCommand = new RenavigateCommand(addQuestionRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateEditQuizCommand = new RenavigateCommand(editQuizRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
+            NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
@@ -121,6 +127,8 @@
 
         public ICommand NavigateEditQuizCommand { get; }
 
+        public ICommand NavigateQuizSettingsCommand { get; }
+
         #endregion
 
         #region LoadDataCommand
@@ -165,7 +173,12 @@
 
         private async Task OnDeleteQuizCommandExecutedAsync(object p)
         {
-            await quizzesService.DeleteByIdAsync(SelectedQuiz.Id);
+            if (SelectedQuiz.EventId != null)
+            {
+                await eventsService.DeleteQuizFromEventAsync(SelectedQuiz.EventId, SelectedQuiz.Id);
+            }
+
+            await quizzesService.DeleteQuizAsync(SelectedQuiz.Id);
 
             await LoadQuizzesData();
         }
@@ -192,15 +205,3 @@
         }
     }
 }
-
-//#region GetAllEndedEventsCommandAsync
-
-//public ICommandAsync GetAllEndedEventsCommandAsync { get; }
-//private bool CanGetAllEndedEventsCommandExecute(object p) => true;
-
-//private async Task OnGetAllEndedEventsExecutedAsync(object p)
-//{
-//    await eventsService.GetAllByCreatorIdAndStatus<EventSimpleViewModel>(Status.Ended, AccountStore.CurrentAdminId, SearchText, SearchCriteria);
-//}
-
-//#endregion

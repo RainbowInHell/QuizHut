@@ -12,7 +12,6 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
-    using System.Linq;
 
     class EventSettingsViewModel : ViewModel
     {
@@ -31,6 +30,7 @@
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizzesRenavigator,
             IRenavigator addGroupsRenavigator,
+            IRenavigator quizSettingRenavigator,
             IViewDisplayTypeService groupSettingsTypeService)
         {
             this.eventsService = eventsService;
@@ -40,6 +40,7 @@
 
             NavigateAddQuizzesCommand = new RenavigateCommand(addQuizzesRenavigator, ViewDisplayType.AddQuizzes, groupSettingsTypeService);
             NavigateAddGroupsCommand = new RenavigateCommand(addGroupsRenavigator, ViewDisplayType.AddGroups, groupSettingsTypeService);
+            NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync, CanDeleteEventFromGroupCommandExecute);
@@ -51,6 +52,8 @@
         public ICommand NavigateAddQuizzesCommand { get; }
 
         public ICommand NavigateAddGroupsCommand { get; }
+
+        public ICommand NavigateQuizSettingsCommand { get; }
 
         #endregion
 
@@ -73,7 +76,11 @@
         private QuizAssignViewModel selectedQuiz;
         public QuizAssignViewModel SelectedQuiz
         {
-            get => selectedQuiz;
+            get
+            {
+                sharedDataStore.SelectedQuiz = new () { Id =  selectedQuiz?.Id };
+                return selectedQuiz;
+            }
             set => Set(ref selectedQuiz, value);
         }
 
@@ -133,23 +140,14 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizz = await quizzesService.GetQuizByEventId<QuizAssignViewModel>(sharedDataStore.SelectedEvent.Id);
-            
-            Quizzes = new();
+            var quizzes = await quizzesService.GetQuizzesByEventId<QuizAssignViewModel>(sharedDataStore.SelectedEvent.Id);
 
-            if (quizz != null)
-            {
-                Quizzes.Add(quizz);
-            }
-            else
-            {
-                Quizzes.DefaultIfEmpty();
-            }
+            Quizzes = new(quizzes);
         }
 
         private async Task LoadGroupsData()
         {
-            var groups = await groupsService.GetAllByEventIdAsync<GroupAssignViewModel>(sharedDataStore.SelectedEvent.Id);
+            var groups = await groupsService.GetAllGroupsByEventIdAsync<GroupAssignViewModel>(sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
         }

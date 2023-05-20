@@ -78,7 +78,8 @@
 
             return category.Id;
         }
-        public async Task UpdateNameAsync(string id, string newName)
+
+        public async Task UpdateCategoryNameAsync(string id, string newName)
         {
             var category = await repository
                 .All()
@@ -91,7 +92,7 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteCategoryAsync(string id)
         {
             var category = await repository
                 .All()

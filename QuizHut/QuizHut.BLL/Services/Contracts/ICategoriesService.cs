@@ -8,9 +8,9 @@
 
         Task<string> CreateCategoryAsync(string name, string creatorId);
 
-        Task UpdateNameAsync(string id, string newName);
+        Task UpdateCategoryNameAsync(string id, string newName);
 
-        Task DeleteAsync(string id);
+        Task DeleteCategoryAsync(string id);
 
         Task DeleteQuizFromCategoryAsync(string categoryId, string quizId);
     }

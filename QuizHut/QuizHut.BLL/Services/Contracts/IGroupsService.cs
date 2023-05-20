@@ -4,7 +4,7 @@
     {
         Task<IList<T>> GetAllGroupsAsync<T>(string creatorId = null, string eventId = null, string searchText = null);
 
-        Task<IEnumerable<T>> GetAllByEventIdAsync<T>(string eventId);
+        Task<IEnumerable<T>> GetAllGroupsByEventIdAsync<T>(string eventId);
 
         Task AssignStudentsToGroupAsync(string groupId, IList<string> studentsIds);
 
@@ -12,9 +12,9 @@
 
         Task<string> CreateGroupAsync(string name, string creatorId);
 
-        Task UpdateNameAsync(string groupId, string newName);
+        Task UpdateGroupNameAsync(string groupId, string newName);
 
-        Task DeleteAsync(string groupId);
+        Task DeleteGroupAsync(string groupId);
 
         Task DeleteStudentFromGroupAsync(string groupId, string studentId);
 

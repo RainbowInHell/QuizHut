@@ -132,14 +132,14 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentsService.GetAllByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
+            var students = await studentsService.GetAllStudentsByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllByGroupIdAsync<EventsAssignViewModel>(sharedDataStore.SelectedGroup.Id);
+            var events = await eventsService.GetAllEventsByGroupIdAsync<EventsAssignViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Events = new(events);
         }

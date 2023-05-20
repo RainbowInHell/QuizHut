@@ -32,7 +32,7 @@
 
             NavigateQuizCommand = new RenavigateCommand(quizRenavigator);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingsRenavigator);
-            NavigateCreateAnswerCommand = new RenavigateCommand(answerCreateRenavigator, Infrastructure.Services.Contracts.ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateCreateAnswerCommand = new RenavigateCommand(answerCreateRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             CreateQuestionCommandAsync = new ActionCommandAsync(OnCreateQuestionCommandExecutedAsync, CanCreateQuestionCommandExecute);
             UpdateQuestionCommandAsync = new ActionCommandAsync(OnUpdateQuestionCommandExecutedAsync, CanUpdateQuestionCommandExecute);
@@ -40,7 +40,18 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
+                {
+                    QuestionDescriptionToCreate = sharedDataStore.SelectedQuestion.Text;
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         private string questionDescriptionToCreate;
         public string QuestionDescriptionToCreate
@@ -70,7 +81,13 @@
         {
             var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuiz.Id, QuestionDescriptionToCreate);
 
-            sharedDataStore.SelectedQuestionId = questionId;
+            if (sharedDataStore.SelectedQuestion == null)
+            {
+                sharedDataStore.SelectedQuestion = new()
+                {
+                    Id = questionId
+                };
+            }
 
             NavigateCreateAnswerCommand.Execute(p);
         }
@@ -85,24 +102,11 @@
 
         private async Task OnUpdateQuestionCommandExecutedAsync(object p)
         {
-            await questionsService.Update(sharedDataStore.SelectedQuestionId, QuestionDescriptionToCreate);
+            await questionsService.UpdateQuestionAsync(sharedDataStore.SelectedQuestion.Id, QuestionDescriptionToCreate);
 
-            //навигация на шестеренку
+            NavigateQuizSettingsCommand.Execute(p);
         }
 
         #endregion
-
-        //#region DeleteQuestionCommandAsync
-
-        //public ICommandAsync DeleteQuestionCommandAsync { get; }
-
-        //private bool CanDeleteQuestionCommandExecute(object p) => true;
-
-        //private async Task OnDeleteQuestionCommandExecutedAsync(object p)
-        //{
-        //    await questionsService.DeleteQuestionByIdAsync(sharedDataStore.SelectedQuestionId);
-        //}
-
-        //#endregion
     }
 }

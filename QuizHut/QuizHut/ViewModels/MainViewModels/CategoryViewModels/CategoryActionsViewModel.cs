@@ -54,7 +54,7 @@
         {
             get
             {
-                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
                 {
                     CategoryNameToCreate = sharedDataStore.SelectedCategory.Name;
                 }
@@ -93,9 +93,7 @@
 
         private bool CanLoadDataCommandExecute(object p)
         {
-            if (ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Create
-                &&
-                ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+            if (CurrentViewDisplayType == ViewDisplayType.AddQuizzes)
             {
                 return true;
             }
@@ -133,7 +131,7 @@
 
         private async Task OnUpdateCategoryNameCommandExecutedAsync(object p)
         {
-            await categoriesService.UpdateNameAsync(sharedDataStore.SelectedCategory.Id, CategoryNameToCreate);
+            await categoriesService.UpdateCategoryNameAsync(sharedDataStore.SelectedCategory.Id, CategoryNameToCreate);
 
             NavigateCategoryCommand.Execute(p);
         }
@@ -162,7 +160,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetUnAssignedToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, AccountStore.CurrentAdminId);
 
             Quizzes = new(quizzes);
         }

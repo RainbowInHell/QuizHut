@@ -19,20 +19,19 @@
         {
             var studentGroup = new StudentGroup() { GroupId = groupId, StudentId = studentId };
 
-            var studentExists = await repository
+            var student = await repository
                 .All()
                 .Where(x => x.GroupId == groupId && x.StudentId == studentId)
-                .FirstOrDefaultAsync()
-                != null;
+                .FirstOrDefaultAsync();
 
-            if (!studentExists)
+            if (student is null)
             {
                 await repository.AddAsync(studentGroup);
                 await repository.SaveChangesAsync();
             }
         }
 
-        public async Task DeleteAsync(string groupId, string studentId)
+        public async Task DeleteStudentGroupAsync(string groupId, string studentId)
         {
             var studentGroup = await repository
                 .All()

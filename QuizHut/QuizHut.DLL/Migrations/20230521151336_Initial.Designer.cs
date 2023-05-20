@@ -11,7 +11,7 @@ using QuizHut.DLL.EntityFramework;
 namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230516173917_Initial")]
+    [Migration("20230521151336_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -325,12 +325,6 @@ namespace QuizHut.DLL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("QuizId")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("QuizName")
-                        .HasColumnType("longtext");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -389,28 +383,6 @@ namespace QuizHut.DLL.Migrations
                     b.ToTable("Groups");
                 });
 
-            modelBuilder.Entity("QuizHut.DLL.Entities.Password", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("QuizId")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Passwords");
-                });
-
             modelBuilder.Entity("QuizHut.DLL.Entities.Question", b =>
                 {
                     b.Property<string>("Id")
@@ -463,8 +435,9 @@ namespace QuizHut.DLL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("PasswordId")
-                        .HasColumnType("int");
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("Timer")
                         .HasColumnType("int");
@@ -475,11 +448,7 @@ namespace QuizHut.DLL.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("EventId")
-                        .IsUnique();
-
-                    b.HasIndex("PasswordId")
-                        .IsUnique();
+                    b.HasIndex("EventId");
 
                     b.ToTable("Quizzes");
                 });
@@ -727,8 +696,7 @@ namespace QuizHut.DLL.Migrations
                 {
                     b.HasOne("QuizHut.DLL.Entities.Category", "Category")
                         .WithMany("Quizzes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("QuizHut.DLL.Entities.ApplicationUser", "Creator")
                         .WithMany("CreatedQuizzes")
@@ -737,20 +705,14 @@ namespace QuizHut.DLL.Migrations
                         .IsRequired();
 
                     b.HasOne("QuizHut.DLL.Entities.Event", "Event")
-                        .WithOne("Quiz")
-                        .HasForeignKey("QuizHut.DLL.Entities.Quiz", "EventId");
-
-                    b.HasOne("QuizHut.DLL.Entities.Password", "Password")
-                        .WithOne("Quiz")
-                        .HasForeignKey("QuizHut.DLL.Entities.Quiz", "PasswordId");
+                        .WithMany("Quizzes")
+                        .HasForeignKey("EventId");
 
                     b.Navigation("Category");
 
                     b.Navigation("Creator");
 
                     b.Navigation("Event");
-
-                    b.Navigation("Password");
                 });
 
             modelBuilder.Entity("QuizHut.DLL.Entities.Result", b =>
@@ -832,8 +794,7 @@ namespace QuizHut.DLL.Migrations
                 {
                     b.Navigation("EventsGroups");
 
-                    b.Navigation("Quiz")
-                        .IsRequired();
+                    b.Navigation("Quizzes");
 
                     b.Navigation("Results");
 
@@ -845,12 +806,6 @@ namespace QuizHut.DLL.Migrations
                     b.Navigation("EventsGroups");
 
                     b.Navigation("StudentsGroups");
-                });
-
-            modelBuilder.Entity("QuizHut.DLL.Entities.Password", b =>
-                {
-                    b.Navigation("Quiz")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("QuizHut.DLL.Entities.Question", b =>

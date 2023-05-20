@@ -2,7 +2,6 @@
 {
     using Microsoft.EntityFrameworkCore;
 
-    using QuizHut.BLL.MapperConfig;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Entities;
     using QuizHut.DLL.Repositories.Contracts;
@@ -14,15 +13,6 @@
         public AnswersService(IRepository<Answer> repository)
         {
             this.repository = repository;
-        }
-
-        public async Task<T> GetByIdAsync<T>(string id)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .To<T>()
-                .FirstOrDefaultAsync();
         }
 
         public async Task CreateAnswerAsync(string answerText, bool isRightAnswer, string questionId)
@@ -38,23 +28,23 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(string id, string text, bool isRightAnswer)
+        public async Task UpdateAnswerAsync(string id, string text, bool isRightAnswer)
         {
             var answer = await repository
-                .AllAsNoTracking()
+                .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             answer.Text = text;
             answer.IsRightAnswer = isRightAnswer;
-
             repository.Update(answer);
+
             await repository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAnswerAsync(string id)
         {
             var answer = await repository
-                .AllAsNoTracking()
+                .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             repository.Delete(answer);
