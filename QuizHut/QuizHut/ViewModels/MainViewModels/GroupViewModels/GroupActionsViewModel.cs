@@ -61,7 +61,7 @@
         {
             get
             {
-                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
                 {
                     GroupNameToCreate = sharedDataStore.SelectedGroup.Name;
                 }
@@ -107,9 +107,9 @@
 
         private bool CanLoadDataCommandExecute(object p)
         {
-            if (ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Create
+            if (CurrentViewDisplayType != ViewDisplayType.Create
                 &&
-                ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                CurrentViewDisplayType != ViewDisplayType.Edit)
             {
                 return true;
             }
@@ -119,12 +119,12 @@
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddEvents)
+            if (CurrentViewDisplayType == ViewDisplayType.AddEvents)
             {
                 await LoadEventsData();
             }
 
-            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddStudents)
+            if (CurrentViewDisplayType == ViewDisplayType.AddStudents)
             {
                 await LoadStudentsData();
             }
@@ -155,7 +155,7 @@
 
         private async Task OnUpdateGroupNameCommandExecutedAsync(object p)
         {
-            await groupsService.UpdateNameAsync(sharedDataStore.SelectedGroup.Id, GroupNameToCreate);
+            await groupsService.UpdateGroupNameAsync(sharedDataStore.SelectedGroup.Id, GroupNameToCreate);
 
             NavigateGroupCommand.Execute(p);
         }
@@ -211,7 +211,7 @@
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, AccountStore.CurrentAdminId);
+            var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, AccountStore.CurrentAdminId);
 
             Events = new(events);
         }

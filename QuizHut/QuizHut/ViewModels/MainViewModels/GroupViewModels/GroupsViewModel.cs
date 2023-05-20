@@ -123,7 +123,7 @@
 
         private async Task OnDeleteGroupCommandExecutedAsync(object p)
         {
-            await groupsService.DeleteAsync(SelectedGroup.Id);
+            await groupsService.DeleteGroupAsync(SelectedGroup.Id);
 
             await LoadGroupsData();
         }

@@ -116,7 +116,7 @@
                 </Button.Style>
             </Button>
             <Button x:Name="AAEVSaveAnswerNewDataBtn" Grid.Row="6" Grid.Column="1"
-                        Command="{Binding AssignQuizToEventCommandAsync}"
+                        Command="{Binding UpdateAnswerCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"

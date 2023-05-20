@@ -32,7 +32,7 @@
             this.viewDisplayTypeService = viewDisplayTypeService;
 
             NavigateQuizCommand = new RenavigateCommand(quizRenavigator);
-            NavigateCreateQuestionCommand = new RenavigateCommand(questionCreateRenavigator, Infrastructure.Services.Contracts.ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateCreateQuestionCommand = new RenavigateCommand(questionCreateRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             RefreshQuizPasswordCommand = new ActionCommand(OnRefreshQuizPasswordCommandExecutedAsync, CanRefreshQuizPasswordCommandExecute);
             CreateQuizCommandAsync = new ActionCommandAsync(OnCreateQuizCommandExecutedAsync, CanCreateQuizCommandExecute);
@@ -45,7 +45,7 @@
         {
             get
             {
-                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
                 {
                     QuizNameToCreate = sharedDataStore.SelectedQuiz.Name;
                     QuizPasswordToCreate = sharedDataStore.SelectedQuiz.Password;
@@ -159,7 +159,7 @@
                 return;
             }
 
-            await quizzesService.UpdateAsync(
+            await quizzesService.UpdateQuizAsync(
                 sharedDataStore.SelectedQuiz.Id,
                 QuizNameToCreate,
                 QuizDescriptionToCreate,

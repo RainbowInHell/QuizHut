@@ -23,6 +23,8 @@
 
         public string Password { get; set; }
 
+        public string EventId { get; set; }
+
         public int Timer { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -37,10 +39,7 @@
                     opt => opt.MapFrom(x => x.Questions.Count))
                 .ForMember(
                     x => x.Color,
-                    opt => opt.MapFrom(x => x.EventId != null ? "#0f990f" : "#d75277"))
-                .ForMember(
-                    x => x.Password,
-                    opt => opt.MapFrom(x => x.Password.Content));
+                    opt => opt.MapFrom(x => x.EventId != null ? "#0f990f" : "#d75277"));
         }
     }
 }

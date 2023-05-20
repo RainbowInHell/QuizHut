@@ -4,6 +4,6 @@
     {
         Task CreateEventGroupAsync(string eventId, string groupId);
 
-        Task DeleteAsync(string eventId, string groupId);
+        Task DeleteEventGroupAsync(string eventId, string groupId);
     }
 }

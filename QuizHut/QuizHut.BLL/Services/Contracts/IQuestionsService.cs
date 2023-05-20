@@ -2,13 +2,13 @@
 {
     public interface IQuestionsService
     {
-        Task<IList<T>> GetAllByQuizIdAsync<T>(string id);
+        Task<IList<T>> GetAllQuestionsByQuizIdAsync<T>(string id);
 
         Task<string> CreateQuestionAsync(string quizId, string questionText);
 
-        Task Update(string id, string text);
+        Task UpdateQuestionAsync(string id, string text);
 
-        Task UpdateAllQuestionsInQuizNumeration(string quizId);
+        Task UpdateAllQuestionsInQuizNumerationAsync(string quizId);
 
         Task DeleteQuestionByIdAsync(string id);
     }

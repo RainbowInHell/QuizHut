@@ -1,8 +1,10 @@
 ﻿namespace QuizHut.Infrastructure.Services
 {
+    using QuizHut.Infrastructure.EntityViewModels.Answers;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
+    using QuizHut.Infrastructure.EntityViewModels.Questions;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
     using QuizHut.Infrastructure.Services.Contracts;
 
@@ -16,8 +18,8 @@
 
         public QuizListViewModel? SelectedQuiz { get; set; }
 
-        public string SelectedQuestionId { get; set; }
+        public QuestionViewModel? SelectedQuestion { get; set; }
 
-        public string SelectedAnswerId { get; set; }
+        public AnswerViewModel? SelectedAnswer { get; set; }
     }
 }

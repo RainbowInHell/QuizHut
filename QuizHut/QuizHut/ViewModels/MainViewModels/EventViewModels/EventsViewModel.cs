@@ -139,7 +139,7 @@
 
         private async Task OnDeleteEventCommandExecutedAsync(object p)
         {
-            await eventsService.DeleteAsync(SelectedEvent.Id);
+            await eventsService.DeleteEventAsync(SelectedEvent.Id);
 
             await LoadEventsData();
         }

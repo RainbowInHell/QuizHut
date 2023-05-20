@@ -106,7 +106,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
@@ -123,7 +123,7 @@
 
         private async Task OnDeleteCategoryCommandExecutedAsync(object p)
         {
-            await categoriesService.DeleteAsync(SelectedCategory.Id);
+            await categoriesService.DeleteCategoryAsync(SelectedCategory.Id);
 
             await LoadCategoriesData();
         }

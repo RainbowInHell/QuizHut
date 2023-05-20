@@ -91,7 +91,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetAllByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id);
+            var quizzes = await quizzesService.GetQuizzesByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id);
 
             Quizzes = new(quizzes);
         }

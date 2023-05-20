@@ -2,13 +2,11 @@
 {
     using System;
 
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
@@ -255,6 +253,7 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -263,11 +262,13 @@
             return new QuizzesViewModel(
                 services.GetRequiredService<IQuizzesService>(),
                 services.GetRequiredService<ICategoriesService>(),
+                services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -306,6 +307,9 @@
         private static QuizSettingsViewModel CreateQuizSettingsViewModel(IServiceProvider services)
         {
             return new QuizSettingsViewModel(
+                services.GetRequiredService<IQuestionsService>(),
+                services.GetRequiredService<IAnswersService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditAnswerViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),

@@ -30,16 +30,29 @@
             this.sharedDataStore = sharedDataStore;
             this.viewDisplayTypeService = viewDisplayTypeService;
 
-            NavigateNewAnswerCommand = new RenavigateCommand(newAnswerRenavigator, Infrastructure.Services.Contracts.ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateNewAnswerCommand = new RenavigateCommand(newAnswerRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingsRenavigator);
-            NavigateNewQuestionCommand = new RenavigateCommand(newQuestionRenavigator, Infrastructure.Services.Contracts.ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateNewQuestionCommand = new RenavigateCommand(newQuestionRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
         
             CreateAnswerCommandAsync = new ActionCommandAsync(OnCreateAnswerCommandExecutedAsync, CanCreateAnswerCommandExecute);
+            UpdateAnswerCommandAsync = new ActionCommandAsync(OnUpdateAnswerCommandExecutedAsync, CanUpdateAnswerCommandExecute);
         }
 
         #region Fields and properties
 
-        public ViewDisplayType? CurrentViewDisplayType => viewDisplayTypeService.CurrentViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
+                {
+                    IsRightAnswer = sharedDataStore.SelectedAnswer.IsRightAnswer;
+                    AnswerDescriptionToCreate = sharedDataStore.SelectedAnswer.Text;
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         private bool isRightAnswer;
         public bool IsRightAnswer
@@ -75,41 +88,26 @@
 
         private async Task OnCreateAnswerCommandExecutedAsync(object p)
         {
-            await answersService.CreateAnswerAsync(AnswerDescriptionToCreate, IsRightAnswer, sharedDataStore.SelectedQuestionId);
+            await answersService.CreateAnswerAsync(AnswerDescriptionToCreate, IsRightAnswer, sharedDataStore.SelectedQuestion.Id);
 
             NavigateNewAnswerCommand.Execute(p);
         }
 
         #endregion
 
-        //#region UpdateAnswerCommandAsync
+        #region UpdateAnswerCommandAsync
 
-        //public ICommandAsync UpdateAnswerCommandAsync { get; }
+        public ICommandAsync UpdateAnswerCommandAsync { get; }
 
-        //private bool CanUpdateAnswerCommandExecute(object p) => true;
+        private bool CanUpdateAnswerCommandExecute(object p) => true;
 
-        //private async Task OnUpdateAnswerCommandExecutedAsync(object p)
-        //{
-        //    await answerService.UpdateAsync(sharedDataStore.SelectedAnswerId, "текст ответа", "правильный ли вопрос");
+        private async Task OnUpdateAnswerCommandExecutedAsync(object p)
+        {
+            await answersService.UpdateAnswerAsync(sharedDataStore.SelectedAnswer.Id, AnswerDescriptionToCreate, IsRightAnswer);
 
-        //    //навигация
-        //}
+            NavigateQuizSettingsCommand.Execute(p);
+        }
 
-        //#endregion
-
-        //#region DeleteAnswerCommandAsync
-
-        //public ICommandAsync DeleteAnswerCommandAsync { get; }
-
-        //private bool CanDeleteAnswerCommandExecute(object p) => true;
-
-        //private async Task OnDeleteAnswerCommandExecutedAsync(object p)
-        //{
-        //    await answerService.DeleteAsync(sharedDataStore.SelectedAnswerId);
-
-        //    //навигация
-        //}
-
-        //#endregion
+        #endregion
     }
 }

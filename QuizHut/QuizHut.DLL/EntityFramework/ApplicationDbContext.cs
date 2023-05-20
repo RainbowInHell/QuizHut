@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuizHut.DLL.Entities;
-
-namespace QuizHut.DLL.EntityFramework
+﻿namespace QuizHut.DLL.EntityFramework
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,8 +18,6 @@ namespace QuizHut.DLL.EntityFramework
         public DbSet<Question> Questions { get; set; }
 
         public DbSet<Quiz> Quizzes { get; set; }
-
-        public DbSet<Password> Passwords { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
@@ -52,30 +47,7 @@ namespace QuizHut.DLL.EntityFramework
             bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
         {
-                return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-            //Связать убираем внешние ключи, и гооврим, что первичные он и есть внешний(не создаем доп поле)
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Event)
-                .WithOne(p => p.Quiz)
-                .HasForeignKey<Quiz>(q => q.EventId);
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Password)
-                .WithOne(p => p.Quiz)
-                .HasForeignKey<Quiz>(q => q.PasswordId);
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Category)
-                .WithMany(p => p.Quizzes)
-                .HasForeignKey(q => q.CategoryId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
 }

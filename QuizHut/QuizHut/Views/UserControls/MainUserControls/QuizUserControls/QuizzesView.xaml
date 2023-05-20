@@ -132,22 +132,6 @@
                   RowStyle="{StaticResource DataGridRowStyle1}" 
                   Grid.Row="4" Width="1000">
 
-            <!--<DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <DataGrid x:Name="DG_myMarks" ItemsSource="{Binding Quizzes}" 
-                      GridLinesVisibility="Vertical"
-                      CanUserAddRows="False"
-                      AutoGenerateColumns="False" 
-                      IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="English" Binding="{Binding Name}" />
-                            <DataGridTextColumn Header="Maths" Binding="{Binding Maths}" />
-                            <DataGridTextColumn Header="Science" Binding="{Binding Science}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>-->
-            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>
@@ -180,7 +164,8 @@
                                     <fa:IconImage Icon="Pen" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource SettingsColor1}" 
-                                        Margin="5,0,0,0">
+                                        Margin="5,0,0,0"
+                                        Command="{Binding DataContext.NavigateQuizSettingsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                     <fa:IconImage Icon="Gear" Style="{StaticResource GridButtonIcon}"/>
                                 </Button>
                                 <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}"

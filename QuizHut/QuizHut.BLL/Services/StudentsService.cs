@@ -49,10 +49,10 @@
             return await query.Where(x => !x.Roles.Any()).To<T>().ToListAsync();
         }
 
-        public async Task<IList<T>> GetAllByGroupIdAsync<T>(string groupId)
+        public async Task<IList<T>> GetAllStudentsByGroupIdAsync<T>(string groupId)
         {
             return await userRepository
-                .All()
+                .AllAsNoTracking()
                 .Where(x => x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId))
                 .To<T>()
                 .ToListAsync();
@@ -86,7 +86,7 @@
             return false;
         }
 
-        public async Task DeleteFromTeacherListAsync(string studentId, string teacherId)
+        public async Task DeleteStudentFromTeacherListAsync(string studentId, string teacherId)
         {
             var studentToRemove = await userRepository
                 .All()

@@ -8,10 +8,10 @@
             string searchCriteria = null,
             string searchText = null);
 
-        Task<IList<T>> GetAllByGroupIdAsync<T>(string groupId);
+        Task<IList<T>> GetAllStudentsByGroupIdAsync<T>(string groupId);
 
         Task<bool> AddStudentAsync(string email, string teacherId);
 
-        Task DeleteFromTeacherListAsync(string studentId, string teacherId);
+        Task DeleteStudentFromTeacherListAsync(string studentId, string teacherId);
     }
 }

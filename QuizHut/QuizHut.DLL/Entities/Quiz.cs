@@ -16,15 +16,13 @@
 
         public string CreatorId { get; set; }
 
+        public string Password { get; set; }
+
         public virtual ApplicationUser Creator { get; set; }
 
         public string? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
-
-        public int? PasswordId { get; set; }
-
-        public virtual Password Password { get; set; }
 
         public string? EventId { get; set; }
 

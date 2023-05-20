@@ -60,7 +60,7 @@
         {
             get
             {
-                if (viewDisplayTypeService.ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
                 {
                     var timeParts = sharedDataStore.SelectedEvent.Duration.Split('-');
 
@@ -132,9 +132,9 @@
 
         private bool CanLoadDataCommandExecute(object p)
         {
-            if (ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Create
+            if (CurrentViewDisplayType != ViewDisplayType.Create
                 &&
-                ViewDisplayType != Infrastructure.Services.Contracts.ViewDisplayType.Edit)
+                CurrentViewDisplayType != ViewDisplayType.Edit)
             {
                 return true;
             }
@@ -144,12 +144,12 @@
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddQuizzes)
+            if (CurrentViewDisplayType == ViewDisplayType.AddQuizzes)
             {
                 await LoadQuizzesData();
             }
 
-            if (ViewDisplayType == Infrastructure.Services.Contracts.ViewDisplayType.AddGroups)
+            if (CurrentViewDisplayType == ViewDisplayType.AddGroups)
             {
                 await LoadGroupsData();
             }
@@ -218,7 +218,7 @@
                 return;
             }
 
-            await eventsService.UpdateAsync(sharedDataStore.SelectedEvent.Id, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
+            await eventsService.UpdateEventAsync(sharedDataStore.SelectedEvent.Id, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
 
             NavigateEventCommand.Execute(p);
         }
@@ -233,22 +233,15 @@
 
         private async Task OnAssignQuizToEventCommandExecute(object p)
         {
-            var selectedQuizes = Quizzes.Where(s => s.IsAssigned).ToList();
+            var selectedQuizes = Quizzes.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
 
-            //if (selectedQuizes.Count() != 1)
-            //{
-            //    // TODO: Error message for user
-            //    return;
-            //}
-            if (selectedQuizes.Count() != 0)
+            if (selectedQuizes.Count() == 0)
             {
-                foreach (var selectedQuiz in selectedQuizes)
-                {
-                    await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEvent.Id, selectedQuiz.Id);
-                }
+                // TODO: Error message for user
+                return;
             }
-
-            //await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEvent.Id, selectedQuizes.First().Id);
+            
+            await eventsService.AssignQuizzesToEventAsync(selectedQuizes, sharedDataStore.SelectedEvent.Id);
 
             NavigateEventSettingsCommand.Execute(p);
         }
@@ -280,7 +273,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetAllUnAssignedToEventAsync<QuizAssignViewModel>(AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(AccountStore.CurrentAdminId);
 
             Quizzes = new(quizzes);
         }
