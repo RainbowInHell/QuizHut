@@ -8,5 +8,15 @@
         {
             InitializeComponent();
         }
+
+        private void Expander_Expanded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            QSVQuestionsDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.Collapsed;
+        }
+
+        private void Expander_Collapsed(object sender, System.Windows.RoutedEventArgs e)
+        {
+            QSVQuestionsDataGrid.RowDetailsVisibilityMode = DataGridRowDetailsVisibilityMode.VisibleWhenSelected;
+        }
     }
 }
