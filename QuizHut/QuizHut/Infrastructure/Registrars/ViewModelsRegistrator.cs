@@ -16,6 +16,7 @@
     using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
     using QuizHut.BLL.Helpers.Contracts;
 
     public static class ViewModelsRegistrator
@@ -48,6 +49,9 @@
             services.AddSingleton<CreateViewModel<AddEditQuestionViewModel>>(services => () => CreateAddEditQuestionViewModel(services));
             services.AddSingleton<CreateViewModel<QuizSettingsViewModel>>(services => () => CreateQuizSettingsViewModel(services));
             services.AddSingleton<CreateViewModel<AddEditAnswerViewModel>>(services => () => CreateAddEditAnswerViewModel(services));
+            services.AddSingleton<CreateViewModel<StartQuizViewModel>>(services => () => CreateStartQuizViewModel(services));
+            services.AddSingleton<CreateViewModel<TakingQuizViewModel>>(services => () => CreateTakingQuizViewModel(services));
+            services.AddSingleton<CreateViewModel<EndQuizViewModel>>(services => () => CreateEndQuizViewModel(services));
 
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
@@ -73,6 +77,9 @@
             services.AddTransient<AddEditQuestionViewModel>();
             services.AddTransient<QuizSettingsViewModel>();
             services.AddTransient<AddEditAnswerViewModel>();
+            services.AddTransient<StartQuizViewModel>();
+            services.AddTransient<TakingQuizViewModel>();
+            services.AddTransient<EndQuizViewModel>();
 
             services.AddTransient<StudentsViewModel>();
 
@@ -97,6 +104,9 @@
             services.AddSingleton<ViewModelRenavigate<AddEditQuestionViewModel>>();
             services.AddSingleton<ViewModelRenavigate<QuizSettingsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<AddEditAnswerViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<StartQuizViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<TakingQuizViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<EndQuizViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
@@ -287,6 +297,25 @@
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditAnswerViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
+        }
+
+        private static StartQuizViewModel CreateStartQuizViewModel(IServiceProvider services)
+        {
+            return new StartQuizViewModel(
+                services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+        }
+
+        private static TakingQuizViewModel CreateTakingQuizViewModel(IServiceProvider services)
+        {
+            return new TakingQuizViewModel(
+                services.GetRequiredService<ViewModelRenavigate<EndQuizViewModel>>());
+        }
+
+        private static EndQuizViewModel CreateEndQuizViewModel(IServiceProvider services)
+        {
+            return new EndQuizViewModel(
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
         }
     }
 }

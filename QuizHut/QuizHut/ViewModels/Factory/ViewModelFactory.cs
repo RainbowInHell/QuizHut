@@ -10,6 +10,7 @@
     using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {
@@ -37,6 +38,9 @@
         private readonly CreateViewModel<AddEditQuestionViewModel> createAddEditQuestionViewModel;
         private readonly CreateViewModel<QuizSettingsViewModel> createQuizSettingsViewModel;
         private readonly CreateViewModel<AddEditAnswerViewModel> createAddEditAnswerViewModel;
+        private readonly CreateViewModel<StartQuizViewModel> createStartQuizViewModel;
+        private readonly CreateViewModel<TakingQuizViewModel> createTakingQuizViewModel;
+        private readonly CreateViewModel<EndQuizViewModel> createEndQuizViewModel;
 
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
@@ -66,6 +70,9 @@
                                             CreateViewModel<AddEditQuestionViewModel> createAddEditQuestionViewModel,
                                             CreateViewModel<QuizSettingsViewModel> createQuizSettingsViewModel,
                                             CreateViewModel<AddEditAnswerViewModel> createAddEditAnswerViewModel,
+                                            CreateViewModel<StartQuizViewModel> createStartQuizViewModel,
+                                            CreateViewModel<TakingQuizViewModel> createTakingQuizViewModel,
+                                            CreateViewModel<EndQuizViewModel> createEndQuizViewModel,
 
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
                                             CreateViewModel<StudentsViewModel> createStudentViewModel,
@@ -95,6 +102,9 @@
             this.createAddEditQuestionViewModel = createAddEditQuestionViewModel;
             this.createQuizSettingsViewModel = createQuizSettingsViewModel;
             this.createAddEditAnswerViewModel = createAddEditAnswerViewModel;
+            this.createStartQuizViewModel = createStartQuizViewModel;
+            this.createTakingQuizViewModel = createTakingQuizViewModel;
+            this.createEndQuizViewModel = createEndQuizViewModel;
 
             this.createResultViewModel = createResultViewModel;
             this.createStudentViewModel = createStudentViewModel;
@@ -129,6 +139,9 @@
                 ViewType.AddEditQuestion => createAddEditQuestionViewModel(),
                 ViewType.QuizSettings => createQuizSettingsViewModel(),
                 ViewType.AddEditAnswer => createAddEditAnswerViewModel(),
+                ViewType.StartQuiz => createStartQuizViewModel(),
+                ViewType.TakingQuiz => createTakingQuizViewModel(),
+                ViewType.EndQuiz => createEndQuizViewModel(),
 
                 ViewType.Result => createResultViewModel(),
                 ViewType.Student => createStudentViewModel(),

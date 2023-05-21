@@ -19,6 +19,8 @@
              
              xmlns:mvqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels" 
              xmlns:mquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls"
+             xmlns:mvpqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels" 
+             xmlns:mpquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls.PassingQuizUserControls"
              
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
@@ -91,6 +93,15 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type mvqvm:AddEditAnswerViewModel}">
                 <mquc:AddEditAnswerView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvpqvm:StartQuizViewModel}">
+                <mpquc:StartQuizView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvpqvm:TakingQuizViewModel}">
+                <mpquc:TakingQuizView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvpqvm:EndQuizViewModel}">
+                <mpquc:EndQuizView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
