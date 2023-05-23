@@ -60,8 +60,11 @@
             services.AddTransient<IScheduledJobsService, ScheduledJobsService>();
             services.AddTransient<IQuestionsService, QuestionsService>();
             services.AddTransient<IAnswersService, AnswersService>();
+            services.AddTransient<IResultsService, ResultsService>();
             services.AddTransient<IDateTimeConverter, DateTimeConverter>();
             services.AddTransient<IExpressionBuilder, ExpressionBuilder>();
+            services.AddTransient<IShuffler, Shuffler>();
+            services.AddTransient<IResultHelper, ResultHelper>();
 
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();

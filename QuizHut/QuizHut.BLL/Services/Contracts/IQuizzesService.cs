@@ -16,7 +16,7 @@
 
         Task<IList<T>> GetQuizzesByEventId<T>(string eventId);
 
-        Task<string> GetQuizIdByPasswordAsync(string password);
+        Task<T> GetQuizByPasswordAsync<T>(string password);
 
         Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password);
 

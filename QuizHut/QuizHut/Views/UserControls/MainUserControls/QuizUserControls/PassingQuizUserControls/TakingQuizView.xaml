@@ -43,7 +43,8 @@
                 <fa:IconImage Grid.Row="1" Grid.Column="1"
                           Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"
                           Icon="CircleQuestion" Foreground="{StaticResource IconColor1}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="Вопрос 1/10"
+                <TextBlock Style="{StaticResource MainTextBlock}" 
+                           Text="{Binding CurrentQuestion.Number, Mode=OneWay, StringFormat='Вопрос {0}/10'}"
                            FontSize="22" Foreground="{StaticResource FontColor4}"
                            VerticalAlignment="Bottom" Margin="5,0,0,0"/>
             </StackPanel>
@@ -51,7 +52,8 @@
 
             <!-- Question -->
             <TextBlock  Grid.Row="3" Grid.Column="1"
-                        Style="{StaticResource MainTextBlock}" Text="{Binding QuestionText}"
+                        Style="{StaticResource MainTextBlock}" 
+                        Text="{Binding CurrentQuestion.Text}"
                         FontSize="20" Foreground="{StaticResource PrimaryFontColor}"
                         TextAlignment="Justify" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
@@ -65,13 +67,13 @@
                           Background="Transparent"
                           Margin="0,5,0,5"
                           Foreground="{StaticResource PrimaryFontColor}">
-                <ItemsControl ItemsSource="{Binding }">
+                <ItemsControl ItemsSource="{Binding CurrentQuestion.Answers}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <CheckBox IsChecked="{Binding IsRightAnswer}"/>
+                                <CheckBox IsChecked="{Binding IsRightAnswerAssumption}"/>
                                 <TextBlock Style="{StaticResource MainTextBlock}"
-                                           Text="{Binding AnswerText}" Margin="10,0"/>
+                                           Text="{Binding Text}" Margin="10,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -80,6 +82,7 @@
 
             <!-- Previous/Next/Cancel button -->
             <Button x:Name="TQVPreviousBtn" Grid.Row="7" Grid.Column="1"
+                        Command="{Binding GoToPreviousQuestionCommand}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
                         HorizontalAlignment="Left"
@@ -89,6 +92,7 @@
                         Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"/>
 
             <Button x:Name="TQVNextlBtn" Grid.Row="7" Grid.Column="1"
+                        Command="{Binding GoToNextQuestionCommand}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource menuOverColor}" 
                         HorizontalAlignment="Right"

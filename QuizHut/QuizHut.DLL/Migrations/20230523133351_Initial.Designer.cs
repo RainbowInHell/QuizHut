@@ -11,7 +11,7 @@ using QuizHut.DLL.EntityFramework;
 namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230521151336_Initial")]
+    [Migration("20230523133351_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -206,9 +206,6 @@ namespace QuizHut.DLL.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -220,9 +217,6 @@ namespace QuizHut.DLL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -231,9 +225,6 @@ namespace QuizHut.DLL.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("NormalizedEmail")
@@ -390,6 +381,9 @@ namespace QuizHut.DLL.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsFullEvaluation")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Number")
                         .HasColumnType("int");

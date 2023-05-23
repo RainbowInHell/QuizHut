@@ -6,31 +6,20 @@
     {
         public ApplicationUser()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Roles = new HashSet<IdentityUserRole<string>>();
-            this.Claims = new HashSet<IdentityUserClaim<string>>();
-            this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.StudentsInGroups = new HashSet<StudentGroup>();
-            this.Students = new HashSet<ApplicationUser>();
-            this.CreatedQuizzes = new HashSet<Quiz>();
-            this.CreatedGroups = new HashSet<Group>();
-            this.Results = new HashSet<Result>();
-            this.CreatedEvents = new HashSet<Event>();
+            CreatedOn = DateTime.Now;
+            StudentsInGroups = new HashSet<StudentGroup>();
+            Students = new HashSet<ApplicationUser>();
+            CreatedQuizzes = new HashSet<Quiz>();
+            CreatedGroups = new HashSet<Group>();
+            Results = new HashSet<Result>();
+            CreatedEvents = new HashSet<Event>();
         }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        // Audit info
         public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        // Deletable entity
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
 
         public string? TeacherId { get; set; }
 

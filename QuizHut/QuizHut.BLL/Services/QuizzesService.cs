@@ -95,12 +95,12 @@
                 .ToListAsync();
         }
 
-        public async Task<string> GetQuizIdByPasswordAsync(string password)
+        public async Task<T> GetQuizByPasswordAsync<T>(string password)
         {
             return await quizRepository
                 .AllAsNoTracking()
                 .Where(x => x.Password == password)
-                .Select(x => x.Id)
+                .To<T>()
                 .FirstOrDefaultAsync();
         }
 

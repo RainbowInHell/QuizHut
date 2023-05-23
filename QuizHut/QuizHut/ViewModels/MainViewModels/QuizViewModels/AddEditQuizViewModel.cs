@@ -9,6 +9,7 @@
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
+    using QuizHut.Infrastructure.EntityViewModels.Quizzes;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
@@ -120,7 +121,7 @@
 
         private async Task OnCreateQuizCommandExecutedAsync(object p)
         {
-            var quizWithSamePasswordId = await quizzesService.GetQuizIdByPasswordAsync(QuizPasswordToCreate);
+            var quizWithSamePasswordId = await quizzesService.GetQuizByPasswordAsync<QuizAssignViewModel>(QuizPasswordToCreate);
 
             if (quizWithSamePasswordId != null)
             {
@@ -151,9 +152,9 @@
 
         private async Task OnUpdateQuizCommandExecutedAsync(object p)
         {
-            var quizWithSamePasswordId = await quizzesService.GetQuizIdByPasswordAsync(QuizPasswordToCreate);
+            var quizWithSamePassword = await quizzesService.GetQuizByPasswordAsync<QuizAssignViewModel>(QuizPasswordToCreate);
 
-            if (quizWithSamePasswordId != null && quizWithSamePasswordId != sharedDataStore.SelectedQuiz.Id)
+            if (quizWithSamePassword != null && quizWithSamePassword.Id != sharedDataStore.SelectedQuiz.Id)
             {
                 // TODO: сообщение об ошибке
                 return;

@@ -18,7 +18,6 @@
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
     using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
-    using QuizHut.BLL.Helpers.Contracts;
 
     public static class ViewModelsRegistrator
     {
@@ -29,7 +28,7 @@
             services.AddSingleton<CreateViewModel<StudentRegistrationViewModel>>(services => () => CreateStudentRegistrationViewModel(services));
             services.AddSingleton<CreateViewModel<TeacherRegistrationViewModel>>(services => () => CreateTeacherRegistrationViewModel(services));
 
-            services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => services.GetRequiredService<HomeViewModel>());
+            services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
 
@@ -53,7 +52,7 @@
             services.AddSingleton<CreateViewModel<StartQuizViewModel>>(services => () => CreateStartQuizViewModel(services));
             services.AddSingleton<CreateViewModel<TakingQuizViewModel>>(services => () => CreateTakingQuizViewModel(services));
             services.AddSingleton<CreateViewModel<EndQuizViewModel>>(services => () => CreateEndQuizViewModel(services));
-
+            
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
             services.AddTransient<MainViewModel>();
@@ -81,7 +80,7 @@
             services.AddTransient<StartQuizViewModel>();
             services.AddTransient<TakingQuizViewModel>();
             services.AddTransient<EndQuizViewModel>();
-
+            
             services.AddTransient<StudentsViewModel>();
 
             services.AddSingleton<IViewModelFactory, ViewModelFactory>();
@@ -317,9 +316,19 @@
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
+        private static HomeViewModel CreateHomeViewModel(IServiceProvider services)
+        {
+            return new HomeViewModel(
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IShuffler>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>());
+        }
+
         private static StartQuizViewModel CreateStartQuizViewModel(IServiceProvider services)
         {
             return new StartQuizViewModel(
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
         }
@@ -327,12 +336,18 @@
         private static TakingQuizViewModel CreateTakingQuizViewModel(IServiceProvider services)
         {
             return new TakingQuizViewModel(
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EndQuizViewModel>>());
         }
 
         private static EndQuizViewModel CreateEndQuizViewModel(IServiceProvider services)
         {
             return new EndQuizViewModel(
+                services.GetRequiredService<IQuestionsService>(),
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<IResultHelper>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
         }
     }
