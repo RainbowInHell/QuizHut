@@ -1,17 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuizHut.BLL.Expression.Contracts;
-using QuizHut.BLL.Services.Contracts;
-using QuizHut.DLL.Entities;
-using QuizHut.DLL.Repositories.Contracts;
-using SendGrid.Helpers.Errors.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuizHut.BLL.Services
+﻿namespace QuizHut.BLL.Services
 {
+    using Microsoft.EntityFrameworkCore;
+    
+    using QuizHut.BLL.Expression.Contracts;
+    using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Entities;
+    using QuizHut.DLL.Repositories.Contracts;
+
     public class ResultsService : IResultsService
     {
         private readonly IRepository<Result> repository;
@@ -29,7 +24,24 @@ namespace QuizHut.BLL.Services
             this.eventRepository = eventRepository;
             this.expressionBuilder = expressionBuilder;
         }
-        public async Task<string> CreateResultAsync(string studentId, int points, int maxPoints, string quizId)
+
+        public async Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null)
+        {
+            var query = repository
+                .AllAsNoTracking()
+                //.Where(x => x.StudentId == id && x.Event.Quizzes.Any(x => x.Id == ""))
+                .Where(x => x.StudentId == id);
+
+            if (searchCriteria != null && searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<Result>(searchCriteria, searchText);
+                query = query.Where(filter);
+            }
+
+            return await query.CountAsync();
+        }
+
+        public async Task<string> CreateResultAsync(string studentId, decimal points, string quizId)
         {
             var @event = await eventRepository
                 .All()
@@ -42,7 +54,7 @@ namespace QuizHut.BLL.Services
             {
                 Points = points,
                 StudentId = studentId,
-                MaxPoints = maxPoints,
+                MaxPoints = quiz.Questions.Count,
                 EventId = @event.Id,
                 EventName = @event.Name,
                 QuizName = quiz.Name,
@@ -56,6 +68,19 @@ namespace QuizHut.BLL.Services
             await eventRepository.SaveChangesAsync();
 
             return result.Id;
+        }
+
+        public async Task UpdateResultAsync(string id, decimal points)
+        {
+            var result = await repository
+                .All()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            result.Points = points;
+
+            repository.Update(result);
+            await repository.SaveChangesAsync();
         }
     }
 }

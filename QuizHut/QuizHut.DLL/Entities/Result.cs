@@ -7,9 +7,9 @@
             Id = Guid.NewGuid().ToString();
         }
 
-        public int Points { get; set; }
+        public decimal? Points { get; set; }
 
-        public int MaxPoints { get; set; }
+        public int? MaxPoints { get; set; }
 
         public string StudentId { get; set; }
 

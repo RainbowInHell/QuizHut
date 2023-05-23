@@ -2,6 +2,9 @@
 {
     using System;
 
+    using Hangfire;
+    using Hangfire.MySql;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -13,20 +16,43 @@
     {
         public static IServiceCollection AddDatabase(this IServiceCollection services)
         {
+            //setx QH_DATABASE_CONNECTION_STRING "Server=localhost;Database=QuizHut;Uid=root;Pwd=matvey2003;"
+            const string QH_DATABASE_CONNECTION_STRING = "QH_DATABASE_CONNECTION_STRING";
+
+            var connectionString = Environment.GetEnvironmentVariable(QH_DATABASE_CONNECTION_STRING, EnvironmentVariableTarget.User);
+
+            //services.AddDbContextFactory<ApplicationDbContext>(opt =>
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
-                //setx QH_DATABASE_CONNECTION_STRING "Server=localhost;Database=QuizHut;Uid=root;Pwd=matvey2003;"
-                const string QH_DATABASE_CONNECTION_STRING = "QH_DATABASE_CONNECTION_STRING";
-
-                var connectionString = Environment.GetEnvironmentVariable(QH_DATABASE_CONNECTION_STRING, EnvironmentVariableTarget.User);
-
                 if (string.IsNullOrEmpty(connectionString))
                 {
                     throw new InvalidOperationException($"The {QH_DATABASE_CONNECTION_STRING} environment variable is not set.");
                 }
 
+                //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), providerOptions => { providerOptions.EnableRetryOnFailure(); });
                 opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 opt.EnableSensitiveDataLogging();
+            });
+
+            services.AddHangfire(configruation =>
+            {
+                configruation.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSimpleAssemblyNameTypeSerializer()
+                    .UseRecommendedSerializerSettings()
+                    .UseStorage(new MySqlStorage(connectionString, new MySqlStorageOptions
+                    {
+                        TransactionIsolationLevel = System.Transactions.IsolationLevel.ReadCommitted,
+                        QueuePollInterval = TimeSpan.FromSeconds(3),
+                        JobExpirationCheckInterval = TimeSpan.FromSeconds(1),
+                        CountersAggregateInterval = TimeSpan.FromMinutes(5),
+                        PrepareSchemaIfNecessary = true,
+                        DashboardJobListLimit = 50000,
+                        TransactionTimeout = TimeSpan.FromMinutes(1),
+                        TablesPrefix = "T_Hangfire",
+                    })).WithJobExpirationTimeout(TimeSpan.FromHours(24 * 7));
+            }).AddHangfireServer(option =>
+            {
+                option.SchedulePollingInterval = TimeSpan.FromSeconds(1);
             });
 
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>

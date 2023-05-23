@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.Infrastructure.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -8,88 +9,9 @@
 
     public class ResultHelper : IResultHelper
     {
-        //public int CalculateResult(
-        //    IList<QuestionViewModel> originalQuizQuestions,
-        //    IList<AttemtedQuizQuestionViewModel> attemptedQuizQuestions)
-        //{
-        //    var totalPoints = 0;
-        //    foreach (var question in originalQuizQuestions)
-        //    {
-        //        var points = 0;
-        //        var correspondingAttendedQuestion = attemptedQuizQuestions.FirstOrDefault(x => x.Id == question.Id);
-        //        var corectAnswersInQuestion = question.Answers.Where(x => x.IsRightAnswer).Count();
-        //        var originalAnswers = question.Answers;
-        //        foreach (var answer in originalAnswers)
-        //        {
-        //            var correspondingAnswerAttempt = correspondingAttendedQuestion.Answers.FirstOrDefault(x => x.Id == answer.Id);
-        //            if (answer.IsRightAnswer == false && correspondingAnswerAttempt.IsRightAnswerAssumption == false)
-        //            {
-        //                continue;
-        //            }
-        //            else if (answer.IsRightAnswer != correspondingAnswerAttempt.IsRightAnswerAssumption)
-        //            {
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                points++;
-        //            }
-        //        }
-
-        //        if (points == corectAnswersInQuestion)
-        //        {
-        //            totalPoints++;
-        //        }
-        //    }
-
-        //    return totalPoints;
-        //}
-
-        //public int CalculateResult(
-        //    IList<QuestionViewModel> originalQuizQuestions,
-        //    IList<AttemtedQuizQuestionViewModel> attemptedQuizQuestions)
-        //{
-        //    var totalPoints = 0;
-        //    foreach (var question in originalQuizQuestions)
-        //    {
-        //        var correspondingAttendedQuestion = attemptedQuizQuestions.FirstOrDefault(x => x.Id == question.Id);
-        //        if (correspondingAttendedQuestion == null)
-        //        {
-        //            continue; // Skip if the question was not attempted
-        //        }
-
-        //        var correctAnswersInQuestion = question.Answers.Count(x => x.IsRightAnswer);
-        //        var originalAnswers = question.Answers;
-        //        var correctAnswersSelected = 0;
-
-        //        foreach (var answer in originalAnswers)
-        //        {
-        //            var correspondingAnswerAttempt = correspondingAttendedQuestion.Answers.FirstOrDefault(x => x.Id == answer.Id);
-        //            if (correspondingAnswerAttempt == null)
-        //            {
-        //                continue; // Skip if the answer was not selected in the attempted question
-        //            }
-
-        //            if (answer.IsRightAnswer == correspondingAnswerAttempt.IsRightAnswerAssumption)
-        //            {
-        //                correctAnswersSelected++; // Increment count for each correctly selected answer
-        //            }
-        //        }
-
-        //        if (correctAnswersSelected == correctAnswersInQuestion)
-        //        {
-        //            totalPoints++;
-        //        }
-        //    }
-
-        //    return totalPoints;
-        //}
-        public int CalculateResult(
-            IList<QuestionViewModel> originalQuizQuestions,
-            IList<AttemtedQuizQuestionViewModel> attemptedQuizQuestions)
+        public decimal CalculateResult(IList<QuestionViewModel> originalQuizQuestions, IList<AttemptedQuizQuestionViewModel> attemptedQuizQuestions)
         {
-            int totalQuestions = originalQuizQuestions.Count;
-            int correctAnswers = 0;
+            decimal totalPoints = 0;
 
             foreach (var attemptedQuestion in attemptedQuizQuestions)
             {
@@ -97,19 +19,44 @@
 
                 if (originalQuestion != null)
                 {
-                    foreach (var attemptedAnswer in attemptedQuestion.Answers)
-                    {
-                        var originalAnswer = originalQuestion.Answers.FirstOrDefault(a => a.Id == attemptedAnswer.Id);
+                    decimal questionPoints = 0;
 
-                        if (originalAnswer != null && originalAnswer.IsRightAnswer && attemptedAnswer.IsRightAnswerAssumption)
+                    if (attemptedQuestion.IsFullEvaluation)
+                    {
+                        bool isFullEvaluationMatch = attemptedQuestion.Answers.All(a =>
+                            originalQuestion.Answers.Any(oa => oa.Id == a.Id && oa.IsRightAnswer == a.IsRightAnswerAssumption));
+
+                        if (isFullEvaluationMatch)
                         {
-                            correctAnswers++;
+                            questionPoints = 1;
                         }
                     }
+                    else
+                    {
+                        int correctAnswerCount = originalQuestion.Answers.Count(a => a.IsRightAnswer);
+                        int selectedAnswerCount = attemptedQuestion.Answers.Count(a => a.IsRightAnswerAssumption);
+                        int selectedCorrectAnswerCount = attemptedQuestion.Answers.Count(a =>
+                            originalQuestion.Answers.Any(oa => oa.Id == a.Id && oa.IsRightAnswer == a.IsRightAnswerAssumption && oa.IsRightAnswer));
+
+                        if (selectedCorrectAnswerCount > 0)
+                        {
+                            if (correctAnswerCount == selectedCorrectAnswerCount && selectedAnswerCount == selectedCorrectAnswerCount)
+                            {
+                                questionPoints = 1;
+                            }
+                            else
+                            {
+                                decimal partialPoints = 1m / originalQuestion.Answers.Count();
+                                questionPoints = selectedCorrectAnswerCount * partialPoints;
+                            }
+                        }
+                    }
+
+                    totalPoints += questionPoints;
                 }
             }
 
-            return correctAnswers;
+            return Math.Round(totalPoints, 2);
         }
     }
 }

@@ -320,9 +320,12 @@
         {
             return new HomeViewModel(
                 services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>());
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static StartQuizViewModel CreateStartQuizViewModel(IServiceProvider services)

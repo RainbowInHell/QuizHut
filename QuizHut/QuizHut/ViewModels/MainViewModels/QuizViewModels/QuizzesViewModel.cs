@@ -131,7 +131,7 @@
 
         #endregion
 
-        #region LoadDataCommand
+        #region LoadDataCommandAsync
 
         public ICommandAsync LoadDataCommandAsync { get; }
 

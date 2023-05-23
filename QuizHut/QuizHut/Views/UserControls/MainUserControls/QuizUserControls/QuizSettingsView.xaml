@@ -56,14 +56,21 @@
                   RowDetailsVisibilityMode="Collapsed"
                   Width="900">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn IsReadOnly="True" Width="100">
+                    <DataGridTemplateColumn IsReadOnly="True" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Expander IsExpanded="True" Expanded="Expander_Expanded" Collapsed="Expander_Collapsed"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Вопрос" IsReadOnly="True" Width="*" Binding="{Binding Name}" />
+                    <DataGridTemplateColumn Header="Совпадение" Width="90" IsReadOnly="True" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsEnabled="False" IsChecked="{Binding IsFullEvaluation}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Вопрос" IsReadOnly="True" Width="*" Binding="{Binding Text}" />
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

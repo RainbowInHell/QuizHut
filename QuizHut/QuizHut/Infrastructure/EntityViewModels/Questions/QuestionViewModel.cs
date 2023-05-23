@@ -22,6 +22,5 @@
         public bool IsFullEvaluation { get; set; }
 
         public IList<AnswerViewModel> Answers { get; set; }
-
     }
 }

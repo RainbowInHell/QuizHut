@@ -54,6 +54,7 @@
 
                 <!-- Link to quiz creation-->
                 <Button x:Name="MVHLinkToCreateQuizBtn" Grid.Row="5" Grid.Column="1"
+                                Command="{Binding NavigateAddQuizCommand}"                        
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                                 Width="150" Height="45"
                                 Style="{StaticResource UserOptionButton}"

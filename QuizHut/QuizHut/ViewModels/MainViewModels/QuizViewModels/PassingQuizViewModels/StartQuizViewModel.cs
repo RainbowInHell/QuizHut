@@ -24,8 +24,8 @@
 
         #region Fields and properties
 
-        private AttemtedQuizViewModel currentQuiz;
-        public AttemtedQuizViewModel CurrentQuiz
+        private AttemptedQuizViewModel currentQuiz;
+        public AttemptedQuizViewModel CurrentQuiz
         {
             get
             {

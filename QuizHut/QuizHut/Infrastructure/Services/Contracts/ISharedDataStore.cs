@@ -21,10 +21,10 @@
 
         AnswerViewModel? SelectedAnswer { get; set; }
 
-        AttemtedQuizViewModel? QuizToPass { get; set; }
+        AttemptedQuizViewModel? QuizToPass { get; set; }
 
-        AttemtedQuizQuestionViewModel? CurrentQuestion { get; set; }
+        AttemptedQuizQuestionViewModel? CurrentQuestion { get; set; }
 
-        int CurrentQuestionNumberInTakingQuiz { get; set; }
+        string CurrentResultId { get; set; }
     }
 }

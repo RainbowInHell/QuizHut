@@ -3,7 +3,7 @@
     using QuizHut.BLL.MapperConfig.Contracts;
     using QuizHut.DLL.Entities;
 
-    public class AttemtedQuizAnswerViewModel : IMapFrom<Answer>
+    public class AttemptedQuizAnswerViewModel : IMapFrom<Answer>
     {
         public string Id { get; set; }
 

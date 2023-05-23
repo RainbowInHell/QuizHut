@@ -1,22 +1,20 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+
     using FontAwesome.Sharp;
+
+    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
-    using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
-    using QuizHut.Infrastructure.EntityViewModels.Answers;
-    using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
-    using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
-    using System.Collections.ObjectModel;
-    using System.Threading.Tasks;
-    using System.Windows.Input;
 
     class HomeViewModel : ViewModel, IMenuView
     {
@@ -26,21 +24,30 @@
 
         private readonly IQuizzesService quizzesService;
 
+        private readonly IResultsService resultsService;
+
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IShuffler shuffler;
 
+        private readonly IRenavigator startQuizRenavigator;
+
         public HomeViewModel(
             IQuizzesService quizzesService,
+            IResultsService resultsService,
             IShuffler shuffler,
             ISharedDataStore sharedDataStore,
-            IRenavigator startQuizRenavigator)
+            IRenavigator addQuizRenavigator,
+            IRenavigator startQuizRenavigator,
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.quizzesService = quizzesService;
+            this.resultsService = resultsService;
             this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
+            this.startQuizRenavigator = startQuizRenavigator;
 
-            NavigatesStartQuizCommand = new RenavigateCommand(startQuizRenavigator);
+            NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             GoToStartQuizCommandAsync = new ActionCommandAsync(OnGoToStartQuizExecutedAsync, CanGoToStartQuizExecute);
         }
@@ -58,7 +65,7 @@
 
         #region NavigationCommands
 
-        public ICommand NavigatesStartQuizCommand { get; }
+        public ICommand NavigateAddQuizCommand { get; }
 
         #endregion
 
@@ -70,21 +77,34 @@
 
         private async Task OnGoToStartQuizExecutedAsync(object p)
         {
-            var quiz = await quizzesService.GetQuizByPasswordAsync<AttemtedQuizViewModel>(QuizPassword);
+            var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(AccountStore.CurrentAdminId);
 
-            if (quiz != null)
+            if (currentUserResultCount > 0)
             {
-                foreach (var question in  quiz.Questions)
-                {
-                    question.Answers = shuffler.Shuffle<AttemtedQuizAnswerViewModel>(question.Answers);
-                }
-
-                sharedDataStore.QuizToPass = quiz;
-                NavigatesStartQuizCommand.Execute(p);
+                // TODO: Error message
+                return;
             }
+
+            var quiz = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
+
+            if (quiz == null || quiz.EventId == null)
+            {
+                // TODO: Error message
+                return;
+            }
+
+            sharedDataStore.QuizToPass = quiz;
+
+            foreach (var question in sharedDataStore.QuizToPass.Questions)
+            {
+                question.Answers = shuffler.Shuffle(question.Answers);
+            }
+
+            //sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(AccountStore.CurrentAdminId, 0, sharedDataStore.QuizToPass.Id);
+
+            startQuizRenavigator.Renavigate();
         }
 
         #endregion
-
     }
 }

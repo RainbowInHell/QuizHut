@@ -74,9 +74,6 @@ namespace QuizHut.DLL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("ClaimType")
                         .HasColumnType("longtext");
 
@@ -88,8 +85,6 @@ namespace QuizHut.DLL.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("UserId");
 
@@ -104,9 +99,6 @@ namespace QuizHut.DLL.Migrations
                     b.Property<string>("ProviderKey")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext");
 
@@ -115,8 +107,6 @@ namespace QuizHut.DLL.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("UserId");
 
@@ -131,12 +121,7 @@ namespace QuizHut.DLL.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("varchar(255)");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("RoleId");
 
@@ -463,11 +448,11 @@ namespace QuizHut.DLL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("MaxPoints")
+                    b.Property<int?>("MaxPoints")
                         .HasColumnType("int");
 
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("Points")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("QuizName")
                         .IsRequired()
@@ -549,10 +534,6 @@ namespace QuizHut.DLL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("QuizHut.DLL.Entities.ApplicationUser", null)
-                        .WithMany("Claims")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("QuizHut.DLL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -562,10 +543,6 @@ namespace QuizHut.DLL.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("QuizHut.DLL.Entities.ApplicationUser", null)
-                        .WithMany("Logins")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("QuizHut.DLL.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -574,10 +551,6 @@ namespace QuizHut.DLL.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("QuizHut.DLL.Entities.ApplicationUser", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -757,19 +730,13 @@ namespace QuizHut.DLL.Migrations
 
             modelBuilder.Entity("QuizHut.DLL.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("Claims");
-
                     b.Navigation("CreatedEvents");
 
                     b.Navigation("CreatedGroups");
 
                     b.Navigation("CreatedQuizzes");
 
-                    b.Navigation("Logins");
-
                     b.Navigation("Results");
-
-                    b.Navigation("Roles");
 
                     b.Navigation("Students");
 

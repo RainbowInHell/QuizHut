@@ -66,8 +66,8 @@
 
                     EventNameToCreate = sharedDataStore.SelectedEvent.Name;
                     EventActivationDate = sharedDataStore.SelectedEvent.StartDate;
-                    EventAvaliableFrom = timeParts[0];
-                    EventAvaliableTo = timeParts[1];
+                    EventAvaliableFrom = timeParts[0].Trim();
+                    EventAvaliableTo = timeParts[1].Trim();
                 }
 
                 return viewDisplayTypeService.CurrentViewDisplayType;

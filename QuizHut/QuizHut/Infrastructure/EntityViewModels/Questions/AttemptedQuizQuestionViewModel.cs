@@ -6,11 +6,11 @@
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Answers;
 
-    public class AttemtedQuizQuestionViewModel : IMapFrom<Question>
+    public class AttemptedQuizQuestionViewModel : IMapFrom<Question>
     {
-        public AttemtedQuizQuestionViewModel()
+        public AttemptedQuizQuestionViewModel()
         {
-            Answers = new List<AttemtedQuizAnswerViewModel>();
+            Answers = new List<AttemptedQuizAnswerViewModel>();
         }
 
         public string Id { get; set; }
@@ -21,6 +21,6 @@
         
         public bool IsFullEvaluation { get; set; }
 
-        public IList<AttemtedQuizAnswerViewModel> Answers { get; set; }
+        public IList<AttemptedQuizAnswerViewModel> Answers { get; set; }
     }
 }

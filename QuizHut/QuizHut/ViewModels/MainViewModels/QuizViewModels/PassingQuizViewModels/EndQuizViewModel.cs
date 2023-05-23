@@ -1,13 +1,9 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels
 {
-    using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
-    using QuizHut.BLL.Helpers;
-    using QuizHut.BLL.Services;
+
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -40,37 +36,23 @@
 
             NavigateHomeCommand = new RenavigateCommand(homeRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            CalculateQuizResultCommandAsync = new ActionCommandAsync(OnCalculateQuizResultCommandExecutedAsync, CanCalculateQuizResultCommandExecuteAsync);
         }
 
         #region Fields and properties
 
-        private ObservableCollection<QuestionViewModel> originalQuestions;
-        public ObservableCollection<QuestionViewModel> OriginalQuestions
+        private AttemptedQuizViewModel currentQuiz;
+        public AttemptedQuizViewModel CurrentQuiz
         {
-            get => originalQuestions;
-            set => Set(ref originalQuestions, value);
+            get => currentQuiz;
+            set => Set(ref currentQuiz, value);
         }
 
-        private ObservableCollection<AttemtedQuizQuestionViewModel> solvedQuestions;
-        public ObservableCollection<AttemtedQuizQuestionViewModel> SolvedQuestions
+        private string resultAsString;
+        public string ResultAsString
         {
-            get => solvedQuestions;
-            set => Set(ref solvedQuestions, value);
-        }
-
-        private int receivedPoints;
-        public int ReceivedPoints
-        {
-            get => receivedPoints;
-            set => Set(ref receivedPoints, value);
-        }
-
-        private int maxPoints;
-        public int MaxPoints
-        {
-            get => maxPoints;
-            set => Set(ref maxPoints, value);
+            get => resultAsString;
+            set => Set(ref resultAsString, value);
         }
 
         #endregion
@@ -81,31 +63,32 @@
 
         #endregion
 
-        #region LoadDataCommand
+        #region CalculateQuizResultCommand
 
-        public ICommandAsync LoadDataCommandAsync { get; }
+        public ICommandAsync CalculateQuizResultCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanCalculateQuizResultCommandExecuteAsync(object p) => true;
 
-        private async Task OnLoadDataCommandExecutedAsync(object p)
+        private async Task OnCalculateQuizResultCommandExecutedAsync(object p)
         {
-            await LoadQuestionsData();
+            await CalculateQuizResult();
         }
 
         #endregion
 
-        private async Task LoadQuestionsData()
+        private async Task CalculateQuizResult()
         {
-            var questions = await questionsService.GetAllQuestionsByQuizIdAsync<QuestionViewModel>(sharedDataStore.QuizToPass.Id);
+            CurrentQuiz = sharedDataStore.QuizToPass;
 
-            OriginalQuestions = new(questions);
-            SolvedQuestions = new(sharedDataStore.QuizToPass.Questions);
+            var originalQuestions = await questionsService.GetAllQuestionsByQuizIdAsync<QuestionViewModel>(CurrentQuiz.Id);
 
-            MaxPoints = questions.Sum(question => question.Answers.Count(answer => answer.IsRightAnswer));
+            var receivedPoints = resultHelper.CalculateResult(originalQuestions, CurrentQuiz.Questions);
 
-            ReceivedPoints = resultHelper.CalculateResult(OriginalQuestions, SolvedQuestions);
+            ResultAsString = $"{receivedPoints}/{originalQuestions.Count}";
 
-            await resultsService.CreateResultAsync(AccountStore.CurrentAdminId, ReceivedPoints, OriginalQuestions.Count, sharedDataStore.QuizToPass.Id);
+            await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints);
+
+            sharedDataStore.CurrentQuestion = null;
         }
     }
 }

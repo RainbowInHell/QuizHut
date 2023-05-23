@@ -56,6 +56,15 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+            <StackPanel Grid.Row="2" Grid.Column="1"
+                        Orientation="Horizontal" Margin="0,5" 
+                        HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding IsFullEvaluation}"
+                          VerticalAlignment="Center"/>
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           FontWeight="SemiBold" FontSize="17"
+                           Text="100% совпадение ответа" Margin="10,0"/>
+            </StackPanel>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
                        Text="Изменение вопроса">

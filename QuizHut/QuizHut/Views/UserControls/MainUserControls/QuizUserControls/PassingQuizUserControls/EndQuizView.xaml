@@ -13,7 +13,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+            <i:InvokeCommandAction Command="{Binding CalculateQuizResultCommandAsync}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     
@@ -61,7 +61,7 @@
                         Grid.Row="3" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Викторина:"
                            FontSize="18" Foreground="{StaticResource FontColor4}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding CurrentQuiz.Name}"
                            FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
 
@@ -70,7 +70,7 @@
                         Grid.Row="5" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Результат:"
                            FontSize="18" Foreground="{StaticResource FontColor4}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding ResultAsString}"
                            FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
 
@@ -79,7 +79,7 @@
                         Grid.Row="7" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Время прохождения:"
                            FontSize="18" Foreground="{StaticResource FontColor4}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding CurrentQuiz.Timer}"
                            FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
 

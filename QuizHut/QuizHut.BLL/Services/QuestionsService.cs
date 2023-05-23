@@ -29,7 +29,7 @@
                 .ToListAsync();
         }
 
-        public async Task<string> CreateQuestionAsync(string quizId, string questionText)
+        public async Task<string> CreateQuestionAsync(string quizId, bool IsFullEvaluation, string questionText)
         {
             var quiz = await quizRepository.All().Select(x => new
             {
@@ -41,6 +41,7 @@
             {
                 Number = quiz.Questions + 1,
                 Text = questionText,
+                IsFullEvaluation = IsFullEvaluation,
                 QuizId = quizId,
             };
 
@@ -50,13 +51,14 @@
             return question.Id;
         }
 
-        public async Task UpdateQuestionAsync(string id, string text)
+        public async Task UpdateQuestionAsync(string id, bool IsFullEvaluation, string text)
         {
             var question = await repository
                 .All()
                 .FirstOrDefaultAsync(x => x.Id == id);
             
             question.Text = text;
+            question.IsFullEvaluation = IsFullEvaluation;
             repository.Update(question);
             
             await repository.SaveChangesAsync();

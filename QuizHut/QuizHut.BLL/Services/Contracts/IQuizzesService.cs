@@ -1,4 +1,4 @@
-﻿namespace QuizHut.BLL.Services.Contracts
+﻿ namespace QuizHut.BLL.Services.Contracts
 {
     public interface IQuizzesService
     {

@@ -33,21 +33,21 @@
 
         public DbSet<ScheduledJob> ScheduledJobs { get; set; }
 
-        public override int SaveChanges() => SaveChanges(true);
+        //public override int SaveChanges() => SaveChanges(true);
 
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
+        //public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        //{
+        //    return base.SaveChanges(acceptAllChangesOnSuccess);
+        //}
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
-            SaveChangesAsync(true, cancellationToken);
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => await
+        //    SaveChangesAsync(true, cancellationToken);
 
-        public override Task<int> SaveChangesAsync(
-            bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default)
-        {
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
+        //public override async Task<int> SaveChangesAsync(
+        //    bool acceptAllChangesOnSuccess,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        //}
     }
 }

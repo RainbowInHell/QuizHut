@@ -60,6 +60,13 @@
             set => Set(ref questionDescriptionToCreate, value);
         }
 
+        private bool isFullEvaluation;
+        public bool IsFullEvaluation
+        {
+            get => isFullEvaluation;
+            set => Set(ref isFullEvaluation, value);
+        }
+
         #endregion
 
         #region NavigationCommands
@@ -79,7 +86,7 @@
         private bool CanCreateQuestionCommandExecute(object p) => true;
         private async Task OnCreateQuestionCommandExecutedAsync(object p)
         {
-            var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuiz.Id, QuestionDescriptionToCreate);
+            var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuiz.Id, IsFullEvaluation, QuestionDescriptionToCreate);
 
             if (sharedDataStore.SelectedQuestion == null)
             {
@@ -102,7 +109,7 @@
 
         private async Task OnUpdateQuestionCommandExecutedAsync(object p)
         {
-            await questionsService.UpdateQuestionAsync(sharedDataStore.SelectedQuestion.Id, QuestionDescriptionToCreate);
+            await questionsService.UpdateQuestionAsync(sharedDataStore.SelectedQuestion.Id, IsFullEvaluation, QuestionDescriptionToCreate);
 
             NavigateQuizSettingsCommand.Execute(p);
         }

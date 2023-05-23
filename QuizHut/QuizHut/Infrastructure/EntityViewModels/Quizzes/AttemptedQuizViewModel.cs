@@ -6,11 +6,11 @@
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Questions;
 
-    public class AttemtedQuizViewModel : IMapFrom<Quiz>
+    public class AttemptedQuizViewModel : IMapFrom<Quiz>
     {
-        public AttemtedQuizViewModel()
+        public AttemptedQuizViewModel()
         {
-            Questions = new List<AttemtedQuizQuestionViewModel>();
+            Questions = new List<AttemptedQuizQuestionViewModel>();
         }
 
         public string Id { get; set; }
@@ -21,6 +21,8 @@
 
         public int Timer { get; set; }
 
-        public IList<AttemtedQuizQuestionViewModel> Questions { get; set; }
+        public string EventId { get; set; }
+
+        public IList<AttemptedQuizQuestionViewModel> Questions { get; set; }
     }
 }

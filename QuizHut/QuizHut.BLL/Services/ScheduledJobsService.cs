@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.BLL.Services
 {
+    using Hangfire;
+
     using Microsoft.EntityFrameworkCore;
 
     using QuizHut.BLL.Services.Contracts;
@@ -13,19 +15,25 @@
 
         private readonly IRepository<Event> eventRepository;
 
+        private readonly IBackgroundJobClient backgroundJobClient;
+
         public ScheduledJobsService(
             IRepository<ScheduledJob> repository,
-            IRepository<Event> eventRepository)
+            IRepository<Event> eventRepository,
+            IBackgroundJobClient backgroundJobClient)
         {
             this.repository = repository;
             this.eventRepository = eventRepository;
+            this.backgroundJobClient = backgroundJobClient;
         }
 
         public async Task CreateStartEventJobAsync(string eventId, TimeSpan activationDelay)
         {
+            var activationScheduleJobId = backgroundJobClient.Schedule(() => SetStatusChangeJobAsync(eventId, Status.Active), activationDelay);
+
             var job = new ScheduledJob()
             {
-                JobId = Guid.NewGuid().ToString(),
+                JobId = activationScheduleJobId,
                 EventId = eventId,
                 IsActivationJob = true,
             };
@@ -36,9 +44,11 @@
 
         public async Task CreateEndEventJobAsync(string eventId, TimeSpan endingDelay)
         {
+            var activationScheduleJobId = backgroundJobClient.Schedule(() => SetStatusChangeJobAsync(eventId, Status.Ended), endingDelay);
+
             var job = new ScheduledJob()
             {
-                JobId = Guid.NewGuid().ToString(),
+                JobId = activationScheduleJobId,
                 EventId = eventId,
                 IsActivationJob = false,
             };
@@ -47,7 +57,6 @@
             await repository.SaveChangesAsync();
         }
 
-        // TO CHECK
         public async Task DeleteJobsAsync(string eventId, bool all, bool deleteActivationJobCondition = false)
         {
             var query = repository

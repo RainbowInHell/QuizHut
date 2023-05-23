@@ -46,7 +46,9 @@
                 query = query.Where(filter);
             }
 
-            return await query.Where(x => !x.Roles.Any()).To<T>().ToListAsync();
+            return await query
+                .To<T>()
+                .ToListAsync();
         }
 
         public async Task<IList<T>> GetAllStudentsByGroupIdAsync<T>(string groupId)

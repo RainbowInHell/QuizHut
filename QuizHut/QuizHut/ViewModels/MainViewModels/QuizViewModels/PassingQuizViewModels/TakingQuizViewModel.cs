@@ -23,26 +23,26 @@
             this.sharedDataStore = sharedDataStore;
             this.nextQuestionRenavigator = nextQuestionRenavigator;
 
-            Questions = new(this.sharedDataStore.QuizToPass.Questions);
-            CurrentQuestion = sharedDataStore.CurrentQuestion is null ? Questions.First() : sharedDataStore.CurrentQuestion;
+            Questions = new(sharedDataStore.QuizToPass.Questions);
+            CurrentQuestion = sharedDataStore.CurrentQuestion ?? Questions.First();
+
+            NavigateEndQuizCommand = new RenavigateCommand(endQuizRenavigator);
 
             GoToNextQuestionCommand = new ActionCommand(OnGoToNextQuestionCommandExecuted, CanGoToNextQuestionCommandExecute);
             GoToPreviousQuestionCommand = new ActionCommand(OnGoToPreviousQuestionCommandExecuted, CanGoToPreviousQuestionCommandExecute);
-
-            NavigateEndQuizCommand = new RenavigateCommand(endQuizRenavigator);
         }
 
         #region Fields and properties
 
-        private ObservableCollection<AttemtedQuizQuestionViewModel> questions;
-        public ObservableCollection<AttemtedQuizQuestionViewModel> Questions
+        private ObservableCollection<AttemptedQuizQuestionViewModel> questions;
+        public ObservableCollection<AttemptedQuizQuestionViewModel> Questions
         {
             get => questions;
             set => Set(ref questions, value);
         }
 
-        private AttemtedQuizQuestionViewModel currentQuestion;
-        public AttemtedQuizQuestionViewModel CurrentQuestion
+        private AttemptedQuizQuestionViewModel currentQuestion;
+        public AttemptedQuizQuestionViewModel CurrentQuestion
         {
             get => currentQuestion;
             set => Set(ref currentQuestion, value);

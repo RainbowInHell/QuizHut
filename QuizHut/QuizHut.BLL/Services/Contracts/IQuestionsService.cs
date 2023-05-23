@@ -4,9 +4,9 @@
     {
         Task<IList<T>> GetAllQuestionsByQuizIdAsync<T>(string id);
 
-        Task<string> CreateQuestionAsync(string quizId, string questionText);
+        Task<string> CreateQuestionAsync(string quizId, bool IsFullEvaluation, string questionText);
 
-        Task UpdateQuestionAsync(string id, string text);
+        Task UpdateQuestionAsync(string id, bool IsFullEvaluation, string text);
 
         Task UpdateAllQuestionsInQuizNumerationAsync(string quizId);
 
