@@ -4,43 +4,49 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls.PassingQuizUserControls"
+             xmlns:localVM="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
              
              mc:Ignorable="d" 
-             Height="550" Width="900"
+             Height="610" Width="900"
              HorizontalAlignment="Left" VerticalAlignment="Top"
-             Margin="50,20,0,0">
+             Margin="50,00,0,0">
 
     <UserControl.Effect>
         <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
     </UserControl.Effect>
 
-    <Border Background="{StaticResource MainViewBackground4}"
-            CornerRadius="15">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="15"/>
-            </Grid.ColumnDefinitions>
+    <StackPanel>
+        <controls:CountDownUserControl/>
+        <Border Background="{StaticResource MainViewBackground4}"
+                CornerRadius="15"
+                Height="550" Width="900"
+                Margin="0,10,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="auto" MinHeight="50" MaxHeight="110"/>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="auto" MinHeight="150" MaxHeight="280"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="55"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="15"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto" MinHeight="50" MaxHeight="110"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto" MinHeight="150" MaxHeight="280"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="55"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
 
-            <!-- Icon and Title -->
-            <StackPanel Orientation="Horizontal"
+                <!-- Icon and Title -->
+                <StackPanel Orientation="Horizontal"
                         Grid.Row="1" Grid.Column="1">
-                <fa:IconImage Grid.Row="1" Grid.Column="1"
+                    <fa:IconImage Grid.Row="1" Grid.Column="1"
                           Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Center"
                           Icon="CircleQuestion" Foreground="{StaticResource IconColor1}"/>
                 <TextBlock Style="{StaticResource MainTextBlock}" 
@@ -60,11 +66,11 @@
                         FontSize="20" Foreground="{StaticResource PrimaryFontColor}"
                         TextAlignment="Justify" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
-            <Separator Grid.Row="4" Grid.Column="1" 
+                <Separator Grid.Row="4" Grid.Column="1" 
                        Background="{StaticResource IconColor2}"/>
 
-            <!-- Answers -->
-            <ScrollViewer x:Name="TQVAnswersSV" 
+                <!-- Answers -->
+                <ScrollViewer x:Name="TQVAnswersSV" 
                           Grid.Row="5" Grid.Column="1"
                           CanContentScroll="False"
                           Background="Transparent"
@@ -104,18 +110,19 @@
                         Content="Следующий"
                         Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"/>
 
-            <Button x:Name="TQVFinishQuizBtn" Grid.Row="8" Grid.Column="1"
+                <Button x:Name="TQVFinishQuizBtn" Grid.Row="8" Grid.Column="1"
                         Template="{StaticResource ButtonTemplate3}"
                         Foreground="{StaticResource PrimaryActiveColor}" Height="35"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0"
                         FontFamily="{StaticResource Manrope}" FontSize="22" FontWeight="SemiBold"
                         Command="{Binding NavigateEndQuizCommand}">
-                <Button.Content>
-                    <TextBlock Style="{StaticResource TextBlockStyle1}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
                         Закончить викторину
-                    </TextBlock>
-                </Button.Content>
-            </Button>
-        </Grid>
-    </Border>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </Border>
+    </StackPanel>
 </UserControl>

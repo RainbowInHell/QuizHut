@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
         xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
         
-        Title="MainView" Height="700" Width="1300"
+        Title="MainView" Height="750" Width="1300"
         
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
