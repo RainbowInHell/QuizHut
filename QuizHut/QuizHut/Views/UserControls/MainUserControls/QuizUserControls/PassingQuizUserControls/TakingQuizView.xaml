@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls.PassingQuizUserControls"
              xmlns:localVM="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
              
              mc:Ignorable="d" 
              Height="610" Width="900"
@@ -17,10 +18,7 @@
     </UserControl.Effect>
 
     <StackPanel>
-        <TextBlock Style="{StaticResource MainTextBlock}"
-                   Text="{Binding TimeRemainingText}" FontSize="40"
-                   Height="50"
-                   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <controls:CountDownUserControl/>
         <Border Background="{StaticResource MainViewBackground4}"
                 CornerRadius="15"
                 Height="550" Width="900"
