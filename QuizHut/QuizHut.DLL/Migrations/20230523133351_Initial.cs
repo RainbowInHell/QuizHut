@@ -1,10 +1,11 @@
-﻿#nullable disable
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace QuizHut.DLL.Migrations
 {
-    using Microsoft.EntityFrameworkCore.Metadata;
-    using Microsoft.EntityFrameworkCore.Migrations;
-
     /// <inheritdoc />
     public partial class Initial : Migration
     {
@@ -44,9 +45,6 @@ namespace QuizHut.DLL.Migrations
                     LastName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     TeacherId = table.Column<string>(type: "varchar(255)", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -480,6 +478,7 @@ namespace QuizHut.DLL.Migrations
                     Text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Number = table.Column<int>(type: "int", nullable: false),
+                    IsFullEvaluation = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     QuizId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false)

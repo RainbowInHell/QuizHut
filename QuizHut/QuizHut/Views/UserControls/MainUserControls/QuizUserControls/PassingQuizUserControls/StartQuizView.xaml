@@ -45,7 +45,7 @@
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Викторина:"
                            FontSize="22" Foreground="{StaticResource FontColor4}"
                            VerticalAlignment="Bottom" Margin="5,0,0,0"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding CurrentQuiz.Name}"
                            FontSize="22" VerticalAlignment="Bottom" Margin="10,0,0,0"/>
             </StackPanel>
             
@@ -55,7 +55,7 @@
                         Grid.Row="3" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Количество вопросов:"
                            FontSize="18" Foreground="{StaticResource FontColor4}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding CurrentQuiz.Questions.Count}"
                            FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
 
@@ -64,12 +64,13 @@
                         Grid.Row="4" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Время для прохождения:"
                            FontSize="18" Foreground="{StaticResource FontColor4}"/>
-                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding }"
+                <TextBlock Style="{StaticResource MainTextBlock}" Text="{Binding CurrentQuiz.Timer}"
                            FontSize="22" Margin="10,0,0,0"/>
             </StackPanel>
 
             <!-- Question description -->
             <TextBox x:Name="SQVQuestionDescriptionTB"
+                     Text="{Binding CurrentQuiz.Description}"
                      Grid.Row="5" Grid.Column="1"
                      Style="{StaticResource textBoxStyle}"
                      Height="150" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"

@@ -12,6 +12,8 @@
 
         public int Number { get; set; }
 
+        public bool IsFullEvaluation { get; set; }
+
         public virtual ICollection<Answer> Answers { get; set; }
 
         public string QuizId { get; set; }
