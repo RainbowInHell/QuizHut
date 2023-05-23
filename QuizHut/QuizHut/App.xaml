@@ -22,6 +22,9 @@
              xmlns:mvpqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels" 
              xmlns:mpquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls.PassingQuizUserControls"
              
+             xmlns:mvrvm="clr-namespace:QuizHut.ViewModels.MainViewModels.ResultViewModels" 
+             xmlns:mruc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.ResultUserControls"
+             
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
     <Application.Resources>
@@ -45,8 +48,18 @@
             <DataTemplate DataType="{x:Type mvvm:UserProfileViewModel}">
                 <muc:UserProfileView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvvm:ResultsViewModel}">
-                <muc:ResultsView/>
+            
+            <DataTemplate DataType="{x:Type mvrvm:ResultsViewModel}">
+                <mruc:ResultsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvrvm:ActiveEventsViewModel}">
+                <mruc:ActiveEventsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvrvm:EndedEventsViewModel}">
+                <mruc:EndedEventsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvrvm:ResultsForEventViewModel}">
+                <mruc:ResultsForEventView/>
             </DataTemplate>
             
             <DataTemplate DataType="{x:Type mvevm:EventsViewModel}">

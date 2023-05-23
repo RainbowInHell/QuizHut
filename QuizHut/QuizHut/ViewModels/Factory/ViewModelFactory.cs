@@ -11,6 +11,7 @@
     using QuizHut.ViewModels.MainViewModels.EventViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.ResultViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {
@@ -43,6 +44,10 @@
         private readonly CreateViewModel<EndQuizViewModel> createEndQuizViewModel;
 
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
+        private readonly CreateViewModel<ActiveEventsViewModel> createActiveEventsViewModel;
+        private readonly CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel;
+        private readonly CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel;
+
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
         private readonly CreateViewModel<UserProfileViewModel> createUserProfileViewModel;
 
@@ -75,6 +80,10 @@
                                             CreateViewModel<EndQuizViewModel> createEndQuizViewModel,
 
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
+                                            CreateViewModel<ActiveEventsViewModel> createActiveEventsViewModel,
+                                            CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel,
+                                            CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel,
+
                                             CreateViewModel<StudentsViewModel> createStudentViewModel,
                                             CreateViewModel<UserProfileViewModel> createUserProfileViewModel)
         {
@@ -107,6 +116,10 @@
             this.createEndQuizViewModel = createEndQuizViewModel;
 
             this.createResultViewModel = createResultViewModel;
+            this.createActiveEventsViewModel = createActiveEventsViewModel;
+            this.createEndedEventsViewModel = createEndedEventsViewModel;
+            this.createResultsForEventViewModel = createResultsForEventViewModel;
+
             this.createStudentViewModel = createStudentViewModel;
             this.createUserProfileViewModel = createUserProfileViewModel;
         }
@@ -144,6 +157,10 @@
                 ViewType.EndQuiz => createEndQuizViewModel(),
 
                 ViewType.Result => createResultViewModel(),
+                ViewType.ActiveResults => createActiveEventsViewModel(),
+                ViewType.EndedResults => createEndedEventsViewModel(),
+                ViewType.ResultsForEvent => createResultsForEventViewModel(),
+
                 ViewType.Student => createStudentViewModel(),
                 ViewType.UserProfile => createUserProfileViewModel(),
 

@@ -36,6 +36,10 @@
         EndQuiz,
 
         Result,
+        ActiveResults,
+        EndedResults,
+        ResultsForEvent,
+
         Student,
         UserProfile,
     }

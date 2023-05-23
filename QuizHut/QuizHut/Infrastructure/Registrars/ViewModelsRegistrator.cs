@@ -18,6 +18,7 @@
     using QuizHut.ViewModels.MainViewModels.QuizViewModels;
     using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.ResultViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -30,7 +31,11 @@
 
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
-            services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => services.GetRequiredService<ResultsViewModel>());
+
+            services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
+            services.AddSingleton<CreateViewModel<ActiveEventsViewModel>>(services => () => services.GetRequiredService<ActiveEventsViewModel>());
+            services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => services.GetRequiredService<EndedEventsViewModel>());
+            services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => services.GetRequiredService<ResultsForEventViewModel>());
 
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
             services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
@@ -58,7 +63,11 @@
             services.AddTransient<MainViewModel>();
             services.AddTransient<HomeViewModel>();
             services.AddTransient<UserProfileViewModel>();
+
             services.AddTransient<ResultsViewModel>();
+            services.AddTransient<ActiveEventsViewModel>();
+            services.AddTransient<EndedEventsViewModel>();
+            services.AddTransient<ResultsForEventViewModel>();
 
             services.AddTransient<EventsViewModel>();
             services.AddTransient<EventActionsViewModel>();
@@ -108,7 +117,10 @@
             services.AddSingleton<ViewModelRenavigate<TakingQuizViewModel>>();
             services.AddSingleton<ViewModelRenavigate<EndQuizViewModel>>();
 
-            services.AddSingleton<ViewModelRenavigate<AddEditAnswerViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ResultsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ActiveEventsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<EndedEventsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ResultsForEventViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
@@ -352,6 +364,14 @@
                 services.GetRequiredService<IResultHelper>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+        }
+
+        private static ResultsViewModel CreateResultsViewModel(IServiceProvider services)
+        {
+            return new ResultsViewModel(
+                services.GetRequiredService<ViewModelRenavigate<ActiveEventsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<EndedEventsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>());
         }
     }
 }
