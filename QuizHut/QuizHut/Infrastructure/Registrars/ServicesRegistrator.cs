@@ -21,24 +21,22 @@
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            //setx QH_SENDGRID_APIKEY "API_KEY_EXAMPLE"
-            const string QH_SENDGRID_APIKEY = "QH_SENDGRID_APIKEY";
+            const string QH_SENDGRID_API_KEY = "QH_SENDGRID_API_KEY";
 
-            //setx QH_SENDGRID_FROM_EMAIL "quizhutkbip@gmail.com"
             const string QH_SENDGRID_FROM_EMAIL = "QH_SENDGRID_FROM_EMAIL";
 
-            var apiKey = Environment.GetEnvironmentVariable("QH_SENDGRID_APIKEY", EnvironmentVariableTarget.User);
+            var apiKey = Environment.GetEnvironmentVariable(QH_SENDGRID_API_KEY, EnvironmentVariableTarget.User);
             
             if (string.IsNullOrEmpty(apiKey))
             {
-                throw new InvalidOperationException($"The {QH_SENDGRID_APIKEY} environment variable is not set.");
+                throw new InvalidOperationException($"The '{QH_SENDGRID_API_KEY}' environment variable is not set.");
             }
             
-            var fromEmail = Environment.GetEnvironmentVariable("QH_SENDGRID_FROM_EMAIL", EnvironmentVariableTarget.User);
+            var fromEmail = Environment.GetEnvironmentVariable(QH_SENDGRID_FROM_EMAIL, EnvironmentVariableTarget.User);
 
             if (string.IsNullOrEmpty(fromEmail))
             {
-                throw new InvalidOperationException($"The {QH_SENDGRID_FROM_EMAIL} environment variable is not set.");
+                throw new InvalidOperationException($"The '{QH_SENDGRID_FROM_EMAIL}' environment variable is not set.");
             }
 
             services.AddSendGrid(opt => opt.ApiKey = apiKey);
@@ -65,6 +63,7 @@
             services.AddTransient<IExpressionBuilder, ExpressionBuilder>();
             services.AddTransient<IShuffler, Shuffler>();
             services.AddTransient<IResultHelper, ResultHelper>();
+            services.AddTransient<IExporter, Exporter>();
 
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IUserDialogService, UserDialogService>();

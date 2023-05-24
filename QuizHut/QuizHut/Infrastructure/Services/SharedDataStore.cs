@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Services
 {
+    using System;
+
     using QuizHut.Infrastructure.EntityViewModels.Answers;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Events;
@@ -27,5 +29,9 @@
         public AttemptedQuizQuestionViewModel? CurrentQuestion { get; set; }
 
         public string CurrentResultId { get; set; }
+
+        public TimeSpan RemainingTime { get; set; }
+        
+        public EventSimpleViewModel? EventToView { get; set; }
     }
 }

@@ -87,7 +87,7 @@
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadStudentsData();
+            await LoadStudentsDataAsync();
         }
 
         #endregion
@@ -100,7 +100,7 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadStudentsData(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentsDataAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
         }
 
         #endregion
@@ -117,7 +117,7 @@
 
             if (partisipantIsAdded)
             {
-                await LoadStudentsData();
+                await LoadStudentsDataAsync();
             }
         }
 
@@ -133,12 +133,12 @@
         {
             await studentService.DeleteStudentFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
 
-            await LoadStudentsData();
+            await LoadStudentsDataAsync();
         }
 
         #endregion
 
-        private async Task LoadStudentsData(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentsDataAsync(string searchCriteria = null, string searchText = null)
         {
             var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, searchCriteria: searchCriteria, searchText: searchText);
 

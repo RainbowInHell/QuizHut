@@ -38,17 +38,21 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
+        private readonly IExporter exporter;
+
         public EventsViewModel(
             IEventsService eventsService,
             ISharedDataStore sharedDataStore,
             IDateTimeConverter dateTimeConverter,
             IRenavigator eventActionsRenavigator,
             IRenavigator eventSettingRenavigator,
-            IViewDisplayTypeService viewDisplayTypeService)
+            IViewDisplayTypeService viewDisplayTypeService,
+            IExporter exporter)
         {
             this.eventsService = eventsService;
             this.sharedDataStore = sharedDataStore;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
 
             NavigateCreateEventCommand = new RenavigateCommand(eventActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateEditEventCommand = new RenavigateCommand(eventActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
@@ -157,6 +161,8 @@
             }
 
             Events = new(events);
+
+            //exporter.GenerateExcelReport();
         }
     }
 }

@@ -43,6 +43,7 @@
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            SendEmailWithQuizPasswordCommandAsync = new ActionCommandAsync(OnSendEmailWithQuizPasswordCommandExecuteAsync, CanSendEmailWithQuizPasswordCommandExecute);
             DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync, CanDeleteEventFromGroupCommandExecute);
             DeleteQuizFromEventCommandAsync = new ActionCommandAsync(OnDeleteQuizFromEventCommandExecutedAsync, CanDeleteQuizFromEventCommandExecute);
         }
@@ -104,6 +105,19 @@
             await LoadQuizzesData();
 
             await LoadGroupsData();
+        }
+
+        #endregion
+
+        #region SendEmailWithQuizPasswordCommandAsync
+
+        public ICommandAsync SendEmailWithQuizPasswordCommandAsync { get; }
+
+        private bool CanSendEmailWithQuizPasswordCommandExecute(object p) => true;
+
+        private async Task OnSendEmailWithQuizPasswordCommandExecuteAsync(object p)
+        {
+            await eventsService.SendEmailsToEventGroups(sharedDataStore.SelectedEvent.Id, SelectedQuiz.Id);
         }
 
         #endregion

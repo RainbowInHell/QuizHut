@@ -33,9 +33,9 @@
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
 
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
-            services.AddSingleton<CreateViewModel<ActiveEventsViewModel>>(services => () => services.GetRequiredService<ActiveEventsViewModel>());
-            services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => services.GetRequiredService<EndedEventsViewModel>());
-            services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => services.GetRequiredService<ResultsForEventViewModel>());
+            services.AddSingleton<CreateViewModel<ActiveEventsViewModel>>(services => () => CreateActiveEventsViewModel(services));
+            services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => CreateEndedEventsViewModel(services));
+            services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => CreateResultsForEventViewModel(services));
 
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
             services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
@@ -240,7 +240,8 @@
                 services.GetRequiredService<IDateTimeConverter>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
-                services.GetRequiredService<IViewDisplayTypeService>());
+                services.GetRequiredService<IViewDisplayTypeService>(),
+                services.GetRequiredService<IExporter>());
         }
 
         private static EventActionsViewModel CreateEventActionsViewModel(IServiceProvider services)
@@ -369,9 +370,31 @@
         private static ResultsViewModel CreateResultsViewModel(IServiceProvider services)
         {
             return new ResultsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<ActiveEventsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EndedEventsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>());
+        }
+
+        private static ActiveEventsViewModel CreateActiveEventsViewModel(IServiceProvider services)
+        {
+            return new ActiveEventsViewModel(
+                services.GetRequiredService<IEventsService>());
+        }
+
+        private static EndedEventsViewModel CreateEndedEventsViewModel(IServiceProvider services)
+        {
+            return new EndedEventsViewModel(
+                services.GetRequiredService<IEventsService>());
+        }
+
+        private static ResultsForEventViewModel CreateResultsForEventViewModel(IServiceProvider services)
+        {
+            return new ResultsForEventViewModel(
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ISharedDataStore>());
         }
     }
 }

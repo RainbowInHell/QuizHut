@@ -100,7 +100,7 @@
                 question.Answers = shuffler.Shuffle(question.Answers);
             }
 
-            //sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(AccountStore.CurrentAdminId, 0, sharedDataStore.QuizToPass.Id);
+            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(AccountStore.CurrentAdminId, 0, sharedDataStore.QuizToPass.Id);
 
             startQuizRenavigator.Renavigate();
         }

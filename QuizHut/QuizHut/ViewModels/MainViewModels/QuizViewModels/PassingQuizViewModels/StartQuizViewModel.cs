@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels
 {
+    using System;
     using System.Windows.Input;
 
     using QuizHut.Infrastructure.Commands;
@@ -11,14 +12,17 @@
     {
         private readonly ISharedDataStore sharedDataStore;
 
+        private readonly IRenavigator takingQuizRenavigator;
+
         public StartQuizViewModel(
             ISharedDataStore sharedDataStore,
             IRenavigator takingQuizRenavigator,
             IRenavigator homeRenavigator)
         {
             this.sharedDataStore = sharedDataStore;
+            this.takingQuizRenavigator = takingQuizRenavigator;
 
-            NavigateTakingQuizCOmmand = new RenavigateCommand(takingQuizRenavigator);
+            NavigateTakingQuizCommand = new ActionCommand(p => OnNavigateTakingQuizCommandExecute());
             NavigateHomeCommand = new RenavigateCommand(homeRenavigator);
         }
 
@@ -39,7 +43,14 @@
 
         #region NavigationCommands
 
-        public ICommand NavigateTakingQuizCOmmand { get; }
+        public ICommand NavigateTakingQuizCommand { get; }
+        
+        private void OnNavigateTakingQuizCommandExecute()
+        {
+            sharedDataStore.RemainingTime = TimeSpan.FromMinutes(CurrentQuiz.Timer);
+            
+            takingQuizRenavigator.Renavigate();
+        }
 
         public ICommand NavigateHomeCommand { get; }
 

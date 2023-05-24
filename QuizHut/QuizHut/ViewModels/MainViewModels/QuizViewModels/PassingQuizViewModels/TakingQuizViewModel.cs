@@ -1,8 +1,10 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
+    using System.Windows.Threading;
 
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.EntityViewModels.Questions;
@@ -11,9 +13,13 @@
 
     class TakingQuizViewModel : ViewModel
     {
+        private DispatcherTimer timer;
+
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IRenavigator nextQuestionRenavigator;
+
+        private readonly IRenavigator endQuizRenavigator;
 
         public TakingQuizViewModel(
             ISharedDataStore sharedDataStore,
@@ -21,7 +27,9 @@
             IRenavigator endQuizRenavigator)
         {
             this.sharedDataStore = sharedDataStore;
+
             this.nextQuestionRenavigator = nextQuestionRenavigator;
+            this.endQuizRenavigator = endQuizRenavigator;
 
             Questions = new(sharedDataStore.QuizToPass.Questions);
             CurrentQuestion = sharedDataStore.CurrentQuestion ?? Questions.First();
@@ -30,6 +38,15 @@
 
             GoToNextQuestionCommand = new ActionCommand(OnGoToNextQuestionCommandExecuted, CanGoToNextQuestionCommandExecute);
             GoToPreviousQuestionCommand = new ActionCommand(OnGoToPreviousQuestionCommandExecuted, CanGoToPreviousQuestionCommandExecute);
+
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timer.Tick += TimerTick;
+
+            StartQuizTimerCommand = new ActionCommand(p => StartQuizTimer());
+            StartQuizTimerCommand.Execute(this);
         }
 
         #region Fields and properties
@@ -47,6 +64,9 @@
             get => currentQuestion;
             set => Set(ref currentQuestion, value);
         }
+
+        private TimeSpan timeRemaining;
+        public string TimeRemainingText => timeRemaining.ToString(@"hh\:mm\:ss");
 
         #endregion
 
@@ -70,6 +90,8 @@
             var currentIndex = Questions.IndexOf(CurrentQuestion);
             sharedDataStore.CurrentQuestion = Questions[currentIndex + 1];
 
+            sharedDataStore.RemainingTime = timeRemaining;
+
             nextQuestionRenavigator.Renavigate();
         }
 
@@ -89,7 +111,36 @@
             var currentIndex = Questions.IndexOf(CurrentQuestion);
             sharedDataStore.CurrentQuestion = Questions[currentIndex - 1];
 
+            sharedDataStore.RemainingTime = timeRemaining;
+
             nextQuestionRenavigator.Renavigate();
+        }
+
+        #endregion
+
+        #region TimerCommand
+
+        public ICommand StartQuizTimerCommand { get; }
+
+        private void TimerTick(object sender, EventArgs e)
+        {
+            timeRemaining = timeRemaining.Subtract(TimeSpan.FromSeconds(1));
+            if (timeRemaining <= TimeSpan.Zero)
+            { 
+                timer.Stop();
+                endQuizRenavigator.Renavigate();
+            }
+            else
+            {
+                OnPropertyChanged(nameof(TimeRemainingText));
+            }
+        }
+
+        private void StartQuizTimer()
+        {
+            timeRemaining = sharedDataStore.RemainingTime.Subtract(TimeSpan.FromMilliseconds(500));
+
+            timer.Start();
         }
 
         #endregion

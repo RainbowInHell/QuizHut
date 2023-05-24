@@ -86,7 +86,7 @@
                 .Where(e => e.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            if (@event.Quizzes.Count == 0 || @event.Status == status)
+            if (@event == null || @event.Quizzes.Count == 0 || @event.Status == status)
             {
                 return;
             }

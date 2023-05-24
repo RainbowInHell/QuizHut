@@ -90,7 +90,7 @@
                     Width="320" Height="50"
                     Content="Начать тест"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"
-                    Command="{Binding NavigateTakingQuizCOmmand}"/>
+                    Command="{Binding NavigateTakingQuizCommand}"/>
 
             <Button x:Name="SQVCancelBtn" Grid.Row="7" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"

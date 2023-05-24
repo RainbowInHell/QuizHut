@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"                                       
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.ResultUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -10,6 +11,11 @@
              d:Height="600" d:Width="1000"
              Background="Transparent">
 
+        <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadEventGroupsDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -23,12 +29,12 @@
             <ComboBox  x:Name="REVSelectGroupCMB"
                        VerticalAlignment="Center"
                        Width="300" Height="35"
-                  ItemsSource="{Binding }"
-                  SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                  ItemsSource="{Binding EventGroups}"
+                  SelectedItem="{Binding SelectedGroup, Mode=TwoWay}"
                   DisplayMemberPath="Name"
                   FontFamily="{StaticResource Manrope}" FontSize="16"/>
             <Button Grid.Row="0"
-                Command="{Binding }"
+                Command="{Binding LoadEventResultsForGroupCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="140" Height="35"
@@ -50,7 +56,8 @@
         <ScrollViewer CanContentScroll="False" Grid.Row="2"
                       Width="970">
             <DataGrid x:Name="REResultsForEventDataGrid" 
-                  ItemsSource="{Binding }"                 
+                  ItemsSource="{Binding EventResults}"   
+                  SelectedItem="{Binding SelectedResult}"                      
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -59,11 +66,11 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя" IsReadOnly="True" Width="*"
-                                    Binding="{Binding Name}"/>
+                                    Binding="{Binding StudentName}"/>
                     <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
-                                    Binding="{Binding CreatedOnDate}"/>
+                                    Binding="{Binding StudentEmail}"/>
                     <DataGridTextColumn Header="Баллы" IsReadOnly="True" Width="200"
-                                    Binding="{Binding CategoryName}"/>
+                                    Binding="{Binding Score}"/>
 
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
@@ -71,7 +78,7 @@
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button Style="{StaticResource GridControlButton}" Background="{StaticResource RemoveColor1}"
                                         Margin="5,0,0,0"
-                                        Command="{Binding DataContext.DeleteQuizCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        Command="{Binding DataContext.DeleteResultCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Trash" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
                                 </StackPanel>

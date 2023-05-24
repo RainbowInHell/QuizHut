@@ -1,18 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using QuizHut.BLL.Services.Contracts;
-using QuizHut.DLL.Entities;
-using QuizHut.Infrastructure.EntityViewModels.Quizzes;
-using QuizHut.Tests.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace QuizHut.Tests.Tests
+﻿namespace QuizHut.Tests.Tests
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    
+    using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Entities;
+    using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Tests.Configuration;
+    
+    using Xunit;
+
     public class QuizzesServiceTests : SetUpTests
     {
         private IQuizzesService Service => ServiceProvider.GetRequiredService<IQuizzesService>();
@@ -116,8 +113,6 @@ namespace QuizHut.Tests.Tests
         {
             var creatorId = Guid.NewGuid().ToString();
             var firstQuizId = await CreateQuizAsync("First quiz", creatorId, "123");
-
-            var secondQuizId = await CreateQuizAsync("Second quiz", password: "123");
 
             var firstModel = new QuizAssignViewModel()
             {

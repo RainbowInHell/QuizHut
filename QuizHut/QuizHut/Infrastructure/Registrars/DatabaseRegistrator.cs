@@ -21,7 +21,6 @@
 
             var connectionString = Environment.GetEnvironmentVariable(QH_DATABASE_CONNECTION_STRING, EnvironmentVariableTarget.User);
 
-            //services.AddDbContextFactory<ApplicationDbContext>(opt =>
             services.AddDbContext<ApplicationDbContext>(opt =>
             {
                 if (string.IsNullOrEmpty(connectionString))
@@ -29,7 +28,6 @@
                     throw new InvalidOperationException($"The {QH_DATABASE_CONNECTION_STRING} environment variable is not set.");
                 }
 
-                //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), providerOptions => { providerOptions.EnableRetryOnFailure(); });
                 opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 opt.EnableSensitiveDataLogging();
             });
@@ -67,6 +65,12 @@
               .AddDefaultTokenProviders();
 
             services.AddRepositories();
+
+            using (var scope = services.BuildServiceProvider().CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                dbContext.Database.EnsureCreated();
+            }
 
             return services;
         }
