@@ -52,6 +52,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
@@ -212,8 +213,14 @@
                 </StackPanel.Style>
             </StackPanel>-->
 
+            <!-- User message block -->
+            <TextBlock x:Name="СAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            
             <!-- Add group and Cancel buttons -->
-            <Button x:Name="CAVAddCategoryBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="CAVAddCategoryBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding CreateCategoryCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -238,7 +245,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="СAVSaveCategoryNameBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="СAVSaveCategoryNameBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding UpdateCategoryNameCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -263,7 +270,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="CAVAddQuizzesBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="CAVAddQuizzesBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding AssignQuizzesToCategoryCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -289,7 +296,7 @@
                 </Button.Style>
             </Button>
 
-            <Button x:Name="СAVCancelBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="СAVCancelBtn" Grid.Row="6" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"

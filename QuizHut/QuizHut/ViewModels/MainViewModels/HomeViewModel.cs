@@ -61,6 +61,13 @@
             set => Set(ref quizPassword, value);
         }
 
+        private string? errorMessage;
+        public string? ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
+
         #endregion
 
         #region NavigationCommands

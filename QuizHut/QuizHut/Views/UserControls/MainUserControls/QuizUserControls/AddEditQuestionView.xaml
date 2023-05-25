@@ -30,6 +30,7 @@
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="15"/>
@@ -94,9 +95,15 @@
                      Height="150" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"
                      VerticalContentAlignment="Top"
                      Text="{Binding QuestionDescriptionToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            
+
+            <!-- User message block -->
+            <TextBlock x:Name="AEQVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
             <!-- Add/Cancel button -->
-            <Button x:Name="QAEVAddQuestionBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="QAEVAddQuestionBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding CreateQuestionCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -118,7 +125,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="QAEVSaveQuestionNewDataBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="QAEVSaveQuestionNewDataBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding UpdateQuestionCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -141,7 +148,7 @@
                 </Button.Style>
             </Button>
 
-            <Button x:Name="QAEVCancelBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="QAEVCancelBtn" Grid.Row="6" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"
@@ -151,7 +158,7 @@
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
                         Command="{Binding NavigateQuizSettingsCommand}"/>
 
-            <Button x:Name="QAEVViewQuizSettingsBtn" Grid.Row="6" Grid.Column="1"
+            <Button x:Name="QAEVViewQuizSettingsBtn" Grid.Row="7" Grid.Column="1"
                         Command="{Binding NavigateQuizCommand}"
                         Template="{StaticResource ButtonTemplate3}"
                         Foreground="{StaticResource PrimaryActiveColor}" Height="25"

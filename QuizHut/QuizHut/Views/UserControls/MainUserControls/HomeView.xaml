@@ -90,10 +90,11 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
-                    <RowDefinition Height="45"/>
+                    <RowDefinition Height="40"/>
                     <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
@@ -122,8 +123,15 @@
                      FontFamily="{StaticResource Manrope}" FontSize="18"
                      Text="{Binding QuizPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+                <!-- User message block -->
+                <TextBlock x:Name="MHVMessageTextBox"
+                       Grid.Row="5" Grid.Column="1"
+                       Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Style="{StaticResource ErrorTextBlock1}"
+                       Margin="0,5,0,5"/>
+                
                 <!-- Link to take quiz-->
-                <Button x:Name="MVHTakeQuiztBtn" Grid.Row="5" Grid.Column="1"
+                <Button x:Name="MVHTakeQuiztBtn" Grid.Row="6" Grid.Column="1"
                                 Command="{Binding GoToStartQuizCommandAsync}"
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                                 Width="150" Height="45"

@@ -117,6 +117,13 @@
             set => Set(ref searchText, value);
         }
 
+        private string? errorMessage;
+        public string? ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
+
         #endregion
 
         #region NavigationCommands

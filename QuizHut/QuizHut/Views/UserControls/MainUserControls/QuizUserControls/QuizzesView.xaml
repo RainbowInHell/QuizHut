@@ -19,11 +19,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="5"/>
             <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
         <!-- Counter TextBlock -->
@@ -66,6 +66,12 @@
                            VerticalAlignment="Center"/>
             </StackPanel>
         </Button>
+
+        <!-- User message block -->
+        <TextBlock x:Name="MQVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="1"
+                   Margin="480,5,0,0" HorizontalAlignment="Left"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- FilterBy category comboBox-->
         <TextBlock Grid.Row="2" 

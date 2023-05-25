@@ -22,11 +22,12 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="15"/>
-                <RowDefinition Height="40"/>
                 <RowDefinition Height="35"/>
-                <RowDefinition Height="25"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="35"/>
                 <RowDefinition Height="15"/>
@@ -87,13 +88,18 @@
             <!-- Question description -->
             <TextBox x:Name="AAEAnswerDescriptionTB"
                      Grid.Row="5" Grid.Column="1"
-                     Style="{StaticResource textBoxStyle}"
-                     Height="150" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"
+                     Style="{StaticResource textBoxStyle}" FontSize="15" MaxLength="300" TextWrapping="Wrap" TextAlignment="Justify"
                      VerticalContentAlignment="Top"
                      Text="{Binding AnswerDescriptionToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+            <!-- User message block -->
+            <TextBlock x:Name="AEAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="6" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
             <!-- Add/Cancel button -->
-            <Button x:Name="AAEVAddAnswerBtn" Grid.Row="6" Grid.Column="1"
+            <Button x:Name="AAEVAddAnswerBtn" Grid.Row="7" Grid.Column="1"
                         Command="{Binding CreateAnswerCommandAsync}"                    
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -115,7 +121,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="AAEVSaveAnswerNewDataBtn" Grid.Row="6" Grid.Column="1"
+            <Button x:Name="AAEVSaveAnswerNewDataBtn" Grid.Row="7" Grid.Column="1"
                         Command="{Binding UpdateAnswerCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -138,7 +144,7 @@
                 </Button.Style>
             </Button>
 
-            <Button x:Name="AAEVCancelBtn" Grid.Row="6" Grid.Column="1"
+            <Button x:Name="AAEVCancelBtn" Grid.Row="7" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"
@@ -148,7 +154,7 @@
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold"
                         Command="{Binding NavigateQuizSettingsCommand}"/>
 
-            <Button x:Name="AAEVViewQuizSettingsBtn" Grid.Row="7" Grid.Column="1"
+            <Button x:Name="AAEVViewQuizSettingsBtn" Grid.Row="8" Grid.Column="1"
                         Command="{Binding NavigateNewQuestionCommand}"
                         Template="{StaticResource ButtonTemplate3}"
                         Foreground="{StaticResource PrimaryActiveColor}" Height="25"

@@ -74,5 +74,11 @@
 
             ActiveEvents = new(activeEvents);
         }
+        private string? errorMessage;
+        public string? ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
     }
 }

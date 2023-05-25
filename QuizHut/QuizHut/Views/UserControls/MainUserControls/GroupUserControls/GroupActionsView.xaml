@@ -55,6 +55,7 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
@@ -320,8 +321,14 @@
                 </StackPanel.Style>
             </StackPanel>-->
 
+            <!-- User message block -->
+            <TextBlock x:Name="GAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
             <!-- Add group and Cancel buttons -->
-            <Button x:Name="GAVAddGroupBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="GAVAddGroupBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding CreateGroupCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -349,7 +356,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVSaveGroupNameBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="GAVSaveGroupNameBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding UpdateGroupNameCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -377,7 +384,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVAddStudentsBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="GAVAddStudentsBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding AssignStudentsToGroupCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -405,7 +412,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVAddEventsBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="GAVAddEventsBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding AssignEventsToGroupCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -433,7 +440,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="GAVCancelBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="GAVCancelBtn" Grid.Row="6" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"

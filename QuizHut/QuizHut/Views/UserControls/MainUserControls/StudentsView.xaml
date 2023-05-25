@@ -20,8 +20,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="5"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -31,6 +31,12 @@
                    FontSize="24" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="{Binding Students.Count, Mode=OneWay, StringFormat='Кол-во: {0}'}"/>
+
+        <!-- User message block -->
+        <TextBlock x:Name="MSVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                   Grid.Row="1"
+                   Margin="480,5,0,0" HorizontalAlignment="Left"
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- FilterBy textBox-->
         <TextBlock Grid.Row="0" 
