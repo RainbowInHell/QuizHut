@@ -82,7 +82,7 @@
 
         private async Task OnDeleteQuizFromCategoryCommandExecutedAsync(object p)
         {
-            await categoriesService.DeleteQuizFromCategoryAsync(sharedDataStore.SelectedCategoryId, SelectedQuiz.Id);
+            await categoriesService.DeleteQuizFromCategoryAsync(sharedDataStore.SelectedCategory.Id, SelectedQuiz.Id);
 
             await LoadQuizzesData();
         }
@@ -91,7 +91,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetAllByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategoryId);
+            var quizzes = await quizzesService.GetQuizzesByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id);
 
             Quizzes = new(quizzes);
         }

@@ -7,6 +7,7 @@
     using FontAwesome.Sharp;
 
     using QuizHut.BLL.Helpers;
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -24,16 +25,20 @@
 
         private readonly IGroupsService groupsService;
 
+        private readonly IDateTimeConverter dateTimeConverter;
+
         private readonly ISharedDataStore sharedDataStore;
 
         public GroupsViewModel(
             IGroupsService groupsService,
+            IDateTimeConverter dateTimeConverter,
             ISharedDataStore sharedDataStore,
             IRenavigator groupActionsRenavigator,
             IRenavigator groupSettingRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.groupsService = groupsService;
+            this.dateTimeConverter = dateTimeConverter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateCreateGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
@@ -59,7 +64,7 @@
         {
             get
             {
-                sharedDataStore.SelectedGroupId = selectedGroup is null ? null : selectedGroup.Id;
+                sharedDataStore.SelectedGroup = selectedGroup;
                 return selectedGroup;
             }
             set => Set(ref selectedGroup, value);
@@ -118,7 +123,7 @@
 
         private async Task OnDeleteGroupCommandExecutedAsync(object p)
         {
-            await groupsService.DeleteAsync(SelectedGroup.Id);
+            await groupsService.DeleteGroupAsync(SelectedGroup.Id);
 
             await LoadGroupsData();
         }
@@ -128,6 +133,11 @@
         private async Task LoadGroupsData(string searchText = null)
         {
             var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(AccountStore.CurrentAdminId, searchText: searchText);
+
+            foreach (var group in groups)
+            {
+                group.CreatedOnDate = dateTimeConverter.GetDate(group.CreatedOn);
+            }
 
             Groups = new(groups);
         }

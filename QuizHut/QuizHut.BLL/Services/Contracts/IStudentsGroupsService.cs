@@ -4,6 +4,6 @@
     {
         Task CreateStudentGroupAsync(string groupId, string studentId);
 
-        Task DeleteAsync(string groupId, string studentId);
+        Task DeleteStudentGroupAsync(string groupId, string studentId);
     }
 }

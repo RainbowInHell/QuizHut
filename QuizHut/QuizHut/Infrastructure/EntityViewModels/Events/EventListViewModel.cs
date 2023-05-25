@@ -17,8 +17,6 @@
 
         public TimeSpan DurationOfActivity { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public string StartDate { get; set; }
 
         public string Duration { get; set; }

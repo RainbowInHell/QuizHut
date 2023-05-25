@@ -6,7 +6,6 @@
     using System.Windows.Input;
 
     using QuizHut.BLL.Helpers;
-    using QuizHut.BLL.Services;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
@@ -58,7 +57,18 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
+                {
+                    GroupNameToCreate = sharedDataStore.SelectedGroup.Name;
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         public ObservableCollection<StudentViewModel> students;
         public ObservableCollection<StudentViewModel> Students
@@ -95,13 +105,29 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            if (CurrentViewDisplayType != ViewDisplayType.Create
+                &&
+                CurrentViewDisplayType != ViewDisplayType.Edit)
+            {
+                return true;
+            }
+
+            return false; 
+        }
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadStudentsData();
+            if (CurrentViewDisplayType == ViewDisplayType.AddEvents)
+            {
+                await LoadEventsData();
+            }
 
-            await LoadEventsData();
+            if (CurrentViewDisplayType == ViewDisplayType.AddStudents)
+            {
+                await LoadStudentsData();
+            }
         }
 
         #endregion
@@ -129,7 +155,7 @@
 
         private async Task OnUpdateGroupNameCommandExecutedAsync(object p)
         {
-            await groupsService.UpdateNameAsync(sharedDataStore.SelectedGroupId, GroupNameToCreate);
+            await groupsService.UpdateGroupNameAsync(sharedDataStore.SelectedGroup.Id, GroupNameToCreate);
 
             NavigateGroupCommand.Execute(p);
         }
@@ -148,7 +174,7 @@
 
             if (selectedStudentIds.Any())
             {
-                await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroupId, selectedStudentIds);
+                await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedStudentIds);
             }
 
             NavigateGroupSettingsCommand.Execute(p);
@@ -168,7 +194,7 @@
 
             if (selectedEventIds.Any())
             {
-                await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroupId, selectedEventIds);
+                await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedEventIds);
             }
 
             NavigateGroupSettingsCommand.Execute(p);
@@ -178,21 +204,21 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroupId);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroupId, AccountStore.CurrentAdminId);
+            var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, AccountStore.CurrentAdminId);
 
             Events = new(events);
         }
 
         private void ViewDisplayTypeService_StateChanged()
         {
-            OnPropertyChanged(nameof(ViewDisplayType));
+            OnPropertyChanged(nameof(CurrentViewDisplayType));
         }
 
         public override void Dispose()

@@ -12,7 +12,7 @@
     public class UserAccountService : IUserAccountService
     {
         private IAccountStore accountStore;
-
+        
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IEmailSenderService emailSender;
@@ -50,7 +50,14 @@
 
             var isRightPassword = await userManager.CheckPasswordAsync(user, password);
 
-            CurrentUser.IsLoggedIn = isRightPassword ? true : false;
+            if (isRightPassword)
+            {
+                CurrentUser.IsLoggedIn = true;
+                CurrentUser.CurrentUser = user;
+                AccountStore.CurrentAdminId = user.Id;
+
+                return true;
+            }
 
             //var roles = await userManager.GetRolesAsync(user);
 
@@ -58,9 +65,8 @@
             //{
             //    AccountStore.CurrentAdminId = user.Id;
             //}
-            AccountStore.CurrentAdminId = user.Id;
 
-            return isRightPassword;
+            return false;
         }
 
         public async Task<string> SendPasswordResetEmail(string email)

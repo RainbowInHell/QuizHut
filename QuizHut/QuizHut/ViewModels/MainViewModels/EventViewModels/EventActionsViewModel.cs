@@ -56,7 +56,23 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
+                {
+                    var timeParts = sharedDataStore.SelectedEvent.Duration.Split('-');
+
+                    EventNameToCreate = sharedDataStore.SelectedEvent.Name;
+                    EventActivationDate = sharedDataStore.SelectedEvent.StartDate;
+                    EventAvaliableFrom = timeParts[0].Trim();
+                    EventAvaliableTo = timeParts[1].Trim();
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         private string eventNameToCreate;
         public string EventNameToCreate
@@ -114,13 +130,29 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            if (CurrentViewDisplayType != ViewDisplayType.Create
+                &&
+                CurrentViewDisplayType != ViewDisplayType.Edit)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadQuizzesData();
+            if (CurrentViewDisplayType == ViewDisplayType.AddQuizzes)
+            {
+                await LoadQuizzesData();
+            }
 
-            await LoadGroupsData();
+            if (CurrentViewDisplayType == ViewDisplayType.AddGroups)
+            {
+                await LoadGroupsData();
+            }
         }
 
         #endregion
@@ -186,7 +218,7 @@
                 return;
             }
 
-            await eventsService.UpdateAsync(sharedDataStore.SelectedEventId, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
+            await eventsService.UpdateEventAsync(sharedDataStore.SelectedEvent.Id, EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo);
 
             NavigateEventCommand.Execute(p);
         }
@@ -201,15 +233,15 @@
 
         private async Task OnAssignQuizToEventCommandExecute(object p)
         {
-            var selectedQuizes = Quizzes.Where(s => s.IsAssigned).ToList();
+            var selectedQuizes = Quizzes.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
 
-            if (selectedQuizes.Count() != 1)
+            if (selectedQuizes.Count() == 0)
             {
                 // TODO: Error message for user
                 return;
             }
-
-            await eventsService.AssignQuizToEventAsync(sharedDataStore.SelectedEventId, selectedQuizes.First().Id);
+            
+            await eventsService.AssignQuizzesToEventAsync(selectedQuizes, sharedDataStore.SelectedEvent.Id);
 
             NavigateEventSettingsCommand.Execute(p);
         }
@@ -232,7 +264,7 @@
                 return;
             }
 
-            await eventsService.AssignGroupsToEventAsync(selectedGroupIds, sharedDataStore.SelectedEventId);
+            await eventsService.AssignGroupsToEventAsync(selectedGroupIds, sharedDataStore.SelectedEvent.Id);
 
             NavigateEventSettingsCommand.Execute(p);
         }
@@ -241,21 +273,21 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetAllUnAssignedToEventAsync<QuizAssignViewModel>(AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(AccountStore.CurrentAdminId);
 
             Quizzes = new(quizzes);
         }
 
         private async Task LoadGroupsData()
         {
-            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedEventId);
+            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
         }
 
         private void ViewDisplayTypeService_StateChanged()
         {
-            OnPropertyChanged(nameof(ViewDisplayType));
+            OnPropertyChanged(nameof(CurrentViewDisplayType));
         }
 
         public override void Dispose()

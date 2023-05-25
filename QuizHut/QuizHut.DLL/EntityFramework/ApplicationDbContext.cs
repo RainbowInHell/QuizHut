@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QuizHut.DLL.Entities;
-
-namespace QuizHut.DLL.EntityFramework
+﻿namespace QuizHut.DLL.EntityFramework
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,8 +19,6 @@ namespace QuizHut.DLL.EntityFramework
 
         public DbSet<Quiz> Quizzes { get; set; }
 
-        public DbSet<Password> Passwords { get; set; }
-
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Group> Groups { get; set; }
@@ -38,43 +33,21 @@ namespace QuizHut.DLL.EntityFramework
 
         public DbSet<ScheduledJob> ScheduledJobs { get; set; }
 
-        public override int SaveChanges() => SaveChanges(true);
+        //public override int SaveChanges() => SaveChanges(true);
 
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            return base.SaveChanges(acceptAllChangesOnSuccess);
-        }
+        //public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        //{
+        //    return base.SaveChanges(acceptAllChangesOnSuccess);
+        //}
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
-            SaveChangesAsync(true, cancellationToken);
+        //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => await
+        //    SaveChangesAsync(true, cancellationToken);
 
-        public override Task<int> SaveChangesAsync(
-            bool acceptAllChangesOnSuccess,
-            CancellationToken cancellationToken = default)
-        {
-                return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Event)
-                .WithOne(p => p.Quiz)
-                .HasForeignKey<Quiz>(q => q.EventId);
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Password)
-                .WithOne(p => p.Quiz)
-                .HasForeignKey<Quiz>(q => q.PasswordId);
-
-            builder.Entity<Quiz>()
-                .HasOne(q => q.Category)
-                .WithMany(p => p.Quizzes)
-                .HasForeignKey(q => q.CategoryId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
-        }
+        //public override async Task<int> SaveChangesAsync(
+        //    bool acceptAllChangesOnSuccess,
+        //    CancellationToken cancellationToken = default)
+        //{
+        //    return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        //}
     }
 }

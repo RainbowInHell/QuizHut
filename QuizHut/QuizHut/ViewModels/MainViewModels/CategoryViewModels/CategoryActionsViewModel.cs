@@ -50,7 +50,18 @@
 
         #region Fields and properties
 
-        public ViewDisplayType? ViewDisplayType => viewDisplayTypeService.ViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
+        {
+            get
+            {
+                if (viewDisplayTypeService.CurrentViewDisplayType == ViewDisplayType.Edit)
+                {
+                    CategoryNameToCreate = sharedDataStore.SelectedCategory.Name;
+                }
+
+                return viewDisplayTypeService.CurrentViewDisplayType;
+            }
+        }
 
         private string categoryNameToCreate;
         public string CategoryNameToCreate
@@ -80,7 +91,15 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
+        private bool CanLoadDataCommandExecute(object p)
+        {
+            if (CurrentViewDisplayType == ViewDisplayType.AddQuizzes)
+            {
+                return true;
+            }
+
+            return false;
+        }
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
@@ -89,7 +108,7 @@
 
         #endregion
 
-        #region CreateGroupCommandAsync
+        #region CreateCategoryCommandAsync
 
         public ICommandAsync CreateCategoryCommandAsync { get; }
 
@@ -112,7 +131,7 @@
 
         private async Task OnUpdateCategoryNameCommandExecutedAsync(object p)
         {
-            await categoriesService.UpdateNameAsync(sharedDataStore.SelectedCategoryId, CategoryNameToCreate);
+            await categoriesService.UpdateCategoryNameAsync(sharedDataStore.SelectedCategory.Id, CategoryNameToCreate);
 
             NavigateCategoryCommand.Execute(p);
         }
@@ -131,7 +150,7 @@
 
             if (selectedQuizIds.Any())
             {
-                await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategoryId, selectedQuizIds);
+                await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategory.Id, selectedQuizIds);
             }
 
             NavigateCategorySettingsCommand.Execute(p);
@@ -141,14 +160,14 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetUnAssignedToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategoryId, AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, AccountStore.CurrentAdminId);
 
             Quizzes = new(quizzes);
         }
 
         private void ViewDisplayTypeService_StateChanged()
         {
-            OnPropertyChanged(nameof(ViewDisplayType));
+            OnPropertyChanged(nameof(CurrentViewDisplayType));
         }
 
         public override void Dispose()

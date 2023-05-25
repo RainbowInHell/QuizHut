@@ -108,7 +108,7 @@
 
         private async Task OnDeleteStudentFromGroupCommandExecutedAsync(object p)
         {
-            await groupsService.DeleteStudentFromGroupAsync(sharedDataStore.SelectedGroupId, SelectedStudent.Id);
+            await groupsService.DeleteStudentFromGroupAsync(sharedDataStore.SelectedGroup.Id, SelectedStudent.Id);
 
             await LoadStudentsData();
         }
@@ -123,7 +123,7 @@
 
         private async Task OnDeleteEventFromGroupCommandExecutedAsync(object p)
         {
-            await groupsService.DeleteEventFromGroupAsync(sharedDataStore.SelectedGroupId, SelectedEvent.Id);
+            await groupsService.DeleteEventFromGroupAsync(sharedDataStore.SelectedGroup.Id, SelectedEvent.Id);
 
             await LoadEventsData();
         }
@@ -132,14 +132,14 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentsService.GetAllByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroupId);
+            var students = await studentsService.GetAllStudentsByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllByGroupIdAsync<EventsAssignViewModel>(sharedDataStore.SelectedGroupId);
+            var events = await eventsService.GetAllEventsByGroupIdAsync<EventsAssignViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Events = new(events);
         }

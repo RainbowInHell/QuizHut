@@ -11,7 +11,7 @@
     public class QuizzesService : IQuizzesService
     {
         private readonly IRepository<Quiz> quizRepository;
-
+        
         private readonly IExpressionBuilder expressionBuilder;
 
         public QuizzesService(
@@ -52,7 +52,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IList<T>> GetAllByCategoryIdAsync<T>(string id)
+        public async Task<IList<T>> GetQuizzesByCategoryIdAsync<T>(string id)
         {
             return await quizRepository
                 .AllAsNoTracking()
@@ -61,16 +61,7 @@
                 .ToListAsync();
         }
 
-        public async Task<string> GetQuizNameByIdAsync(string id)
-        {
-            return await quizRepository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .Select(x => x.Name)
-                .FirstOrDefaultAsync();
-        }
-
-        public async Task<IList<T>> GetUnAssignedToCategoryByCreatorIdAsync<T>(string categoryId, string creatorId)
+        public async Task<IList<T>> GetUnAssignedQuizzesToCategoryByCreatorIdAsync<T>(string categoryId, string creatorId)
         {
             return await quizRepository
                 .AllAsNoTracking()
@@ -79,7 +70,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IList<T>> GetAllUnAssignedToEventAsync<T>(string creatorId = null)
+        public async Task<IList<T>> GetUnAssignedQuizzesToEventAsync<T>(string creatorId = null)
         {
             var query = quizRepository
                    .AllAsNoTracking()
@@ -95,37 +86,67 @@
                 .ToListAsync();
         }
 
-        public async Task<T> GetQuizByEventId<T>(string eventId)
+        public async Task<IList<T>> GetQuizzesByEventId<T>(string eventId)
         {
             return await quizRepository
-                .All()
+                .AllAsNoTracking()
                 .Where(x => x.EventId == eventId)
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<T> GetQuizByPasswordAsync<T>(string password)
+        {
+            return await quizRepository
+                .AllAsNoTracking()
+                .Where(x => x.Password == password)
                 .To<T>()
                 .FirstOrDefaultAsync();
         }
 
-        public async Task AssignQuizToEventAsync(string eventId, string quizId)
+        public async Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password)
+        {
+            var quiz = new Quiz
+            {
+                Name = name,
+                Description = description,
+                Timer = timer,
+                CreatorId = creatorId,
+                Password = password
+            };
+
+            await quizRepository.AddAsync(quiz);
+            await quizRepository.SaveChangesAsync();
+
+            return quiz.Id;
+        }
+
+        public async Task UpdateQuizAsync(string id, string name, string description, int? timer, string password)
         {
             var quiz = await quizRepository
-                .All()
-                .Where(x => x.Id == quizId)
-                .FirstOrDefaultAsync();
+               .All()
+               .FirstOrDefaultAsync(x => x.Id == id);
 
-            quiz.EventId = eventId;
+            if (quiz.Password != password)
+            {
+                quiz.Password = password;
+            }
+
+            quiz.Name = name;
+            quiz.Description = description;
+            quiz.Timer = timer;
+
             quizRepository.Update(quiz);
-            
             await quizRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteEventFromQuizAsync(string eventId, string quizId)
+        public async Task DeleteQuizAsync(string id)
         {
             var quiz = await quizRepository
                 .All()
-                .Where(x => x.Id == quizId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-            quiz.EventId = null;
-            quizRepository.Update(quiz);
+            quizRepository.Delete(quiz);
 
             await quizRepository.SaveChangesAsync();
         }

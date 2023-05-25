@@ -131,7 +131,7 @@
 
         private async Task OnDeleteStudentFromTeacherListCommandExecute(object p)
         {
-            await studentService.DeleteFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
+            await studentService.DeleteStudentFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
 
             await LoadStudentsData();
         }

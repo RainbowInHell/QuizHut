@@ -27,6 +27,14 @@
         GroupSettings,
 
         Quiz,
+        AddEditQuiz,
+        AddEditQuestion,
+        QuizSettings,
+        AddEditAnswer,
+        StartQuiz,
+        TakingQuiz,
+        EndQuiz,
+
         Result,
         Student,
         UserProfile,

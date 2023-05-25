@@ -14,7 +14,7 @@
 
     public interface IViewDisplayTypeService
     {
-        ViewDisplayType? ViewDisplayType { get; set; }
+        ViewDisplayType? CurrentViewDisplayType { get; set; }
 
         event Action StateChanged;
     }

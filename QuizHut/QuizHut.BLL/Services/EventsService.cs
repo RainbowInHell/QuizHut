@@ -18,25 +18,29 @@
     {
         private readonly IRepository<Event> repository;
 
-        private readonly IQuizzesService quizService;
+        private readonly IRepository<Quiz> quizRepository;
 
         private readonly IEventsGroupsService eventsGroupsService;
 
         private readonly IScheduledJobsService scheduledJobsService;
 
+        private readonly IEmailSenderService emailSenderService;
+
         private readonly IExpressionBuilder expressionBuilder;
 
         public EventsService(
             IRepository<Event> repository,
-            IQuizzesService quizService,
+            IRepository<Quiz> quizRepository,
             IEventsGroupsService eventsGroupsService,
             IScheduledJobsService scheduledJobsService,
+            IEmailSenderService emailSenderService,
             IExpressionBuilder expressionBuilder)
         {
             this.repository = repository;
-            this.quizService = quizService;
+            this.quizRepository = quizRepository;
             this.eventsGroupsService = eventsGroupsService;
             this.scheduledJobsService = scheduledJobsService;
+            this.emailSenderService = emailSenderService;
             this.expressionBuilder = expressionBuilder;
         }
 
@@ -52,7 +56,8 @@
                 query = query.Where(x => x.CreatorId == creatorId);
             }
 
-            if (searchCriteria != null && searchText != null)
+            var emptyNameInput = searchText == null && searchCriteria == "Name";
+            if (searchCriteria != null && !emptyNameInput)
             {
                 var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
                 query = query.Where(filter);
@@ -64,7 +69,7 @@
                    .ToListAsync();
         }
 
-        public async Task<IList<T>> GetAllFilteredByStatusAndGroupAsync<T>(
+        public async Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(
             Status status, 
             string groupId, 
             string creatorId = null)
@@ -86,7 +91,7 @@
               .ToListAsync();
         }
 
-        public async Task<IList<T>> GetAllByGroupIdAsync<T>(string groupId)
+        public async Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId)
         {
             return await repository
                 .AllAsNoTracking()
@@ -95,34 +100,45 @@
                 .ToListAsync();
         }
 
+        public async Task AssignQuizzesToEventAsync(IList<string> quizIds, string eventId)
+        {
+            var @event = await repository
+                .All()
+                .Include(e => e.Quizzes)
+                .Where(e => e.Id == eventId)
+                .FirstOrDefaultAsync();
+
+            foreach (var quizId in quizIds)
+            {
+                var quiz = await quizRepository
+                    .All()
+                    .Where(x => x.Id == quizId)
+                    .FirstOrDefaultAsync();
+
+                if (quiz.EventId != null)
+                {
+                    await DeleteQuizFromEventAsync(quiz.EventId, quizId);
+                }
+
+                @event.Quizzes.Add(quiz);
+                @event.Status = GetStatus(@event.ActivationDateAndTime, @event.DurationOfActivity, quizId);
+
+                repository.Update(@event);
+                await repository.SaveChangesAsync();
+
+                if (@event.Status != Status.Ended)
+                {
+                    await SheduleStatusChangeAsync(@event.ActivationDateAndTime, @event.DurationOfActivity, @event.Id, @event.Status);
+                }
+            }
+        }
+
         public async Task AssignGroupsToEventAsync(IList<string> groupIds, string eventId)
         {
             foreach (var groupId in groupIds)
             {
                 await eventsGroupsService.CreateEventGroupAsync(eventId, groupId);
             }
-        }
-
-        public async Task AssignQuizToEventAsync(string eventId, string quizId)
-        {
-            var @event = await repository
-                .All()
-                .Where(x => x.Id == eventId)
-                .FirstOrDefaultAsync();
-
-            @event.QuizId = quizId;
-            @event.QuizName = await quizService.GetQuizNameByIdAsync(quizId);
-            @event.Status = GetStatus(@event.ActivationDateAndTime, @event.DurationOfActivity, quizId);
-
-            repository.Update(@event);
-            await repository.SaveChangesAsync();
-
-            if (@event.Status != Status.Ended)
-            {
-                await SheduleStatusChangeAsync(@event.ActivationDateAndTime, @event.DurationOfActivity, @event.Id, @event.Status);
-            }
-
-            await quizService.AssignQuizToEventAsync(eventId, quizId);
         }
 
         public async Task<string> CreateEventAsync(
@@ -150,10 +166,11 @@
             return @event.Id;
         }
 
-        public async Task UpdateAsync(string id, string name, string activationDate, string activeFrom, string activeTo)
+        public async Task UpdateEventAsync(string id, string name, string activationDate, string activeFrom, string activeTo)
         {
             var @event = await repository
                 .All()
+                .Include(e => e.Quizzes)
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -163,12 +180,12 @@
             @event.Name = name;
             @event.ActivationDateAndTime = activationDateAndTime;
             @event.DurationOfActivity = durationOfActivity;
-            @event.Status = GetStatus(activationDateAndTime, durationOfActivity, @event.QuizId);
+            @event.Status = GetStatus(activationDateAndTime, durationOfActivity, @event.Quizzes.FirstOrDefault()?.Id);
 
             repository.Update(@event);
             await repository.SaveChangesAsync();
 
-            if (@event.QuizId != null)
+            if (@event.Quizzes.Count > 0)
             {
                 await SheduleStatusChangeAsync(activationDateAndTime, durationOfActivity, id, @event.Status);
             }
@@ -178,39 +195,76 @@
         {
             var @event = await repository
                 .All()
+                .Include(x => x.Quizzes)
                 .Where(x => x.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            @event.QuizId = null;
+            var quizToRemove = @event.Quizzes.FirstOrDefault(q => q.Id == quizId);
 
-            if (@event.Status == Status.Active)
+            @event.Quizzes.Remove(quizToRemove);
+
+            if (!@event.Quizzes.Any())
             {
-                @event.Status = Status.Pending;
-                await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
+                if (@event.Status == Status.Active)
+                {
+                    @event.Status = Status.Pending;
+                }
             }
 
-            repository.Update(@event);
+            await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
 
+            repository.Update(@event);
             await repository.SaveChangesAsync();
-            
-            await quizService.DeleteEventFromQuizAsync(eventId, quizId);
         }
 
-        public async Task DeleteAsync(string eventId)
+        public async Task DeleteEventAsync(string eventId)
         {
             var @event = await repository
                 .All()
+                .Include(e => e.Quizzes)
                 .Where(x => x.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            var quizId = @event.QuizId;
-            if (quizId != null)
+            foreach (var quiz in @event.Quizzes)
             {
-                await quizService.DeleteEventFromQuizAsync(eventId, quizId);
+                quiz.EventId = null;
+                quizRepository.Update(quiz);
             }
 
             repository.Delete(@event);
+
+            await quizRepository.SaveChangesAsync();
             await repository.SaveChangesAsync();
+        }
+
+        public async Task SendEmailsToEventGroups(string eventId, string quizId)
+        {
+            var eventInfo = await repository
+                .AllAsNoTracking()
+                .Where(x => x.Id == eventId)
+                .Select(x => new
+                {
+                    EventName = x.Name,
+                    Password = x.Quizzes
+                        .Where(q => q.Id == quizId)
+                        .Select(q => q.Password)
+                        .FirstOrDefault(),
+                    QuizName = x.Quizzes
+                        .Where(q => q.Id == quizId)
+                        .Select(q => q.Name)
+                        .FirstOrDefault(),
+                    Emails = x.EventsGroups
+                        .SelectMany(eg => eg.Group.StudentsGroups.Select(sg => sg.Student.Email)),
+                })
+                .FirstOrDefaultAsync();
+
+            foreach (var email in eventInfo.Emails)
+            {
+                var emailSubject = $"Пароль для викторины '{eventInfo.QuizName}' в мероприятии '{eventInfo.EventName}'";
+                var emailContent = $"Пароль: {eventInfo.Password}";
+
+                await emailSenderService.SendEmailAsync(email, emailSubject, emailContent);
+            }
         }
 
         public string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate)

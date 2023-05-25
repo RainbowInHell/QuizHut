@@ -19,6 +19,14 @@
 
         public string CreatedOnDate { get; set; }
 
+        public string Description { get; set; }
+
+        public string Password { get; set; }
+
+        public string EventId { get; set; }
+
+        public int Timer { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public string Color { get; set; }

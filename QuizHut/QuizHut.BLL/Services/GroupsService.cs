@@ -53,7 +53,7 @@
             return await query.OrderByDescending(x => x.CreatedOn).To<T>().ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllByEventIdAsync<T>(string eventId)
+        public async Task<IEnumerable<T>> GetAllGroupsByEventIdAsync<T>(string eventId)
         {
             return await repository
                 .AllAsNoTracking()
@@ -88,7 +88,7 @@
             }
         }
 
-        public async Task UpdateNameAsync(string groupId, string newName)
+        public async Task UpdateGroupNameAsync(string groupId, string newName)
         {
             var group = await repository
                 .All()
@@ -101,7 +101,7 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string groupId)
+        public async Task DeleteGroupAsync(string groupId)
         {
             var group = await repository
                 .All()
@@ -115,12 +115,12 @@
 
         public async Task DeleteStudentFromGroupAsync(string groupId, string studentId)
         {
-            await studentsGroupsService.DeleteAsync(groupId, studentId);
+            await studentsGroupsService.DeleteStudentGroupAsync(groupId, studentId);
         }
 
         public async Task DeleteEventFromGroupAsync(string groupId, string eventId)
         {
-            await eventsGroupsService.DeleteAsync(eventId, groupId);
+            await eventsGroupsService.DeleteEventGroupAsync(eventId, groupId);
         }
     }
 }

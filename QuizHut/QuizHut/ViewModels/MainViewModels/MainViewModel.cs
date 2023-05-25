@@ -30,6 +30,7 @@
         private void UserAccountService_StateChanged()
         {
             OnPropertyChanged(nameof(IsLoggedIn));
+            OnPropertyChanged(nameof(CurrentUserFullName));
         }
 
         private void NavigationService_StateChanged()
@@ -47,6 +48,19 @@
         public ViewModel CurrentView => navigationService.CurrentView;
 
         public bool IsLoggedIn => userAccountService.CurrentUser.IsLoggedIn;
+
+        public string CurrentUserFullName
+        {
+            get
+            {
+                if (userAccountService.CurrentUser.CurrentUser != null)
+                {
+                    return $"{userAccountService.CurrentUser.CurrentUser.FirstName} {userAccountService.CurrentUser.CurrentUser.LastName}";
+                }
+
+                return null;
+            }
+        }
 
         private string title = HomeViewModel.Title;
         public string Title 

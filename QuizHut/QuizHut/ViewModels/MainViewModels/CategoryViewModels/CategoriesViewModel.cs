@@ -7,6 +7,7 @@
     using FontAwesome.Sharp;
 
     using QuizHut.BLL.Helpers;
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -24,16 +25,20 @@
 
         private readonly ICategoriesService categoriesService;
 
+        private readonly IDateTimeConverter dateTimeConverter;
+
         private readonly ISharedDataStore sharedDataStore;
 
         public CategoriesViewModel(
             ICategoriesService categoriesService,
+            IDateTimeConverter dateTimeConverter,
             ISharedDataStore sharedDataStore,
             IRenavigator categoryActionsRenavigator,
             IRenavigator categorySettingRenavigator,
             IViewDisplayTypeService viewDisplayTypeService) 
         {
             this.categoriesService = categoriesService;
+            this.dateTimeConverter = dateTimeConverter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateCreateCategoryCommand = new RenavigateCommand(categoryActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
@@ -59,7 +64,7 @@
         {
             get
             {
-                sharedDataStore.SelectedCategoryId = selectedCategory is null ? null : selectedCategory.Id;
+                sharedDataStore.SelectedCategory = selectedCategory;
                 return selectedCategory;
             }
             set => Set(ref selectedCategory, value);
@@ -101,7 +106,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
@@ -118,7 +123,7 @@
 
         private async Task OnDeleteCategoryCommandExecutedAsync(object p)
         {
-            await categoriesService.DeleteAsync(SelectedCategory.Id);
+            await categoriesService.DeleteCategoryAsync(SelectedCategory.Id);
 
             await LoadCategoriesData();
         }
@@ -128,6 +133,11 @@
         private async Task LoadCategoriesData(string searchText = null)
         {
             var categories = await categoriesService.GetAllCategories<CategoryViewModel>(AccountStore.CurrentAdminId, searchText);
+
+            foreach (var category in categories)
+            {
+                category.CreatedOnDate = dateTimeConverter.GetDate(category.CreatedOn);
+            }
 
             Categories = new(categories);
         }

@@ -6,13 +6,13 @@
 
     internal class ViewDisplayTypeService : IViewDisplayTypeService
     {
-        private ViewDisplayType? viewDisplayType;
-        public ViewDisplayType? ViewDisplayType
+        private ViewDisplayType? currentViewDisplayType;
+        public ViewDisplayType? CurrentViewDisplayType
         {
-            get => viewDisplayType;
+            get => currentViewDisplayType;
             set
             {
-                viewDisplayType = value;
+                currentViewDisplayType = value;
                 StateChanged?.Invoke();
             }
         }

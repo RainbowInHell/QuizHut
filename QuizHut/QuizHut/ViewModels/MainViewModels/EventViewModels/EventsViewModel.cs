@@ -73,7 +73,7 @@
         {
             get
             {
-                sharedDataStore.SelectedEventId = selectedEvent is null ? null : selectedEvent.Id;
+                sharedDataStore.SelectedEvent = selectedEvent;
                 return selectedEvent;
             }
             set => Set(ref selectedEvent, value);
@@ -139,7 +139,7 @@
 
         private async Task OnDeleteEventCommandExecutedAsync(object p)
         {
-            await eventsService.DeleteAsync(SelectedEvent.Id);
+            await eventsService.DeleteEventAsync(SelectedEvent.Id);
 
             await LoadEventsData();
         }

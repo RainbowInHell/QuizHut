@@ -6,21 +6,23 @@
     {
         Task<IList<T>> GetAllEventsAsync<T>(string creatorId = null, string searchCriteria = null, string searchText = null);
 
-        Task<IList<T>> GetAllFilteredByStatusAndGroupAsync<T>(Status status, string groupId, string creatorId = null);
+        Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(Status status, string groupId, string creatorId = null);
 
-        Task<IList<T>> GetAllByGroupIdAsync<T>(string groupId);
+        Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId);
 
-        Task AssignQuizToEventAsync(string eventId, string quizId);
+        Task AssignQuizzesToEventAsync(IList<string> quizIds, string eventId);
 
         Task AssignGroupsToEventAsync(IList<string> groupIds, string eventId);
 
         Task<string> CreateEventAsync(string name, string activationDate, string activeFrom, string activeTo, string creatorId);
 
-        Task UpdateAsync(string id, string name, string activationDate, string activeFrom, string ativeTo);
+        Task UpdateEventAsync(string id, string name, string activationDate, string activeFrom, string ativeTo);
 
         Task DeleteQuizFromEventAsync(string eventId, string quizId);
 
-        Task DeleteAsync(string eventId);
+        Task DeleteEventAsync(string eventId);
+
+        Task SendEmailsToEventGroups(string eventId, string groupId);
 
         string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate);
     }

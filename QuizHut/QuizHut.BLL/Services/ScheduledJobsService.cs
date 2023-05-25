@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.BLL.Services
 {
+    using Hangfire;
+
     using Microsoft.EntityFrameworkCore;
 
     using QuizHut.BLL.Services.Contracts;
@@ -10,22 +12,28 @@
     public class ScheduledJobsService : IScheduledJobsService
     {
         private readonly IRepository<ScheduledJob> repository;
-    
+
         private readonly IRepository<Event> eventRepository;
+
+        private readonly IBackgroundJobClient backgroundJobClient;
 
         public ScheduledJobsService(
             IRepository<ScheduledJob> repository,
-            IRepository<Event> eventRepository)
+            IRepository<Event> eventRepository,
+            IBackgroundJobClient backgroundJobClient)
         {
             this.repository = repository;
             this.eventRepository = eventRepository;
+            this.backgroundJobClient = backgroundJobClient;
         }
 
         public async Task CreateStartEventJobAsync(string eventId, TimeSpan activationDelay)
         {
+            var activationScheduleJobId = backgroundJobClient.Schedule(() => SetStatusChangeJobAsync(eventId, Status.Active), activationDelay);
+
             var job = new ScheduledJob()
             {
-                JobId = Guid.NewGuid().ToString(),
+                JobId = activationScheduleJobId,
                 EventId = eventId,
                 IsActivationJob = true,
             };
@@ -36,9 +44,11 @@
 
         public async Task CreateEndEventJobAsync(string eventId, TimeSpan endingDelay)
         {
+            var activationScheduleJobId = backgroundJobClient.Schedule(() => SetStatusChangeJobAsync(eventId, Status.Ended), endingDelay);
+
             var job = new ScheduledJob()
             {
-                JobId = Guid.NewGuid().ToString(),
+                JobId = activationScheduleJobId,
                 EventId = eventId,
                 IsActivationJob = false,
             };
@@ -58,23 +68,25 @@
                 query = query.Where(x => x.IsActivationJob == deleteActivationJobCondition);
             }
 
-            var jobsIds = await query
-                .Select(x => x.JobId)
-                .ToListAsync();
+            var jobs = await query.ToListAsync();
+
+            foreach (var job in jobs)
+            {
+                repository.Delete(job);
+            }
+
+            await repository.SaveChangesAsync();
         }
 
         public async Task SetStatusChangeJobAsync(string eventId, Status status)
         {
-            var @event = await this.eventRepository
+            var @event = await eventRepository
                 .All()
-                .Where(x => x.Id == eventId)
+                .Include(e => e.Quizzes)
+                .Where(e => e.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            var studentNames = await this.GetStudentsNamesByEventIdAsync(eventId);
-            var adminUpdate = status == Status.Active ? "ActiveEventUpdate" : "EndedEventUpdate";
-            var studentUpdate = status == Status.Active ? "NewActiveEventMessage" : "NewEndedEventMessage";
-
-            if (@event.QuizId == null || @event.Status == status)
+            if (@event.Quizzes.Count == 0 || @event.Status == status)
             {
                 return;
             }
@@ -82,15 +94,6 @@
             @event.Status = status;
             eventRepository.Update(@event);
             await eventRepository.SaveChangesAsync();
-        }
-
-        private async Task<string[]> GetStudentsNamesByEventIdAsync(string id)
-        {
-            return await eventRepository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .SelectMany(x => x.EventsGroups.SelectMany(x => x.Group.StudentsGroups.Select(x => x.Student.UserName)))
-                .ToArrayAsync();
         }
     }
 }

@@ -22,23 +22,13 @@
                 .Where(x => x.GroupId == groupId && x.EventId == eventId)
                 .FirstOrDefaultAsync();
 
-            //if (deletedEventGroup != null)
-            //{
-            //    repository.Undelete(deletedEventGroup);
-            //}
-            //else
-            //{
-            //    var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
-            //    await repository.AddAsync(eventGroup);
-            //}
-
             var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
             await repository.AddAsync(eventGroup);
 
             await repository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(string eventId, string groupId)
+        public async Task DeleteEventGroupAsync(string eventId, string groupId)
         {
             var eventGroup = await repository
                 .All()

@@ -20,7 +20,7 @@
         {
             var message = new SendGridMessage()
             {
-                From = new EmailAddress(Environment.GetEnvironmentVariable("QH_SENDGRID_APIKEY", EnvironmentVariableTarget.User)),
+                From = new EmailAddress(Environment.GetEnvironmentVariable("QH_SENDGRID_FROM_EMAIL", EnvironmentVariableTarget.User)),
                 Subject = subject,
                 PlainTextContent = body
             };

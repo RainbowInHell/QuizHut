@@ -11,7 +11,7 @@
 
         private IViewDisplayTypeService viewDisplayTypeService;
 
-        private readonly ViewDisplayType? viewDisplayType;
+        private readonly ViewDisplayType? currentViewDisplayType;
 
         public RenavigateCommand(IRenavigator renavigator)
         {
@@ -21,7 +21,7 @@
         public RenavigateCommand(IRenavigator renavigator, ViewDisplayType viewDisplayType, IViewDisplayTypeService viewDisplayTypeService)
         {
             this.renavigator = renavigator;
-            this.viewDisplayType = viewDisplayType;
+            currentViewDisplayType = viewDisplayType;
             this.viewDisplayTypeService = viewDisplayTypeService;
         }
 
@@ -36,9 +36,9 @@
         {
             renavigator.Renavigate();
 
-            if (viewDisplayType != null)
+            if (currentViewDisplayType != null)
             {
-                viewDisplayTypeService.ViewDisplayType = viewDisplayType;
+                viewDisplayTypeService.CurrentViewDisplayType = currentViewDisplayType;
             }
         }
     }
