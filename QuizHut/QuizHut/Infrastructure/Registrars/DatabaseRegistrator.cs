@@ -28,8 +28,8 @@
                     throw new InvalidOperationException($"The {QH_DATABASE_CONNECTION_STRING} environment variable is not set.");
                 }
 
-                opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-                opt.EnableSensitiveDataLogging();
+                //opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                //opt.EnableSensitiveDataLogging();
             });
 
             services.AddHangfire(configruation =>

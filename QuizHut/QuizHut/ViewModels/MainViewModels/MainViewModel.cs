@@ -39,8 +39,10 @@
             navigationService.StateChanged += NavigationService_StateChanged;
             accountStore.StateChanged += UserAccountService_StateChanged;
 
+            NavigateProfileCommand = new ActionCommand(p => ProfileNavigate());
+
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
-            NavigationCommand.Execute(ViewType.Authorization);
+            NavigationCommand.Execute(ViewType.UserProfile);
             
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
         }
@@ -55,6 +57,12 @@
         {
             OnPropertyChanged(nameof(CurrentView));
             ShowingContent();
+        }
+
+        private void ProfileNavigate()
+        {
+            SelectedOption = null;
+            NavigationCommand.Execute(ViewType.UserProfile);
         }
 
         #region Fields and properties
@@ -91,7 +99,7 @@
             set => Set(ref iconChar, value);
         }
 
-        private string selectedOption = "Home";
+        private string selectedOption = "Home";//TO-DO сделать проверку на выделение начальной кнопки в зависимости от роли
         public string? SelectedOption 
         { 
             get => selectedOption; 
@@ -103,6 +111,7 @@
         #region Commands
 
         public NavigationCommand NavigationCommand { get; }
+        public ICommand NavigateProfileCommand { get; }
 
         #region LogoutCommand
         public ICommand LogoutCommand { get; } 

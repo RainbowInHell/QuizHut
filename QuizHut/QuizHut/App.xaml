@@ -4,11 +4,13 @@
              
              xmlns:svvm="clr-namespace:QuizHut.ViewModels.StartViewModels" 
              xmlns:mvtvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels"
+             xmlns:mvsvm="clr-namespace:QuizHut.ViewModels.MainViewModels.StudentPartViewModels"
              
              xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels"
              
              xmlns:suc="clr-namespace:QuizHut.Views.UserControls.StartUserControls"
              xmlns:mtuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls"
+             xmlns:msuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.StudentPartUserControls"
              
              xmlns:muc="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
              
@@ -20,6 +22,9 @@
              
              xmlns:mvtevm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels" 
              xmlns:mteuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.EventUserControls"
+             
+             xmlns:mvsevm="clr-namespace:QuizHut.ViewModels.MainViewModels.StudentPartViewModels.EventsViewModels" 
+             xmlns:mseuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.StudentPartUserControls.EventsUserControls"
              
              xmlns:mvtqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels" 
              xmlns:mtquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.QuizUserControls"
@@ -49,6 +54,10 @@
             <DataTemplate DataType="{x:Type mvtvm:HomeViewModel}">
                 <mtuc:HomeView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type mvsvm:StudentHomeViewModel}">
+                <msuc:StudentHomeView/>
+            </DataTemplate>
+            
             <DataTemplate DataType="{x:Type mvvm:UserProfileViewModel}">
                 <muc:UserProfileView/>
             </DataTemplate>
@@ -66,6 +75,10 @@
                 <mtruc:ResultsForEventView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type mvsvm:OwnResultsViewModel}">
+                <msuc:OwnResultsView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type mvtevm:EventsViewModel}">
                 <mteuc:EventsView/>
             </DataTemplate>
@@ -75,7 +88,17 @@
             <DataTemplate DataType="{x:Type mvtevm:EventSettingsViewModel}">
                 <mteuc:EventSettingsView/>
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type mvsevm:StudentActiveEventsViewModel}">
+                <mseuc:StudentActiveEventsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvsevm:StudentPendingEventsViewModel}">
+                <mseuc:StudentPendingEventsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvsevm:StudentEndedEventsViewModel}">
+                <mseuc:StudentEndedEventsView/>
+            </DataTemplate>
+
             <DataTemplate DataType="{x:Type mvtgvm:GroupsViewModel}">
                 <mtguc:GroupsView/>
             </DataTemplate>

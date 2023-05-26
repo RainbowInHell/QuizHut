@@ -87,7 +87,7 @@
                             </Style>
                         </StackPanel.Style>
                     </StackPanel>
-                    <controls:TeacherNavigationMenu Grid.Row="2" Margin="0,20">
+                    <controls:TeacherNavigationMenu Grid.Row="2" Margin="0,40">
                         <controls:TeacherNavigationMenu.Style>
                             <Style TargetType="controls:TeacherNavigationMenu">
                                 <Style.Triggers>
@@ -98,6 +98,17 @@
                             </Style>
                         </controls:TeacherNavigationMenu.Style>
                     </controls:TeacherNavigationMenu>
+                    <controls:StudentNavigationMenu Grid.Row="2" Margin="0,40">
+                        <controls:StudentNavigationMenu.Style>
+                            <Style TargetType="controls:StudentNavigationMenu">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </controls:StudentNavigationMenu.Style>
+                    </controls:StudentNavigationMenu>
 
                     <!-- Logout button -->
                     <Button x:Name="MVLogoutBtn"
@@ -212,8 +223,7 @@
                                 Style="{StaticResource UserOptionButton}"
                                 Tag="{StaticResource Color9}"
                                 Margin="10,0,0,0"
-                                Command="{Binding NavigationCommand}"
-                                CommandParameter="{x:Static nav:ViewType.UserProfile}">
+                                Command="{Binding NavigateProfileCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Профиль" Style="{StaticResource UserOptionButtonText}"/>
                                 <fa:IconImage Icon="AddressCard" 

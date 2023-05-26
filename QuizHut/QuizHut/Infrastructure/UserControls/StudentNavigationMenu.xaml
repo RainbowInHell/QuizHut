@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="QuizHut.Infrastructure.UserControls.StudentNavigationMenu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizHut.Infrastructure.UserControls"
+             xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             
+             mc:Ignorable="d" 
+             d:Width="250" d:Height="500">
+    <StackPanel>
+        <!-- Student Menu Buttons -->
+        <RadioButton x:Name="MVStdHomeMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color3}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=StudentHome}"
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.StudentHome}">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Home" Style="{StaticResource MenuButtonIcon}"/>
+                <TextBlock Text="Главная" Style="{StaticResource MenuButtonText}"/>
+            </StackPanel>
+        </RadioButton>
+
+        <RadioButton x:Name="MVStdOwnResultsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color2}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=OwnResult}"
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.OwnResult}">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Trophy" Style="{StaticResource MenuButtonIcon}"/>
+                <TextBlock Text="Мои результаты" Style="{StaticResource MenuButtonText}"/>
+            </StackPanel>
+        </RadioButton>
+
+        <RadioButton x:Name="MVStdEventsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource Color6}"
+                                 Background="{StaticResource FontColor4}">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
+                <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
+                <fa:IconImage Icon="ArrowDown" Style="{StaticResource MenuButtonIcon}"
+                              Height="12" Width="12" Margin="70,0,0,0"
+                              Foreground="{StaticResource SecondaryFontColor}"/>
+            </StackPanel>
+        </RadioButton>
+
+        <StackPanel>
+            <RadioButton x:Name="MVStdActiveEventsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource IconColor5}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=StudentActiveEvents}"
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.StudentActiveEvents}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="HourglassHalf" Style="{StaticResource MenuButtonIcon}"/>
+                    <TextBlock Text="Активные" Style="{StaticResource MenuButtonText}"/>
+                </StackPanel>
+            </RadioButton>
+
+            <RadioButton x:Name="MVStdPendingEventsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource IconColor6}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=StudentPendingEvents}"
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.StudentPendingEvents}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="HourglassStart" Style="{StaticResource MenuButtonIcon}"/>
+                    <TextBlock Text="В ожидании" Style="{StaticResource MenuButtonText}"/>
+                </StackPanel>
+            </RadioButton>
+
+            <RadioButton x:Name="MVStdEndedEventsMenuBtn"
+                                 Style="{StaticResource MenuButton}"
+                                 Tag="{StaticResource IconColor7}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=StudentEndedEvents}"
+                                 Command="{Binding NavigationCommand}"
+                                 CommandParameter="{x:Static nav:ViewType.StudentEndedEvents}">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Icon="HourglassEnd" Style="{StaticResource MenuButtonIcon}"/>
+                    <TextBlock Text="Оконченные" Style="{StaticResource MenuButtonText}"/>
+                </StackPanel>
+            </RadioButton>
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MVStdEventsMenuBtn}" Value="True">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked, ElementName=MVStdEventsMenuBtn}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

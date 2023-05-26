@@ -13,6 +13,8 @@
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels.EventsViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {
@@ -22,10 +24,15 @@
         private readonly CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel;
 
         private readonly CreateViewModel<HomeViewModel> createHomeViewModel;
+        private readonly CreateViewModel<StudentHomeViewModel> createStudentHomeViewModel;
 
         private readonly CreateViewModel<CategoriesViewModel> createCategoryViewModel;
         private readonly CreateViewModel<CategoryActionsViewModel> createCategoryActionsViewModel;
         private readonly CreateViewModel<CategorySettingsViewModel> createCategorySettingsViewModel;
+
+        private readonly CreateViewModel<StudentActiveEventsViewModel> createStudentActiveEventsViewModel;
+        private readonly CreateViewModel<StudentPendingEventsViewModel> createStudentPendingEventsViewModel;
+        private readonly CreateViewModel<StudentEndedEventsViewModel> createStudentEndedEventsViewModel;
 
         private readonly CreateViewModel<EventsViewModel> createEventViewModel;
         private readonly CreateViewModel<EventActionsViewModel> createEventActionsViewModel;
@@ -49,6 +56,8 @@
         private readonly CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel;
         private readonly CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel;
 
+        private readonly CreateViewModel<OwnResultsViewModel> createOwnResultsViewModel;
+
         private readonly CreateViewModel<StudentsViewModel> createStudentViewModel;
         private readonly CreateViewModel<UserProfileViewModel> createUserProfileViewModel;
 
@@ -58,6 +67,7 @@
                                             CreateViewModel<ResetPasswordViewModel> createResetPasswordViewModel,
 
                                             CreateViewModel<HomeViewModel> createHomeViewModel,
+                                            CreateViewModel<StudentHomeViewModel> createStudentHomeViewModel,
 
                                             CreateViewModel<CategoriesViewModel> createCategoryViewModel,
                                             CreateViewModel<CategoryActionsViewModel> createCategoryActionsViewModel,
@@ -66,6 +76,10 @@
                                             CreateViewModel<EventsViewModel> createEventViewModel,
                                             CreateViewModel<EventActionsViewModel> createEventActionsViewModel,
                                             CreateViewModel<EventSettingsViewModel> createEventSettingsViewModel,
+
+                                            CreateViewModel<StudentActiveEventsViewModel> createStudentActiveEventsViewModel,
+                                            CreateViewModel<StudentPendingEventsViewModel> createStudentPendingEventsViewModel,
+                                            CreateViewModel<StudentEndedEventsViewModel> createStudentEndedEventsViewModel,
 
                                             CreateViewModel<GroupsViewModel> createGroupViewModel,
                                             CreateViewModel<GroupActionsViewModel> createGroupActionsViewModel,
@@ -85,6 +99,8 @@
                                             CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel,
                                             CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel,
 
+                                            CreateViewModel<OwnResultsViewModel> createOwnResultsViewModel,
+
                                             CreateViewModel<StudentsViewModel> createStudentViewModel,
                                             CreateViewModel<UserProfileViewModel> createUserProfileViewModel)
         {
@@ -94,6 +110,7 @@
             this.createResetPasswordViewModel = createResetPasswordViewModel;
 
             this.createHomeViewModel = createHomeViewModel;
+            this.createStudentHomeViewModel = createStudentHomeViewModel;
 
             this.createCategoryViewModel = createCategoryViewModel;
             this.createCategoryActionsViewModel = createCategoryActionsViewModel;
@@ -102,6 +119,10 @@
             this.createEventViewModel = createEventViewModel;
             this.createEventActionsViewModel = createEventActionsViewModel;
             this.createEventSettingsViewModel = createEventSettingsViewModel;
+
+            this.createStudentActiveEventsViewModel = createStudentActiveEventsViewModel;
+            this.createStudentPendingEventsViewModel = createStudentPendingEventsViewModel;
+            this.createStudentEndedEventsViewModel = createStudentEndedEventsViewModel;
 
             this.createGroupViewModel = createGroupViewModel;
             this.createGroupActionsViewModel = createGroupActionsViewModel;
@@ -121,6 +142,8 @@
             this.createEndedEventsViewModel = createEndedEventsViewModel;
             this.createResultsForEventViewModel = createResultsForEventViewModel;
 
+            this.createOwnResultsViewModel = createOwnResultsViewModel;
+
             this.createStudentViewModel = createStudentViewModel;
             this.createUserProfileViewModel = createUserProfileViewModel;
         }
@@ -135,6 +158,7 @@
                 ViewType.ResetPassword => createResetPasswordViewModel(),
 
                 ViewType.Home => createHomeViewModel(),
+                ViewType.StudentHome => createStudentHomeViewModel(),
 
                 ViewType.Category => createCategoryViewModel(),
                 ViewType.CategoryActions => createCategoryActionsViewModel(),
@@ -143,6 +167,10 @@
                 ViewType.Event => createEventViewModel(),
                 ViewType.EventActions => createEventActionsViewModel(),
                 ViewType.EventSettings => createEventSettingsViewModel(),
+
+                ViewType.StudentActiveEvents => createStudentActiveEventsViewModel(),
+                ViewType.StudentPendingEvents => createStudentPendingEventsViewModel(),
+                ViewType.StudentEndedEvents => createStudentEndedEventsViewModel(),
 
                 ViewType.Group => createGroupViewModel(),
                 ViewType.GroupActions => createGroupActionsViewModel(),
@@ -161,6 +189,8 @@
                 ViewType.ActiveResults => createActiveEventsViewModel(),
                 ViewType.EndedResults => createEndedEventsViewModel(),
                 ViewType.ResultsForEvent => createResultsForEventViewModel(),
+
+                ViewType.OwnResult => createOwnResultsViewModel(),
 
                 ViewType.Student => createStudentViewModel(),
                 ViewType.UserProfile => createUserProfileViewModel(),

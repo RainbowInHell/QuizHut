@@ -20,6 +20,8 @@
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels.EventsViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -31,6 +33,8 @@
             services.AddSingleton<CreateViewModel<TeacherRegistrationViewModel>>(services => () => CreateTeacherRegistrationViewModel(services));
 
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
+            services.AddSingleton<CreateViewModel<StudentHomeViewModel>>(services => () => services.GetRequiredService<StudentHomeViewModel>());
+
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
 
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
@@ -38,9 +42,15 @@
             services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => CreateEndedEventsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => CreateResultsForEventViewModel(services));
 
+            services.AddSingleton<CreateViewModel<OwnResultsViewModel>>(services => () => services.GetRequiredService<OwnResultsViewModel>());
+
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
             services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
             services.AddSingleton<CreateViewModel<EventSettingsViewModel>>(services => () => CreateEventSettingsViewModel(services));
+
+            services.AddSingleton<CreateViewModel<StudentActiveEventsViewModel>>(services => () => services.GetRequiredService<StudentActiveEventsViewModel>());
+            services.AddSingleton<CreateViewModel<StudentPendingEventsViewModel>>(services => () => services.GetRequiredService<StudentPendingEventsViewModel>());
+            services.AddSingleton<CreateViewModel<StudentEndedEventsViewModel>>(services => () => services.GetRequiredService<StudentEndedEventsViewModel>());
 
             services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => CreateGroupsViewModel(services));
             services.AddSingleton<CreateViewModel<GroupActionsViewModel>>(services => () => CreateGroupActionsViewModel(services));
@@ -62,7 +72,10 @@
             services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
 
             services.AddTransient<MainViewModel>();
+
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<StudentHomeViewModel>();
+
             services.AddTransient<UserProfileViewModel>();
 
             services.AddTransient<ResultsViewModel>();
@@ -70,9 +83,15 @@
             services.AddTransient<EndedEventsViewModel>();
             services.AddTransient<ResultsForEventViewModel>();
 
+            services.AddTransient<OwnResultsViewModel>();
+
             services.AddTransient<EventsViewModel>();
             services.AddTransient<EventActionsViewModel>();
             services.AddTransient<EventSettingsViewModel>();
+
+            services.AddTransient<StudentActiveEventsViewModel>();
+            services.AddTransient<StudentPendingEventsViewModel>();
+            services.AddTransient<StudentEndedEventsViewModel>();
 
             services.AddTransient<GroupsViewModel>();
             services.AddTransient<GroupActionsViewModel>();

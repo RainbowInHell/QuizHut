@@ -13,6 +13,7 @@
         ResetPassword,
 
         Home,
+        StudentHome,
 
         Category,
         CategoryActions,
@@ -21,6 +22,10 @@
         Event,
         EventActions,
         EventSettings,
+
+        StudentActiveEvents,
+        StudentPendingEvents,
+        StudentEndedEvents,
 
         Group,
         GroupActions,
@@ -39,6 +44,8 @@
         ActiveResults,
         EndedResults,
         ResultsForEvent,
+
+        OwnResult,
 
         Student,
         UserProfile,

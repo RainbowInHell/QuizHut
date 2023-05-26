@@ -47,9 +47,8 @@
             <!-- Icon and Title -->
             <StackPanel Orientation="Horizontal"
                         Grid.Row="1" Grid.Column="1">
-                <fa:IconImage Grid.Row="1" Grid.Column="1"
-                          Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"
-                          Icon="CircleExclamation" Foreground="{StaticResource IconColor1}"/>
+                <fa:IconImage Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"
+                              Icon="CircleExclamation" Foreground="{StaticResource IconColor1}"/>
                 <TextBlock Style="{StaticResource MainTextBlock}" Text="Ваши результаты:"
                            FontSize="22" Foreground="{StaticResource FontColor4}"
                            VerticalAlignment="Bottom" Margin="5,0,0,0"/>

@@ -63,9 +63,4 @@
     </Resource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\MainViewModels\StudentPartViewModels\" />
-    <Folder Include="Views\UserControls\MainUserControls\StudentPartUserControls\" />
-  </ItemGroup>
-
 </Project>
