@@ -3,27 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              
              xmlns:svvm="clr-namespace:QuizHut.ViewModels.StartViewModels" 
+             xmlns:mvtvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels"
+             
              xmlns:mvvm="clr-namespace:QuizHut.ViewModels.MainViewModels"
              
              xmlns:suc="clr-namespace:QuizHut.Views.UserControls.StartUserControls"
+             xmlns:mtuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls"
+             
              xmlns:muc="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
              
-             xmlns:mvgvm="clr-namespace:QuizHut.ViewModels.MainViewModels.GroupViewModels" 
-             xmlns:mguc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.GroupUserControls"
+             xmlns:mvtgvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels" 
+             xmlns:mtguc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.GroupUserControls"
              
-             xmlns:mvcvm="clr-namespace:QuizHut.ViewModels.MainViewModels.CategoryViewModels" 
-             xmlns:mcuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.CategoryUserControls"
+             xmlns:mvtcvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels" 
+             xmlns:mtcuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.CategoryUserControls"
              
-             xmlns:mvevm="clr-namespace:QuizHut.ViewModels.MainViewModels.EventViewModels" 
-             xmlns:meuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.EventUserControls"
+             xmlns:mvtevm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels" 
+             xmlns:mteuc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.EventUserControls"
              
-             xmlns:mvqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels" 
-             xmlns:mquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls"
-             xmlns:mvpqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels" 
-             xmlns:mpquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.QuizUserControls.PassingQuizUserControls"
+             xmlns:mvtqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels" 
+             xmlns:mtquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.QuizUserControls"
+             xmlns:mvtpqvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels" 
+             xmlns:mtpquc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.QuizUserControls.PassingQuizUserControls"
              
-             xmlns:mvrvm="clr-namespace:QuizHut.ViewModels.MainViewModels.ResultViewModels" 
-             xmlns:mruc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.ResultUserControls"
+             xmlns:mvtrvm="clr-namespace:QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.ResultViewModels" 
+             xmlns:mtruc="clr-namespace:QuizHut.Views.UserControls.MainUserControls.TeacherPartUserControls.ResultUserControls"
              
              xmlns:converters="clr-namespace:QuizHut.Infrastructure.Converters">
     
@@ -41,84 +45,84 @@
             <DataTemplate DataType="{x:Type svvm:TeacherRegistrationViewModel}">
                 <suc:TeacherRegistrationView/>
             </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvvm:HomeViewModel}">
-                <muc:HomeView/>
+
+            <DataTemplate DataType="{x:Type mvtvm:HomeViewModel}">
+                <mtuc:HomeView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type mvvm:UserProfileViewModel}">
                 <muc:UserProfileView/>
             </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvrvm:ResultsViewModel}">
-                <mruc:ResultsView/>
+
+            <DataTemplate DataType="{x:Type mvtrvm:ResultsViewModel}">
+                <mtruc:ResultsView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvrvm:ActiveEventsViewModel}">
-                <mruc:ActiveEventsView/>
+            <DataTemplate DataType="{x:Type mvtrvm:ActiveEventsViewModel}">
+                <mtruc:ActiveEventsView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvrvm:EndedEventsViewModel}">
-                <mruc:EndedEventsView/>
+            <DataTemplate DataType="{x:Type mvtrvm:EndedEventsViewModel}">
+                <mtruc:EndedEventsView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvrvm:ResultsForEventViewModel}">
-                <mruc:ResultsForEventView/>
-            </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvevm:EventsViewModel}">
-                <meuc:EventsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvevm:EventActionsViewModel}">
-                <meuc:EventActionsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvevm:EventSettingsViewModel}">
-                <meuc:EventSettingsView/>
-            </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvgvm:GroupsViewModel}">
-                <mguc:GroupsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvgvm:GroupActionsViewModel}">
-                <mguc:GroupActionsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvgvm:GroupSettingsViewModel}">
-                <mguc:GroupSettingsView/>
-            </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvcvm:CategoriesViewModel}">
-                <mcuc:CategoriesView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvcvm:CategoryActionsViewModel}">
-                <mcuc:CategoryActionsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvcvm:CategorySettingsViewModel}">
-                <mcuc:CategorySettingsView/>
-            </DataTemplate>
-            
-            <DataTemplate DataType="{x:Type mvqvm:QuizzesViewModel}">
-                <mquc:QuizzesView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvqvm:AddEditQuizViewModel}">
-                <mquc:AddEditQuizView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvqvm:AddEditQuestionViewModel}">
-                <mquc:AddEditQuestionView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvqvm:QuizSettingsViewModel}">
-                <mquc:QuizSettingsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvqvm:AddEditAnswerViewModel}">
-                <mquc:AddEditAnswerView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvpqvm:StartQuizViewModel}">
-                <mpquc:StartQuizView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvpqvm:TakingQuizViewModel}">
-                <mpquc:TakingQuizView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvpqvm:EndQuizViewModel}">
-                <mpquc:EndQuizView/>
+            <DataTemplate DataType="{x:Type mvtrvm:ResultsForEventViewModel}">
+                <mtruc:ResultsForEventView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type mvvm:StudentsViewModel}">
-                <muc:StudentsView/>
+            <DataTemplate DataType="{x:Type mvtevm:EventsViewModel}">
+                <mteuc:EventsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtevm:EventActionsViewModel}">
+                <mteuc:EventActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtevm:EventSettingsViewModel}">
+                <mteuc:EventSettingsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type mvtgvm:GroupsViewModel}">
+                <mtguc:GroupsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtgvm:GroupActionsViewModel}">
+                <mtguc:GroupActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtgvm:GroupSettingsViewModel}">
+                <mtguc:GroupSettingsView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type mvtcvm:CategoriesViewModel}">
+                <mtcuc:CategoriesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtcvm:CategoryActionsViewModel}">
+                <mtcuc:CategoryActionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtcvm:CategorySettingsViewModel}">
+                <mtcuc:CategorySettingsView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type mvtqvm:QuizzesViewModel}">
+                <mtquc:QuizzesView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtqvm:AddEditQuizViewModel}">
+                <mtquc:AddEditQuizView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtqvm:AddEditQuestionViewModel}">
+                <mtquc:AddEditQuestionView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtqvm:QuizSettingsViewModel}">
+                <mtquc:QuizSettingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtqvm:AddEditAnswerViewModel}">
+                <mtquc:AddEditAnswerView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtpqvm:StartQuizViewModel}">
+                <mtpquc:StartQuizView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtpqvm:TakingQuizViewModel}">
+                <mtpquc:TakingQuizView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type mvtpqvm:EndQuizViewModel}">
+                <mtpquc:EndQuizView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type mvtvm:StudentsViewModel}">
+                <mtuc:StudentsView/>
             </DataTemplate>
 
             <converters:RadioButtonConverter x:Key="RadioButtonConverter"/>

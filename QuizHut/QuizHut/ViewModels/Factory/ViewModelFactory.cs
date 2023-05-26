@@ -6,12 +6,13 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.StartViewModels;
     using QuizHut.ViewModels.MainViewModels;
-    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
-    using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
-    using QuizHut.ViewModels.MainViewModels.EventViewModels;
-    using QuizHut.ViewModels.MainViewModels.QuizViewModels;
-    using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
-    using QuizHut.ViewModels.MainViewModels.ResultViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.ResultViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
 
     internal class ViewModelFactory : IViewModelFactory
     {

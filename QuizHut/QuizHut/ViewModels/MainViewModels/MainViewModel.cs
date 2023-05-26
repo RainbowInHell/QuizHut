@@ -12,7 +12,8 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
     using QuizHut.ViewModels.Factory;
-    
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
+
     class MainViewModel : DialogViewModel
     {
         private readonly IUserAccountService userAccountService;
