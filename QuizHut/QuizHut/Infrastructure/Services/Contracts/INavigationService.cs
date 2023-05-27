@@ -41,8 +41,7 @@
         EndQuiz,
 
         Result,
-        ActiveResults,
-        EndedResults,
+        ActiveEndedResults,
         ResultsForEvent,
 
         OwnResult,

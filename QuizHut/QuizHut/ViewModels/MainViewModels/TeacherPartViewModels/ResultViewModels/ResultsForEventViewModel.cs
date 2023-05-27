@@ -63,6 +63,13 @@
             set => Set(ref selectedResult, value);
         }
 
+        private string errorMessage;
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
+
         #endregion
 
         #region LoadEventGroupsDataCommandAsync
@@ -114,12 +121,6 @@
             var eventResults = await resultsService.GetAllResultsByEventAndGroupAsync<ResultViewModel>(sharedDataStore.EventToView.Id, SelectedGroup.Id);
 
             EventResults = new(eventResults);
-        }
-        private string? errorMessage;
-        public string? ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
         }
     }
 }

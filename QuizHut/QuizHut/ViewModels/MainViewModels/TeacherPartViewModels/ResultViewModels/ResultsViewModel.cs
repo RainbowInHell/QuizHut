@@ -29,15 +29,15 @@
         public ResultsViewModel(
             IEventsService eventsService,
             ISharedDataStore sharedDataStore,
-            IRenavigator activeEventsRenavigator,
-            IRenavigator endedEventsRenavigator,
-            IRenavigator resultsForEventRenavigator)
+            IRenavigator activeEndedEventsRenavigator,
+            IRenavigator resultsForEventRenavigator,
+            IViewDisplayTypeService viewDisplayTypeService)
         {
             this.eventsService = eventsService;
             this.sharedDataStore = sharedDataStore;
 
-            NavigateActiveEventsCommand = new RenavigateCommand(activeEventsRenavigator);
-            NavigateEndedEventsCommand = new RenavigateCommand(endedEventsRenavigator);
+            NavigateActiveEventsCommand = new RenavigateCommand(activeEndedEventsRenavigator, ViewDisplayType.ActiveEvents, viewDisplayTypeService);
+            NavigateEndedEventsCommand = new RenavigateCommand(activeEndedEventsRenavigator, ViewDisplayType.EndedEvents, viewDisplayTypeService);
             NavigateResultsForEventCommand = new RenavigateCommand(resultsForEventRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);

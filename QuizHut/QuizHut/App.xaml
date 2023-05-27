@@ -65,11 +65,8 @@
             <DataTemplate DataType="{x:Type mvtrvm:ResultsViewModel}">
                 <mtruc:ResultsView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type mvtrvm:ActiveEventsViewModel}">
-                <mtruc:ActiveEventsView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type mvtrvm:EndedEventsViewModel}">
-                <mtruc:EndedEventsView/>
+            <DataTemplate DataType="{x:Type mvtrvm:ActiveEndedEventsViewModel}">
+                <mtruc:ActiveEndedEventsView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type mvtrvm:ResultsForEventViewModel}">
                 <mtruc:ResultsForEventView/>

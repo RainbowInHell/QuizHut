@@ -44,12 +44,12 @@
                 <!-- Title textBlocks -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Style="{StaticResource MainTextBlock}"
-                           Text="Создать тест"/>
+                           Text="Создать викторину"/>
 
                 <!-- Description textBlock -->
                 <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
-                       Text="Перейти к созданию тестов" FontSize="14" FontWeight="SemiBold"/>
+                       Text="Перейти к созданию викторины" FontSize="14" FontWeight="SemiBold"/>
 
                 <!-- Link to quiz creation-->
                 <Button x:Name="MVHLinkToCreateQuizBtn" Grid.Row="5" Grid.Column="1"
@@ -106,18 +106,18 @@
                 <!-- Title textBlocks -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Style="{StaticResource MainTextBlock}"
-                           Text="Пройти тест"/>
+                           Text="Пройти викторину"/>
 
                 <!-- Description textBlock -->
                 <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
-                       Text="Введите пароль от необходимого теста" FontSize="14" FontWeight="SemiBold"/>
+                       Text="Введите пароль от необходимой викторины" FontSize="14" FontWeight="SemiBold"/>
 
                 <!-- Input for quiz password -->
                 <TextBox x:Name="MVHQuizPasswordTextBox"
                      Grid.Row="4" Grid.Column="1"
                      Style="{StaticResource textBoxStyle}"
-                     Tag="Введите пароль теста..."
+                     Tag="Введите пароль викторины..."
                      Height="45"
                      FontFamily="{StaticResource Manrope}" FontSize="18"
                      Text="{Binding QuizPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

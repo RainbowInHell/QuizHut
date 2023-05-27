@@ -52,8 +52,7 @@
         private readonly CreateViewModel<EndQuizViewModel> createEndQuizViewModel;
 
         private readonly CreateViewModel<ResultsViewModel> createResultViewModel;
-        private readonly CreateViewModel<ActiveEventsViewModel> createActiveEventsViewModel;
-        private readonly CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel;
+        private readonly CreateViewModel<ActiveEndedEventsViewModel> createActiveEndedEventsViewModel;
         private readonly CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel;
 
         private readonly CreateViewModel<OwnResultsViewModel> createOwnResultsViewModel;
@@ -95,8 +94,7 @@
                                             CreateViewModel<EndQuizViewModel> createEndQuizViewModel,
 
                                             CreateViewModel<ResultsViewModel> createResultViewModel,
-                                            CreateViewModel<ActiveEventsViewModel> createActiveEventsViewModel,
-                                            CreateViewModel<EndedEventsViewModel> createEndedEventsViewModel,
+                                            CreateViewModel<ActiveEndedEventsViewModel> createActiveEndedEventsViewModel,
                                             CreateViewModel<ResultsForEventViewModel> createResultsForEventViewModel,
 
                                             CreateViewModel<OwnResultsViewModel> createOwnResultsViewModel,
@@ -138,8 +136,7 @@
             this.createEndQuizViewModel = createEndQuizViewModel;
 
             this.createResultViewModel = createResultViewModel;
-            this.createActiveEventsViewModel = createActiveEventsViewModel;
-            this.createEndedEventsViewModel = createEndedEventsViewModel;
+            this.createActiveEndedEventsViewModel = createActiveEndedEventsViewModel;
             this.createResultsForEventViewModel = createResultsForEventViewModel;
 
             this.createOwnResultsViewModel = createOwnResultsViewModel;
@@ -186,8 +183,7 @@
                 ViewType.EndQuiz => createEndQuizViewModel(),
 
                 ViewType.Result => createResultViewModel(),
-                ViewType.ActiveResults => createActiveEventsViewModel(),
-                ViewType.EndedResults => createEndedEventsViewModel(),
+                ViewType.ActiveEndedResults => createActiveEndedEventsViewModel(),
                 ViewType.ResultsForEvent => createResultsForEventViewModel(),
 
                 ViewType.OwnResult => createOwnResultsViewModel(),

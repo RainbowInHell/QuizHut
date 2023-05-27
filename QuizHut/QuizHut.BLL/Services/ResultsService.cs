@@ -83,7 +83,7 @@
             return result.Id;
         }
 
-        public async Task UpdateResultAsync(string id, decimal points)
+        public async Task UpdateResultAsync(string id, decimal points, TimeSpan timeSpent)
         {
             var result = await repository
                 .All()
@@ -91,6 +91,7 @@
                 .FirstOrDefaultAsync();
 
             result.Points = points;
+            result.TimeSpent = timeSpent;
 
             repository.Update(result);
             await repository.SaveChangesAsync();

@@ -81,7 +81,7 @@
                                  CommandParameter="{x:Static nav:ViewType.StudentEndedEvents}">
                 <StackPanel Orientation="Horizontal">
                     <fa:IconImage Icon="HourglassEnd" Style="{StaticResource MenuButtonIcon}"/>
-                    <TextBlock Text="Оконченные" Style="{StaticResource MenuButtonText}"/>
+                    <TextBlock Text="Завершённые" Style="{StaticResource MenuButtonText}"/>
                 </StackPanel>
             </RadioButton>
             <StackPanel.Style>

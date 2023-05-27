@@ -11,6 +11,8 @@
 
         public int? MaxPoints { get; set; }
 
+        public TimeSpan TimeSpent { get; set; } = TimeSpan.Zero;
+
         public string StudentId { get; set; }
 
         public virtual ApplicationUser Student { get; set; }

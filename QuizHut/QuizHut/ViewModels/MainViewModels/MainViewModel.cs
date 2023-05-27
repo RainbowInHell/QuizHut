@@ -42,34 +42,21 @@
             NavigateProfileCommand = new ActionCommand(p => ProfileNavigate());
 
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
-            NavigationCommand.Execute(ViewType.UserProfile);
+            NavigationCommand.Execute(ViewType.Authorization);
             
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
-        }
 
-        private void UserAccountService_StateChanged()
-        {
-            OnPropertyChanged(nameof(IsLoggedIn));
-            OnPropertyChanged(nameof(CurrentUser));
-        }
-
-        private void NavigationService_StateChanged()
-        {
-            OnPropertyChanged(nameof(CurrentView));
-            ShowingContent();
-        }
-
-        private void ProfileNavigate()
-        {
-            SelectedOption = null;
-            NavigationCommand.Execute(ViewType.UserProfile);
+            if(CurrentUserRole == UserRole.Student) 
+            { 
+                SelectedOption = "StudentHome"; 
+            }
         }
 
         #region Fields and properties
 
         public ViewModel CurrentView => navigationService.CurrentView;
 
-        public bool IsLoggedIn => accountStore.CurrentUser != null;
+        public UserRole CurrentUserRole => accountStore.CurrentUserRole;
 
         public ApplicationUser CurrentUser
         {
@@ -99,7 +86,7 @@
             set => Set(ref iconChar, value);
         }
 
-        private string selectedOption = "Home";//TO-DO сделать проверку на выделение начальной кнопки в зависимости от роли
+        private string selectedOption = "Home";
         public string? SelectedOption 
         { 
             get => selectedOption; 
@@ -108,20 +95,21 @@
 
         #endregion
 
-        #region Commands
+        #region NavigationCommands
 
         public NavigationCommand NavigationCommand { get; }
+
         public ICommand NavigateProfileCommand { get; }
 
+        #endregion
+
         #region LogoutCommand
-        public ICommand LogoutCommand { get; } 
+        public ICommand LogoutCommand { get; }
         private void OnLogoutCommandExecuted(object p)
         {
             userAccountService.Logout();
             NavigationCommand.Execute(ViewType.Authorization);
         }
-
-        #endregion
 
         #endregion
 
@@ -132,6 +120,24 @@
                 Title = menuView.GetType().GetProperty("Title").GetValue(null).ToString();
                 IconChar = (IconChar)menuView.GetType().GetProperty("IconChar").GetValue(null);
             }
+        }
+
+        private void UserAccountService_StateChanged()
+        {
+            OnPropertyChanged(nameof(CurrentUserRole));
+            OnPropertyChanged(nameof(CurrentUser));
+        }
+
+        private void NavigationService_StateChanged()
+        {
+            OnPropertyChanged(nameof(CurrentView));
+            ShowingContent();
+        }
+
+        private void ProfileNavigate()
+        {
+            SelectedOption = null;
+            NavigationCommand.Execute(ViewType.UserProfile);
         }
 
         public override void Dispose()

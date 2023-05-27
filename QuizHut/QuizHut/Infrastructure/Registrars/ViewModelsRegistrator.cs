@@ -1,27 +1,28 @@
 ﻿namespace QuizHut.Infrastructure.Registrars
 {
     using System;
-
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
     using QuizHut.BLL.Dto.DtoValidators;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.MainViewModels;
-    using QuizHut.ViewModels.StartViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.ResultViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
     using QuizHut.ViewModels.MainViewModels.StudentPartViewModels;
     using QuizHut.ViewModels.MainViewModels.StudentPartViewModels.EventsViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.ResultViewModels;
+    using QuizHut.ViewModels.StartViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -35,11 +36,10 @@
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
             services.AddSingleton<CreateViewModel<StudentHomeViewModel>>(services => () => services.GetRequiredService<StudentHomeViewModel>());
 
-            services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
+            services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => CreateUserProfileViewModel(services));
 
+            services.AddSingleton<CreateViewModel<ActiveEndedEventsViewModel>>(services => () => CreateActiveEndedEventsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
-            services.AddSingleton<CreateViewModel<ActiveEventsViewModel>>(services => () => CreateActiveEventsViewModel(services));
-            services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => CreateEndedEventsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => CreateResultsForEventViewModel(services));
 
             services.AddSingleton<CreateViewModel<OwnResultsViewModel>>(services => () => services.GetRequiredService<OwnResultsViewModel>());
@@ -79,8 +79,7 @@
             services.AddTransient<UserProfileViewModel>();
 
             services.AddTransient<ResultsViewModel>();
-            services.AddTransient<ActiveEventsViewModel>();
-            services.AddTransient<EndedEventsViewModel>();
+            services.AddTransient<ActiveEndedEventsViewModel>();
             services.AddTransient<ResultsForEventViewModel>();
 
             services.AddTransient<OwnResultsViewModel>();
@@ -138,8 +137,7 @@
             services.AddSingleton<ViewModelRenavigate<EndQuizViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<ResultsViewModel>>();
-            services.AddSingleton<ViewModelRenavigate<ActiveEventsViewModel>>();
-            services.AddSingleton<ViewModelRenavigate<EndedEventsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ActiveEndedEventsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResultsForEventViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
@@ -392,23 +390,9 @@
             return new ResultsViewModel(
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<ViewModelRenavigate<ActiveEventsViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<EndedEventsViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>());
-        }
-
-        private static ActiveEventsViewModel CreateActiveEventsViewModel(IServiceProvider services)
-        {
-            return new ActiveEventsViewModel(
-                services.GetRequiredService<IEventsService>(),
-                services.GetRequiredService<ISharedDataStore>());
-        }
-
-        private static EndedEventsViewModel CreateEndedEventsViewModel(IServiceProvider services)
-        {
-            return new EndedEventsViewModel(
-                services.GetRequiredService<IEventsService>(),
-                services.GetRequiredService<ISharedDataStore>());
+                services.GetRequiredService<ViewModelRenavigate<ActiveEndedEventsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static ResultsForEventViewModel CreateResultsForEventViewModel(IServiceProvider services)
@@ -417,6 +401,23 @@
                 services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<IGroupsService>(),
                 services.GetRequiredService<ISharedDataStore>());
+        }        
+        
+        private static ActiveEndedEventsViewModel CreateActiveEndedEventsViewModel(IServiceProvider services)
+        {
+            return new ActiveEndedEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }       
+        
+        private static UserProfileViewModel CreateUserProfileViewModel(IServiceProvider services)
+        {
+            return new UserProfileViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
         }
     }
 }

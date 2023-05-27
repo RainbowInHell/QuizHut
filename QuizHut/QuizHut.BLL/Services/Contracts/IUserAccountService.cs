@@ -2,6 +2,8 @@
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
+    
     using QuizHut.DLL.Entities;
 
     public interface IUserAccountService
@@ -15,5 +17,7 @@
         Task<bool> ResetUserPassword(string email, string resetToken, string newPassword);
 
         void Logout();
+
+        Task<IdentityResult> DeleteUserAsync(string id);
     }
 }

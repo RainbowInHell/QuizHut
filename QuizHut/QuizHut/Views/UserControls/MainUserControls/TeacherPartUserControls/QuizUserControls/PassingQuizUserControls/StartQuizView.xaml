@@ -78,7 +78,7 @@
             <!-- Info message -->
             <TextBlock Grid.Row="6" Grid.Column="1"
                        Style="{StaticResource ErrorTextBlock1}" FontSize="16"
-                       Text="* помните что вы не сможете вернутся если вы случайно закроете тест"/>
+                       Text="* помните что вы не сможете вернутся если вы случайно закроете викторину"/>
 
 
             <!-- Start/Cancel button -->
@@ -87,7 +87,7 @@
                     Background="{StaticResource PrimaryActiveColor}"
                     HorizontalAlignment="Left" VerticalAlignment="Center"
                     Width="320" Height="50"
-                    Content="Начать тест"
+                    Content="Начать викторину"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"
                     Command="{Binding NavigateTakingQuizCommand}"/>
 

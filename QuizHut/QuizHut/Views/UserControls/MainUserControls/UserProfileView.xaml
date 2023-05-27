@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls"
               xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -11,6 +12,12 @@
              HorizontalAlignment="Left" VerticalAlignment="Top"
              Margin="150,10,0,0">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <UserControl.Effect>
         <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
     </UserControl.Effect>
@@ -67,7 +74,8 @@
                            Margin="0,0,0,2"/>
                 <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
-                         IsEnabled="False"/>
+                         IsEnabled="False"
+                 Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
             <!-- Password block -->
@@ -104,7 +112,8 @@
                            Margin="0,0,0,2"/>
                 <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
-                         Tag="Имя..."/>
+                         Tag="Имя..."
+                         Text="{Binding CurrentUser.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <Button x:Name="MUPVChangeFirstNameBtn" Grid.Row="6" Grid.Column="1"
                     Style="{StaticResource UserOptionButton}"
@@ -128,7 +137,8 @@
                            Margin="0,0,0,2"/>
                 <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
-                         Tag="Фамилия..."/>
+                         Tag="Фамилия..."
+                         Text="{Binding CurrentUser.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <Button x:Name="MUPVhangeLastNameBtn" Grid.Row="8" Grid.Column="1"
                     Style="{StaticResource UserOptionButton}"
@@ -171,7 +181,7 @@
                     VerticalAlignment="Center" HorizontalAlignment="Right"
                     Content="Удалить"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                    Command="{Binding }"/>
+                    Command="{Binding DeleteUserCommandAsync}"/>
         </Grid>
     </Border>
 </UserControl>

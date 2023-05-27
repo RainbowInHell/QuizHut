@@ -114,14 +114,14 @@
                 Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
-                Width="130" Height="40"
+                Width="140" Height="40"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 Margin="130,0,0,0"
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
                 Command="{Binding NavigateAddQuizCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="20" Margin="0,0,2,0"/>
-                <TextBlock Text="Добавить тест" 
+                <TextBlock Text="Новая викторина" 
                            FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
                            VerticalAlignment="Center"/>
             </StackPanel>

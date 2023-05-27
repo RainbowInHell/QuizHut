@@ -46,18 +46,18 @@
                 <!-- Title textBlocks -->
                 <TextBlock Grid.Row="2" Grid.Column="1"
                            Style="{StaticResource MainTextBlock}"
-                           Text="Пройти тест"/>
+                           Text="Пройти викторину"/>
 
                 <!-- Description textBlock -->
                 <TextBlock Grid.Row="3" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
-                       Text="Введите пароль от необходимого теста" FontSize="14" FontWeight="SemiBold"/>
+                       Text="Введите пароль от необходимой викторины" FontSize="14" FontWeight="SemiBold"/>
 
                 <!-- Input for quiz password -->
                 <TextBox x:Name="MVSHQuizPasswordTextBox"
                      Grid.Row="4" Grid.Column="1" Margin="0,5,0,0"
                      Style="{StaticResource textBoxStyle}"
-                     Tag="Введите пароль теста..."
+                     Tag="Введите пароль викторины..."
                      Height="45"
                      FontFamily="{StaticResource Manrope}" FontSize="18"
                      Text="{Binding QuizPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

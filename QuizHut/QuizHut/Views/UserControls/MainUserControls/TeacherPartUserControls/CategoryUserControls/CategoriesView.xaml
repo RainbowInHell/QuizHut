@@ -115,7 +115,7 @@
                                     Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Создан" IsReadOnly="True" Width="*"
                                     Binding="{Binding CreatedOnDate}"/>
-                <DataGridTextColumn Header="Тестов" IsReadOnly="True" Width="*"
+                <DataGridTextColumn Header="Викторин" IsReadOnly="True" Width="*"
                                     Binding="{Binding QuizzesCount}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">

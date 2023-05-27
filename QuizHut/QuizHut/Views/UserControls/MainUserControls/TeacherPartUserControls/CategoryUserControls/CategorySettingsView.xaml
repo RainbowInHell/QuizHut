@@ -25,7 +25,7 @@
                 Background="{StaticResource Color2}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource MainTextBlock}"
-                       Text="Назначенные тесты"
+                       Text="Назначенные викторины"
                        Margin="80,0,0,0"/>
                 <Button x:Name="CSVEventsAdd"
                         Template="{StaticResource MainButtonTemplate2}" 

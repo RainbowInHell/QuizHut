@@ -101,7 +101,7 @@
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Назначение тестов">
+                       Text="Назначение викторин">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>
@@ -180,37 +180,6 @@
                     </Style>
                 </ScrollViewer.Style>
             </ScrollViewer>
-            <!--<StackPanel x:Name="CAVNoQuizzesSP"
-                Grid.Row="4" Grid.Column="1">
-                <TextBlock Style="{StaticResource MainTextBlock}"
-                           Text="В данный момент нет тестов" FontSize="14" FontWeight="SemiBold"/>
-                <Button x:Name="CAVNavigateQuizBtn"
-                    Margin="0,5,0,0"
-                    Command="{Binding }"
-                    Foreground="{StaticResource SettingsColor1}"
-                    FontWeight="DemiBold"
-                    FontSize="14"
-                    HorizontalAlignment="Left"
-                    Template="{StaticResource ButtonTemplate3}">
-                    <Button.Content>
-                        <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Хотите добавить?
-                        </TextBlock>
-                    </Button.Content>
-                </Button>
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="0">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Quizzes.Count}" Value="1">
-                                <Setter Property="Visibility" Value="Collapsed"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
-            </StackPanel>-->
 
             <!-- User message block -->
             <TextBlock x:Name="СAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
@@ -276,7 +245,7 @@
                         HorizontalAlignment="Left"
                         Width="250" Height="45"
                         VerticalAlignment="Center"
-                        Content="Добавить тесты"
+                        Content="Добавить викторины"
                         Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="18" FontWeight="SemiBold">
                 <Button.Style>
                     <Style TargetType="Button">

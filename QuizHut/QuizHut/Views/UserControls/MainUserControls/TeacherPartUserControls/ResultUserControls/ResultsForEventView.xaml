@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"                                       
-             xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.ResultUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
              mc:Ignorable="d" 
@@ -46,7 +45,7 @@
         <!-- User message block -->
         <TextBlock x:Name="REVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="0"
-                   Margin="0,0,400,5" VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                   Margin="270,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left"
                    Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Group name definition -->
@@ -74,6 +73,8 @@
                                     Binding="{Binding StudentName}"/>
                     <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
                                     Binding="{Binding StudentEmail}"/>
+                    <DataGridTextColumn Header="Время прохождения" IsReadOnly="True" Width="*"
+                                    Binding="{Binding TimeSpent}"/>
                     <DataGridTextColumn Header="Баллы" IsReadOnly="True" Width="200"
                                     Binding="{Binding Score}"/>
 

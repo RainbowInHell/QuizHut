@@ -27,13 +27,13 @@
                 Background="{StaticResource Color2}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource MainTextBlock}"
-                       Text="Тесты"
+                       Text="Викторины"
                        Margin="80,0,0,0"/>
                 <Button x:Name="ESVQuizzesAdd"
                         Template="{StaticResource MainButtonTemplate2}" 
                         Background="{StaticResource menuOverColor}"
                         Width="150" Height="30"
-                        Margin="565,0,0,0"
+                        Margin="505,0,0,0"
                         Command="{Binding NavigateAddQuizzesCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="CirclePlus" Foreground="{StaticResource SecondaryFontColor}" Width="20" Height="20" Margin="0,0,5,0"/>

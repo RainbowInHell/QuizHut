@@ -64,7 +64,7 @@
             <TextBlock Style="{StaticResource MainTextBlock}"
                        Foreground="{StaticResource SecondaryFontColor}"
                        Width="auto" HorizontalAlignment="Left" Margin="10,0,0,0"
-                       Text="Оконченные события: "/>
+                       Text="Завершённые события: "/>
         </Border>
         <Button x:Name="MSEEVDownloadBtn"
                 Grid.Row="1"

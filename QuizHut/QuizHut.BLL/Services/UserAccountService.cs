@@ -49,11 +49,11 @@
 
                 if (roles.Contains("Organizer"))
                 {
-
+                    accountStore.CurrentUserRole = UserRole.Teacher;
                 }
                 else
                 {
-
+                    accountStore.CurrentUserRole = UserRole.Student;
                 }
 
                 accountStore.CurrentUser = user;
@@ -108,7 +108,20 @@
 
         public void Logout()
         {
+            accountStore.CurrentUserRole = UserRole.Unauthorised;
             accountStore.CurrentUser = null;
+        }
+
+        public async Task<IdentityResult> DeleteUserAsync(string id)
+        {
+            var user = await userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return IdentityResult.Failed();
+            }
+
+            return await userManager.DeleteAsync(user);
         }
     }
 }

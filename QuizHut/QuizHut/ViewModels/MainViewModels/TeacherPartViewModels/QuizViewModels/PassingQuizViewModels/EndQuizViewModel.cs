@@ -95,7 +95,7 @@
 
             TimePassedText = sharedDataStore.RemainingTime.ToString(@"hh\:mm\:ss");
 
-            await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints);
+            await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints, sharedDataStore.RemainingTime);
 
             sharedDataStore.CurrentQuestion = null;
         }

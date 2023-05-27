@@ -14,6 +14,8 @@
 
         public string StudentEmail { get; set; }
 
+        public string TimeSpent { get; set; }
+
         public string Score { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
@@ -25,6 +27,9 @@
                .ForMember(
                    x => x.StudentEmail,
                    opt => opt.MapFrom(x => x.Student.Email))
+               .ForMember(
+                   x => x.TimeSpent,
+                   opt => opt.MapFrom(x => x.TimeSpent.ToString(@"hh\:mm\:ss")))
                .ForMember(
                    x => x.Score,
                    opt => opt.MapFrom(x => $"{Math.Round((decimal)x.Points,2)}/{x.MaxPoints}"));

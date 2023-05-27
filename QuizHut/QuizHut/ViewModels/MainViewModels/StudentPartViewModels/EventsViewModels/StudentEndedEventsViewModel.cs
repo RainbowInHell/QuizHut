@@ -7,7 +7,7 @@
 
     class StudentEndedEventsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Оконченные";
+        public static string Title { get; } = "Завершённые";
 
         public static IconChar IconChar { get; } = IconChar.HourglassEnd;
     }

@@ -8,7 +8,7 @@
 
         Task<string> CreateResultAsync(string studentId, decimal points, string quizId);
 
-        Task UpdateResultAsync(string id, decimal points);
+        Task UpdateResultAsync(string id, decimal points, TimeSpan timeSpent);
 
         Task DeleteResultAsync(string id);
     }

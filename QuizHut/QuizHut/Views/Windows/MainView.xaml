@@ -68,6 +68,8 @@
 
                     </StackPanel>
                     <Separator Grid.Row="1" Background="{StaticResource PrimaryActiveColor}"/>
+                    
+                    <!-- Unauthorized user block -->
                     <StackPanel Margin="0,150,0,0" Grid.Row="2">
                         <Image Source="\Images\LoginViewImages\MainLogo.png" 
                        Height="90" Width="150"/>
@@ -80,29 +82,42 @@
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="True">
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Student">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Teacher">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
                     </StackPanel>
+                    
+                    <!-- Teacher navigation menu -->
                     <controls:TeacherNavigationMenu Grid.Row="2" Margin="0,40">
                         <controls:TeacherNavigationMenu.Style>
                             <Style TargetType="controls:TeacherNavigationMenu">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Student">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </controls:TeacherNavigationMenu.Style>
                     </controls:TeacherNavigationMenu>
+                    
+                    <!-- Student navigation menu -->
                     <controls:StudentNavigationMenu Grid.Row="2" Margin="0,40">
                         <controls:StudentNavigationMenu.Style>
                             <Style TargetType="controls:StudentNavigationMenu">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Teacher">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -126,7 +141,7 @@
                         <Button.Style>
                             <Style BasedOn="{StaticResource UserOptionButton}" TargetType="Button">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -210,6 +225,15 @@
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    FontSize="24" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    VerticalAlignment="Center"/>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                     </StackPanel>
                     
                     <!-- User options -->
@@ -220,7 +244,6 @@
                                 Margin="0,0,10,0">
                         <!-- Profile button -->
                         <Button x:Name="MVProfileBtn"
-                                Style="{StaticResource UserOptionButton}"
                                 Tag="{StaticResource Color9}"
                                 Margin="10,0,0,0"
                                 Command="{Binding NavigateProfileCommand}">
@@ -230,6 +253,15 @@
                                               Style="{StaticResource UserOptionButtonIcon}"
                                               Margin="3,0,0,0"/>
                             </StackPanel>
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource UserOptionButton}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
                         </Button>
                         <!-- User name and role -->
                         <TextBlock 
@@ -243,7 +275,7 @@
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsLoggedIn}" Value="False">
+                                    <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
                                         <Setter Property="Visibility" Value="Collapsed"/>
                                     </DataTrigger>
                                 </Style.Triggers>

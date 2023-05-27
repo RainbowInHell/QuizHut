@@ -16,6 +16,8 @@
             }
         }
 
+        public UserRole CurrentUserRole { get ; set; } = UserRole.Unauthorised;
+
         public event Action StateChanged;
     }
 }

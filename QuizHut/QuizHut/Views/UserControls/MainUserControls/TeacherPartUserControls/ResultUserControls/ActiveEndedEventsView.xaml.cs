@@ -2,9 +2,9 @@
 {
     using System.Windows.Controls;
 
-    public partial class ActiveEventsView : UserControl
+    public partial class ActiveEndedEventsView : UserControl
     {
-        public ActiveEventsView()
+        public ActiveEndedEventsView()
         {
             InitializeComponent();
         }
