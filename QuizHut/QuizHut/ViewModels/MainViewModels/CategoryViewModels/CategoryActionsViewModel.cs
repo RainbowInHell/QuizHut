@@ -116,7 +116,7 @@
 
         private async Task OnCreateCategoryCommandExecutedAsync(object p)
         {
-            await categoriesService.CreateCategoryAsync(CategoryNameToCreate, AccountStore.CurrentAdminId);
+            await categoriesService.CreateCategoryAsync(CategoryNameToCreate, sharedDataStore.CurrentUser.Id);
 
             NavigateCategoryCommand.Execute(p);
         }
@@ -160,7 +160,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, sharedDataStore.CurrentUser.Id);
 
             Quizzes = new(quizzes);
         }

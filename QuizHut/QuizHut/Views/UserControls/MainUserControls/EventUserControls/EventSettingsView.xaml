@@ -66,7 +66,13 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button Style="{StaticResource GridControlButton}" 
+                                        Background="{StaticResource EditColor1}"
+                                        Command="{Binding DataContext.SendEmailWithQuizPasswordCommandAsync, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                        <fa:IconImage Icon="Envelope" Style="{StaticResource GridButtonIcon}"/>
+                                    </Button>
+                                    <Button Style="{StaticResource GridControlButton}" 
                                         Background="{StaticResource SettingsColor1}"
+                                        Margin="5,0,0,0"
                                         Command="{Binding DataContext.NavigateQuizSettingsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Eye" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
@@ -91,25 +97,11 @@
                 <TextBlock Style="{StaticResource MainTextBlock}"
                        Text="Группы"
                        Margin="80,0,0,0"/>
-                <Button x:Name="ESVSendPasswordBtn"
-                        Template="{StaticResource MainButtonTemplate2}" 
-                        Background="{StaticResource menuOverColor}"
-                        Width="150" Height="30"
-                        Margin="380,0,0,0"
-                        Command="{Binding NavigateAddStudentsCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <fa:IconImage Icon="ShareNodes" Foreground="{StaticResource SecondaryFontColor}" Width="20" Height="20" Margin="0,0,5,0"/>
-                        <TextBlock Text="Разослать пароль"
-                           TextWrapping="Wrap"
-                           Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="13" FontWeight="SemiBold"
-                           VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
                 <Button x:Name="ESVGroupsAddBtn"
                         Template="{StaticResource MainButtonTemplate2}" 
                         Background="{StaticResource menuOverColor}"
                         Width="150" Height="30"
-                        Margin="20,0,0,0"
+                        Margin="550,0,0,0"
                         Command="{Binding NavigateAddGroupsCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="CirclePlus" Foreground="{StaticResource SecondaryFontColor}" Width="20" Height="20" Margin="0,0,5,0"/>

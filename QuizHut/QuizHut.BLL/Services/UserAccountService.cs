@@ -4,30 +4,23 @@
 
     using Microsoft.AspNetCore.Identity;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Entities;
 
     public class UserAccountService : IUserAccountService
-    {
-        private IAccountStore accountStore;
-        
+    {        
         private readonly UserManager<ApplicationUser> userManager;
 
         private readonly IEmailSenderService emailSender;
+        
+        private readonly IAccountStore accountStore;
 
         public UserAccountService(UserManager<ApplicationUser> userManager, IEmailSenderService emailSender, IAccountStore accountStore)
         {
             this.userManager = userManager;
             this.emailSender = emailSender;
             this.accountStore = accountStore;
-        }
-
-        public IAccountStore CurrentUser 
-        {
-            get => accountStore;
-            set => accountStore = value;
         }
 
         public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
@@ -52,19 +45,21 @@
 
             if (isRightPassword)
             {
-                CurrentUser.IsLoggedIn = true;
-                CurrentUser.CurrentUser = user;
-                AccountStore.CurrentAdminId = user.Id;
+                var roles = await userManager.GetRolesAsync(user);
+
+                if (roles.Contains("Organizer"))
+                {
+
+                }
+                else
+                {
+
+                }
+
+                accountStore.CurrentUser = user;
 
                 return true;
             }
-
-            //var roles = await userManager.GetRolesAsync(user);
-
-            //if (roles.Contains("Admin"))
-            //{
-            //    AccountStore.CurrentAdminId = user.Id;
-            //}
 
             return false;
         }
@@ -113,7 +108,7 @@
 
         public void Logout()
         {
-            CurrentUser.IsLoggedIn = false;
+            accountStore.CurrentUser = null;
         }
     }
 }

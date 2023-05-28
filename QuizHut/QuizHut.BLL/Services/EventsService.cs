@@ -69,6 +69,27 @@
                    .ToListAsync();
         }
 
+        public async Task<IList<T>> GetAllEventsByCreatorIdAndStatusAsync<T>(
+            Status status,
+            string creatorId,
+            string searchText = null)
+        {
+            var query = repository
+                .AllAsNoTracking()
+                .Where(x => x.Status == status && x.CreatorId == creatorId);
+
+            if (searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<Event>("Name", searchText);
+                query = query.Where(filter);
+            }
+
+            return await query
+                   .OrderByDescending(x => x.CreatedOn)
+                   .To<T>()
+                   .ToListAsync();
+        }
+
         public async Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(
             Status status, 
             string groupId, 
@@ -114,11 +135,6 @@
                     .All()
                     .Where(x => x.Id == quizId)
                     .FirstOrDefaultAsync();
-
-                if (quiz.EventId != null)
-                {
-                    await DeleteQuizFromEventAsync(quiz.EventId, quizId);
-                }
 
                 @event.Quizzes.Add(quiz);
                 @event.Status = GetStatus(@event.ActivationDateAndTime, @event.DurationOfActivity, quizId);
@@ -287,10 +303,10 @@
             var nowMins = timeNow.Minutes;
             var invalidStartingTime = startHours < nowHours || (startHours == nowHours && startMins < nowMins);
 
-            //if (userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
-            //{
-            //    return "Invalid Starting Time";
-            //}
+            if (userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
+            {
+                return "Invalid Starting Time";
+            }
 
             var duration = GetDurationOfActivity(activationDate, activeFrom, activeTo);
             if (duration.Hours <= 0 && duration.Minutes <= 0)

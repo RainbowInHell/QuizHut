@@ -132,7 +132,7 @@
             var quizId = await quizzesService.CreateQuizAsync(
                 QuizNameToCreate,
                 QuizDescriptionToCreate,
-                QuizTimerToCreate, AccountStore.CurrentAdminId,
+                QuizTimerToCreate, sharedDataStore.CurrentUser.Id,
                 QuizPasswordToCreate);
 
             //

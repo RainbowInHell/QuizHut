@@ -55,6 +55,13 @@
             set => Set(ref resultAsString, value);
         }
 
+        private string timePassedText;
+        public string TimePassedText
+        {
+            get => timePassedText;
+            set => Set(ref timePassedText, value);
+        }
+
         #endregion
 
         #region NavigationCommands
@@ -85,6 +92,8 @@
             var receivedPoints = resultHelper.CalculateResult(originalQuestions, CurrentQuiz.Questions);
 
             ResultAsString = $"{receivedPoints}/{originalQuestions.Count}";
+
+            TimePassedText = sharedDataStore.RemainingTime.ToString(@"hh\:mm\:ss");
 
             await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints);
 

@@ -1,8 +1,9 @@
 ﻿namespace QuizHut.BLL.Services
 {
     using Microsoft.EntityFrameworkCore;
-    
+
     using QuizHut.BLL.Expression.Contracts;
+    using QuizHut.BLL.MapperConfig;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Entities;
     using QuizHut.DLL.Repositories.Contracts;
@@ -23,6 +24,17 @@
             this.repository = repository;
             this.eventRepository = eventRepository;
             this.expressionBuilder = expressionBuilder;
+        }
+
+        public async Task<IEnumerable<T>> GetAllResultsByEventAndGroupAsync<T>(string eventId, string groupId)
+        {
+            return await repository
+             .AllAsNoTracking()
+             .Where(x => x.EventId == eventId)
+             .Where(x => x.Student.StudentsInGroups.Any(x => x.Group.Id == groupId))
+             .OrderBy(x => x.CreatedOn)
+             .To<T>()
+             .ToListAsync();
         }
 
         public async Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null)
@@ -46,6 +58,7 @@
             var @event = await eventRepository
                 .All()
                 .Include(e => e.Quizzes)
+                .ThenInclude(q => q.Questions)
                 .FirstOrDefaultAsync(e => e.Quizzes.Any(q => q.Id == quizId));
 
             var quiz = @event.Quizzes.FirstOrDefault(q => q.Id == quizId);
@@ -80,6 +93,17 @@
             result.Points = points;
 
             repository.Update(result);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteResultAsync(string id)
+        {
+            var result = await repository
+                .All()
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            repository.Delete(result);
             await repository.SaveChangesAsync();
         }
     }

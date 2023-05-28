@@ -8,7 +8,7 @@
         xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
         xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
         
-        Title="MainView" Height="700" Width="1300"
+        Title="MainView" Height="750" Width="1300"
         
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -222,11 +222,14 @@
                             </StackPanel>
                         </Button>
                         <!-- User name and role -->
-                        <TextBlock Text="{Binding CurrentUserFullName}"
+                        <TextBlock 
                                    FontSize="16" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    VerticalAlignment="Center"
-                                   Margin="10,0,0,0"/>
+                                   Margin="10,0,0,0">
+                            <Run Text="{Binding CurrentUser.FirstName, StringFormat={}{0} }"/>
+                            <Run Text="{Binding CurrentUser.LastName}"/>
+                        </TextBlock>
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>

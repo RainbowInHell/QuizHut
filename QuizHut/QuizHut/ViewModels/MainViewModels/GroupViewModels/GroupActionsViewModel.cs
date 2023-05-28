@@ -140,7 +140,7 @@
 
         private async Task OnCreateGroupCommandExecutedAsync(object p)
         {
-            await groupsService.CreateGroupAsync(GroupNameToCreate, AccountStore.CurrentAdminId);
+            await groupsService.CreateGroupAsync(GroupNameToCreate, sharedDataStore.CurrentUser.Id);
 
             NavigateGroupCommand.Execute(p);
         }
@@ -204,14 +204,14 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedGroup.Id);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }
 
         private async Task LoadEventsData()
         {
-            var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, AccountStore.CurrentAdminId);
+            var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, sharedDataStore.CurrentUser.Id);
 
             Events = new(events);
         }

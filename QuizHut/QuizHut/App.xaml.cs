@@ -7,6 +7,8 @@
     using Microsoft.Extensions.Hosting;
 
     using QuizHut.BLL.MapperConfig;
+    using QuizHut.DLL.EntityFramework;
+    using QuizHut.DLL.Seeding;
     using QuizHut.Infrastructure.Registrars;
     using QuizHut.Infrastructure.Services.Contracts;
 
@@ -33,6 +35,13 @@
             AutoMapperConfig.RegisterMappings(typeof(App).Assembly);
 
             Services.GetRequiredService<IUserDialogService>().OpenMainView();
+
+            using (var scope = Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                await new ApplicationDbContextSeeder().SeedAsync(dbContext, scope.ServiceProvider);
+            }
 
             base.OnStartup(e);
         }

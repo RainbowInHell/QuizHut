@@ -6,11 +6,11 @@
 
     using FontAwesome.Sharp;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
 
@@ -30,9 +30,12 @@
 
         private readonly IStudentsService studentService;
 
-        public StudentsViewModel(IStudentsService studentService)
+        private readonly ISharedDataStore sharedDataStore;
+
+        public StudentsViewModel(IStudentsService studentService, ISharedDataStore sharedDataStore)
         {
             this.studentService = studentService;
+            this.sharedDataStore = sharedDataStore;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             AddStudentToTeacherListCommandAsync = new ActionCommandAsync(OnAddStudentToTeacherListCommandExecute, CanAddStudentToTeacherListCommandExecute);
@@ -87,7 +90,7 @@
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
-            await LoadStudentsData();
+            await LoadStudentsDataAsync();
         }
 
         #endregion
@@ -100,7 +103,7 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadStudentsData(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentsDataAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
         }
 
         #endregion
@@ -113,11 +116,11 @@
 
         private async Task OnAddStudentToTeacherListCommandExecute(object p)
         {
-            var partisipantIsAdded = await studentService.AddStudentAsync(StudentEmailToAdd, AccountStore.CurrentAdminId);
+            var partisipantIsAdded = await studentService.AddStudentAsync(StudentEmailToAdd, sharedDataStore.CurrentUser.Id);
 
             if (partisipantIsAdded)
             {
-                await LoadStudentsData();
+                await LoadStudentsDataAsync();
             }
         }
 
@@ -131,16 +134,16 @@
 
         private async Task OnDeleteStudentFromTeacherListCommandExecute(object p)
         {
-            await studentService.DeleteStudentFromTeacherListAsync(SelectedStudent.Id, AccountStore.CurrentAdminId);
+            await studentService.DeleteStudentFromTeacherListAsync(SelectedStudent.Id, sharedDataStore.CurrentUser.Id);
 
-            await LoadStudentsData();
+            await LoadStudentsDataAsync();
         }
 
         #endregion
 
-        private async Task LoadStudentsData(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentsDataAsync(string searchCriteria = null, string searchText = null)
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(AccountStore.CurrentAdminId, searchCriteria: searchCriteria, searchText: searchText);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria: searchCriteria, searchText: searchText);
 
             Students = new(students);
         }

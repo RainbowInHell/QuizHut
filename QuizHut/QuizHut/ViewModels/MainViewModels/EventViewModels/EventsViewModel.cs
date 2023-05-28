@@ -38,17 +38,21 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
+        private readonly IExporter exporter;
+
         public EventsViewModel(
             IEventsService eventsService,
             ISharedDataStore sharedDataStore,
             IDateTimeConverter dateTimeConverter,
             IRenavigator eventActionsRenavigator,
             IRenavigator eventSettingRenavigator,
-            IViewDisplayTypeService viewDisplayTypeService)
+            IViewDisplayTypeService viewDisplayTypeService,
+            IExporter exporter)
         {
             this.eventsService = eventsService;
             this.sharedDataStore = sharedDataStore;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
 
             NavigateCreateEventCommand = new RenavigateCommand(eventActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
             NavigateEditEventCommand = new RenavigateCommand(eventActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
@@ -148,7 +152,7 @@
 
         private async Task LoadEventsData(string searchCriteria = null, string searchText = null)
         {
-            var events = await eventsService.GetAllEventsAsync<EventListViewModel>(AccountStore.CurrentAdminId, searchCriteria, searchText);
+            var events = await eventsService.GetAllEventsAsync<EventListViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
 
             foreach (var @event in events)
             {
@@ -157,6 +161,8 @@
             }
 
             Events = new(events);
+
+            //exporter.GenerateExcelReport();
         }
     }
 }

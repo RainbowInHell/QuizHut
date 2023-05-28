@@ -132,7 +132,7 @@
 
         private async Task LoadCategoriesData(string searchText = null)
         {
-            var categories = await categoriesService.GetAllCategories<CategoryViewModel>(AccountStore.CurrentAdminId, searchText);
+            var categories = await categoriesService.GetAllCategories<CategoryViewModel>(sharedDataStore.CurrentUser.Id, searchText);
 
             foreach (var category in categories)
             {
