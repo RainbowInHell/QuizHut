@@ -38,6 +38,7 @@
 
             GoToNextQuestionCommand = new ActionCommand(OnGoToNextQuestionCommandExecuted, CanGoToNextQuestionCommandExecute);
             GoToPreviousQuestionCommand = new ActionCommand(OnGoToPreviousQuestionCommandExecuted, CanGoToPreviousQuestionCommandExecute);
+            StopTimerAndGoToEndQuizCommand = new ActionCommand(OnStopTimerAndGoToEndQuizCommandExecuted);
 
             timer = new DispatcherTimer
             {
@@ -114,6 +115,21 @@
             sharedDataStore.RemainingTime = timeRemaining;
 
             nextQuestionRenavigator.Renavigate();
+        }
+
+        #endregion
+
+        #region StopTimerAndGoToEndQuizCommand
+
+        public ICommand StopTimerAndGoToEndQuizCommand { get; }
+
+        private void OnStopTimerAndGoToEndQuizCommandExecuted(object p)
+        {
+            timer.Stop();
+
+            sharedDataStore.RemainingTime = TimeSpan.FromMinutes(sharedDataStore.QuizToPass.Timer) - timeRemaining;
+
+            endQuizRenavigator.Renavigate();
         }
 
         #endregion

@@ -132,7 +132,7 @@
 
         private async Task LoadGroupsData(string searchText = null)
         {
-            var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(AccountStore.CurrentAdminId, searchText: searchText);
+            var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(sharedDataStore.CurrentUser.Id, searchText: searchText);
 
             foreach (var group in groups)
             {

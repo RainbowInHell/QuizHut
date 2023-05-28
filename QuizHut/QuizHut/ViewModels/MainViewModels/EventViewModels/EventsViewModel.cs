@@ -152,7 +152,7 @@
 
         private async Task LoadEventsData(string searchCriteria = null, string searchText = null)
         {
-            var events = await eventsService.GetAllEventsAsync<EventListViewModel>(AccountStore.CurrentAdminId, searchCriteria, searchText);
+            var events = await eventsService.GetAllEventsAsync<EventListViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
 
             foreach (var @event in events)
             {

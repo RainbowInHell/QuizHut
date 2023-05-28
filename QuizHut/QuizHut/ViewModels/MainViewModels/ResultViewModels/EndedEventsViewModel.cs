@@ -3,23 +3,26 @@
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Events;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     class EndedEventsViewModel : ViewModel
     {
         private readonly IEventsService eventsService;
 
-        public EndedEventsViewModel(IEventsService eventsService)
+        private readonly ISharedDataStore sharedDataStore;
+
+        public EndedEventsViewModel(IEventsService eventsService, ISharedDataStore sharedDataStore)
         {
             this.eventsService = eventsService;
+            this.sharedDataStore = sharedDataStore;
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
         }
 
@@ -45,8 +48,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadEndedEventsDataAsync();
@@ -69,7 +70,7 @@
 
         private async Task LoadEndedEventsDataAsync(string searchText = null)
         {
-            var endedEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Ended, AccountStore.CurrentAdminId, searchText);
+            var endedEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Ended, sharedDataStore.CurrentUser.Id, searchText);
 
             EndedEvents = new(endedEvents);
         }

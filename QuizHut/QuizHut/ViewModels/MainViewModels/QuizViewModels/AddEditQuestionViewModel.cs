@@ -88,13 +88,7 @@
         {
             var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuiz.Id, IsFullEvaluation, QuestionDescriptionToCreate);
 
-            if (sharedDataStore.SelectedQuestion == null)
-            {
-                sharedDataStore.SelectedQuestion = new()
-                {
-                    Id = questionId
-                };
-            }
+            sharedDataStore.SelectedQuestion = new() { Id = questionId };
 
             NavigateCreateAnswerCommand.Execute(p);
         }

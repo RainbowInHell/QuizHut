@@ -77,7 +77,7 @@
 
         private async Task OnGoToStartQuizExecutedAsync(object p)
         {
-            var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(AccountStore.CurrentAdminId);
+            var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(sharedDataStore.CurrentUser.Id);
 
             if (currentUserResultCount > 0)
             {
@@ -100,7 +100,7 @@
                 question.Answers = shuffler.Shuffle(question.Answers);
             }
 
-            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(AccountStore.CurrentAdminId, 0, sharedDataStore.QuizToPass.Id);
+            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(sharedDataStore.CurrentUser.Id, 0, sharedDataStore.QuizToPass.Id);
 
             startQuizRenavigator.Renavigate();
         }

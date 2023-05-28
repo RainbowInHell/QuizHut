@@ -2,6 +2,7 @@
 {
     using System;
 
+    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Answers;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Events;
@@ -11,6 +12,8 @@
     
     public interface ISharedDataStore
     {
+        ApplicationUser? CurrentUser { get; set; }
+
         GroupListViewModel? SelectedGroup { get; set; }
 
         CategoryViewModel? SelectedCategory { get; set; }

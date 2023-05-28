@@ -3,21 +3,24 @@
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Events;
+    using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     class ActiveEventsViewModel : ViewModel
     {
         private readonly IEventsService eventsService;
+        
+        private readonly ISharedDataStore sharedDataStore;
 
-        public ActiveEventsViewModel(IEventsService eventsService)
+        public ActiveEventsViewModel(IEventsService eventsService, ISharedDataStore sharedDataStore)
         {
             this.eventsService = eventsService;
+            this.sharedDataStore = sharedDataStore;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
@@ -67,7 +70,7 @@
 
         private async Task LoadActiveEventsDataAsync(string searchText = null)
         {
-            var activeEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Active, AccountStore.CurrentAdminId, searchText);
+            var activeEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Active, sharedDataStore.CurrentUser.Id, searchText);
 
             ActiveEvents = new(activeEvents);
         }

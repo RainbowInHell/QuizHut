@@ -30,13 +30,6 @@
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Right" VerticalAlignment="Center"
                    Text="Поиск по названию:"/>
-            <!--<ComboBox  x:Name="AEVSearchByCMB"
-                  Grid.Row="0"
-                  HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="100" Height="35" Margin="10,0,0,0"
-                  FontFamily="{StaticResource Manrope}" FontSize="16"
-                  ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
-                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"/>-->
             <TextBox  x:Name="AEVSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
@@ -60,7 +53,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        
+
         <!-- Title block -->
         <Border Grid.Row="1" Height="80" VerticalAlignment="Bottom"
                 Background="{StaticResource MainViewBackground4}">
@@ -80,31 +73,6 @@
             </StackPanel>
         </Border>
 
-        <!-- All active events -->
-        <!--<ScrollViewer CanContentScroll="False"
-                      Grid.Row="2" Width="1000">
-            <ItemsControl ItemsSource="{Binding ActiveEvents}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0,5" Background="{StaticResource IconColor3Light}">
-                            <TextBlock Style="{StaticResource MainTextBlock}"
-                                           Text="{Binding Name}" FontSize="14" Margin="10,0,0,0"/>
-                            <Button x:Name="AEVAllActiveEventBtn" 
-                                        VerticalAlignment="Bottom" 
-                                        Width="70" Height="30" Margin="650,0,0,0"
-                                        Style="{StaticResource UserOptionButton}"
-                                        Tag="{StaticResource IconColor3}" Background="Transparent"
-                                        Command="{Binding DataContext.NavigateResultsForEventCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Смотреть" Style="{StaticResource UserOptionButtonText}" FontSize="11" FontWeight="Bold"
-                                                   VerticalAlignment="Center"/>
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>-->
         <ScrollViewer CanContentScroll="False"
                       Grid.Row="2">
             <DataGrid x:Name="AEVAllActiveEventsDataGrid" 

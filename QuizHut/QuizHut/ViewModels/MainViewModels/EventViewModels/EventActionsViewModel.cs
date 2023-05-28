@@ -184,7 +184,7 @@
                 return;
             }
 
-            await eventsService.CreateEventAsync(EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo, AccountStore.CurrentAdminId);
+            await eventsService.CreateEventAsync(EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo, sharedDataStore.CurrentUser.Id);
 
             NavigateEventCommand.Execute(p);
         }
@@ -273,14 +273,14 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(AccountStore.CurrentAdminId);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(sharedDataStore.CurrentUser.Id);
 
             Quizzes = new(quizzes);
         }
 
         private async Task LoadGroupsData()
         {
-            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(AccountStore.CurrentAdminId, sharedDataStore.SelectedEvent.Id);
+            var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
         }

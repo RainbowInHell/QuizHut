@@ -6,7 +6,6 @@
 
     using FontAwesome.Sharp;
     
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
@@ -41,7 +40,7 @@
             NavigateEndedEventsCommand = new RenavigateCommand(endedEventsRenavigator);
             NavigateResultsForEventCommand = new RenavigateCommand(resultsForEventRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
         }
 
         #region FieldsAndProperties
@@ -87,8 +86,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadActiveEventsDataAsync();
@@ -100,14 +97,14 @@
 
         private async Task LoadActiveEventsDataAsync()
         {
-            var activeEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Active, AccountStore.CurrentAdminId);
+            var activeEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Active, sharedDataStore.CurrentUser.Id);
 
             ActiveEvents = new(activeEvents);
         }
 
         private async Task LoadEndedEventsDataAsync()
         {
-            var endedEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Ended, AccountStore.CurrentAdminId);
+            var endedEvents = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(Status.Ended, sharedDataStore.CurrentUser.Id);
 
             EndedEvents = new(endedEvents);
         }

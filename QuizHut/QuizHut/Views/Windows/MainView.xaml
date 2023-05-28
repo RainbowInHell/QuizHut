@@ -222,11 +222,14 @@
                             </StackPanel>
                         </Button>
                         <!-- User name and role -->
-                        <TextBlock Text="{Binding CurrentUserFullName}"
+                        <TextBlock 
                                    FontSize="16" FontWeight="Medium" FontFamily="{StaticResource Manrope}"
                                    Foreground="{StaticResource PrimaryFontColor}"
                                    VerticalAlignment="Center"
-                                   Margin="10,0,0,0"/>
+                                   Margin="10,0,0,0">
+                            <Run Text="{Binding CurrentUser.FirstName, StringFormat={}{0} }"/>
+                            <Run Text="{Binding CurrentUser.LastName}"/>
+                        </TextBlock>
                         <StackPanel.Style>
                             <Style TargetType="StackPanel">
                                 <Style.Triggers>

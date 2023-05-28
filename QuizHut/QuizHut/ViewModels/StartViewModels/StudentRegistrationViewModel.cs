@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.StartViewModels
 {
-    using System.Text;
+    using System.Linq;
+    using System;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -20,8 +21,6 @@
 
         private readonly RegisterRequestValidator validator;
 
-        private bool IsRegistred { get; set; } = true;
-
         public StudentRegistrationViewModel(
             IUserAccountService userAccountService, 
             RegisterRequestValidator validator,
@@ -29,13 +28,12 @@
             IRenavigator teacherRegistrRenavigator)
         {
             this.userAccountService = userAccountService;
-
             this.validator = validator;
-
-            RegisterCommandAsync = new ActionCommandAsync(OnRegisterCommandExecutedAsync, CanRegisterCommandExecute);
 
             NavigateAuthorizationViewCommand = new RenavigateCommand(authorizRenavigator);
             NavigateTeacherRegistrationViewCommand = new RenavigateCommand(teacherRegistrRenavigator);
+
+            RegisterCommandAsync = new ActionCommandAsync(OnRegisterCommandExecutedAsync, CanRegisterCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -84,9 +82,15 @@
 
         #endregion
 
-        #region Commands
+        #region NavigationCommands
 
-        #region RegisterCommand
+        public ICommand NavigateAuthorizationViewCommand { get; }
+
+        public ICommand NavigateTeacherRegistrationViewCommand { get; }
+
+        #endregion
+
+        #region RegisterCommandAsync
 
         public ICommandAsync RegisterCommandAsync { get; }
 
@@ -100,15 +104,15 @@
                 LastName = LastName
             };
 
-            IsRegistred = await userAccountService.RegisterAsync(newUser, Password);
+            bool isRegistered = await userAccountService.RegisterAsync(newUser, Password);
 
-            if (IsRegistred)
+            if (isRegistered)
             {
-                ErrorMessage = "Пользователь зарегистрирован";
+                ErrorMessage = "User registered.";
             }
             else
             {
-                ErrorMessage = "Пользователь с такой почтой уже существует";
+                ErrorMessage = "A user with this email already exists.";
             }
         }
 
@@ -124,34 +128,15 @@
 
             var validationResult = validator.Validate(registerRequest);
 
-            if (!IsRegistred)
-            {
-                IsRegistred = true;
-                return true;
-            }
             if (validationResult.IsValid)
             {
                 ErrorMessage = null;
                 return true;
             }
 
-            var errors = new StringBuilder();
-
-            foreach (var error in validationResult.Errors)
-            {
-                errors.AppendLine(error.ErrorMessage);
-            }
-
-            ErrorMessage = errors.ToString();
-
+            ErrorMessage = string.Join(Environment.NewLine, validationResult.Errors.Select(error => error.ErrorMessage));
             return false;
         }
-
-        #endregion
-
-        public ICommand NavigateAuthorizationViewCommand { get; }
-
-        public ICommand NavigateTeacherRegistrationViewCommand { get; }
 
         #endregion
 

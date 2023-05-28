@@ -187,7 +187,7 @@
 
         private async Task LoadQuizzesData(string searchCriteria = null, string searchText = null, string categoryId = null)
         {
-            var quizzes = await quizzesService.GetAllQuizzesAsync<QuizListViewModel>(AccountStore.CurrentAdminId, searchCriteria, searchText, categoryId);
+            var quizzes = await quizzesService.GetAllQuizzesAsync<QuizListViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText, categoryId);
 
             foreach (var quizz in quizzes)
             {
@@ -199,7 +199,7 @@
 
         private async Task LoadCategoriesData()
         {
-            var categories = await categoriesService.GetAllCategories<CategorySimpleViewModel>(AccountStore.CurrentAdminId);
+            var categories = await categoriesService.GetAllCategories<CategorySimpleViewModel>(sharedDataStore.CurrentUser.Id);
 
             Categories = new(categories);
         }

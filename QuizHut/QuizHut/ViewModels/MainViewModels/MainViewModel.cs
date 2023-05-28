@@ -4,7 +4,9 @@
 
     using FontAwesome.Sharp;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
@@ -13,13 +15,28 @@
     
     class MainViewModel : DialogViewModel
     {
-        public MainViewModel(INavigationService navigationService, IViewModelFactory traderViewModelFactory, IUserAccountService userAccountService)
+        private readonly IUserAccountService userAccountService;
+
+        private readonly INavigationService navigationService;
+
+        private readonly IAccountStore accountStore;
+
+        private readonly ISharedDataStore sharedDataStore;
+
+        public MainViewModel(
+            IUserAccountService userAccountService, 
+            INavigationService navigationService,
+            IAccountStore accountStore,
+            ISharedDataStore sharedDataStore, 
+            IViewModelFactory traderViewModelFactory)
         {
-            this.navigationService = navigationService;
             this.userAccountService = userAccountService;
+            this.navigationService = navigationService;
+            this.accountStore = accountStore;
+            this.sharedDataStore = sharedDataStore;
 
             navigationService.StateChanged += NavigationService_StateChanged;
-            userAccountService.CurrentUser.StateChanged += UserAccountService_StateChanged;
+            accountStore.StateChanged += UserAccountService_StateChanged;
 
             NavigationCommand = new NavigationCommand(navigationService, traderViewModelFactory);
             NavigationCommand.Execute(ViewType.Authorization);
@@ -30,7 +47,7 @@
         private void UserAccountService_StateChanged()
         {
             OnPropertyChanged(nameof(IsLoggedIn));
-            OnPropertyChanged(nameof(CurrentUserFullName));
+            OnPropertyChanged(nameof(CurrentUser));
         }
 
         private void NavigationService_StateChanged()
@@ -41,21 +58,18 @@
 
         #region Fields and properties
 
-        private readonly INavigationService navigationService;
-
-        private readonly IUserAccountService userAccountService;
-
         public ViewModel CurrentView => navigationService.CurrentView;
 
-        public bool IsLoggedIn => userAccountService.CurrentUser.IsLoggedIn;
+        public bool IsLoggedIn => accountStore.CurrentUser != null;
 
-        public string CurrentUserFullName
+        public ApplicationUser CurrentUser
         {
             get
             {
-                if (userAccountService.CurrentUser.CurrentUser != null)
+                if (accountStore.CurrentUser != null)
                 {
-                    return $"{userAccountService.CurrentUser.CurrentUser.FirstName} {userAccountService.CurrentUser.CurrentUser.LastName}";
+                    sharedDataStore.CurrentUser = accountStore.CurrentUser;
+                    return accountStore.CurrentUser;
                 }
 
                 return null;
@@ -113,7 +127,7 @@
         public override void Dispose()
         {
             navigationService.StateChanged -= NavigationService_StateChanged;
-            userAccountService.CurrentUser.StateChanged -= UserAccountService_StateChanged;
+            accountStore.StateChanged -= UserAccountService_StateChanged;
 
             base.Dispose();
         }

@@ -5,8 +5,6 @@
 
     public class AccountStore : IAccountStore
     {
-        public static string CurrentAdminId;
-
         private ApplicationUser currentUser;
         public ApplicationUser CurrentUser
         {
@@ -14,17 +12,6 @@
             set
             {
                 currentUser = value;
-                StateChanged?.Invoke();
-            }
-        }
-
-        private bool isLoggedIn;
-        public bool IsLoggedIn
-        {
-            get => isLoggedIn;
-            set
-            {
-                isLoggedIn = value;
                 StateChanged?.Invoke();
             }
         }

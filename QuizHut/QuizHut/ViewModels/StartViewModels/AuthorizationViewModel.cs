@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.StartViewModels
 {
-    using System.Text;
+    using System.Linq;
+    using System;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -20,8 +21,6 @@
         private readonly LoginRequestValidator validator;
 
         private readonly IRenavigator mainRenavigator;
-
-        private bool IsLoggedIn { get; set; } = true;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService,
@@ -44,22 +43,22 @@
 
         #region FieldsAndProperties
 
-        private string? email;
-        public string? Email
+        private string email;
+        public string Email
         {
             get => email;
             set => Set(ref email, value);
         }
 
-        private string? password;
-        public string? Password
+        private string password;
+        public string Password
         {
             get => password;
             set => Set(ref password, value);
         }
 
-        private string? errorMessage;
-        public string? ErrorMessage
+        private string errorMessage;
+        public string ErrorMessage
         {
             get => errorMessage;
             set => Set(ref errorMessage, value);
@@ -67,9 +66,17 @@
 
         #endregion
 
-        #region Commands
+        #region NavigationCommands
 
-        #region LoginCommand
+        public ICommand NavigateStudentRegistrationCommand { get; }
+
+        public ICommand NavigateTeacherRegistrationCommand { get; }
+
+        public ICommand NavigateResetPasswordCommand { get; }
+
+        #endregion
+
+        #region LoginCommandAsync
 
         public ICommandAsync LoginCommandAsync { get; }
 
@@ -83,50 +90,29 @@
 
             var validationResult = validator.Validate(loginRequest);
 
-            if (!IsLoggedIn)
-            {
-                IsLoggedIn = true;
-                return true;
-            }
             if (validationResult.IsValid)
             {
                 ErrorMessage = null;
                 return true;
             }
 
-            var errors = new StringBuilder();
-
-            foreach (var error in validationResult.Errors)
-            {
-                errors.AppendLine(error.ErrorMessage);
-            }
-
-            ErrorMessage = errors.ToString();
-
+            ErrorMessage = string.Join(Environment.NewLine, validationResult.Errors.Select(error => error.ErrorMessage));
             return false;
         }
 
         private async Task OnLoginCommandExecutedAsync(object p)
         {
-            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
+            bool isLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
-            if (IsLoggedIn)
+            if (isLoggedIn)
             {
                 mainRenavigator.Renavigate();
             }
             else
             {
-                ErrorMessage = "Неверная почта или пароль";
+                ErrorMessage = "Неверная почта или пароль.";
             }
         }
-
-        #endregion
-
-        public ICommand NavigateStudentRegistrationCommand { get; }
-
-        public ICommand NavigateTeacherRegistrationCommand { get; }
-
-        public ICommand NavigateResetPasswordCommand { get; }
 
         #endregion
 

@@ -28,7 +28,7 @@
             this.groupsService = groupsService;
             this.sharedDataStore = sharedDataStore;
 
-            LoadEventGroupsDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadEventGroupsDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             LoadEventResultsForGroupCommandAsync = new ActionCommandAsync(OnLoadEventResultsForGroupCommandAsync, CanLoadEventResultsForGroupCommandExecute);
             DeleteResultCommandAsync = new ActionCommandAsync(OnDeleteResultCommandExecuteAsync);
         }
@@ -68,8 +68,6 @@
         #region LoadEventGroupsDataCommandAsync
 
         public ICommandAsync LoadEventGroupsDataCommandAsync { get; }
-
-        private bool CanLoadDataCommandExecute(object p) => true;
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {

@@ -380,13 +380,15 @@
         private static ActiveEventsViewModel CreateActiveEventsViewModel(IServiceProvider services)
         {
             return new ActiveEventsViewModel(
-                services.GetRequiredService<IEventsService>());
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>());
         }
 
         private static EndedEventsViewModel CreateEndedEventsViewModel(IServiceProvider services)
         {
             return new EndedEventsViewModel(
-                services.GetRequiredService<IEventsService>());
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>());
         }
 
         private static ResultsForEventViewModel CreateResultsForEventViewModel(IServiceProvider services)
