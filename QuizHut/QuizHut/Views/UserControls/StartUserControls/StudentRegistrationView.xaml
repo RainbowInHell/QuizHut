@@ -43,7 +43,7 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"
-                       Text="Регистрация учащегося"
+                       Text="Регистрация участника"
                        Margin="0,10,0,0"
                        FontFamily="{StaticResource Manrope}"
                        FontSize="16"
@@ -129,7 +129,7 @@
                     Command="{Binding NavigateTeacherRegistrationViewCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Регистрация преподавателя
+                        Регистрация организатора
                     </TextBlock>
                 </Button.Content>
             </Button>

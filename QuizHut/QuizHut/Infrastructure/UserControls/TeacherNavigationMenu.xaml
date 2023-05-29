@@ -91,7 +91,7 @@
                                  CommandParameter="{x:Static nav:ViewType.Student}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
-                <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
+                <TextBlock Text="Участники" Style="{StaticResource MenuButtonText}"/>
             </StackPanel>
         </RadioButton>
     </StackPanel>

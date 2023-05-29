@@ -45,7 +45,7 @@
         <!-- User message block -->
         <TextBlock x:Name="REVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="0"
-                   Margin="270,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                   Margin="270,0,0,5" VerticalAlignment="Center" HorizontalAlignment="Left"
                    Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- Group name definition -->

@@ -16,7 +16,7 @@
 
     class StudentsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Учащиеся";
+        public static string Title { get; } = "Участники";
 
         public static IconChar IconChar { get; } = IconChar.UserGroup;
 

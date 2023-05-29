@@ -8,7 +8,7 @@
               xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
              mc:Ignorable="d" 
-             Height="600" Width="500"
+             Height="530" Width="500"
              HorizontalAlignment="Left" VerticalAlignment="Top"
              Margin="150,10,0,0">
 
@@ -36,8 +36,6 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="70"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="20"/>
                 <RowDefinition Height="70"/>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="70"/>
@@ -78,34 +76,9 @@
                  Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
 
-            <!-- Password block -->
-            <StackPanel x:Name="MUPVPasswordSP"
-                        Grid.Row="4" Grid.Column="1"
-                        VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="370">
-                <TextBlock Style="{StaticResource MainTextBlock}" 
-                           FontSize="15" FontWeight="Bold" Text="Пароль:" 
-                           Margin="0,0,0,2"/>
-                <TextBox Style="{StaticResource textBoxStyle}"
-                         Height="40" FontSize="16" MaxLength="50"
-                         Tag="Проверить пароль..."/>
-            </StackPanel>
-            <Button x:Name="MUPVCheckPasswordBtn" Grid.Row="4" Grid.Column="1"
-                    Style="{StaticResource UserOptionButton}"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Width="80" Height="40" Background="{StaticResource ActiveColor3}"
-                    Tag="{StaticResource SecondaryMainViewBackround}"
-                    Command="{Binding }"
-                    Content="Проверить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
-            <!-- Password message block -->
-            <TextBlock x:Name="MUPVPasswordMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
-                   Grid.Row="5" Grid.Column="1"
-                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding PasswordErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-
             <!-- FirstName block -->
             <StackPanel x:Name="MUPVFirstNameSP"
-                        Grid.Row="6" Grid.Column="1"
+                        Grid.Row="4" Grid.Column="1"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="370">
                 <TextBlock Style="{StaticResource MainTextBlock}" 
                            FontSize="15" FontWeight="Bold" Text="Имя:" 
@@ -115,22 +88,15 @@
                          Tag="Имя..."
                          Text="{Binding CurrentUser.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <Button x:Name="MUPVChangeFirstNameBtn" Grid.Row="6" Grid.Column="1"
-                    Style="{StaticResource UserOptionButton}"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Width="80" Height="40" Background="{StaticResource ActiveColor3}"
-                    Tag="{StaticResource EditColor1}"
-                    Command="{Binding }"
-                    Content="Изменить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
             <!-- FirstName message block -->
             <TextBlock x:Name="MUPVFirstNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
-                   Grid.Row="7" Grid.Column="1"
+                   Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="{Binding FirstNameErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <!-- LastName block -->
             <StackPanel x:Name="MUPVLastNameSP"
-                        Grid.Row="8" Grid.Column="1"
+                        Grid.Row="6" Grid.Column="1"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="370">
                 <TextBlock Style="{StaticResource MainTextBlock}" 
                            FontSize="15" FontWeight="Bold" Text="Фамилия:" 
@@ -140,32 +106,34 @@
                          Tag="Фамилия..."
                          Text="{Binding CurrentUser.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <Button x:Name="MUPVhangeLastNameBtn" Grid.Row="8" Grid.Column="1"
-                    Style="{StaticResource UserOptionButton}"
-                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Width="80" Height="40" Background="{StaticResource ActiveColor3}"
-                    Tag="{StaticResource EditColor1}"
-                    Command="{Binding }"
-                    Content="Изменить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
             <!-- LastName message block -->
             <TextBlock x:Name="MUPVLastNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="7" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="{Binding LastNameErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            
+
+            <!-- Update first/last names button -->
+            <Button x:Name="MUPVChangeFirstLastNameBtn" Grid.Row="4" Grid.Column="1" Grid.RowSpan="4"
+                    Style="{StaticResource UserOptionButton}"
+                    VerticalAlignment="Center" HorizontalAlignment="Right"
+                    Width="80" Height="40" Background="{StaticResource ActiveColor3}"
+                    Tag="{StaticResource EditColor1}"
+                    Command="{Binding }"
+                    Content="Изменить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
+
             <!-- Info block -->
-            <TextBlock Grid.Row="10" Grid.Column="1"
+            <TextBlock Grid.Row="8" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
                        Text="Ваш аккаунт содержит персональную информацию. 
                        Данная страница позволяет скачать ваши личные данные или удалить аккаунт." FontSize="14" FontWeight="Medium"
-                       VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify"/>
-            <TextBlock Grid.Row="10" Grid.Column="1" Margin="0,70,0,0"
+                       VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,70,0,0"
                        Style="{StaticResource MainTextBlock}"
-                       Text="Удаление этих данных навсегда удалит ваш акаунт без возможности восстановления." FontSize="14" FontWeight="ExtraBold"
+                       Text="Удаление этих данных навсегда удалит ваш акаунт без возможности восстановления." FontSize="16" FontWeight="ExtraBold"
                        VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify"/>
             
             <!-- Download/Delete buttons -->
-            <Button x:Name="MUPVDownloadInfoBtn" Grid.Row="11" Grid.Column="1"
+            <Button x:Name="MUPVDownloadInfoBtn" Grid.Row="9" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"
                     Background="{StaticResource PrimaryActiveColor}"
                     Width="170" Height="50" Margin="20,0,0,0"
@@ -174,7 +142,7 @@
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
                     Command="{Binding }"/>
 
-            <Button x:Name="MUPVDeleteBtn" Grid.Row="11" Grid.Column="1"
+            <Button x:Name="MUPVDeleteBtn" Grid.Row="9" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"
                     Background="{StaticResource menuOverColor}"
                     Width="170" Height="50" Margin="0,0,20,0"

@@ -121,7 +121,7 @@
                     Command="{Binding NavigateTeacherRegistrationCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Регистрация преподавателя
+                        Регистрация организатора
                     </TextBlock>
                 </Button.Content>
             </Button>
@@ -136,7 +136,7 @@
                     Command="{Binding NavigateStudentRegistrationCommand}">
                 <Button.Content>
                     <TextBlock Style="{StaticResource TextBlockStyle1}">
-                        Регистрация учащегося
+                        Регистрация участника
                     </TextBlock>
                 </Button.Content>
             </Button>
