@@ -15,6 +15,7 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
@@ -39,6 +40,8 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
+        private readonly IExporter exporter;
+
         private readonly ISharedDataStore sharedDataStore;
 
         public QuizzesViewModel(
@@ -46,6 +49,7 @@
             ICategoriesService categoriesService,
             IEventsService eventsService,
             IDateTimeConverter dateTimeConverter,
+            IExporter exporter,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizRenavigator,
             IRenavigator addQuestionRenavigator,
@@ -57,6 +61,7 @@
             this.categoriesService = categoriesService;
             this.eventsService = eventsService;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
@@ -67,6 +72,7 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             DeleteQuizCommandAsync = new ActionCommandAsync(OnDeleteQuizCommandExecutedAsync, CanDeleteQuizCommandExecute);
+            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
         }
 
         #region Fields and properties
@@ -188,6 +194,17 @@
             await quizzesService.DeleteQuizAsync(SelectedQuiz.Id);
 
             await LoadQuizzesData();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommand ExportDataCommand { get; }
+
+        private void OnExportDataCommandExecute(object p)
+        {
+            exporter.GenerateExcelReport(Quizzes);
         }
 
         #endregion

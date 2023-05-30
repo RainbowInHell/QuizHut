@@ -83,21 +83,37 @@
 
         private async Task OnGoToStartQuizExecutedAsync(object p)
         {
-            var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(sharedDataStore.CurrentUser.Id);
-
-            if (currentUserResultCount > 0)
-            {
-                // TODO: Error message
-                return;
-            }
-
             var quiz = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
 
-            if (quiz == null || quiz.EventId == null)
+            if (quiz == null || quiz.EventId == null) 
             {
                 // TODO: Error message
                 return;
             }
+
+            var doesParticipantHasResult = await resultsService.DoesParticipantHasResult(sharedDataStore.CurrentUser.Id, quiz.Id);
+
+            if (doesParticipantHasResult)
+            {
+                // TODO: Error message
+                return;
+            }
+
+            //var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(sharedDataStore.CurrentUser.Id);
+
+            //if (currentUserResultCount > 0)
+            //{
+            //    // TODO: Error message
+            //    return;
+            //}
+
+            //var quiz = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
+
+            //if (quiz == null || quiz.EventId == null)
+            //{
+            //    // TODO: Error message
+            //    return;
+            //}
 
             sharedDataStore.QuizToPass = quiz;
 

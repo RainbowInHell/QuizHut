@@ -76,6 +76,7 @@
         <!-- Download data-->
         <Button x:Name="MVSDownloadBtn"
                 Grid.Row="2"
+                Command="{Binding ExportDataCommand}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource Color9}"
                 Width="100" Height="35" Margin="10,0,0,0"

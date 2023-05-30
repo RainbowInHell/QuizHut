@@ -37,10 +37,21 @@
              .ToListAsync();
         }
 
+        public async Task<bool> DoesParticipantHasResult(string participantId, string quizId)
+        {
+            var res =  await repository
+             .AllAsNoTracking()
+             .Where(x => x.StudentId == participantId && x.Event.Quizzes.Any(x => x.Id == quizId))
+             .FirstOrDefaultAsync();
+
+            return res != null;
+        }
+
         public async Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null)
         {
             var query = repository
                 .AllAsNoTracking()
+                .Include(x => x.Event.Quizzes)
                 //.Where(x => x.StudentId == id && x.Event.Quizzes.Any(x => x.Id == ""))
                 .Where(x => x.StudentId == id);
 

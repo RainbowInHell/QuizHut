@@ -7,7 +7,6 @@
 
     using FontAwesome.Sharp;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;

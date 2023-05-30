@@ -188,6 +188,7 @@
             return new GroupsViewModel(
                 services.GetRequiredService<IGroupsService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
@@ -223,6 +224,7 @@
             return new CategoriesViewModel(
                 services.GetRequiredService<ICategoriesService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
@@ -294,6 +296,7 @@
                 services.GetRequiredService<ICategoriesService>(),
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),

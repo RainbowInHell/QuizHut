@@ -6,7 +6,6 @@
 
     using FontAwesome.Sharp;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
@@ -27,11 +26,14 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
+        private readonly IExporter exporter;
+
         private readonly ISharedDataStore sharedDataStore;
 
         public CategoriesViewModel(
             ICategoriesService categoriesService,
             IDateTimeConverter dateTimeConverter,
+            IExporter exporter,
             ISharedDataStore sharedDataStore,
             IRenavigator categoryActionsRenavigator,
             IRenavigator categorySettingRenavigator,
@@ -39,6 +41,7 @@
         {
             this.categoriesService = categoriesService;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateCreateCategoryCommand = new RenavigateCommand(categoryActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
@@ -48,6 +51,7 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             DeleteCategoryCommandAsync = new ActionCommandAsync(OnDeleteCategoryCommandExecutedAsync, CanDeleteCategoryCommandExecute);
+            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -133,6 +137,17 @@
             await categoriesService.DeleteCategoryAsync(SelectedCategory.Id);
 
             await LoadCategoriesData();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommand ExportDataCommand { get; }
+
+        private void OnExportDataCommandExecute(object p)
+        {
+            exporter.GenerateExcelReport(Categories);
         }
 
         #endregion

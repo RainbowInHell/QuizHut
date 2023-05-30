@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
-
+    using System.Windows.Input;
     using FontAwesome.Sharp;
 
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
@@ -32,15 +33,19 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        public StudentsViewModel(IStudentsService studentService, ISharedDataStore sharedDataStore)
+        private readonly IExporter exporter;
+
+        public StudentsViewModel(IStudentsService studentService, IExporter exporter, ISharedDataStore sharedDataStore)
         {
             this.studentService = studentService;
+            this.exporter = exporter;
             this.sharedDataStore = sharedDataStore;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             AddStudentToTeacherListCommandAsync = new ActionCommandAsync(OnAddStudentToTeacherListCommandExecute, CanAddStudentToTeacherListCommandExecute);
             DeleteStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnDeleteStudentFromTeacherListCommandExecute, CanDeleteStudentFromTeacherListCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -144,6 +149,17 @@
             await studentService.DeleteStudentFromTeacherListAsync(SelectedStudent.Id, sharedDataStore.CurrentUser.Id);
 
             await LoadStudentsDataAsync();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommand ExportDataCommand { get; }
+
+        private void OnExportDataCommandExecute(object p)
+        {
+            exporter.GenerateExcelReport(Students);
         }
 
         #endregion

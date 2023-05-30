@@ -13,6 +13,7 @@
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
+    using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
@@ -27,11 +28,14 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
+        private readonly IExporter exporter;
+
         private readonly ISharedDataStore sharedDataStore;
 
         public GroupsViewModel(
             IGroupsService groupsService,
             IDateTimeConverter dateTimeConverter,
+            IExporter exporter,
             ISharedDataStore sharedDataStore,
             IRenavigator groupActionsRenavigator,
             IRenavigator groupSettingRenavigator,
@@ -39,6 +43,7 @@
         {
             this.groupsService = groupsService;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
             this.sharedDataStore = sharedDataStore;
 
             NavigateCreateGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
@@ -48,6 +53,7 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
+            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -133,6 +139,17 @@
             await groupsService.DeleteGroupAsync(SelectedGroup.Id);
 
             await LoadGroupsData();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommand ExportDataCommand { get; }
+
+        private void OnExportDataCommandExecute(object p)
+        {
+            exporter.GenerateExcelReport(Groups);
         }
 
         #endregion

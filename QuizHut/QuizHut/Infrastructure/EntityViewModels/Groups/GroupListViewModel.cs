@@ -1,7 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.EntityViewModels.Groups
 {
     using System;
-
+    using System.Collections.Generic;
     using AutoMapper;
 
     using QuizHut.BLL.MapperConfig.Contracts;
@@ -20,6 +20,8 @@
         public string CreatedOnDate { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public IList<StudentGroup> StudentsGroups { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

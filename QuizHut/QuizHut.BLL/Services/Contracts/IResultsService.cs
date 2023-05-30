@@ -4,6 +4,8 @@
     {
         Task<IEnumerable<T>> GetAllResultsByEventAndGroupAsync<T>(string eventId, string groupId);
 
+        Task<bool> DoesParticipantHasResult(string participantId, string quizId);
+
         Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null);
 
         Task<string> CreateResultAsync(string studentId, decimal points, string quizId);
