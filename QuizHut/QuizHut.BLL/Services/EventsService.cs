@@ -1,7 +1,6 @@
 ﻿namespace QuizHut.BLL.Services
 {
     using System.Globalization;
-
     using Microsoft.EntityFrameworkCore;
 
     using QuizHut.BLL.Expression.Contracts;
@@ -97,8 +96,7 @@
         {
             var query = repository
                 .AllAsNoTracking()
-                .Where(x => !x.EventsGroups
-                .Any(x => x.GroupId == groupId));
+                .Where(x => !x.EventsGroups.Any(x => x.GroupId == groupId));
 
             if (creatorId != null)
             {
@@ -110,6 +108,35 @@
               .OrderByDescending(x => x.CreatedOn)
               .To<T>()
               .ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllEventsByStatusAndStudentIdAsync<T>(
+            Status status,
+            string studentId,
+            string searchCriteria = null,
+            string searchText = null)
+        {
+            var query = repository
+                .AllAsNoTracking()
+                .Include(x => x.Quizzes)
+                .ThenInclude(q => q.Results)
+                .Where(x => x.EventsGroups.Any(eg => eg.Group.StudentsGroups.Any(sg => sg.StudentId == studentId)));
+
+            if (status == Status.Active)
+            {
+                query = query.Where(x => x.Quizzes.Any(q => !q.Results.Any(r => r.StudentId == studentId)));
+            }
+
+            if (searchCriteria != null && searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
+                query = query.Where(filter);
+            }
+
+            return await query
+                .OrderByDescending(x => x.CreatedOn)
+                .To<T>()
+                .ToListAsync();
         }
 
         public async Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId)
@@ -224,10 +251,9 @@
                 if (@event.Status == Status.Active)
                 {
                     @event.Status = Status.Pending;
+                    await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
                 }
             }
-
-            await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
 
             repository.Update(@event);
             await repository.SaveChangesAsync();

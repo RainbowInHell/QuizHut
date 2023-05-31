@@ -8,7 +8,6 @@
         {
             Id = Guid.NewGuid().ToString();
             Quizzes = new HashSet<Quiz>();
-            Results = new HashSet<Result>();
             EventsGroups = new HashSet<EventGroup>();
             ScheduledJobs = new HashSet<ScheduledJob>();
         }
@@ -26,8 +25,6 @@
         public TimeSpan DurationOfActivity { get; set; }
 
         public virtual ICollection<Quiz> Quizzes { get; set; }
-
-        public virtual ICollection<Result> Results { get; set; }
 
         public virtual ICollection<EventGroup> EventsGroups { get; set; }
 

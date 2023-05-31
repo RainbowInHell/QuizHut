@@ -13,27 +13,32 @@
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            var teacherId = await CreateUser(
+            var organizerId = await CreateUser(
                 userManager,
-                "TestTeacher",
+                "Пример",
+                "Организатора",
                 "organizer@mail.ru",
                 "Organizer");
 
-            await CreateUser(
-                userManager,
-                "TestStudent",
-                "student@mail.ru",
-                "Student");
+            for (int i = 0; i < 10; i++)
+            {
+                await CreateUser(
+                    userManager,
+                    "Пример",
+                    $"Студента{i}",
+                    $"student{i}@mail.ru",
+                    "Student");
+            }
 
             if (!dbContext.Quizzes.Any())
             {
-                await CreateQuizzes(teacherId, userManager, dbContext);
+                await CreateQuizzes(organizerId, userManager, dbContext);
             }
         }
 
-        private static async Task CreateQuizzes(string teacherId, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
+        private static async Task CreateQuizzes(string organizerId, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
         {
-            var teacher = await userManager.FindByIdAsync(teacherId);
+            var teacher = await userManager.FindByIdAsync(organizerId);
             for (int i = 1; i <= 5; i++)
             {
                 var quiz = new Quiz()
@@ -78,15 +83,16 @@
 
         private static async Task<string> CreateUser(
             UserManager<ApplicationUser> userManager,
-            string name,
+            string firstName,
+            string lastName,
             string email,
             string roleName)
         {
             var user = new ApplicationUser
             {
                 UserName = email,
-                FirstName = name,
-                LastName = name,
+                FirstName = firstName,
+                LastName = lastName,
                 Email = email,
             };
 

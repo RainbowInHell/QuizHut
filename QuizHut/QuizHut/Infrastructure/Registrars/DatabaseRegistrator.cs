@@ -69,7 +69,7 @@
             using (var scope = services.BuildServiceProvider().CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
             }
 
             return services;

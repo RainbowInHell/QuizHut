@@ -10,6 +10,12 @@
 
         Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(Status status, string groupId, string creatorId = null);
 
+        Task<IList<T>> GetAllEventsByStatusAndStudentIdAsync<T>(
+            Status status,
+            string studentId,
+            string searchCriteria = null,
+            string searchText = null);
+
         Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId);
 
         Task AssignQuizzesToEventAsync(IList<string> quizIds, string eventId);

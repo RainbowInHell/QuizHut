@@ -11,7 +11,7 @@ using QuizHut.DLL.EntityFramework;
 namespace QuizHut.DLL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230524092113_Initial")]
+    [Migration("20230601063014_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -440,34 +440,26 @@ namespace QuizHut.DLL.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("EventActivationDateAndTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("EventId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<int?>("MaxPoints")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Points")
+                    b.Property<decimal>("Points")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<string>("QuizName")
+                    b.Property<string>("QuizId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("StudentId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
+                    b.Property<TimeSpan>("TimeSpent")
+                        .HasColumnType("time(6)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EventId");
+                    b.HasIndex("QuizId");
 
                     b.HasIndex("StudentId");
 
@@ -684,9 +676,9 @@ namespace QuizHut.DLL.Migrations
 
             modelBuilder.Entity("QuizHut.DLL.Entities.Result", b =>
                 {
-                    b.HasOne("QuizHut.DLL.Entities.Event", "Event")
+                    b.HasOne("QuizHut.DLL.Entities.Quiz", "Quiz")
                         .WithMany("Results")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -696,7 +688,7 @@ namespace QuizHut.DLL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
+                    b.Navigation("Quiz");
 
                     b.Navigation("Student");
                 });
@@ -757,8 +749,6 @@ namespace QuizHut.DLL.Migrations
 
                     b.Navigation("Quizzes");
 
-                    b.Navigation("Results");
-
                     b.Navigation("ScheduledJobs");
                 });
 
@@ -777,6 +767,8 @@ namespace QuizHut.DLL.Migrations
             modelBuilder.Entity("QuizHut.DLL.Entities.Quiz", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("Results");
                 });
 #pragma warning restore 612, 618
         }

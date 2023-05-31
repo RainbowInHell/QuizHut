@@ -45,11 +45,6 @@
             NavigationCommand.Execute(ViewType.Authorization);
             
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
-
-            if(CurrentUserRole == UserRole.Student) 
-            { 
-                SelectedOption = "StudentHome"; 
-            }
         }
 
         #region Fields and properties
@@ -86,11 +81,11 @@
             set => Set(ref iconChar, value);
         }
 
-        private string selectedOption = "Home";
-        public string? SelectedOption 
-        { 
-            get => selectedOption; 
-            set => Set(ref selectedOption, value); 
+        private string? selectedOption = "Home";
+        public string? SelectedOption
+        {
+            get => selectedOption;
+            set => Set(ref selectedOption, value);
         }
 
         #endregion
@@ -136,7 +131,6 @@
 
         private void ProfileNavigate()
         {
-            SelectedOption = null;
             NavigationCommand.Execute(ViewType.UserProfile);
         }
 

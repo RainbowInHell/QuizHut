@@ -13,7 +13,7 @@
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <Border x:Name="MVSHGoToTakeQuizBlock"
                 CornerRadius="15" 
-                Width="450" Height="250" Margin="40,50,0,0"
+                Width="450" Height="250" Margin="300,175,0,0"
                 Background="{StaticResource MainViewBackground4}">
 
             <Border.Effect>
@@ -88,7 +88,7 @@
                 </Button>
             </Grid>
         </Border>
-        <Border x:Name="MVSHLastUpdatesBlock"
+        <!--<Border x:Name="MVSHLastUpdatesBlock"
                 CornerRadius="15" 
                 Width="470" Height="250" Margin="20,50,0,0"
                 Background="{StaticResource MainViewBackground4}">
@@ -110,13 +110,13 @@
                     <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
 
-                <!-- Title textBlocks -->
+                --><!-- Title textBlocks --><!--
                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,10,0,0" 
                            HorizontalAlignment="Center" VerticalAlignment="Center"
                            Style="{StaticResource MainTextBlock}"
                            Text="Последние обновления" FontSize="22"/>
                 
-                <ItemsControl Grid.Row="1" Grid.Column="1"
+                --><!--<ItemsControl Grid.Row="1" Grid.Column="1"
                               ItemsSource="{Binding }">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -126,8 +126,8 @@
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                </ItemsControl>--><!--
             </Grid>
-        </Border>
+        </Border>-->
     </StackPanel>
 </UserControl>

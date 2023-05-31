@@ -168,7 +168,7 @@
 
             Events = new(events);
 
-            //exporter.GenerateExcelReport();
+            //await exporter.GenerateComplexResultsExcelReportAsync();
         }
     }
 }

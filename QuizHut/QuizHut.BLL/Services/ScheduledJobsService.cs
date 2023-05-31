@@ -68,14 +68,14 @@
                 query = query.Where(x => x.IsActivationJob == deleteActivationJobCondition);
             }
 
-            var jobs = await query.ToListAsync();
+            var jobsIds = await query
+                .Select(x => x.JobId)
+                .ToListAsync();
 
-            foreach (var job in jobs)
+            foreach (var jobId in jobsIds)
             {
-                repository.Delete(job);
+                backgroundJobClient.Delete(jobId);
             }
-
-            await repository.SaveChangesAsync();
         }
 
         public async Task SetStatusChangeJobAsync(string eventId, Status status)

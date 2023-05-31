@@ -12,48 +12,37 @@
     {
         private readonly IRepository<Result> repository;
 
-        private readonly IRepository<Event> eventRepository;
+        private readonly IRepository<Quiz> quizRepository;
 
         private readonly IExpressionBuilder expressionBuilder;
 
         public ResultsService(
             IRepository<Result> repository,
-            IRepository<Event> eventRepository,
+            IRepository<Quiz> quizRepository,
             IExpressionBuilder expressionBuilder)
         {
             this.repository = repository;
-            this.eventRepository = eventRepository;
+            this.quizRepository = quizRepository;
             this.expressionBuilder = expressionBuilder;
         }
 
         public async Task<IEnumerable<T>> GetAllResultsByEventAndGroupAsync<T>(string eventId, string groupId)
         {
             return await repository
-             .AllAsNoTracking()
-             .Where(x => x.EventId == eventId)
-             .Where(x => x.Student.StudentsInGroups.Any(x => x.Group.Id == groupId))
-             .OrderBy(x => x.CreatedOn)
-             .To<T>()
-             .ToListAsync();
+                .AllAsNoTracking()
+                .Where(x => x.Quiz.EventId == eventId && x.Student.StudentsInGroups.Any(s => s.Group.Id == groupId))
+                .OrderBy(x => x.CreatedOn)
+                .To<T>()
+                .ToListAsync();
         }
 
-        public async Task<bool> DoesParticipantHasResult(string participantId, string quizId)
-        {
-            var res =  await repository
-             .AllAsNoTracking()
-             .Where(x => x.StudentId == participantId && x.Event.Quizzes.Any(x => x.Id == quizId))
-             .FirstOrDefaultAsync();
-
-            return res != null;
-        }
-
-        public async Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null)
+        public async Task<IEnumerable<T>> GetAllResultsByStudentIdAsync<T>(string studentId, string searchCriteria = null, string searchText = null)
         {
             var query = repository
                 .AllAsNoTracking()
-                .Include(x => x.Event.Quizzes)
-                //.Where(x => x.StudentId == id && x.Event.Quizzes.Any(x => x.Id == ""))
-                .Where(x => x.StudentId == id);
+                .Include(x => x.Quiz.Event)
+                //.ThenInclude(x => x.Event)
+                .Where(x => x.StudentId == studentId);
 
             if (searchCriteria != null && searchText != null)
             {
@@ -61,35 +50,37 @@
                 query = query.Where(filter);
             }
 
-            return await query.CountAsync();
+            return await query
+                .To<T>()
+                .ToListAsync();
         }
 
-        public async Task<string> CreateResultAsync(string studentId, decimal points, string quizId)
+        public async Task<bool> DoesParticipantHasResult(string participantId, string quizId)
         {
-            var @event = await eventRepository
-                .All()
-                .Include(e => e.Quizzes)
-                .ThenInclude(q => q.Questions)
-                .FirstOrDefaultAsync(e => e.Quizzes.Any(q => q.Id == quizId));
+            var res =  await repository
+             .AllAsNoTracking()
+             .Where(x => x.StudentId == participantId && x.QuizId == quizId)
+             .FirstOrDefaultAsync();
 
-            var quiz = @event.Quizzes.FirstOrDefault(q => q.Id == quizId);
+            return res != null;
+        }
+
+        public async Task<string> CreateResultAsync(string studentId, string quizId)
+        {
+            var quiz = await quizRepository
+                .All()
+                .Where(x => x.Id == quizId)
+                .FirstOrDefaultAsync();
 
             var result = new Result()
             {
-                Points = points,
                 StudentId = studentId,
-                MaxPoints = quiz.Questions.Count,
-                EventId = @event.Id,
-                EventName = @event.Name,
-                QuizName = quiz.Name,
-                EventActivationDateAndTime = @event.ActivationDateAndTime,
+                QuizId = quizId,
+                MaxPoints = quiz.Questions.Count
             };
 
             await repository.AddAsync(result);
             await repository.SaveChangesAsync();
-
-            @event.Results.Add(result);
-            await eventRepository.SaveChangesAsync();
 
             return result.Id;
         }

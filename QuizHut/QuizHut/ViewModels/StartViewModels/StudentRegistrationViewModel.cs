@@ -108,11 +108,11 @@
 
             if (isRegistered)
             {
-                ErrorMessage = "User registered.";
+                ErrorMessage = "Пользователь зарегистрирован.";
             }
             else
             {
-                ErrorMessage = "A user with this email already exists.";
+                ErrorMessage = "Пользователь с такой почтой уже существует.";
             }
         }
 

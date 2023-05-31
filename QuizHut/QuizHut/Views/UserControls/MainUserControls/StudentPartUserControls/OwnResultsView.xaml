@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"             
              xmlns:local="clr-namespace:QuizHut.Views.UserControls.MainUserControls.StudentPartUserControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
@@ -10,6 +11,11 @@
              d:Height="600" d:Width="1000"
              Background="Transparent">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -71,7 +77,7 @@
         <ScrollViewer CanContentScroll="False" Grid.Row="2"
                       Width="auto">
             <DataGrid x:Name="MORVAllResultsDataGrid" 
-                  ItemsSource="{Binding }"                 
+                  ItemsSource="{Binding StudentResults}"                 
                   Style="{StaticResource DataGridStyle1}" 
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
@@ -79,12 +85,16 @@
                   Width="auto">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Имя" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
-                    <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>
-                    <DataGridTextColumn Header="Баллы" IsReadOnly="True" Width="200"
-                                    Binding="{Binding }"/>
+                    <DataGridTextColumn Header="Событие" IsReadOnly="True" Width="*"
+                                    Binding="{Binding EventName}"/>
+                    <DataGridTextColumn Header="Викторина" IsReadOnly="True" Width="*"
+                                    Binding="{Binding QuizName}"/>
+                    <DataGridTextColumn Header="Дата" IsReadOnly="True" Width="*"
+                                    Binding="{Binding Date}"/>
+                    <DataGridTextColumn Header="Время прохождения" IsReadOnly="True" Width="*"
+                                    Binding="{Binding TimeSpent}"/>
+                    <DataGridTextColumn Header="Баллы" IsReadOnly="True" Width="100"
+                                    Binding="{Binding Score}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </ScrollViewer>

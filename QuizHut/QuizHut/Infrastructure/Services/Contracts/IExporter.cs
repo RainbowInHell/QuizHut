@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Services.Contracts
 {
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
 
     using QuizHut.Infrastructure.EntityViewModels;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
@@ -9,7 +10,21 @@
 
     public interface IExporter
     {
-        void GenerateExcelReport();
+        Task GenerateStudentPerformanceDistributionByCategoryAsync();
+
+        Task GenerateTimeSpentOnQuizzesByStudentAsync();
+
+        Task GenerateQuizCompletionRateByGroupAsync();
+
+        Task GenerateTopPerformingStudentsByQuizAsync();
+
+        Task GenerateQuizPerformanceReportByCategoryAsync();
+
+        Task GenerateGroupPerformanceReportAsync();
+
+        Task GenerateEventParticipationReportAsync();
+
+        Task GenerateComplexResultsExcelReportAsync();
 
         void GenerateExcelReport(ObservableCollection<StudentViewModel> students);
 

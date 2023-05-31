@@ -6,6 +6,7 @@
         {
             Id = Guid.NewGuid().ToString();
             Questions = new HashSet<Question>();
+            Results = new HashSet<Result>();
         }
 
         public string Name { get; set; }
@@ -29,5 +30,7 @@
         public virtual Event Event { get; set; }
 
         public virtual ICollection<Question> Questions { get; set; }
+
+        public virtual ICollection<Result> Results { get; set; }
     }
 }

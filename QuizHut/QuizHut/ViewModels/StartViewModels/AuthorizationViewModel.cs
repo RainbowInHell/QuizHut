@@ -13,6 +13,7 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.BLL.Helpers.Contracts;
 
     internal class AuthorizationViewModel : DialogViewModel
     {
@@ -20,19 +21,27 @@
 
         private readonly LoginRequestValidator validator;
 
-        private readonly IRenavigator mainRenavigator;
+        private readonly IAccountStore accountStore;
+
+        private readonly IRenavigator teacherMainRenavigator;
+
+        private readonly IRenavigator studentMainRenavigator;
 
         public AuthorizationViewModel(
             IUserAccountService userAccountService,
             LoginRequestValidator validator,
+            IAccountStore accountStore,
             IRenavigator studRegisterRenavigator,
             IRenavigator teacherRegisterRenavigator,
             IRenavigator resetPasswordRenavigator,
-            IRenavigator mainRenavigator)
+            IRenavigator teacherMainRenavigator,
+            IRenavigator studentMainRenavigator)
         {
             this.userAccountService = userAccountService;
             this.validator = validator;
-            this.mainRenavigator = mainRenavigator;
+            this.accountStore = accountStore;
+            this.teacherMainRenavigator = teacherMainRenavigator;
+            this.studentMainRenavigator = studentMainRenavigator;
 
             LoginCommandAsync = new ActionCommandAsync(OnLoginCommandExecutedAsync, CanLoginCommandExecute);
 
@@ -106,7 +115,14 @@
 
             if (isLoggedIn)
             {
-                mainRenavigator.Renavigate();
+                if (accountStore.CurrentUserRole == UserRole.Teacher)
+                {
+                    teacherMainRenavigator.Renavigate();
+                }
+                else
+                {
+                    studentMainRenavigator.Renavigate();
+                }
             }
             else
             {

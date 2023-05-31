@@ -32,7 +32,7 @@
                    opt => opt.MapFrom(x => x.TimeSpent.ToString(@"hh\:mm\:ss")))
                .ForMember(
                    x => x.Score,
-                   opt => opt.MapFrom(x => $"{Math.Round((decimal)x.Points,2)}/{x.MaxPoints}"));
+                   opt => opt.MapFrom(x => $"{Math.Round(x.Points,2)}/{x.MaxPoints}"));
         }
     }
 }

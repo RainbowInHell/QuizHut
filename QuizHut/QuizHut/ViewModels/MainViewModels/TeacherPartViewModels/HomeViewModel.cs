@@ -60,8 +60,8 @@
             set => Set(ref quizPassword, value);
         }
 
-        private string? errorMessage;
-        public string? ErrorMessage
+        private string errorMessage;
+        public string ErrorMessage
         {
             get => errorMessage;
             set => Set(ref errorMessage, value);
@@ -83,46 +83,36 @@
 
         private async Task OnGoToStartQuizExecutedAsync(object p)
         {
-            var quiz = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
+            var quizToPass = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
 
-            if (quiz == null || quiz.EventId == null) 
+            if (quizToPass == null)
             {
-                // TODO: Error message
+                ErrorMessage = "Нет викторины с таким паролем.";
                 return;
             }
 
-            var doesParticipantHasResult = await resultsService.DoesParticipantHasResult(sharedDataStore.CurrentUser.Id, quiz.Id);
+            if (quizToPass.EventId == null) 
+            {
+                ErrorMessage = "Викторина должна быть назначена на событие.";
+                return;
+            }
+
+            var doesParticipantHasResult = await resultsService.DoesParticipantHasResult(sharedDataStore.CurrentUser.Id, quizToPass.Id);
 
             if (doesParticipantHasResult)
             {
-                // TODO: Error message
+                ErrorMessage = "Вы уже участвовали в викторине.";
                 return;
             }
 
-            //var currentUserResultCount = await resultsService.GetResultsCountByStudentIdAsync(sharedDataStore.CurrentUser.Id);
-
-            //if (currentUserResultCount > 0)
-            //{
-            //    // TODO: Error message
-            //    return;
-            //}
-
-            //var quiz = await quizzesService.GetQuizByPasswordAsync<AttemptedQuizViewModel>(QuizPassword);
-
-            //if (quiz == null || quiz.EventId == null)
-            //{
-            //    // TODO: Error message
-            //    return;
-            //}
-
-            sharedDataStore.QuizToPass = quiz;
-
-            foreach (var question in sharedDataStore.QuizToPass.Questions)
+            foreach (var question in quizToPass.Questions)
             {
                 question.Answers = shuffler.Shuffle(question.Answers);
             }
 
-            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(sharedDataStore.CurrentUser.Id, 0, sharedDataStore.QuizToPass.Id);
+            sharedDataStore.QuizToPass = quizToPass;
+
+            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(sharedDataStore.CurrentUser.Id, sharedDataStore.QuizToPass.Id);
 
             startQuizRenavigator.Renavigate();
         }

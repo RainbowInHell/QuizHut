@@ -188,7 +188,7 @@
         }
 
         [Fact]
-        public async Task CreateGroupAsyncShouldCreateCorrectly()
+        public async Task CreateGroupAsync_ShouldCreateCorrectly()
         {
             //Arrange
             var creatorId = Guid.NewGuid().ToString();

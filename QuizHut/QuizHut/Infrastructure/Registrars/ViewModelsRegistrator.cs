@@ -42,13 +42,13 @@
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => CreateResultsForEventViewModel(services));
 
-            services.AddSingleton<CreateViewModel<OwnResultsViewModel>>(services => () => services.GetRequiredService<OwnResultsViewModel>());
+            services.AddSingleton<CreateViewModel<OwnResultsViewModel>>(services => () => CreateOwnResultsViewModel(services));
 
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
             services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
             services.AddSingleton<CreateViewModel<EventSettingsViewModel>>(services => () => CreateEventSettingsViewModel(services));
 
-            services.AddSingleton<CreateViewModel<StudentActiveEventsViewModel>>(services => () => services.GetRequiredService<StudentActiveEventsViewModel>());
+            services.AddSingleton<CreateViewModel<StudentActiveEventsViewModel>>(services => () => CreateStudentActiveEventsViewModel(services));
             services.AddSingleton<CreateViewModel<StudentPendingEventsViewModel>>(services => () => services.GetRequiredService<StudentPendingEventsViewModel>());
             services.AddSingleton<CreateViewModel<StudentEndedEventsViewModel>>(services => () => services.GetRequiredService<StudentEndedEventsViewModel>());
 
@@ -118,6 +118,7 @@
             services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
             services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<StudentHomeViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<EventsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<EventActionsViewModel>>();
@@ -152,10 +153,12 @@
             return new AuthorizationViewModel(
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<LoginRequestValidator>(),
+                services.GetRequiredService<IAccountStore>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentHomeViewModel>>());
         }
 
         private static ResetPasswordViewModel CreateResetPasswordViewModel(IServiceProvider services)
@@ -421,6 +424,21 @@
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
+        }       
+        
+        private static OwnResultsViewModel CreateOwnResultsViewModel(IServiceProvider services)
+        {
+            return new OwnResultsViewModel(
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<ISharedDataStore>());
+        }       
+        
+        private static StudentActiveEventsViewModel CreateStudentActiveEventsViewModel(IServiceProvider services)
+        {
+            return new StudentActiveEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IDateTimeConverter>());
         }
     }
 }

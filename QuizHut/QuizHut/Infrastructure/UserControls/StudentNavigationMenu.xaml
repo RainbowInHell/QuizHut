@@ -14,7 +14,7 @@
         <RadioButton x:Name="MVStdHomeMenuBtn"
                                  Style="{StaticResource MenuButton}"
                                  Tag="{StaticResource Color3}"
-                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=StudentHome}"
+                                 IsChecked="{Binding SelectedOption, Converter={StaticResource RadioButtonConverter}, ConverterParameter=Home}"
                                  Command="{Binding NavigationCommand}"
                                  CommandParameter="{x:Static nav:ViewType.StudentHome}">
             <StackPanel Orientation="Horizontal">
@@ -37,8 +37,7 @@
 
         <RadioButton x:Name="MVStdEventsMenuBtn"
                                  Style="{StaticResource MenuButton}"
-                                 Tag="{StaticResource Color6}"
-                                 Background="{StaticResource FontColor4}">
+                                 Tag="{StaticResource Color6}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="CalendarDays" Style="{StaticResource MenuButtonIcon}"/>
                 <TextBlock Text="События" Style="{StaticResource MenuButtonText}"/>
