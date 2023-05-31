@@ -96,7 +96,7 @@
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="13" FontWeight="SemiBold"/>
         <!-- Download and Add buttons -->
         <Button x:Name="MVQDownloadBtn"
-                Command="{Binding ExportDataCommand}"
+                Command="{Binding ExportDataAsyncCommand}"
                 Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource Color8}"

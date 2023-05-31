@@ -4,6 +4,7 @@
 
     using QuizHut.BLL.MapperConfig.Contracts;
     using QuizHut.DLL.Entities;
+    using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.EntityViewModels.Questions;
 
     public class AttemptedQuizViewModel : IMapFrom<Quiz>
@@ -21,7 +22,7 @@
 
         public int Timer { get; set; }
 
-        public string EventId { get; set; }
+        public EventSimpleViewModel Event { get; set; }
 
         public IList<AttemptedQuizQuestionViewModel> Questions { get; set; }
     }

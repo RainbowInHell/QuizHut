@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -48,10 +49,10 @@
             NavigateEditCategoryCommand = new RenavigateCommand(categoryActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateCategorySettingsCommand = new RenavigateCommand(categorySettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            DeleteCategoryCommandAsync = new ActionCommandAsync(OnDeleteCategoryCommandExecutedAsync, CanDeleteCategoryCommandExecute);
-            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
+            DeleteCategoryCommandAsync = new ActionCommandAsync(OnDeleteCategoryCommandExecutedAsync);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
 
         #region FieldsAndProperties
@@ -104,8 +105,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadCategoriesData();
@@ -130,8 +129,6 @@
 
         public ICommandAsync DeleteCategoryCommandAsync { get; }
 
-        private bool CanDeleteCategoryCommandExecute(object p) => true;
-
         private async Task OnDeleteCategoryCommandExecutedAsync(object p)
         {
             await categoriesService.DeleteCategoryAsync(SelectedCategory.Id);
@@ -143,11 +140,11 @@
 
         #region ExportDataCommand
 
-        public ICommand ExportDataCommand { get; }
+        public ICommandAsync ExportDataAsyncCommand { get; }
 
-        private void OnExportDataCommandExecute(object p)
+        private async Task OnExportDataAsyncCommandExecute(object p)
         {
-            exporter.GenerateExcelReport(Categories);
+            await exporter.GenerateExcelReportAsync(Categories);
         }
 
         #endregion
@@ -156,12 +153,21 @@
         {
             var categories = await categoriesService.GetAllCategories<CategoryViewModel>(sharedDataStore.CurrentUser.Id, searchText);
 
-            foreach (var category in categories)
+            if (!categories.Any())
             {
-                category.CreatedOnDate = dateTimeConverter.GetDate(category.CreatedOn);
+                ErrorMessage = "Категории не найдены";
             }
+            else
+            {
+                foreach (var category in categories)
+                {
+                    category.CreatedOnDate = dateTimeConverter.GetDate(category.CreatedOn);
+                }
 
-            Categories = new(categories);
+                Categories = new(categories);
+                
+                ErrorMessage = null;
+            }
         }
     }
 }

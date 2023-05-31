@@ -23,6 +23,8 @@
 
         private readonly IAccountStore accountStore;
 
+        private readonly ISharedDataStore sharedDataStore;
+
         private readonly IRenavigator teacherMainRenavigator;
 
         private readonly IRenavigator studentMainRenavigator;
@@ -31,6 +33,7 @@
             IUserAccountService userAccountService,
             LoginRequestValidator validator,
             IAccountStore accountStore,
+            ISharedDataStore sharedDataStore,
             IRenavigator studRegisterRenavigator,
             IRenavigator teacherRegisterRenavigator,
             IRenavigator resetPasswordRenavigator,
@@ -40,6 +43,7 @@
             this.userAccountService = userAccountService;
             this.validator = validator;
             this.accountStore = accountStore;
+            this.sharedDataStore = sharedDataStore;
             this.teacherMainRenavigator = teacherMainRenavigator;
             this.studentMainRenavigator = studentMainRenavigator;
 
@@ -117,10 +121,12 @@
             {
                 if (accountStore.CurrentUserRole == UserRole.Teacher)
                 {
+                    sharedDataStore.CurrentUserRole = UserRole.Teacher;
                     teacherMainRenavigator.Renavigate();
                 }
                 else
                 {
+                    sharedDataStore.CurrentUserRole = UserRole.Student;
                     studentMainRenavigator.Renavigate();
                 }
             }

@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -35,8 +36,8 @@
             NavigateAddQuizzesCommand = new RenavigateCommand(addQuizzesRenavigator, ViewDisplayType.AddQuizzes, groupSettingsTypeService);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            DeleteQuizFromCategoryCommandAsync = new ActionCommandAsync(OnDeleteQuizFromCategoryCommandExecutedAsync, CanDeleteQuizFromCategoryCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            DeleteQuizFromCategoryCommandAsync = new ActionCommandAsync(OnDeleteQuizFromCategoryCommandExecutedAsync);
         }
 
         #region Fields and properties
@@ -73,8 +74,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadQuizzesData();
@@ -85,8 +84,6 @@
         #region DeleteQuizFromCategoryCommandAsync
 
         public ICommandAsync DeleteQuizFromCategoryCommandAsync { get; }
-
-        private bool CanDeleteQuizFromCategoryCommandExecute(object p) => true;
 
         private async Task OnDeleteQuizFromCategoryCommandExecutedAsync(object p)
         {
@@ -101,7 +98,10 @@
         {
             var quizzes = await quizzesService.GetQuizzesByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id);
 
-            Quizzes = new(quizzes);
+            if (quizzes.Any()) 
+            {
+                Quizzes = new(quizzes);
+            }
         }
     }
 }

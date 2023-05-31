@@ -1,4 +1,15 @@
-﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
+﻿using QuizHut.BLL.Services.Contracts;
+using QuizHut.Infrastructure.Commands.Base.Contracts;
+using QuizHut.Infrastructure.Commands.Base;
+using QuizHut.Infrastructure.Commands;
+using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+using QuizHut.Infrastructure.Services.Contracts;
+using QuizHut.ViewModels.Base;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
 {
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -45,8 +56,8 @@
             NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            CreateCategoryCommandAsync = new ActionCommandAsync(OnCreateCategoryCommandExecutedAsync, CanCreateCategoryCommandExecute);
-            UpdateCategoryNameCommandAsync = new ActionCommandAsync(OnUpdateCategoryNameCommandExecutedAsync, CanUpdateCategoryNameCommandExecute);
+            CreateCategoryCommandAsync = new ActionCommandAsync(OnCreateCategoryCommandExecutedAsync, CanCreateUpdateCategoryNameCommandExecute);
+            UpdateCategoryNameCommandAsync = new ActionCommandAsync(OnUpdateCategoryNameCommandExecutedAsync, CanCreateUpdateCategoryNameCommandExecute);
             AssignQuizzesToCategoryCommandAsync = new ActionCommandAsync(OnAssignQuizzesToCategoryCommandExecute, CanAssignQuizzesToCategoryCommandExecute);
         }
 
@@ -130,7 +141,17 @@
 
         public ICommandAsync CreateCategoryCommandAsync { get; }
 
-        private bool CanCreateCategoryCommandExecute(object p) => !string.IsNullOrEmpty(CategoryNameToCreate);
+        private bool CanCreateUpdateCategoryNameCommandExecute(object p)
+        {
+            if (string.IsNullOrEmpty(CategoryNameToCreate))
+            {
+                ErrorMessage = "Название категории не может быть пустым";
+                return false;
+            }
+
+            ErrorMessage = null;
+            return true;
+        }
 
         private async Task OnCreateCategoryCommandExecutedAsync(object p)
         {
@@ -144,8 +165,6 @@
         #region UpdateCategoryNameCommandAsync
 
         public ICommandAsync UpdateCategoryNameCommandAsync { get; }
-
-        private bool CanUpdateCategoryNameCommandExecute(object p) => !string.IsNullOrEmpty(CategoryNameToCreate);
 
         private async Task OnUpdateCategoryNameCommandExecutedAsync(object p)
         {
@@ -178,7 +197,7 @@
 
         private async Task LoadQuizzesData()
         {
-            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, sharedDataStore.CurrentUser.Id);
+            var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.CurrentUser.Id);
 
             Quizzes = new(quizzes);
             IsQuizzesEmpty = quizzes.Count == 0;

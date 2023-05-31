@@ -6,6 +6,8 @@
 
         Task<IEnumerable<T>> GetAllResultsByStudentIdAsync<T>(string studentId, string searchCriteria = null, string searchText = null);
 
+        Task<IEnumerable<T>> GetAllResultsByStudentIdAndQuizIdAsync<T>(string studentId, string quizId);
+
         Task<bool> DoesParticipantHasResult(string participantId, string quizId);
 
         Task<string> CreateResultAsync(string studentId, string quizId);

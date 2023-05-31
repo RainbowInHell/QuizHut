@@ -1,28 +1,37 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels
 {
     using System;
+    using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using QuizHut.BLL.Helpers.Contracts;
+    using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
+    using QuizHut.Infrastructure.Commands.Base;
+    using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
 
     class StartQuizViewModel : ViewModel
     {
+        private readonly IResultsService resultsService;
+
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IRenavigator takingQuizRenavigator;
 
         public StartQuizViewModel(
+            IResultsService resultsService,
             ISharedDataStore sharedDataStore,
             IRenavigator takingQuizRenavigator,
             IRenavigator homeRenavigator)
         {
+            this.resultsService = resultsService;
             this.sharedDataStore = sharedDataStore;
             this.takingQuizRenavigator = takingQuizRenavigator;
 
-            NavigateTakingQuizCommand = new ActionCommand(p => OnNavigateTakingQuizCommandExecute());
+            NavigateTakingQuizAsyncCommand = new ActionCommandAsync(OnNavigateTakingQuizAsyncCommandExecute);
             NavigateHomeCommand = new RenavigateCommand(homeRenavigator);
         }
 
@@ -43,12 +52,17 @@
 
         #region NavigationCommands
 
-        public ICommand NavigateTakingQuizCommand { get; }
+        public ICommandAsync NavigateTakingQuizAsyncCommand { get; }
 
-        private void OnNavigateTakingQuizCommandExecute()
+        private async Task OnNavigateTakingQuizAsyncCommandExecute(object p)
         {
             sharedDataStore.RemainingTime = TimeSpan.FromMinutes(CurrentQuiz.Timer);
             
+            if (sharedDataStore.CurrentUserRole == UserRole.Student)
+            {
+                sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(sharedDataStore.CurrentUser.Id, sharedDataStore.QuizToPass.Id);
+            }
+
             takingQuizRenavigator.Renavigate();
         }
 

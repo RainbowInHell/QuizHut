@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Services.Contracts
 {
     using System;
+    using QuizHut.BLL.Helpers.Contracts;
     using System.Windows.Threading;
 
     using QuizHut.DLL.Entities;
@@ -14,6 +15,8 @@
     public interface ISharedDataStore
     {
         ApplicationUser? CurrentUser { get; set; }
+
+        UserRole? CurrentUserRole { get; set; }
 
         GroupListViewModel? SelectedGroup { get; set; }
 

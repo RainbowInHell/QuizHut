@@ -3,11 +3,10 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
-    using System.Windows.Input;
+
     using FontAwesome.Sharp;
 
     using QuizHut.BLL.Services.Contracts;
-    using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
@@ -41,11 +40,11 @@
             this.exporter = exporter;
             this.sharedDataStore = sharedDataStore;
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             AddStudentToTeacherListCommandAsync = new ActionCommandAsync(OnAddStudentToTeacherListCommandExecute, CanAddStudentToTeacherListCommandExecute);
-            DeleteStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnDeleteStudentFromTeacherListCommandExecute, CanDeleteStudentFromTeacherListCommandExecute);
+            DeleteStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnDeleteStudentFromTeacherListCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -98,8 +97,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadStudentsDataAsync();
@@ -111,7 +108,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
@@ -134,6 +131,10 @@
             {
                 await LoadStudentsDataAsync();
             }
+            else
+            {
+                ErrorMessage = "Участник не найден";
+            }
         }
 
         #endregion
@@ -141,8 +142,6 @@
         #region DeleteStudentFromTeacherListCommandAsync
 
         public ICommandAsync DeleteStudentFromTeacherListCommandAsync { get; }
-
-        private bool CanDeleteStudentFromTeacherListCommandExecute(object p) => true;
 
         private async Task OnDeleteStudentFromTeacherListCommandExecute(object p)
         {
@@ -153,13 +152,13 @@
 
         #endregion
 
-        #region ExportDataCommand
+        #region ExportDataAsyncCommand
 
-        public ICommand ExportDataCommand { get; }
+        public ICommandAsync ExportDataAsyncCommand { get; }
 
-        private void OnExportDataCommandExecute(object p)
+        private async Task OnExportDataAsyncExecute(object p)
         {
-            exporter.GenerateExcelReport(Students);
+            await exporter.GenerateExcelReportAsync(Students);
         }
 
         #endregion
@@ -168,7 +167,15 @@
         {
             var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria: searchCriteria, searchText: searchText);
 
-            Students = new(students);
+            if (students.Count == 0)
+            {
+                ErrorMessage = "Участники не найдены";
+            }
+            else
+            {
+                Students = new(students);
+                ErrorMessage = null;
+            }
         }
     }
 }

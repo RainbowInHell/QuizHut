@@ -4,7 +4,7 @@
     {
         Task<IEnumerable<T>> GetAllCategories<T>(string creatorId, string searchText = null);
 
-        Task AssignQuizzesToCategoryAsync(string id, IEnumerable<string> quizzesIds);
+        Task AssignQuizzesToCategoryAsync(string categoryId, IEnumerable<string> quizzesIds);
 
         Task<string> CreateCategoryAsync(string name, string creatorId);
 

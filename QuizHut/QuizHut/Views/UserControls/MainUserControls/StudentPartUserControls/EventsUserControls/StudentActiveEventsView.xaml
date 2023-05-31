@@ -110,12 +110,6 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Событие" IsReadOnly="True" Width="100"
                                     Binding="{Binding Name}"/>
-                    <!--<DataGridTextColumn Header="Викторина" IsReadOnly="True" Width="*"
-                                    Binding="{Binding QuizName}"/>
-                    <DataGridTextColumn Header="Вопросов" IsReadOnly="True" Width="*"
-                                    Binding="{Binding QuestionsCount}"/>
-                    <DataGridTextColumn Header="Таймер" IsReadOnly="True" Width="*"
-                                    Binding="{Binding }"/>-->
                     <DataGridTextColumn Header="Прололжительность" IsReadOnly="True" Width="500"
                                     Binding="{Binding Duration}"/>
                 </DataGrid.Columns>
@@ -129,7 +123,7 @@
                               Style="{StaticResource NestedDataGridStyle1}"
                               CellStyle="{StaticResource NestedDataGridCellStyle1}" 
                               ColumnHeaderStyle="{StaticResource NestedDataGridColumnHeaderStyle1}" 
-                              RowStyle="{StaticResource NestedDataGridRowStyle2}"
+                              RowStyle="{StaticResource NestedDataGridRowStyle1}"
                               Width="900">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Викторина" IsReadOnly="True" Width="*"
@@ -138,6 +132,19 @@
                                                 Binding="{Binding QuestionsCount}" /> 
                                 <DataGridTextColumn Header="Время на прохождение" IsReadOnly="True" Width="*"
                                                 Binding="{Binding TimeToTake}" />
+                                <DataGridTemplateColumn Header="Пройден ли" IsReadOnly="True" Width="100">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Ellipse Width="15" Height="15">
+                                                <Ellipse.Style>
+                                                    <Style TargetType="{x:Type Ellipse}">
+                                                        <Setter Property="Fill" Value="{Binding Color, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                                    </Style>
+                                                </Ellipse.Style>
+                                            </Ellipse>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </DataTemplate>

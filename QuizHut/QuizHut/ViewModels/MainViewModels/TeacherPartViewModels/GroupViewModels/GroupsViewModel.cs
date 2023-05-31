@@ -6,14 +6,12 @@
 
     using FontAwesome.Sharp;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
-    using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
@@ -53,7 +51,7 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
-            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
+            ExportDataCommandAsync = new ActionCommandAsync(OnExportDataCommandAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -145,11 +143,11 @@
 
         #region ExportDataCommand
 
-        public ICommand ExportDataCommand { get; }
+        public ICommandAsync ExportDataCommandAsync { get; }
 
-        private void OnExportDataCommandExecute(object p)
+        private async Task OnExportDataCommandAsyncExecute(object p)
         {
-            exporter.GenerateExcelReport(Groups);
+            await exporter.GenerateExcelReportAsync(Groups);
         }
 
         #endregion

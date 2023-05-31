@@ -34,7 +34,7 @@
             services.AddSingleton<CreateViewModel<TeacherRegistrationViewModel>>(services => () => CreateTeacherRegistrationViewModel(services));
 
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
-            services.AddSingleton<CreateViewModel<StudentHomeViewModel>>(services => () => services.GetRequiredService<StudentHomeViewModel>());
+            services.AddSingleton<CreateViewModel<StudentHomeViewModel>>(services => () => CreateStudentHomeViewModel(services));
 
             services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => CreateUserProfileViewModel(services));
 
@@ -156,6 +156,7 @@
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<LoginRequestValidator>(),
                 services.GetRequiredService<IAccountStore>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
@@ -366,7 +367,6 @@
         {
             return new HomeViewModel(
                 services.GetRequiredService<IQuizzesService>(),
-                services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
@@ -377,6 +377,7 @@
         private static StartQuizViewModel CreateStartQuizViewModel(IServiceProvider services)
         {
             return new StartQuizViewModel(
+                services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
@@ -450,6 +451,16 @@
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<IDateTimeConverter>());
+        }        
+        
+        private static StudentHomeViewModel CreateStudentHomeViewModel(IServiceProvider services)
+        {
+            return new StudentHomeViewModel(
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<IShuffler>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>());
         }
     }
 }

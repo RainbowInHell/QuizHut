@@ -72,7 +72,7 @@
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            //await LoadStudentResultsAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentResultsAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
         }
 
         #endregion

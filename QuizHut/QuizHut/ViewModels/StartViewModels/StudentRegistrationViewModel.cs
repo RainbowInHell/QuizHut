@@ -14,6 +14,7 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.BLL.Helpers.Contracts;
 
     internal class StudentRegistrationViewModel : ViewModel
     {
@@ -104,7 +105,7 @@
                 LastName = LastName
             };
 
-            bool isRegistered = await userAccountService.RegisterAsync(newUser, Password);
+            bool isRegistered = await userAccountService.RegisterAsync(newUser, Password, UserRole.Student);
 
             if (isRegistered)
             {

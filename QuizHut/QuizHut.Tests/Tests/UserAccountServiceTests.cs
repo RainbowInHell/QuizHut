@@ -46,7 +46,7 @@
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act 
-            var result = await userAccountService.RegisterAsync(newUser, password);
+            var result = await userAccountService.RegisterAsync(newUser, password, UserRole.Student);
 
             // Assert 
             Assert.True(result);
@@ -63,7 +63,7 @@
                 .ReturnsAsync(IdentityResult.Failed());
 
             // Act 
-            var result = await userAccountService.RegisterAsync(newUser, password);
+            var result = await userAccountService.RegisterAsync(newUser, password, UserRole.Student);
 
             // Assert 
             Assert.False(result);

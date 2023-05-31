@@ -40,17 +40,26 @@
         {
             var query = repository
                 .AllAsNoTracking()
-                .Include(x => x.Quiz.Event)
-                //.ThenInclude(x => x.Event)
-                .Where(x => x.StudentId == studentId);
+                .Include(x => x.Quiz)
+                .ThenInclude(x => x.Event)
+                .Where(x => x.StudentId == studentId)
+                .To<T>();
 
             if (searchCriteria != null && searchText != null)
             {
-                var filter = expressionBuilder.GetExpression<Result>(searchCriteria, searchText);
+                var filter = expressionBuilder.GetExpression<T>(searchCriteria, searchText);
                 query = query.Where(filter);
             }
 
-            return await query
+            return await query.ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllResultsByStudentIdAndQuizIdAsync<T>(string studentId, string quizId)
+        {
+            return await repository
+                .AllAsNoTracking()
+                .Include(x => x.Quiz)
+                .Where(x => x.StudentId == studentId && x.QuizId == quizId)
                 .To<T>()
                 .ToListAsync();
         }

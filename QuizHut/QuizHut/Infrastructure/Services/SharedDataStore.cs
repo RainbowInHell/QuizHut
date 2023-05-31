@@ -3,6 +3,7 @@
     using System;
     using System.Windows.Threading;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Answers;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
@@ -15,6 +16,8 @@
     public class SharedDataStore : ISharedDataStore
     {
         public ApplicationUser? CurrentUser { get; set; }
+
+        public UserRole? CurrentUserRole { get; set; }
 
         public GroupListViewModel? SelectedGroup { get; set; }
 

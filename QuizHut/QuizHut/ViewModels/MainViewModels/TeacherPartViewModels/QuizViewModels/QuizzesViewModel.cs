@@ -72,7 +72,7 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             DeleteQuizCommandAsync = new ActionCommandAsync(OnDeleteQuizCommandExecutedAsync, CanDeleteQuizCommandExecute);
-            ExportDataCommand = new ActionCommand(OnExportDataCommandExecute);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
 
         #region Fields and properties
@@ -200,11 +200,11 @@
 
         #region ExportDataCommand
 
-        public ICommand ExportDataCommand { get; }
+        public ICommandAsync ExportDataAsyncCommand { get; }
 
-        private void OnExportDataCommandExecute(object p)
+        private async Task OnExportDataAsyncCommandExecute(object p)
         {
-            exporter.GenerateExcelReport(Quizzes);
+            await exporter.GenerateExcelReportAsync(Quizzes);
         }
 
         #endregion

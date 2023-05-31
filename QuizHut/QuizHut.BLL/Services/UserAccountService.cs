@@ -23,13 +23,29 @@
             this.accountStore = accountStore;
         }
 
-        public async Task<bool> RegisterAsync(ApplicationUser newUser, string password)
+        public async Task<bool> RegisterAsync(ApplicationUser newUser, string password, UserRole userRole)
         {
             newUser.UserName = newUser.Email;
 
             var result = await userManager.CreateAsync(newUser, password);
 
-            return result.Succeeded;
+            if (result.Succeeded)
+            {
+                var roleAssignResult = new IdentityResult();
+
+                if (userRole == UserRole.Teacher)
+                {
+                    roleAssignResult = await userManager.AddToRoleAsync(newUser, "Organizer");
+                }
+                else
+                {
+                    roleAssignResult = await userManager.AddToRoleAsync(newUser, "Student");
+                }
+
+                return roleAssignResult.Succeeded;
+            }
+
+            return false;
         }
 
         public async Task<bool> LoginAsync(string email, string password)
@@ -110,6 +126,29 @@
         {
             accountStore.CurrentUserRole = UserRole.Unauthorised;
             accountStore.CurrentUser = null;
+        }
+
+        public async Task<ApplicationUser> UpdateUserAsync(ApplicationUser updatedUser)
+        {
+            var user = await userManager.FindByIdAsync(updatedUser.Id);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            user.FirstName = updatedUser.FirstName;
+            user.LastName = updatedUser.LastName;
+
+            var result = await userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                accountStore.CurrentUser = updatedUser;
+                return user;
+            }
+
+            return null;
         }
 
         public async Task<IdentityResult> DeleteUserAsync(string id)

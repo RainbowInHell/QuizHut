@@ -168,7 +168,9 @@
 
             Events = new(events);
 
-            //await exporter.GenerateComplexResultsExcelReportAsync();
+            await exporter.GenerateComplexResultsExcelReportAsync();
+            await exporter.GenerateTimeSpentOnQuizzesByStudentAsync();
+
         }
     }
 }

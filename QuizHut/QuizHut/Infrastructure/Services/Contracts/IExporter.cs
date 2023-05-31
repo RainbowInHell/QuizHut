@@ -26,12 +26,12 @@
 
         Task GenerateComplexResultsExcelReportAsync();
 
-        void GenerateExcelReport(ObservableCollection<StudentViewModel> students);
+        Task GenerateExcelReportAsync(ObservableCollection<StudentViewModel> students);
 
-        void GenerateExcelReport(ObservableCollection<QuizListViewModel> quizzes);
+        Task GenerateExcelReportAsync(ObservableCollection<QuizListViewModel> quizzes);
 
-        void GenerateExcelReport(ObservableCollection<CategoryViewModel> categories);
+        Task GenerateExcelReportAsync(ObservableCollection<CategoryViewModel> categories);
 
-        void GenerateExcelReport(ObservableCollection<GroupListViewModel> groups);
+        Task GenerateExcelReportAsync(ObservableCollection<GroupListViewModel> groups);
     }
 }

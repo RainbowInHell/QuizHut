@@ -89,7 +89,7 @@
                     Width="320" Height="50"
                     Content="Начать викторину"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"
-                    Command="{Binding NavigateTakingQuizCommand}"/>
+                    Command="{Binding NavigateTakingQuizAsyncCommand}"/>
 
             <Button x:Name="SQVCancelBtn" Grid.Row="7" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"

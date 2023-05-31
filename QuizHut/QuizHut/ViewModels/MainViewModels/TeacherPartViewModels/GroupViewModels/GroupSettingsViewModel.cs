@@ -132,7 +132,7 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentsService.GetAllStudentsByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
+            var students = await studentsService.GetAllStudentsAsync<StudentViewModel>(groupId: sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }

@@ -27,5 +27,4 @@
                 .ForMember(x => x.Quizzes, opt => opt.MapFrom(e => e.Quizzes));
         }
     }
-
 }

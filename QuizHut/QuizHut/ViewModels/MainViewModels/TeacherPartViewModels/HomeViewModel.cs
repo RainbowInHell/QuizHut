@@ -23,8 +23,6 @@
 
         private readonly IQuizzesService quizzesService;
 
-        private readonly IResultsService resultsService;
-
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IShuffler shuffler;
@@ -33,7 +31,6 @@
 
         public HomeViewModel(
             IQuizzesService quizzesService,
-            IResultsService resultsService,
             IShuffler shuffler,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizRenavigator,
@@ -41,7 +38,6 @@
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.quizzesService = quizzesService;
-            this.resultsService = resultsService;
             this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
             this.startQuizRenavigator = startQuizRenavigator;
@@ -60,8 +56,8 @@
             set => Set(ref quizPassword, value);
         }
 
-        private string errorMessage;
-        public string ErrorMessage
+        private string? errorMessage;
+        public string? ErrorMessage
         {
             get => errorMessage;
             set => Set(ref errorMessage, value);
@@ -91,28 +87,12 @@
                 return;
             }
 
-            if (quizToPass.EventId == null) 
-            {
-                ErrorMessage = "Викторина должна быть назначена на событие.";
-                return;
-            }
-
-            var doesParticipantHasResult = await resultsService.DoesParticipantHasResult(sharedDataStore.CurrentUser.Id, quizToPass.Id);
-
-            if (doesParticipantHasResult)
-            {
-                ErrorMessage = "Вы уже участвовали в викторине.";
-                return;
-            }
-
             foreach (var question in quizToPass.Questions)
             {
                 question.Answers = shuffler.Shuffle(question.Answers);
             }
 
             sharedDataStore.QuizToPass = quizToPass;
-
-            sharedDataStore.CurrentResultId = await resultsService.CreateResultAsync(sharedDataStore.CurrentUser.Id, sharedDataStore.QuizToPass.Id);
 
             startQuizRenavigator.Renavigate();
         }

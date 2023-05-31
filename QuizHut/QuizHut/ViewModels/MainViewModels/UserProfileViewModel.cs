@@ -37,6 +37,7 @@
 
             LoadDataCommand = new ActionCommand(OnLoadDataCommandExecuted);
             DeleteUserCommandAsync = new ActionCommandAsync(OnDeleteUserCommandAsyncExecute);
+            UpdateUserCommandAsync = new ActionCommandAsync(OnUpdateUserCommandAsyncExecute, CanUpdateUserCommandAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -60,6 +61,34 @@
         }
 
         #endregion
+
+        #region UpdateUserCommandAsync
+
+        public ICommandAsync UpdateUserCommandAsync { get; }
+
+        private bool CanUpdateUserCommandAsyncExecute(object p)
+        {
+            if (CurrentUser == null || string.IsNullOrEmpty(CurrentUser.FirstName) || string.IsNullOrEmpty(CurrentUser.FirstName)) 
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task OnUpdateUserCommandAsyncExecute(object p)
+        {
+            var result = await userAccountService.UpdateUserAsync(CurrentUser);
+
+            if (result != null)
+            {
+                CurrentUser = result;
+                //LoadUserDataAsync();
+            }
+        }
+
+        #endregion
+
 
         #region DeleteUserCommandAsync
 

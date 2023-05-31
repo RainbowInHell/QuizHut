@@ -120,7 +120,10 @@
 
             TimePassedText = sharedDataStore.RemainingTime.ToString(@"hh\:mm\:ss");
 
-            await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints, sharedDataStore.RemainingTime);
+            if (sharedDataStore.CurrentUserRole == UserRole.Student)
+            {
+                await resultsService.UpdateResultAsync(sharedDataStore.CurrentResultId, receivedPoints, sharedDataStore.RemainingTime);
+            }
 
             sharedDataStore.CurrentQuestion = null;
         }

@@ -118,7 +118,7 @@
                     VerticalAlignment="Center" HorizontalAlignment="Right"
                     Width="80" Height="40" Background="{StaticResource ActiveColor3}"
                     Tag="{StaticResource EditColor1}"
-                    Command="{Binding }"
+                    Command="{Binding UpdateUserCommandAsync}"
                     Content="Изменить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
 
             <!-- Info block -->

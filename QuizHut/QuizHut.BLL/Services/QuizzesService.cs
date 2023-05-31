@@ -72,11 +72,11 @@
         }
 
         //Метод получения всех викторин, которые не назначены на категорию с переданным Id
-        public async Task<IList<T>> GetUnAssignedQuizzesToCategoryByCreatorIdAsync<T>(string categoryId, string creatorId)
+        public async Task<IList<T>> GetUnAssignedQuizzesToCategoryByCreatorIdAsync<T>(string creatorId)
         {
             return await quizRepository
                 .AllAsNoTracking()
-                .Where(x => x.CreatorId == creatorId && x.CategoryId != categoryId)
+                .Where(x => x.CreatorId == creatorId && x.CategoryId == null)
                 .To<T>()
                 .ToListAsync();
         }
