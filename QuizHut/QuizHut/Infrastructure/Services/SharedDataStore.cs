@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.Infrastructure.Services
 {
     using System;
+    using System.Windows.Threading;
 
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Answers;
@@ -36,5 +37,7 @@
         public TimeSpan RemainingTime { get; set; }
         
         public EventSimpleViewModel? EventToView { get; set; }
+
+        public DispatcherTimer DispatcherTimer { get; set; }
     }
 }

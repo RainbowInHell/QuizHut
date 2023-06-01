@@ -257,13 +257,14 @@
                     </Style>
                 </ScrollViewer.Style>
             </ScrollViewer>
-            <!--<StackPanel x:Name="GAVNoStudentsSP"
+            <!-- No students block -->
+            <StackPanel x:Name="GAVNoStudentsSP"
                 Grid.Row="4" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}"
-                           Text="В данный момент нет студентов" FontSize="14" FontWeight="SemiBold"/>
+                           Text="В данный момент нет участников" FontSize="14" FontWeight="SemiBold"/>
                 <Button x:Name="GAVNavigateStudentBtn"
                     Margin="0,5,0,0"
-                    Command="{Binding }"
+                    Command="{Binding NavigateAddStudentCommand}"
                     Foreground="{StaticResource SettingsColor1}"
                     FontWeight="DemiBold"
                     FontSize="14"
@@ -278,23 +279,34 @@
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            
+                            <DataTrigger Binding="{Binding IsStudentsEmpty}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="1">
+                            <DataTrigger Binding="{Binding IsStudentsEmpty}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-            </StackPanel>-->
-            <!--<StackPanel x:Name="GAVNoEventsSP"
+            </StackPanel>
+            <!-- No events block -->
+            <StackPanel x:Name="GAVNoEventsSP"
                 Grid.Row="4" Grid.Column="1">
                 <TextBlock Style="{StaticResource MainTextBlock}"
                            Text="В данный момент нет событий" FontSize="14" FontWeight="SemiBold"/>
                 <Button x:Name="GAVNavigateEventBtn"
                     Margin="0,5,0,0"
-                    Command="{Binding }"
+                    Command="{Binding NavigateAddEventCommand}"
                     Foreground="{StaticResource SettingsColor1}"
                     FontWeight="DemiBold"
                     FontSize="14"
@@ -309,16 +321,26 @@
                 <StackPanel.Style>
                     <Style TargetType="StackPanel">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="0">
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            
+                            <DataTrigger Binding="{Binding IsEventsEmpty}" Value="True">
                                 <Setter Property="Visibility" Value="Visible"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Students.Count}" Value="1">
+                            <DataTrigger Binding="{Binding IsEventsEmpty}" Value="False">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-            </StackPanel>-->
+            </StackPanel>
 
             <!-- User message block -->
             <TextBlock x:Name="GAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"

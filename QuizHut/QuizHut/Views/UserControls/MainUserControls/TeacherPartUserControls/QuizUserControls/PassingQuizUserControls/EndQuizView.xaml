@@ -90,7 +90,7 @@
                     VerticalAlignment="Center" HorizontalAlignment="Center"
                     Content="Покинуть викторину"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="22" FontWeight="SemiBold"
-                    Command="{Binding NavigateHomeCommand}"/>
+                    Command="{Binding QuitQuizCommand}"/>
         </Grid>
     </Border>
 </UserControl>

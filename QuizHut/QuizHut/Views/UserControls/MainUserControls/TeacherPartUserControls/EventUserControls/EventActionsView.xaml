@@ -314,6 +314,92 @@
                 </ScrollViewer.Style>
             </ScrollViewer>
 
+            <!-- No quizzes block -->
+            <StackPanel x:Name="EAVNoQuizzesSP"
+                Grid.Row="4" Grid.Column="1">
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           Text="В данный момент нет викторин" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="EAVNavigateQuizBtn"
+                    Margin="0,5,0,0"
+                    Command="{Binding NavigateAddQuizCommand}"
+                    Foreground="{StaticResource SettingsColor1}"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    Template="{StaticResource ButtonTemplate3}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Хотите добавить?
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsQuizzesEmpty}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsQuizzesEmpty}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>
+            
+            <!-- No groups block -->
+            <StackPanel x:Name="EAVNoGroupsSP"
+                Grid.Row="4" Grid.Column="1">
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           Text="В данный момент нет групп" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="EAVNavigateGroupBtn"
+                    Margin="0,5,0,0"
+                    Command="{Binding NavigateAddGroupCommand}"
+                    Foreground="{StaticResource SettingsColor1}"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    Template="{StaticResource ButtonTemplate3}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Хотите добавить?
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsGroupsEmpty}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsGroupsEmpty}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>
+
             <!-- Add event and Cancel buttons -->
             <Button x:Name="EAVAddEventBtn" Grid.Row="5" Grid.Column="1"
                         Command="{Binding CreateEventCommandAsync}"

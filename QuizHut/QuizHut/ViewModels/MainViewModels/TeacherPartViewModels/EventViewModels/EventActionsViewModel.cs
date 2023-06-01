@@ -34,6 +34,8 @@
             ISharedDataStore sharedDataStore,
             IRenavigator eventRenavigator,
             IRenavigator eventSettingRenavigator,
+            IRenavigator addQuizRenavigator,
+            IRenavigator addGroupRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.eventsService = eventsService;
@@ -46,6 +48,8 @@
 
             NavigateEventCommand = new RenavigateCommand(eventRenavigator);
             NavigateEventSettingsCommand = new RenavigateCommand(eventSettingRenavigator);
+            NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateAddGroupCommand = new RenavigateCommand(addGroupRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             CreateEventCommandAsync = new ActionCommandAsync(OnCreateEventCommandExecutedAsync, CanCreateEventCommandExecute);
@@ -55,6 +59,20 @@
         }
 
         #region Fields and properties
+
+        private bool isQuizzesEmpty;
+        public bool IsQuizzesEmpty
+        {
+            get => isQuizzesEmpty;
+            set => Set(ref isQuizzesEmpty, value);
+        }
+
+        private bool isGroupsEmpty;
+        public bool IsGroupsEmpty
+        {
+            get => isGroupsEmpty;
+            set => Set(ref isGroupsEmpty, value);
+        }
 
         public ViewDisplayType? CurrentViewDisplayType
         {
@@ -130,6 +148,10 @@
         public ICommand NavigateEventCommand { get; }
 
         public ICommand NavigateEventSettingsCommand { get; }
+
+        public ICommand NavigateAddQuizCommand { get; }
+
+        public ICommand NavigateAddGroupCommand { get; }
 
         #endregion
 
@@ -283,6 +305,7 @@
             var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(sharedDataStore.CurrentUser.Id);
 
             Quizzes = new(quizzes);
+            IsQuizzesEmpty = quizzes.Count == 0;
         }
 
         private async Task LoadGroupsData()
@@ -290,6 +313,7 @@
             var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedEvent.Id);
 
             Groups = new(groups);
+            IsGroupsEmpty = groups.Count == 0;
         }
 
         private void ViewDisplayTypeService_StateChanged()

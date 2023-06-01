@@ -110,7 +110,7 @@
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{StaticResource DataGridRowStyle1}" 
-            Grid.Row="4" Width="1000">
+            Grid.Row="4" Width="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"
                                     Binding="{Binding Name}"/>

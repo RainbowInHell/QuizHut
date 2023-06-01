@@ -25,6 +25,7 @@
             IQuizzesService quizzesService,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizzesRenavigator,
+            IRenavigator quizSettingRenavigator,
             IViewDisplayTypeService groupSettingsTypeService)
         {
             this.categoriesService = categoriesService;
@@ -32,6 +33,7 @@
             this.sharedDataStore = sharedDataStore;
 
             NavigateAddQuizzesCommand = new RenavigateCommand(addQuizzesRenavigator, ViewDisplayType.AddQuizzes, groupSettingsTypeService);
+            NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             DeleteQuizFromCategoryCommandAsync = new ActionCommandAsync(OnDeleteQuizFromCategoryCommandExecutedAsync, CanDeleteQuizFromCategoryCommandExecute);
@@ -49,7 +51,11 @@
         private QuizAssignViewModel selectedQuiz;
         public QuizAssignViewModel SelectedQuiz
         {
-            get => selectedQuiz;
+            get
+            {
+                sharedDataStore.SelectedQuiz = new() { Id = selectedQuiz?.Id };
+                return selectedQuiz;
+            }
             set => Set(ref selectedQuiz, value);
         }
 
@@ -58,6 +64,8 @@
         #region NavigationCommands
 
         public ICommand NavigateAddQuizzesCommand { get; }
+
+        public ICommand NavigateQuizSettingsCommand { get; }
 
         #endregion
 

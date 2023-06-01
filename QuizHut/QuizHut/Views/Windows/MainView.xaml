@@ -8,12 +8,13 @@
         xmlns:controls="clr-namespace:QuizHut.Infrastructure.UserControls"
         xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
         
-        Title="MainView" Height="750" Width="1300"
+        Title="QuizzesHut" Height="750" Width="1300"
         
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Icon="\Images\main_icon.ico">
 
     <Border BorderThickness="2"
             CornerRadius="10">

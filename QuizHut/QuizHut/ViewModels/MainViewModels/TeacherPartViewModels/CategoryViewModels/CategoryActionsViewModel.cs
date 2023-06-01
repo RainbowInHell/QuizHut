@@ -30,6 +30,7 @@
             ISharedDataStore sharedDataStore,
             IRenavigator categoryRenavigator,
             IRenavigator categorySettingRenavigator,
+            IRenavigator addQuizRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.categoriesService = categoriesService;
@@ -41,6 +42,7 @@
 
             NavigateCategoryCommand = new RenavigateCommand(categoryRenavigator);
             NavigateCategorySettingsCommand = new RenavigateCommand(categorySettingRenavigator);
+            NavigateAddQuizCommand = new RenavigateCommand(addQuizRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             CreateCategoryCommandAsync = new ActionCommandAsync(OnCreateCategoryCommandExecutedAsync, CanCreateCategoryCommandExecute);
@@ -49,6 +51,13 @@
         }
 
         #region Fields and properties
+
+        private bool isQuizzesEmpty;
+        public bool IsQuizzesEmpty
+        {
+            get => isQuizzesEmpty;
+            set => Set(ref isQuizzesEmpty, value);
+        }
 
         public ViewDisplayType? CurrentViewDisplayType
         {
@@ -91,6 +100,8 @@
         public ICommand NavigateCategoryCommand { get; }
 
         public ICommand NavigateCategorySettingsCommand { get; }
+
+        public ICommand NavigateAddQuizCommand { get; }
 
         #endregion
 
@@ -170,6 +181,7 @@
             var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id, sharedDataStore.CurrentUser.Id);
 
             Quizzes = new(quizzes);
+            IsQuizzesEmpty = quizzes.Count == 0;
         }
 
         private void ViewDisplayTypeService_StateChanged()

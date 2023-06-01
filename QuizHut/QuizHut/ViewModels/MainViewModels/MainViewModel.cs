@@ -14,7 +14,7 @@
     using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
 
-    class MainViewModel : DialogViewModel
+    class MainViewModel : ViewModel
     {
         private readonly IUserAccountService userAccountService;
 

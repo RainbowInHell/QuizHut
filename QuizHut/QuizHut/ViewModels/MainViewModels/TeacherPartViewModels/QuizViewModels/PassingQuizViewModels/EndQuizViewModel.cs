@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -22,19 +23,31 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
+        private readonly IAccountStore accountStore;
+
+        private readonly IRenavigator homeRenavigator;
+
+        private readonly IRenavigator studentHomeRenavigator;
+
         public EndQuizViewModel(
             IQuestionsService questionsService,
             IResultsService resultsService,
             IResultHelper resultHelper,
             ISharedDataStore sharedDataStore,
-            IRenavigator homeRenavigator)
+            IAccountStore accountStore,
+            IRenavigator homeRenavigator,
+            IRenavigator studentHomeRenavigator)
         {
             this.questionsService = questionsService;
             this.resultsService = resultsService;
             this.resultHelper = resultHelper;
             this.sharedDataStore = sharedDataStore;
+            this.accountStore = accountStore;
 
-            NavigateHomeCommand = new RenavigateCommand(homeRenavigator);
+            this.homeRenavigator = homeRenavigator;
+            this.studentHomeRenavigator = studentHomeRenavigator;
+
+            QuitQuizCommand = new ActionCommand(OnQuitQuizCommandExecuted);
 
             CalculateQuizResultCommandAsync = new ActionCommandAsync(OnCalculateQuizResultCommandExecutedAsync, CanCalculateQuizResultCommandExecuteAsync);
         }
@@ -64,9 +77,21 @@
 
         #endregion
 
-        #region NavigationCommands
+        #region QuitQuizCommand
 
-        public ICommand NavigateHomeCommand { get; }
+        public ICommand QuitQuizCommand { get; }
+
+        private void OnQuitQuizCommandExecuted(object p)
+        {
+            if (accountStore.CurrentUserRole == UserRole.Student)
+            {
+                studentHomeRenavigator.Renavigate();
+            }
+            else
+            {
+                homeRenavigator.Renavigate();
+            }
+        }
 
         #endregion
 

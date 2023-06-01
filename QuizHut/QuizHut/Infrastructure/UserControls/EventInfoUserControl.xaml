@@ -31,7 +31,7 @@
                        Text="Название:" Margin="0,0,0,5"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="50" FontSize="16" MaxLength="50"
-                     Tag="Введите название группы..."
+                     Tag="Введите название события..."
                      Text="{Binding EventNameToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 

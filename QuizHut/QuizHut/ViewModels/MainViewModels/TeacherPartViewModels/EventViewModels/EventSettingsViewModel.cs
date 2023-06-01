@@ -31,6 +31,7 @@
             IRenavigator addQuizzesRenavigator,
             IRenavigator addGroupsRenavigator,
             IRenavigator quizSettingRenavigator,
+            IRenavigator groupSettingRenavigator,
             IViewDisplayTypeService groupSettingsTypeService)
         {
             this.eventsService = eventsService;
@@ -41,6 +42,7 @@
             NavigateAddQuizzesCommand = new RenavigateCommand(addQuizzesRenavigator, ViewDisplayType.AddQuizzes, groupSettingsTypeService);
             NavigateAddGroupsCommand = new RenavigateCommand(addGroupsRenavigator, ViewDisplayType.AddGroups, groupSettingsTypeService);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
+            NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             SendEmailWithQuizPasswordCommandAsync = new ActionCommandAsync(OnSendEmailWithQuizPasswordCommandExecuteAsync, CanSendEmailWithQuizPasswordCommandExecute);
@@ -55,6 +57,8 @@
         public ICommand NavigateAddGroupsCommand { get; }
 
         public ICommand NavigateQuizSettingsCommand { get; }
+
+        public ICommand NavigateGroupSettingsCommand { get; }
 
         #endregion
 
@@ -88,7 +92,11 @@
         private GroupAssignViewModel selectedGroup;
         public GroupAssignViewModel SelectedGroup
         {
-            get => selectedGroup;
+            get
+            {
+                sharedDataStore.SelectedGroup = new() { Id = selectedGroup?.Id };
+                return selectedGroup;
+            }
             set => Set(ref selectedGroup, value);
         }
 

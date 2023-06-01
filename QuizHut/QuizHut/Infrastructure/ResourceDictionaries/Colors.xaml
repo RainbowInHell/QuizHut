@@ -56,7 +56,7 @@
     <SolidColorBrush x:Key="Color8" Color="#FA240A"/>
     <SolidColorBrush x:Key="Color9" Color="#C122C9"/>
     <SolidColorBrush x:Key="Color10" Color="#0A1A3C"/>
-    <SolidColorBrush x:Key="Color11" Color="#B62F69"/>
+    <SolidColorBrush x:Key="Color11" Color="#7C2FB6"/>
     <SolidColorBrush x:Key="Color12" Color="#789516"/>
     <SolidColorBrush x:Key="Color13" Color="#6169EA"/>
 

@@ -181,6 +181,46 @@
                 </ScrollViewer.Style>
             </ScrollViewer>
 
+            <!-- No quizzes block -->
+            <StackPanel x:Name="CAVNoQuizzesSP"
+                Grid.Row="4" Grid.Column="1">
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           Text="В данный момент нет викторин" FontSize="14" FontWeight="SemiBold"/>
+                <Button x:Name="CAVNavigateQuizBtn"
+                    Margin="0,5,0,0"
+                    Command="{Binding NavigateAddQuizCommand}"
+                    Foreground="{StaticResource SettingsColor1}"
+                    FontWeight="DemiBold"
+                    FontSize="14"
+                    HorizontalAlignment="Left"
+                    Template="{StaticResource ButtonTemplate3}">
+                    <Button.Content>
+                        <TextBlock Style="{StaticResource TextBlockStyle1}">
+                        Хотите добавить?
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding IsQuizzesEmpty}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsQuizzesEmpty}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+            </StackPanel>
+
             <!-- User message block -->
             <TextBlock x:Name="СAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="5" Grid.Column="1"

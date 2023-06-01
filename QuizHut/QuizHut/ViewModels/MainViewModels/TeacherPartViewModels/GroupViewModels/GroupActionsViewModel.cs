@@ -35,6 +35,8 @@
             ISharedDataStore sharedDataStore,
             IRenavigator groupRenavigator,
             IRenavigator groupSettingRenavigator,
+            IRenavigator addStudentRenavigator,
+            IRenavigator addEventRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.groupsService = groupsService;
@@ -47,6 +49,8 @@
 
             NavigateGroupCommand = new RenavigateCommand(groupRenavigator);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
+            NavigateAddStudentCommand = new RenavigateCommand(addStudentRenavigator,ViewDisplayType.Create, viewDisplayTypeService);
+            NavigateAddEventCommand = new RenavigateCommand(addEventRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
             CreateGroupCommandAsync = new ActionCommandAsync(OnCreateGroupCommandExecutedAsync, CanCreateGroupCommandExecute);
@@ -56,6 +60,20 @@
         }
 
         #region Fields and properties
+
+        private bool isStudentEmpty;
+        public bool IsStudentsEmpty
+        {
+            get => isStudentEmpty;
+            set => Set(ref isStudentEmpty, value);
+        }
+
+        private bool isEventEmpty;
+        public bool IsEventsEmpty
+        {
+            get => isEventEmpty;
+            set => Set(ref isEventEmpty, value);
+        }
 
         public ViewDisplayType? CurrentViewDisplayType
         {
@@ -105,6 +123,10 @@
         public ICommand NavigateGroupCommand { get; }
 
         public ICommand NavigateGroupSettingsCommand { get; }
+
+        public ICommand NavigateAddStudentCommand { get; }
+
+        public ICommand NavigateAddEventCommand { get; }
 
         #endregion
 
@@ -214,6 +236,7 @@
             var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
+            IsStudentsEmpty = students.Count == 0;
         }
 
         private async Task LoadEventsData()
@@ -221,6 +244,7 @@
             var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, sharedDataStore.CurrentUser.Id);
 
             Events = new(events);
+            IsEventsEmpty = events.Count == 0;
         }
 
         private void ViewDisplayTypeService_StateChanged()

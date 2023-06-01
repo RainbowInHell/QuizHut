@@ -13,7 +13,7 @@
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <Border x:Name="MVSHGoToTakeQuizBlock"
                 CornerRadius="15" 
-                Width="450" Height="250" Margin="300,175,0,0"
+                Width="450" Height="250" Margin="100,100,0,0"
                 Background="{StaticResource MainViewBackground4}">
 
             <Border.Effect>

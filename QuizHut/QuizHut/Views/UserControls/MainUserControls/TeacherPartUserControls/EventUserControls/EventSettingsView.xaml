@@ -132,7 +132,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                     <Button Style="{StaticResource GridControlButton}" 
-                                        Background="{StaticResource SettingsColor1}">
+                                        Background="{StaticResource SettingsColor1}"
+                                        Command="{Binding DataContext.NavigateGroupSettingsCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
                                         <fa:IconImage Icon="Eye" Style="{StaticResource GridButtonIcon}"/>
                                     </Button>
                                     <Button Style="{StaticResource GridControlButton}" 

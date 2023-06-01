@@ -652,4 +652,10 @@
         <Setter Property="Margin" Value="0 4 0 0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
+    <Style x:Key="NestedDataGridRowStyle2" TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="{StaticResource IconColor3Light}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="0 4 0 0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
 </ResourceDictionary>

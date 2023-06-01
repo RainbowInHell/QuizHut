@@ -34,13 +34,13 @@
         <!-- Search -->
         <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,650,0"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,700,0"
                    Text="Поиск по:"/>
         <ComboBox  x:Name="MVQSearchByCMB"
                   Grid.Row="0"
-                  HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="100" Height="35" Margin="0,0,540,0"
-                  FontFamily="{StaticResource Manrope}" FontSize="16"
+                  HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                  Width="150" Height="35" Margin="0,0,540,0"
+                  FontFamily="{StaticResource Manrope}" FontSize="14"
                   ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
                   SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"/>
         <TextBox  x:Name="MVQSearchTB"
@@ -79,12 +79,12 @@
                    Text="Фильтр по категории:"/>
         <ComboBox  x:Name="MVQFilterCMB"
                   Grid.Row="2"
-                  HorizontalAlignment="Right" VerticalAlignment="Center"
+                  HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center"
                   Width="300" Height="35" Margin="0,0,160,0"
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
                   DisplayMemberPath="Name"
-                  FontFamily="{StaticResource Manrope}" FontSize="16"/>
+                  FontFamily="{StaticResource Manrope}" FontSize="14"/>
         <Button Grid.Row="2"
                 Command="{Binding SearchCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
@@ -136,7 +136,7 @@
                   CellStyle="{StaticResource DataGridCellStyle1}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
                   RowStyle="{StaticResource DataGridRowStyle1}" 
-                  Grid.Row="4" Width="1000">
+                  Grid.Row="4" Width="auto">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*"

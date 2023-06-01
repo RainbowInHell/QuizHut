@@ -40,15 +40,16 @@
         <!-- FilterBy textBox-->
         <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,640,0"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,690,0"
                    Text="Поиск по:"/>
         <ComboBox Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="100" Height="35"
+                  Width="150" Height="35"
                   Margin="0,0,535,0"
                   Tag="Критерий..."
                   ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
-                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}">
+                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"
+                  FontFamily="{StaticResource Manrope}" FontSize="14">
         </ComboBox>
         <TextBox  x:Name="MVSSearchTB"
                   Style="{StaticResource textBoxStyle}"
@@ -92,8 +93,8 @@
         <!-- Add email textBox -->
         <TextBox x:Name="MVSAddStudTB" Grid.Row="2"
                  Style="{StaticResource textBoxStyle}"
-                 Height="40" Width="500" Margin="150,0,0,0"
-                 HorizontalAlignment="Left" VerticalAlignment="Center"
+                 Height="40" Width="500" Margin="0,0,140,0"
+                 HorizontalAlignment="Right" VerticalAlignment="Center"
                  Tag="Email"
                  Text="{Binding StudentEmailToAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <Button Grid.Row="2"
@@ -116,7 +117,7 @@
         <DataGrid x:Name="MVSStudentDataGrid" ItemsSource="{Binding Students}"
                   SelectedItem="{Binding SelectedStudent}"
                   Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
-            Grid.Row="4" Margin="0,0,0,20" Width="1000">
+            Grid.Row="4" Margin="0,0,0,20" Width="auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
                                     Binding="{Binding FullName}"/>

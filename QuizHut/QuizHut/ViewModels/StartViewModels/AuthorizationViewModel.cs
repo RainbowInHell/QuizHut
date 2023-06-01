@@ -15,7 +15,7 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.BLL.Helpers.Contracts;
 
-    internal class AuthorizationViewModel : DialogViewModel
+    internal class AuthorizationViewModel : ViewModel
     {
         private readonly IUserAccountService userAccountService;
 

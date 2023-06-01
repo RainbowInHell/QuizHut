@@ -83,13 +83,13 @@
                 Background="{StaticResource Color2}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Style="{StaticResource MainTextBlock}"
-                       Text="Студенты"
+                       Text="Участники"
                        Margin="80,0,0,0"/>
                 <Button x:Name="GSVStudentsAddBtn"
                         Template="{StaticResource MainButtonTemplate2}" 
                         Background="{StaticResource menuOverColor}"
                         Width="150" Height="30"
-                        Margin="550,0,0,0"
+                        Margin="545,0,0,0"
                         Command="{Binding NavigateAddStudentsCommand}">
                     <StackPanel Orientation="Horizontal">
                         <fa:IconImage Icon="CirclePlus" Foreground="{StaticResource SecondaryFontColor}" Width="20" Height="20" Margin="0,0,5,0"/>

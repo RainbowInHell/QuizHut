@@ -74,7 +74,7 @@
         <!-- Set timer -->
         <StackPanel Grid.Row="4">
             <TextBlock Style="{StaticResource MainTextBlock}" FontSize="15" FontWeight="Bold"
-                       Text="Задайте таймер:" Margin="0,0,0,2"/>
+                       Text="Задайте таймер (минуты):" Margin="0,0,0,2"/>
             <TextBox Style="{StaticResource textBoxStyle}"
                      Height="40" FontSize="16" MaxLength="50"
                      Tag="Минуты..."

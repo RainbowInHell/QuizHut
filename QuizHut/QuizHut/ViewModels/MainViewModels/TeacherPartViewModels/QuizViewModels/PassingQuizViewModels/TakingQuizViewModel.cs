@@ -13,8 +13,6 @@
 
     class TakingQuizViewModel : ViewModel
     {
-        private DispatcherTimer timer;
-
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IRenavigator nextQuestionRenavigator;
@@ -40,17 +38,17 @@
             GoToPreviousQuestionCommand = new ActionCommand(OnGoToPreviousQuestionCommandExecuted, CanGoToPreviousQuestionCommandExecute);
             StopTimerAndGoToEndQuizCommand = new ActionCommand(OnStopTimerAndGoToEndQuizCommandExecuted);
 
-            timer = new DispatcherTimer
-            {
-                Interval = TimeSpan.FromSeconds(1)
-            };
-            timer.Tick += TimerTick;
-
-            StartQuizTimerCommand = new ActionCommand(p => StartQuizTimer());
-            StartQuizTimerCommand.Execute(this);
+            SetupTimer();
         }
 
         #region Fields and properties
+
+        private DispatcherTimer timer;
+        public DispatcherTimer Timer
+        {
+            get => timer;
+            set => Set(ref timer, value);
+        }
 
         private ObservableCollection<AttemptedQuizQuestionViewModel> questions;
         public ObservableCollection<AttemptedQuizQuestionViewModel> Questions
@@ -125,26 +123,19 @@
 
         private void OnStopTimerAndGoToEndQuizCommandExecuted(object p)
         {
-            timer.Stop();
-
-            sharedDataStore.RemainingTime = TimeSpan.FromMinutes(sharedDataStore.QuizToPass.Timer) - timeRemaining;
-
-            endQuizRenavigator.Renavigate();
+            EndQuiz();
         }
 
         #endregion
 
         #region TimerCommand
 
-        public ICommand StartQuizTimerCommand { get; }
-
         private void TimerTick(object sender, EventArgs e)
         {
             timeRemaining = timeRemaining.Subtract(TimeSpan.FromSeconds(1));
             if (timeRemaining <= TimeSpan.Zero)
             {
-                timer.Stop();
-                endQuizRenavigator.Renavigate();
+                EndQuiz();
             }
             else
             {
@@ -152,11 +143,39 @@
             }
         }
 
-        private void StartQuizTimer()
+        private void StartTimer()
         {
-            timeRemaining = sharedDataStore.RemainingTime.Subtract(TimeSpan.FromMilliseconds(500));
+            timeRemaining = sharedDataStore.RemainingTime;
 
-            timer.Start();
+            Timer.Start();
+        }
+
+        private void EndQuiz()
+        {
+            Timer.Stop();
+
+            sharedDataStore.RemainingTime = TimeSpan.FromMinutes(sharedDataStore.QuizToPass.Timer) - timeRemaining;
+
+            endQuizRenavigator.Renavigate();
+        }
+
+        private void SetupTimer()
+        {
+            if (sharedDataStore.DispatcherTimer == null)
+            {
+                sharedDataStore.DispatcherTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(1)
+                };
+            }
+
+            Timer = sharedDataStore.DispatcherTimer;
+            Timer.Tick += TimerTick;
+
+            if (sharedDataStore.RemainingTime > TimeSpan.Zero)
+            {
+                StartTimer();
+            }
         }
 
         #endregion
