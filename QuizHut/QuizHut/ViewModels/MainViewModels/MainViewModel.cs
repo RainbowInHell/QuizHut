@@ -45,6 +45,7 @@
             NavigationCommand.Execute(ViewType.Authorization);
             
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
+            ShowHelpCommand = new ActionCommand(OnShowHelpCommandExecuted);
         }
 
         #region Fields and properties
@@ -104,6 +105,15 @@
         {
             userAccountService.Logout();
             NavigationCommand.Execute(ViewType.Authorization);
+        }
+
+        #endregion
+
+        #region ShowHelpCommand
+        public ICommand ShowHelpCommand { get; }
+        private void OnShowHelpCommandExecuted(object p)
+        {
+            System.Windows.Forms.Help.ShowHelp(null, @"QuizzesHutHelp.chm");
         }
 
         #endregion

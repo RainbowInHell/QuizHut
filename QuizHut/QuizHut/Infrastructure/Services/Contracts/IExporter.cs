@@ -7,6 +7,7 @@
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Infrastructure.EntityViewModels.Results;
 
     public interface IExporter
     {
@@ -33,5 +34,7 @@
         Task GenerateExcelReportAsync(ObservableCollection<CategoryViewModel> categories);
 
         Task GenerateExcelReportAsync(ObservableCollection<GroupListViewModel> groups);
+
+        Task GenerateExcelReportAsync(ObservableCollection<StudentResultViewModel> studentResults, string studentName);
     }
 }

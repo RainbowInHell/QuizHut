@@ -175,6 +175,8 @@
         private static TeacherRegistrationViewModel CreateTeacherRegistrationViewModel(IServiceProvider services)
         {
             return new TeacherRegistrationViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<RegisterRequestValidator>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>());
         }
@@ -441,7 +443,8 @@
         {
             return new OwnResultsViewModel(
                 services.GetRequiredService<IResultsService>(),
-                services.GetRequiredService<ISharedDataStore>());
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IExporter>());
         }       
         
         private static StudentActiveEventsViewModel CreateStudentActiveEventsViewModel(IServiceProvider services)

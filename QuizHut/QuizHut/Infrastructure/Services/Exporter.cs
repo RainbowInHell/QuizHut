@@ -19,6 +19,7 @@
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Infrastructure.EntityViewModels.Results;
     using QuizHut.Infrastructure.Services.Contracts;
 
     public class Exporter : IExporter
@@ -686,6 +687,56 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
                 await package.SaveAsAsync(new FileInfo(@"D:\GroupsReport.xlsx"));
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<StudentResultViewModel> studentResults, string studentName)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add($"Результаты {studentName}");
+
+                worksheet.Cells[1, 1].Value = "Участник:";
+                worksheet.Cells[1, 2].Value = studentName;
+
+                worksheet.Cells[2, 1].Value = "Дата экспорта:";
+                worksheet.Cells[2, 2].Value = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+                worksheet.Cells[4, 1, 4, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[4, 1, 4, 5].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[4, 1, 4, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[4, 1, 4, 5].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[4, 1, 4, 5].Style.Font.Bold = true;
+
+                worksheet.Cells[4, 1].Value = "Событие";
+                worksheet.Cells[4, 2].Value = "Викторина";
+                worksheet.Cells[4, 3].Value = "Дата";
+                worksheet.Cells[4, 4].Value = "Время прохождения";
+                worksheet.Cells[4, 5].Value = "Баллы";
+
+                int rowIndex = 5;
+                foreach (var result in studentResults)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = result.EventName;
+                    worksheet.Cells[rowIndex, 2].Value = result.QuizName;
+                    worksheet.Cells[rowIndex, 3].Value = result.Date;
+                    worksheet.Cells[rowIndex, 4].Value = result.TimeSpent;
+                    worksheet.Cells[rowIndex, 5].Value = result.Score;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                string saveDate = DateTime.Now.ToString("dd_MM__HH_mm");
+                await package.SaveAsAsync(new FileInfo($@"D:\{studentName}_OwnResultReport_{saveDate}.xlsx"));
             }
         }
 

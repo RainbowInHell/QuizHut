@@ -30,13 +30,17 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        public OwnResultsViewModel(IResultsService resultsService, ISharedDataStore sharedDataStore)
+        private readonly IExporter exporter;
+
+        public OwnResultsViewModel(IResultsService resultsService, ISharedDataStore sharedDataStore, IExporter exporter)
         {
             this.resultsService = resultsService;
             this.sharedDataStore = sharedDataStore;
+            this.exporter = exporter;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
 
         #region Fields and properties
@@ -84,6 +88,18 @@
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadStudentResultsAsync();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommandAsync ExportDataAsyncCommand { get; }
+
+        private async Task OnExportDataAsyncCommandExecute(object p)
+        {
+            string fullName = $"{sharedDataStore.CurrentUser.LastName} {sharedDataStore.CurrentUser.FirstName}";
+            await exporter.GenerateExcelReportAsync(studentResults, fullName);
         }
 
         #endregion

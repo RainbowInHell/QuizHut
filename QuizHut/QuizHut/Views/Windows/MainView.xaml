@@ -152,10 +152,11 @@
                     <!-- Help button -->
                     <Button x:Name="MVHelpBtn"
                             HorizontalAlignment="Right"
-                                Margin="20"
-                                Grid.Row="3"
-                                Style="{StaticResource UserOptionButton}"
-                                Tag="{StaticResource Color6}">
+                            Margin="20"
+                            Grid.Row="3"
+                            Style="{StaticResource UserOptionButton}"
+                            Tag="{StaticResource Color6}"
+                            Command="{Binding ShowHelpCommand}">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Справка" Style="{StaticResource UserOptionButtonText}"/>
                             <fa:IconImage Icon="CircleInfo"
