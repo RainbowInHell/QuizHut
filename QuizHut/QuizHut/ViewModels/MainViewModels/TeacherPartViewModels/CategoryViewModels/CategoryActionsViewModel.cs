@@ -1,22 +1,10 @@
-﻿using QuizHut.BLL.Services.Contracts;
-using QuizHut.Infrastructure.Commands.Base.Contracts;
-using QuizHut.Infrastructure.Commands.Base;
-using QuizHut.Infrastructure.Commands;
-using QuizHut.Infrastructure.EntityViewModels.Quizzes;
-using QuizHut.Infrastructure.Services.Contracts;
-using QuizHut.ViewModels.Base;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Input;
-
-namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
+﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
 {
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -90,18 +78,25 @@ namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewMo
             set => Set(ref categoryNameToCreate, value);
         }
 
-        public ObservableCollection<QuizAssignViewModel> quizzes;
+        public ObservableCollection<QuizAssignViewModel> quizzes = new ();
         public ObservableCollection<QuizAssignViewModel> Quizzes
         {
             get => quizzes;
             set => Set(ref quizzes, value);
         }
 
-        private string? errorMessage;
-        public string? ErrorMessage
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
+        }
+
+        private string? assignQuizziesErrorMessage;
+        public string? AssignQuizziesErrorMessage
+        {
+            get => assignQuizziesErrorMessage;
+            set => Set(ref assignQuizziesErrorMessage, value);
         }
 
         #endregion
@@ -145,11 +140,11 @@ namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewMo
         {
             if (string.IsNullOrEmpty(CategoryNameToCreate))
             {
-                ErrorMessage = "Название категории не может быть пустым";
+                CreateUpdateErrorMessage = "Название категории не может быть пустым";
                 return false;
             }
 
-            ErrorMessage = null;
+            CreateUpdateErrorMessage = null;
             return true;
         }
 
@@ -179,7 +174,16 @@ namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewMo
 
         public ICommandAsync AssignQuizzesToCategoryCommandAsync { get; }
 
-        private bool CanAssignQuizzesToCategoryCommandExecute(object p) => true;
+        private bool CanAssignQuizzesToCategoryCommandExecute(object p)
+        {
+            //if (!Quizzes.Where(x => x.IsAssigned).Any())
+            //{
+            //    AssignQuizziesErrorMessage = "Выбери";
+            //    return false;
+            //}
+
+            return true;
+        }
 
         private async Task OnAssignQuizzesToCategoryCommandExecute(object p)
         {
@@ -199,8 +203,12 @@ namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewMo
         {
             var quizzes = await quizzesService.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(sharedDataStore.CurrentUser.Id);
 
-            Quizzes = new(quizzes);
-            IsQuizzesEmpty = quizzes.Count == 0;
+            IsQuizzesEmpty = !quizzes.Any();
+
+            if (!IsQuizzesEmpty)
+            {
+                Quizzes = new(quizzes);
+            }
         }
 
         private void ViewDisplayTypeService_StateChanged()

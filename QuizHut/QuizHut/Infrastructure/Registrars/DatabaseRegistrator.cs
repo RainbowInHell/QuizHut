@@ -16,7 +16,6 @@
     {
         public static IServiceCollection AddDatabase(this IServiceCollection services)
         {
-            //setx QH_DATABASE_CONNECTION_STRING "Server=localhost;Database=QuizHut;Uid=root;Pwd=matvey2003;"
             const string QH_DATABASE_CONNECTION_STRING = "QH_DATABASE_CONNECTION_STRING";
 
             var connectionString = Environment.GetEnvironmentVariable(QH_DATABASE_CONNECTION_STRING, EnvironmentVariableTarget.User);
@@ -46,7 +45,7 @@
                         PrepareSchemaIfNecessary = true,
                         DashboardJobListLimit = 50000,
                         TransactionTimeout = TimeSpan.FromMinutes(1),
-                        TablesPrefix = "T_Hangfire",
+                        TablesPrefix = "Hangfire",
                     })).WithJobExpirationTimeout(TimeSpan.FromHours(24 * 7));
             }).AddHangfireServer(option =>
             {

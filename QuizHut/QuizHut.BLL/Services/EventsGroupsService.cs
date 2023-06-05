@@ -17,12 +17,8 @@
 
         public async Task CreateEventGroupAsync(string eventId, string groupId)
         {
-            var deletedEventGroup = await repository
-                .All()
-                .Where(x => x.GroupId == groupId && x.EventId == eventId)
-                .FirstOrDefaultAsync();
-
             var eventGroup = new EventGroup() { EventId = eventId, GroupId = groupId };
+         
             await repository.AddAsync(eventGroup);
 
             await repository.SaveChangesAsync();

@@ -40,9 +40,9 @@
             NavigateEditQuestionCommand = new RenavigateCommand(editQuestionRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateEditAnswerCommand = new RenavigateCommand(editAnswerRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            DeleteQuestionCommandAsync = new ActionCommandAsync(OnDeleteQuestionCommandExecutedAsync, CanDeleteQuestionCommandExecute);
-            DeleteAnswerCommandAsync = new ActionCommandAsync(OnDeleteAnswerCommandExecutedAsync, CanDeleteAnswerCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            DeleteQuestionCommandAsync = new ActionCommandAsync(OnDeleteQuestionCommandExecutedAsync);
+            DeleteAnswerCommandAsync = new ActionCommandAsync(OnDeleteAnswerCommandExecutedAsync);
         }
 
         #region Fields and properties
@@ -94,8 +94,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadQuestionsData();
@@ -106,8 +104,6 @@
         #region DeleteQuestionCommandAsync
 
         public ICommandAsync DeleteQuestionCommandAsync { get; }
-
-        private bool CanDeleteQuestionCommandExecute(object p) => true;
 
         private async Task OnDeleteQuestionCommandExecutedAsync(object p)
         {
@@ -121,8 +117,6 @@
         #region DeleteAnswerCommandAsync
 
         public ICommandAsync DeleteAnswerCommandAsync { get; }
-
-        private bool CanDeleteAnswerCommandExecute(object p) => true;
 
         private async Task OnDeleteAnswerCommandExecutedAsync(object p)
         {

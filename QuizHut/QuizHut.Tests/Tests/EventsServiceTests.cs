@@ -31,7 +31,7 @@
                 Name = "Second Event",
                 ActivationDateAndTime = secondEventDate,
                 DurationOfActivity = TimeSpan.FromMinutes(30),
-                Status = Status.Pending.ToString(),
+                Status = Status.Pending,
             };
 
             //Act

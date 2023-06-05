@@ -12,6 +12,7 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.DLL.Common;
 
     class EventSettingsViewModel : ViewModel
     {
@@ -44,23 +45,11 @@
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            SendEmailWithQuizPasswordCommandAsync = new ActionCommandAsync(OnSendEmailWithQuizPasswordCommandExecuteAsync, CanSendEmailWithQuizPasswordCommandExecute);
-            DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync, CanDeleteEventFromGroupCommandExecute);
-            DeleteQuizFromEventCommandAsync = new ActionCommandAsync(OnDeleteQuizFromEventCommandExecutedAsync, CanDeleteQuizFromEventCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            SendEmailWithQuizPasswordCommandAsync = new ActionCommandAsync(OnSendEmailWithQuizPasswordCommandExecuteAsync);
+            DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync);
+            DeleteQuizFromEventCommandAsync = new ActionCommandAsync(OnDeleteQuizFromEventCommandExecutedAsync);
         }
-
-        #region NavigationCommands
-
-        public ICommand NavigateAddQuizzesCommand { get; }
-
-        public ICommand NavigateAddGroupsCommand { get; }
-
-        public ICommand NavigateQuizSettingsCommand { get; }
-
-        public ICommand NavigateGroupSettingsCommand { get; }
-
-        #endregion
 
         #region Fields and properties
 
@@ -102,11 +91,21 @@
 
         #endregion
 
+        #region NavigationCommands
+
+        public ICommand NavigateAddQuizzesCommand { get; }
+
+        public ICommand NavigateAddGroupsCommand { get; }
+
+        public ICommand NavigateQuizSettingsCommand { get; }
+
+        public ICommand NavigateGroupSettingsCommand { get; }
+
+        #endregion
+
         #region LoadDataCommandAsync
 
         public ICommandAsync LoadDataCommandAsync { get; }
-
-        private bool CanLoadDataCommandExecute(object p) => true;
 
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
@@ -121,8 +120,6 @@
 
         public ICommandAsync SendEmailWithQuizPasswordCommandAsync { get; }
 
-        private bool CanSendEmailWithQuizPasswordCommandExecute(object p) => true;
-
         private async Task OnSendEmailWithQuizPasswordCommandExecuteAsync(object p)
         {
             await eventsService.SendEmailsToEventGroups(sharedDataStore.SelectedEvent.Id, SelectedQuiz.Id);
@@ -134,10 +131,14 @@
 
         public ICommandAsync DeleteEventFromGroupCommandAsync { get; }
 
-        private bool CanDeleteEventFromGroupCommandExecute(object p) => true;
-
         private async Task OnDeleteEventFromGroupCommandExecutedAsync(object p)
         {
+            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+            {
+                // TODO: Error message for user
+                return;
+            }
+
             await groupsService.DeleteEventFromGroupAsync(SelectedGroup.Id, sharedDataStore.SelectedEvent.Id);
 
             await LoadGroupsData();
@@ -149,10 +150,14 @@
 
         public ICommandAsync DeleteQuizFromEventCommandAsync { get; }
 
-        private bool CanDeleteQuizFromEventCommandExecute(object p) => true;
-
         private async Task OnDeleteQuizFromEventCommandExecutedAsync(object p)
         {
+            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+            {
+                // TODO: Error message for user
+                return;
+            }
+
             await eventsService.DeleteQuizFromEventAsync(sharedDataStore.SelectedEvent.Id, SelectedQuiz.Id);
 
             await LoadQuizzesData();

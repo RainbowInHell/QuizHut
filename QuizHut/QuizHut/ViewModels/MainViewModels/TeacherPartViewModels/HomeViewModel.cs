@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -25,20 +26,16 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        private readonly IShuffler shuffler;
-
         private readonly IRenavigator startQuizRenavigator;
 
         public HomeViewModel(
             IQuizzesService quizzesService,
-            IShuffler shuffler,
             ISharedDataStore sharedDataStore,
             IRenavigator addQuizRenavigator,
             IRenavigator startQuizRenavigator,
             IViewDisplayTypeService viewDisplayTypeService)
         {
             this.quizzesService = quizzesService;
-            this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
             this.startQuizRenavigator = startQuizRenavigator;
 
@@ -85,11 +82,6 @@
             {
                 ErrorMessage = "Нет викторины с таким паролем.";
                 return;
-            }
-
-            foreach (var question in quizToPass.Questions)
-            {
-                question.Answers = shuffler.Shuffle(question.Answers);
             }
 
             sharedDataStore.QuizToPass = quizToPass;

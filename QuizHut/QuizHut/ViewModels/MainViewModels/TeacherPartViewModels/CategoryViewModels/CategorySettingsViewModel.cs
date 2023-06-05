@@ -98,10 +98,7 @@
         {
             var quizzes = await quizzesService.GetQuizzesByCategoryIdAsync<QuizAssignViewModel>(sharedDataStore.SelectedCategory.Id);
 
-            if (quizzes.Any()) 
-            {
-                Quizzes = new(quizzes);
-            }
+            Quizzes = new(quizzes);
         }
     }
 }

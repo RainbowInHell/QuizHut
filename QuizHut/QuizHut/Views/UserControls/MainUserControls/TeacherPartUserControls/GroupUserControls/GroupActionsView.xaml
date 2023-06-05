@@ -132,7 +132,7 @@
             </TextBlock>
 
             <TextBlock Grid.Row="2" Grid.Column="1"
-                       Text="Назначение событий для {название группы}">
+                       Text="Назначение событий">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
                         <Style.Triggers>

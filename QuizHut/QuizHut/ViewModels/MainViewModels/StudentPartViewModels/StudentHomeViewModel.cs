@@ -80,7 +80,7 @@
                 return;
             }
 
-            if (quizToPass.Event.Id == null)
+            if (quizToPass.Event == null)
             {
                 ErrorMessage = "Викторина должна быть назначена на событие.";
                 return;
@@ -88,7 +88,7 @@
 
             if (quizToPass.Event.Status != Status.Active)
             {
-                ErrorMessage = "Событие еще не активно.";
+                ErrorMessage = "Событие недоступно.";
                 return;
             }
 
@@ -99,13 +99,6 @@
                 ErrorMessage = "Вы уже участвовали в викторине.";
                 return;
             }
-
-            foreach (var question in quizToPass.Questions)
-            {
-                question.Answers = shuffler.Shuffle(question.Answers);
-            }
-
-            sharedDataStore.QuizToPass = quizToPass;
 
             startQuizRenavigator.Renavigate();
         }

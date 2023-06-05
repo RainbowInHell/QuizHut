@@ -165,7 +165,7 @@
 
         private async Task LoadStudentsDataAsync(string searchCriteria = null, string searchText = null)
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria: searchCriteria, searchText: searchText);
+            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
 
             if (students.Count == 0)
             {

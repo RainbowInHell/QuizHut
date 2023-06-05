@@ -86,7 +86,7 @@
                   DisplayMemberPath="Name"
                   FontFamily="{StaticResource Manrope}" FontSize="14"/>
         <Button Grid.Row="2"
-                Command="{Binding SearchCommandAsync}"
+                Command="{Binding FilterByCategoryCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
                 Width="140" Height="35"

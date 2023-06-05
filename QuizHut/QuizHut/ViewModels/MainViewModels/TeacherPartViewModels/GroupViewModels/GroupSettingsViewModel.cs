@@ -40,9 +40,9 @@
             NavigateAddStudentsCommand = new RenavigateCommand(addStudentRenavigator, ViewDisplayType.AddStudents, groupSettingsTypeService);
             NavigateAddEventsCommand = new RenavigateCommand(addEventsRenavigator, ViewDisplayType.AddEvents, groupSettingsTypeService);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            DeleteStudentFromGroupCommandAsync = new ActionCommandAsync(OnDeleteStudentFromGroupCommandExecutedAsync, CanDeleteStudentFromGroupCommandExecute);
-            DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync, CanDeleteEventFromGroupCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            DeleteStudentFromGroupCommandAsync = new ActionCommandAsync(OnDeleteStudentFromGroupCommandExecutedAsync);
+            DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync);
         }
 
         #region Fields and properties
@@ -89,8 +89,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadEventsData();
@@ -103,8 +101,6 @@
         #region DeleteStudentFromGroupCommandAsync
 
         public ICommandAsync DeleteStudentFromGroupCommandAsync { get; }
-
-        private bool CanDeleteStudentFromGroupCommandExecute(object p) => true;
 
         private async Task OnDeleteStudentFromGroupCommandExecutedAsync(object p)
         {
@@ -119,8 +115,6 @@
 
         public ICommandAsync DeleteEventFromGroupCommandAsync { get; }
 
-        private bool CanDeleteEventFromGroupCommandExecute(object p) => true;
-
         private async Task OnDeleteEventFromGroupCommandExecutedAsync(object p)
         {
             await groupsService.DeleteEventFromGroupAsync(sharedDataStore.SelectedGroup.Id, SelectedEvent.Id);
@@ -132,7 +126,7 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentsService.GetAllStudentsAsync<StudentViewModel>(groupId: sharedDataStore.SelectedGroup.Id);
+            var students = await studentsService.GetAllStudentsByGroupIdAsync<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
         }

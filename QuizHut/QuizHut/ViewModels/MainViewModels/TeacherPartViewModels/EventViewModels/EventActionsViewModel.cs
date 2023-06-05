@@ -5,8 +5,8 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
+    using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
     using QuizHut.Infrastructure.Commands.Base.Contracts;
@@ -52,8 +52,8 @@
             NavigateAddGroupCommand = new RenavigateCommand(addGroupRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            CreateEventCommandAsync = new ActionCommandAsync(OnCreateEventCommandExecutedAsync, CanCreateEventCommandExecute);
-            UpdateEventCommandAsync = new ActionCommandAsync(OnUpdateEventCommandExecutedAsync, CanUpdateEventCommandExecute);
+            CreateEventCommandAsync = new ActionCommandAsync(OnCreateEventCommandExecutedAsync, CanCreateUpdateEventCommandExecute);
+            UpdateEventCommandAsync = new ActionCommandAsync(OnUpdateEventCommandExecutedAsync, CanCreateUpdateEventCommandExecute);
             AssignQuizToEventCommandAsync = new ActionCommandAsync(OnAssignQuizToEventCommandExecute, CanAssignQuizToEventCommandExecute);
             AssignGroupsToEventCommandAsync = new ActionCommandAsync(OnAssignGroupsToEventCommandExecute, CanAssignGroupsToEventCommandExecute);
         }
@@ -161,9 +161,9 @@
 
         private bool CanLoadDataCommandExecute(object p)
         {
-            if (CurrentViewDisplayType != ViewDisplayType.Create
-                &&
-                CurrentViewDisplayType != ViewDisplayType.Edit)
+            if (CurrentViewDisplayType == ViewDisplayType.AddQuizzes
+                ||
+                CurrentViewDisplayType == ViewDisplayType.AddGroups)
             {
                 return true;
             }
@@ -190,11 +190,11 @@
 
         public ICommandAsync CreateEventCommandAsync { get; }
 
-        private bool CanCreateEventCommandExecute(object p)
+        private bool CanCreateUpdateEventCommandExecute(object p)
         {
-            if (!string.IsNullOrEmpty(EventNameToCreate) ||
-                !string.IsNullOrEmpty(EventActivationDate) ||
-                !string.IsNullOrEmpty(EventAvaliableFrom) ||
+            if (!string.IsNullOrEmpty(EventNameToCreate) &&
+                !string.IsNullOrEmpty(EventActivationDate) &&
+                !string.IsNullOrEmpty(EventAvaliableFrom) &&
                 !string.IsNullOrEmpty(EventAvaliableTo))
             {
                 return true;
@@ -205,7 +205,7 @@
 
         private async Task OnCreateEventCommandExecutedAsync(object p)
         {
-            var timeErrorMessage = eventsService.GetTimeErrorMessage(EventAvaliableFrom, eventAvaliableTo, EventActivationDate);
+            var timeErrorMessage = eventsService.GetTimeErrorMessage(EventAvaliableFrom, EventAvaliableTo, EventActivationDate);
 
             if (timeErrorMessage != null)
             {
@@ -224,22 +224,12 @@
 
         public ICommandAsync UpdateEventCommandAsync { get; }
 
-        private bool CanUpdateEventCommandExecute(object p)
-        {
-            if (!string.IsNullOrEmpty(EventNameToCreate) ||
-                !string.IsNullOrEmpty(EventActivationDate) ||
-                !string.IsNullOrEmpty(EventAvaliableFrom) ||
-                !string.IsNullOrEmpty(EventAvaliableTo))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private async Task OnUpdateEventCommandExecutedAsync(object p)
         {
-            var timeErrorMessage = eventsService.GetTimeErrorMessage(EventAvaliableFrom, eventAvaliableTo, EventActivationDate);
+            var timeParts = sharedDataStore.SelectedEvent.Duration.Split('-');
+            var oldEventAvaliableFrom = timeParts[0].Trim();
+
+            var timeErrorMessage = eventsService.GetTimeErrorMessage(EventAvaliableFrom, EventAvaliableTo, EventActivationDate, oldEventAvaliableFrom);
 
             if (timeErrorMessage != null)
             {
@@ -262,9 +252,15 @@
 
         private async Task OnAssignQuizToEventCommandExecute(object p)
         {
+            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+            {
+                // TODO: Error message for user
+                return;
+            }
+
             var selectedQuizes = Quizzes.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
 
-            if (selectedQuizes.Count() == 0)
+            if (!selectedQuizes.Any())
             {
                 // TODO: Error message for user
                 return;
@@ -285,9 +281,15 @@
 
         private async Task OnAssignGroupsToEventCommandExecute(object p)
         {
+            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+            {
+                // TODO: Error message for user
+                return;
+            }
+
             var selectedGroupIds = Groups.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
 
-            if (selectedGroupIds.Count() == 0)
+            if (!selectedGroupIds.Any())
             {
                 // TODO: Error message for user
                 return;

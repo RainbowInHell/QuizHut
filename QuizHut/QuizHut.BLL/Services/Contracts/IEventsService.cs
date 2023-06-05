@@ -32,6 +32,6 @@
 
         Task SendEmailsToEventGroups(string eventId, string quizId);
 
-        string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate);
+        string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate, string oldActiveFrom = null);
     }
 }

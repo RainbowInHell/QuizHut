@@ -57,9 +57,9 @@
             NavigateEditEventCommand = new RenavigateCommand(eventActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateEventSettingsCommand = new RenavigateCommand(eventSettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            DeleteEventCommandAsync = new ActionCommandAsync(OnDeleteEventCommandExecutedAsync, CanDeleteEventCommandExecute);
+            DeleteEventCommandAsync = new ActionCommandAsync(OnDeleteEventCommandExecutedAsync);
         }
 
         #region FieldsAndProperties
@@ -119,8 +119,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadEventsData();
@@ -132,7 +130,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
@@ -144,8 +142,6 @@
         #region DeleteEventCommandAsync
 
         public ICommandAsync DeleteEventCommandAsync { get; }
-
-        private bool CanDeleteEventCommandExecute(object p) => true;
 
         private async Task OnDeleteEventCommandExecutedAsync(object p)
         {
@@ -168,9 +164,8 @@
 
             Events = new(events);
 
-            await exporter.GenerateComplexResultsExcelReportAsync();
-            await exporter.GenerateTimeSpentOnQuizzesByStudentAsync();
-
+            //await exporter.GenerateComplexResultsExcelReportAsync();
+            //await exporter.GenerateTimeSpentOnQuizzesByStudentAsync();
         }
     }
 }

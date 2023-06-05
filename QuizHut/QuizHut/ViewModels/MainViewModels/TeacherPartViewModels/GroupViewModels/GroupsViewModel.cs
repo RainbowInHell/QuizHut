@@ -48,9 +48,9 @@
             NavigateEditGroupCommand = new RenavigateCommand(groupActionsRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync, CanDeleteGroupCommandExecute);
+            DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync);
             ExportDataCommandAsync = new ActionCommandAsync(OnExportDataCommandAsyncExecute);
         }
 
@@ -104,8 +104,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadGroupsData();
@@ -117,7 +115,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
@@ -129,8 +127,6 @@
         #region DeleteGroupCommandAsync
 
         public ICommandAsync DeleteGroupCommandAsync { get; }
-
-        private bool CanDeleteGroupCommandExecute(object p) => true;
 
         private async Task OnDeleteGroupCommandExecutedAsync(object p)
         {

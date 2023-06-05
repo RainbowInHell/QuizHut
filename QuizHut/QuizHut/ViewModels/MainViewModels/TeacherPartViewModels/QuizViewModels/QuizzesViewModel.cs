@@ -7,7 +7,6 @@
 
     using FontAwesome.Sharp;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
@@ -15,7 +14,6 @@
     using QuizHut.Infrastructure.Commands.Base.Contracts;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
-    using QuizHut.Infrastructure.Services;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
@@ -69,9 +67,10 @@
             NavigateEditQuizCommand = new RenavigateCommand(editQuizRenavigator, ViewDisplayType.Edit, viewDisplayTypeService);
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingRenavigator);
 
-            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
+            LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
-            DeleteQuizCommandAsync = new ActionCommandAsync(OnDeleteQuizCommandExecutedAsync, CanDeleteQuizCommandExecute);
+            FilterByCategoryCommandAsync = new ActionCommandAsync(OnFilterByCategoryCommandAsyncExecute, CanFilterByCategoryCommandAsyncExecute);
+            DeleteQuizCommandAsync = new ActionCommandAsync(OnDeleteQuizCommandExecutedAsync);
             ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
 
@@ -148,8 +147,6 @@
 
         public ICommandAsync LoadDataCommandAsync { get; }
 
-        private bool CanLoadDataCommandExecute(object p) => true;
-
         private async Task OnLoadDataCommandExecutedAsync(object p)
         {
             await LoadQuizzesData();
@@ -163,15 +160,24 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => true;
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            var selectedCategoryId = SelectedCategory is null ? null : SelectedCategory.Id;
+            await LoadQuizzesData(SearchCriteriasInEnglish[SearchCriteria] ?? null, SearchText);
+        }
 
-            var searchCriteria = SearchCriteria is null ? null : SearchCriteriasInEnglish[SearchCriteria];
+        #endregion
 
-            await LoadQuizzesData(searchCriteria, SearchText, selectedCategoryId);
+        #region FilterByCategoryCommandAsync
+
+        public ICommandAsync FilterByCategoryCommandAsync { get; }
+
+        private bool CanFilterByCategoryCommandAsyncExecute(object p) => SelectedCategory != null;
+
+        private async Task OnFilterByCategoryCommandAsyncExecute(object p)
+        {
+            await LoadQuizzesData(SearchCriteriasInEnglish[SearchCriteria] ?? null, SearchText, SelectedCategory.Id);
 
             SelectedCategory = null;
         }
@@ -181,8 +187,6 @@
         #region DeleteQuizCommandAsync
 
         public ICommandAsync DeleteQuizCommandAsync { get; }
-
-        private bool CanDeleteQuizCommandExecute(object p) => true;
 
         private async Task OnDeleteQuizCommandExecutedAsync(object p)
         {

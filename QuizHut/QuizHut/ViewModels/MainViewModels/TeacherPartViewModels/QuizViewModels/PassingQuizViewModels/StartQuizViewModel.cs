@@ -17,17 +17,21 @@
     {
         private readonly IResultsService resultsService;
 
+        private readonly IShuffler shuffler;
+
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IRenavigator takingQuizRenavigator;
 
         public StartQuizViewModel(
             IResultsService resultsService,
+            IShuffler shuffler,
             ISharedDataStore sharedDataStore,
             IRenavigator takingQuizRenavigator,
             IRenavigator homeRenavigator)
         {
             this.resultsService = resultsService;
+            this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
             this.takingQuizRenavigator = takingQuizRenavigator;
 
@@ -56,6 +60,11 @@
 
         private async Task OnNavigateTakingQuizAsyncCommandExecute(object p)
         {
+            foreach (var question in sharedDataStore.QuizToPass.Questions)
+            {
+                question.Answers = shuffler.Shuffle(question.Answers);
+            }
+
             sharedDataStore.RemainingTime = TimeSpan.FromMinutes(CurrentQuiz.Timer);
             
             if (sharedDataStore.CurrentUserRole == UserRole.Student)

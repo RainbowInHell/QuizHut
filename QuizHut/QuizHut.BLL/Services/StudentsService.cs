@@ -24,7 +24,6 @@
 
         public async Task<IList<T>> GetAllStudentsAsync<T>(
             string teacherId = null,
-            string groupId = null,
             string searchCriteria = null,
             string searchText = null)
         {
@@ -35,11 +34,6 @@
                 query = query.Where(x => x.TeacherId == teacherId);
             }
 
-            if (groupId != null)
-            {
-                query = query.Where(x => !x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId));
-            }
-
             if (searchCriteria != null && searchText != null)
             {
                 var filter = expressionBuilder.GetExpression<ApplicationUser>(searchCriteria, searchText);
@@ -47,6 +41,24 @@
             }
 
             return await query
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllStudentsByGroupIdAsync<T>(string groupId)
+        {
+            return await userRepository
+                .AllAsNoTracking()
+                .Where(x => x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId))
+                .To<T>()
+                .ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllStudentsUnAssignedToGroup<T>(string groupId)
+        {
+            return await userRepository
+                .AllAsNoTracking()
+                .Where(x => !x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId))
                 .To<T>()
                 .ToListAsync();
         }

@@ -13,11 +13,6 @@
 
     using TimeZoneConverter;
 
-    public class Anonimis
-    {
-        public string Name { get; set; }
-    }
-
     public class EventsService : IEventsService
     {
         private readonly IRepository<Event> repository;
@@ -95,8 +90,8 @@
         }
 
         public async Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(
-            Status status, 
-            string groupId, 
+            Status status,
+            string groupId,
             string creatorId = null)
         {
             var query = repository
@@ -183,14 +178,14 @@
                 @event.Quizzes.Add(quiz);
                 @event.Status = GetStatus(@event.ActivationDateAndTime, @event.DurationOfActivity, quizId);
 
-                repository.Update(@event);
-                await repository.SaveChangesAsync();
-
-                if (@event.Status != Status.Ended)
+                if (@event.Quizzes.Count == 1)
                 {
                     await SheduleStatusChangeAsync(@event.ActivationDateAndTime, @event.DurationOfActivity, @event.Id, @event.Status);
                 }
             }
+
+            repository.Update(@event);
+            await repository.SaveChangesAsync();
         }
 
         public async Task AssignGroupsToEventAsync(IList<string> groupIds, string eventId)
@@ -202,10 +197,10 @@
         }
 
         public async Task<string> CreateEventAsync(
-            string name, 
-            string activationDate, 
-            string activeFrom, 
-            string activeTo, 
+            string name,
+            string activationDate,
+            string activeFrom,
+            string activeTo,
             string creatorId)
         {
             var activationDateAndTime = GetActivationDateAndTimeUtc(activationDate, activeFrom);
@@ -245,7 +240,7 @@
             repository.Update(@event);
             await repository.SaveChangesAsync();
 
-            if (@event.Quizzes.Count > 0)
+            if (@event.Quizzes.Any())
             {
                 await SheduleStatusChangeAsync(activationDateAndTime, durationOfActivity, id, @event.Status);
             }
@@ -265,11 +260,8 @@
 
             if (!@event.Quizzes.Any())
             {
-                if (@event.Status == Status.Active)
-                {
-                    @event.Status = Status.Pending;
-                    await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
-                }
+                @event.Status = Status.Pending;
+                await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
             }
 
             repository.Update(@event);
@@ -284,15 +276,8 @@
                 .Where(x => x.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            foreach (var quiz in @event.Quizzes)
-            {
-                quiz.EventId = null;
-                quizRepository.Update(quiz);
-            }
-
             repository.Delete(@event);
 
-            await quizRepository.SaveChangesAsync();
             await repository.SaveChangesAsync();
         }
 
@@ -326,7 +311,7 @@
             }
         }
 
-        public string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate)
+        public string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate, string oldActiveFrom = null)
         {
             var zone = TimeZoneInfo.FindSystemTimeZoneById(TZConvert.IanaToWindows(DateTimeConverter.TimeZoneIana));
             var userLocalTimeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, zone);
@@ -346,7 +331,7 @@
             var nowMins = timeNow.Minutes;
             var invalidStartingTime = startHours < nowHours || (startHours == nowHours && startMins < nowMins);
 
-            if (userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
+            if (activeFrom != oldActiveFrom && userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
             {
                 return "Invalid Starting Time";
             }
@@ -404,15 +389,6 @@
             }
 
             return Status.Ended;
-        }
-
-        private async Task<string[]> GetStudentsNamesByEventIdAsync(string id)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .SelectMany(x => x.EventsGroups.SelectMany(x => x.Group.StudentsGroups.Select(x => x.Student.UserName)))
-                .ToArrayAsync();
         }
 
         private async Task SheduleStatusChangeAsync(

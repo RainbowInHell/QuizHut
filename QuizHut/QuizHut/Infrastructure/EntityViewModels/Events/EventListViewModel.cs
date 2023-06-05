@@ -2,12 +2,11 @@
 {
     using System;
 
-    using AutoMapper;
-
     using QuizHut.BLL.MapperConfig.Contracts;
+    using QuizHut.DLL.Common;
     using QuizHut.DLL.Entities;
 
-    public class EventListViewModel : IMapFrom<Event>, IHaveCustomMappings
+    public class EventListViewModel : IMapFrom<Event>
     {
         public string Id { get; set; }
 
@@ -21,14 +20,6 @@
 
         public string Duration { get; set; }
 
-        public string Status { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Event, EventListViewModel>()
-                .ForMember(
-                    x => x.Status,
-                    opt => opt.MapFrom(x => x.Status.ToString()));
-        }
+        public Status Status { get; set; }
     }
 }

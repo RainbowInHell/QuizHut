@@ -85,8 +85,8 @@
         public async Task<IList<T>> GetUnAssignedQuizzesToEventAsync<T>(string creatorId = null)
         {
             var query = quizRepository
-                   .AllAsNoTracking()
-                   .Where(x => x.EventId == null);
+                .AllAsNoTracking()
+                .Where(x => x.CreatorId == creatorId && x.EventId == null);
 
             if (creatorId != null)
             {

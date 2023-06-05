@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.Infrastructure.Commands;
     using QuizHut.Infrastructure.Commands.Base;
@@ -35,7 +34,7 @@
             NavigateQuizCommand = new RenavigateCommand(quizRenavigator);
             NavigateCreateQuestionCommand = new RenavigateCommand(questionCreateRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
-            RefreshQuizPasswordCommand = new ActionCommand(OnRefreshQuizPasswordCommandExecutedAsync, CanRefreshQuizPasswordCommandExecute);
+            RefreshQuizPasswordCommand = new ActionCommand(OnRefreshQuizPasswordCommandExecutedAsync);
             CreateQuizCommandAsync = new ActionCommandAsync(OnCreateQuizCommandExecutedAsync, CanCreateQuizCommandExecute);
             UpdateQuizCommandAsync = new ActionCommandAsync(OnUpdateQuizCommandExecutedAsync, CanUpdateQuizCommandExecute);
         }
@@ -110,8 +109,6 @@
         #region RefreshQuizPasswordCommand
 
         public ICommand RefreshQuizPasswordCommand { get; }
-
-        private bool CanRefreshQuizPasswordCommandExecute(object p) => true;
 
         private void OnRefreshQuizPasswordCommandExecutedAsync(object p)
         {

@@ -29,7 +29,7 @@
             this.nextQuestionRenavigator = nextQuestionRenavigator;
             this.endQuizRenavigator = endQuizRenavigator;
 
-            Questions = new(sharedDataStore.QuizToPass.Questions);
+            Questions = new(sharedDataStore.QuizToPass.Questions.OrderBy(x => x.Number));
             CurrentQuestion = sharedDataStore.CurrentQuestion ?? Questions.First();
 
             NavigateEndQuizCommand = new RenavigateCommand(endQuizRenavigator);

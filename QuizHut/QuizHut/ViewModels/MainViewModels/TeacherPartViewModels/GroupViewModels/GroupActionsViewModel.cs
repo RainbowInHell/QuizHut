@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using System.Windows.Input;
 
-    using QuizHut.BLL.Helpers;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Common;
     using QuizHut.Infrastructure.Commands;
@@ -136,9 +135,9 @@
 
         private bool CanLoadDataCommandExecute(object p)
         {
-            if (CurrentViewDisplayType != ViewDisplayType.Create
-                &&
-                CurrentViewDisplayType != ViewDisplayType.Edit)
+            if (CurrentViewDisplayType == ViewDisplayType.AddEvents
+                ||
+                CurrentViewDisplayType == ViewDisplayType.AddStudents)
             {
                 return true;
             }
@@ -233,7 +232,7 @@
 
         private async Task LoadStudentsData()
         {
-            var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedGroup.Id);
+            var students = await studentService.GetAllStudentsUnAssignedToGroup<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
 
             Students = new(students);
             IsStudentsEmpty = students.Count == 0;
