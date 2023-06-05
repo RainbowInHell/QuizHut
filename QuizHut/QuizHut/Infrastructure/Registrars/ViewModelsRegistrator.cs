@@ -12,13 +12,16 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Factory;
     using QuizHut.ViewModels.MainViewModels;
-    using QuizHut.ViewModels.MainViewModels.CategoryViewModels;
-    using QuizHut.ViewModels.MainViewModels.EventViewModels;
-    using QuizHut.ViewModels.MainViewModels.GroupViewModels;
-    using QuizHut.ViewModels.MainViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.StudentPartViewModels.EventsViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.EventViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels;
+    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.ResultViewModels;
     using QuizHut.ViewModels.StartViewModels;
-    using QuizHut.ViewModels.MainViewModels.QuizViewModels.PassingQuizViewModels;
-    using QuizHut.ViewModels.MainViewModels.ResultViewModels;
 
     public static class ViewModelsRegistrator
     {
@@ -30,16 +33,23 @@
             services.AddSingleton<CreateViewModel<TeacherRegistrationViewModel>>(services => () => CreateTeacherRegistrationViewModel(services));
 
             services.AddSingleton<CreateViewModel<HomeViewModel>>(services => () => CreateHomeViewModel(services));
-            services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => services.GetRequiredService<UserProfileViewModel>());
+            services.AddSingleton<CreateViewModel<StudentHomeViewModel>>(services => () => CreateStudentHomeViewModel(services));
 
+            services.AddSingleton<CreateViewModel<UserProfileViewModel>>(services => () => CreateUserProfileViewModel(services));
+
+            services.AddSingleton<CreateViewModel<ActiveEndedEventsViewModel>>(services => () => CreateActiveEndedEventsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsViewModel>>(services => () => CreateResultsViewModel(services));
-            services.AddSingleton<CreateViewModel<ActiveEventsViewModel>>(services => () => CreateActiveEventsViewModel(services));
-            services.AddSingleton<CreateViewModel<EndedEventsViewModel>>(services => () => CreateEndedEventsViewModel(services));
             services.AddSingleton<CreateViewModel<ResultsForEventViewModel>>(services => () => CreateResultsForEventViewModel(services));
+
+            services.AddSingleton<CreateViewModel<OwnResultsViewModel>>(services => () => CreateOwnResultsViewModel(services));
 
             services.AddSingleton<CreateViewModel<EventsViewModel>>(services => () => CreateEventsViewModel(services));
             services.AddSingleton<CreateViewModel<EventActionsViewModel>>(services => () => CreateEventActionsViewModel(services));
             services.AddSingleton<CreateViewModel<EventSettingsViewModel>>(services => () => CreateEventSettingsViewModel(services));
+
+            services.AddSingleton<CreateViewModel<StudentActiveEventsViewModel>>(services => () => CreateStudentActiveEventsViewModel(services));
+            services.AddSingleton<CreateViewModel<StudentPendingEventsViewModel>>(services => () => CreateStudentPendingEventsViewModel(services));
+            services.AddSingleton<CreateViewModel<StudentEndedEventsViewModel>>(services => () => CreateStudentEndedEventsViewModel(services));
 
             services.AddSingleton<CreateViewModel<GroupsViewModel>>(services => () => CreateGroupsViewModel(services));
             services.AddSingleton<CreateViewModel<GroupActionsViewModel>>(services => () => CreateGroupActionsViewModel(services));
@@ -58,20 +68,28 @@
             services.AddSingleton<CreateViewModel<TakingQuizViewModel>>(services => () => CreateTakingQuizViewModel(services));
             services.AddSingleton<CreateViewModel<EndQuizViewModel>>(services => () => CreateEndQuizViewModel(services));
             
-            services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => services.GetRequiredService<StudentsViewModel>());
+            services.AddSingleton<CreateViewModel<StudentsViewModel>>(services => () => CreateStudentsViewModel(services));
 
             services.AddTransient<MainViewModel>();
+
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<StudentHomeViewModel>();
+
             services.AddTransient<UserProfileViewModel>();
 
             services.AddTransient<ResultsViewModel>();
-            services.AddTransient<ActiveEventsViewModel>();
-            services.AddTransient<EndedEventsViewModel>();
+            services.AddTransient<ActiveEndedEventsViewModel>();
             services.AddTransient<ResultsForEventViewModel>();
+
+            services.AddTransient<OwnResultsViewModel>();
 
             services.AddTransient<EventsViewModel>();
             services.AddTransient<EventActionsViewModel>();
             services.AddTransient<EventSettingsViewModel>();
+
+            services.AddTransient<StudentActiveEventsViewModel>();
+            services.AddTransient<StudentPendingEventsViewModel>();
+            services.AddTransient<StudentEndedEventsViewModel>();
 
             services.AddTransient<GroupsViewModel>();
             services.AddTransient<GroupActionsViewModel>();
@@ -99,6 +117,7 @@
             services.AddSingleton<ViewModelRenavigate<TeacherRegistrationViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResetPasswordViewModel>>();
             services.AddSingleton<ViewModelRenavigate<HomeViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<StudentHomeViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<EventsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<EventActionsViewModel>>();
@@ -118,13 +137,14 @@
             services.AddSingleton<ViewModelRenavigate<EndQuizViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<ResultsViewModel>>();
-            services.AddSingleton<ViewModelRenavigate<ActiveEventsViewModel>>();
-            services.AddSingleton<ViewModelRenavigate<EndedEventsViewModel>>();
+            services.AddSingleton<ViewModelRenavigate<ActiveEndedEventsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<ResultsForEventViewModel>>();
 
             services.AddSingleton<ViewModelRenavigate<CategoriesViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategoryActionsViewModel>>();
             services.AddSingleton<ViewModelRenavigate<CategorySettingsViewModel>>();
+
+            services.AddSingleton<ViewModelRenavigate<StudentsViewModel>>();
 
             return services;
         }
@@ -134,10 +154,13 @@
             return new AuthorizationViewModel(
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<LoginRequestValidator>(),
+                services.GetRequiredService<IAccountStore>(),
+                services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<StudentRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<TeacherRegistrationViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResetPasswordViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentHomeViewModel>>());
         }
 
         private static ResetPasswordViewModel CreateResetPasswordViewModel(IServiceProvider services)
@@ -170,6 +193,7 @@
             return new GroupsViewModel(
                 services.GetRequiredService<IGroupsService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
@@ -185,6 +209,8 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -205,6 +231,7 @@
             return new CategoriesViewModel(
                 services.GetRequiredService<ICategoriesService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
@@ -218,6 +245,7 @@
                 services.GetRequiredService<IQuizzesService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -229,6 +257,7 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<CategoriesViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<CategorySettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<CategoryActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -253,6 +282,8 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<EventsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventSettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupActionsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -266,6 +297,7 @@
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<EventActionsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<QuizSettingsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<GroupSettingsViewModel>>(),
                 services.GetRequiredService<IViewDisplayTypeService>());
         }
 
@@ -276,6 +308,7 @@
                 services.GetRequiredService<ICategoriesService>(),
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuestionViewModel>>(),
@@ -333,8 +366,6 @@
         {
             return new HomeViewModel(
                 services.GetRequiredService<IQuizzesService>(),
-                services.GetRequiredService<IResultsService>(),
-                services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AddEditQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>(),
@@ -344,6 +375,8 @@
         private static StartQuizViewModel CreateStartQuizViewModel(IServiceProvider services)
         {
             return new StartQuizViewModel(
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
@@ -364,7 +397,9 @@
                 services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<IResultHelper>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+                services.GetRequiredService<IAccountStore>(),
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentHomeViewModel>>());
         }
 
         private static ResultsViewModel CreateResultsViewModel(IServiceProvider services)
@@ -372,23 +407,9 @@
             return new ResultsViewModel(
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<ViewModelRenavigate<ActiveEventsViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<EndedEventsViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>());
-        }
-
-        private static ActiveEventsViewModel CreateActiveEventsViewModel(IServiceProvider services)
-        {
-            return new ActiveEventsViewModel(
-                services.GetRequiredService<IEventsService>(),
-                services.GetRequiredService<ISharedDataStore>());
-        }
-
-        private static EndedEventsViewModel CreateEndedEventsViewModel(IServiceProvider services)
-        {
-            return new EndedEventsViewModel(
-                services.GetRequiredService<IEventsService>(),
-                services.GetRequiredService<ISharedDataStore>());
+                services.GetRequiredService<ViewModelRenavigate<ActiveEndedEventsViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
         }
 
         private static ResultsForEventViewModel CreateResultsForEventViewModel(IServiceProvider services)
@@ -396,6 +417,73 @@
             return new ResultsForEventViewModel(
                 services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<IGroupsService>(),
+                services.GetRequiredService<ISharedDataStore>());
+        }        
+        
+        private static ActiveEndedEventsViewModel CreateActiveEndedEventsViewModel(IServiceProvider services)
+        {
+            return new ActiveEndedEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>(),
+                services.GetRequiredService<IViewDisplayTypeService>());
+        }       
+        
+        private static UserProfileViewModel CreateUserProfileViewModel(IServiceProvider services)
+        {
+            return new UserProfileViewModel(
+                services.GetRequiredService<IUserAccountService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
+        }       
+        
+        private static OwnResultsViewModel CreateOwnResultsViewModel(IServiceProvider services)
+        {
+            return new OwnResultsViewModel(
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<ISharedDataStore>());
+        }       
+        
+        private static StudentActiveEventsViewModel CreateStudentActiveEventsViewModel(IServiceProvider services)
+        {
+            return new StudentActiveEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IDateTimeConverter>());
+        }
+
+        private static StudentPendingEventsViewModel CreateStudentPendingEventsViewModel(IServiceProvider services)
+        {
+            return new StudentPendingEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IDateTimeConverter>());
+        }
+
+        private static StudentEndedEventsViewModel CreateStudentEndedEventsViewModel(IServiceProvider services)
+        {
+            return new StudentEndedEventsViewModel(
+                services.GetRequiredService<IEventsService>(),
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IDateTimeConverter>());
+        }
+
+        private static StudentHomeViewModel CreateStudentHomeViewModel(IServiceProvider services)
+        {
+            return new StudentHomeViewModel(
+                services.GetRequiredService<IQuizzesService>(),
+                services.GetRequiredService<IResultsService>(),
+                services.GetRequiredService<IShuffler>(),
+                services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>());
+        } 
+        
+        private static StudentsViewModel CreateStudentsViewModel(IServiceProvider services)
+        {
+            return new StudentsViewModel(
+                services.GetRequiredService<IStudentsService>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ISharedDataStore>());
         }
     }

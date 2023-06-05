@@ -1,11 +1,13 @@
 ﻿namespace QuizHut.Infrastructure.EntityViewModels.Quizzes
 {
     using System;
-
+    using System.Collections.Generic;
     using AutoMapper;
     
     using QuizHut.BLL.MapperConfig.Contracts;
     using QuizHut.DLL.Entities;
+    using QuizHut.Infrastructure.EntityViewModels.Answers;
+    using QuizHut.Infrastructure.EntityViewModels.Questions;
 
     public class QuizListViewModel : IMapFrom<Quiz>, IHaveCustomMappings
     {
@@ -30,6 +32,8 @@
         public DateTime CreatedOn { get; set; }
 
         public string Color { get; set; }
+
+        public IList<QuestionViewModel> Questions { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

@@ -44,13 +44,8 @@
                 .ToListAsync();
         }
 
-        public async Task AssignQuizzesToCategoryAsync(string id, IEnumerable<string> quizzesIds)
+        public async Task AssignQuizzesToCategoryAsync(string categoryId, IEnumerable<string> quizzesIds)
         {
-            var category = await repository
-                .All()
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
             foreach (var quizId in quizzesIds)
             {
                 var quiz = await quizRepository
@@ -58,14 +53,10 @@
                     .Where(x => x.Id == quizId)
                     .FirstOrDefaultAsync();
 
-                category.Quizzes.Add(quiz);
-                quiz.CategoryId = id;
-
-                repository.Update(category);
+                quiz.CategoryId = categoryId;
                 quizRepository.Update(quiz);
             }
 
-            await repository.SaveChangesAsync();
             await quizRepository.SaveChangesAsync();
         }
 
@@ -106,23 +97,14 @@
 
         public async Task DeleteQuizFromCategoryAsync(string categoryId, string quizId)
         {
-            var category = await repository
-              .All()
-              .Where(x => x.Id == categoryId)
-              .FirstOrDefaultAsync();
-
             var quiz = await quizRepository
-                    .All()
-                    .Where(x => x.Id == quizId)
-                    .FirstOrDefaultAsync();
+                .All()
+                .Where(x => x.Id == quizId)
+                .FirstOrDefaultAsync();
 
-            category.Quizzes.Remove(quiz);
             quiz.CategoryId = null;
-
-            repository.Update(category);
             quizRepository.Update(quiz);
 
-            await repository.SaveChangesAsync();
             await quizRepository.SaveChangesAsync();
         }
     }

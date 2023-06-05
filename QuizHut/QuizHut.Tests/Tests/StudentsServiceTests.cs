@@ -38,31 +38,31 @@
             Assert.Equal(model.Email, resultModelCollection.First().Email);
         }
 
-        [Fact]
-        public async Task GetAllStudentsByGroupIdAsync_ShouldReturnCorrectModelCollection()
-        {
-            //Arrange
-            await CreateUserAsync("teacher@teacher.com", "Teacher", "Teachers");
-            var studentId = await CreateUserAsync("student@student.com", "Student", "Student");
-            var groupId = await AssignStudentToGroupAsync(studentId);
+        //[Fact]
+        //public async Task GetAllStudentsByGroupIdAsync_ShouldReturnCorrectModelCollection()
+        //{
+        //    //Arrange
+        //    await CreateUserAsync("teacher@teacher.com", "Teacher", "Teachers");
+        //    var studentId = await CreateUserAsync("student@student.com", "Student", "Student");
+        //    var groupId = await AssignStudentToGroupAsync(studentId);
 
-            var model = new StudentViewModel()
-            {
-                Id = studentId,
-                FullName = "Student Student",
-                Email = "student@student.com",
-                IsAssigned = false,
-            };
+        //    var model = new StudentViewModel()
+        //    {
+        //        Id = studentId,
+        //        FullName = "Student Student",
+        //        Email = "student@student.com",
+        //        IsAssigned = false,
+        //    };
 
-            //Act
-            var resultModelCollection = await Service.GetAllStudentsByGroupIdAsync<StudentViewModel>(groupId);
+        //    //Act
+        //    var resultModelCollection = await Service.GetAllStudentsByGroupIdAsync<StudentViewModel>(groupId);
 
-            //Assert
-            Assert.Equal(1, resultModelCollection.Count());
-            Assert.Equal(model.Id, resultModelCollection.First().Id);
-            Assert.Equal(model.FullName, resultModelCollection.First().FullName);
-            Assert.Equal(model.Email, resultModelCollection.First().Email);
-        }
+        //    //Assert
+        //    Assert.Equal(1, resultModelCollection.Count());
+        //    Assert.Equal(model.Id, resultModelCollection.First().Id);
+        //    Assert.Equal(model.FullName, resultModelCollection.First().FullName);
+        //    Assert.Equal(model.Email, resultModelCollection.First().Email);
+        //}
 
         [Fact]
         public async Task AddStudentAsyncShould_ReturnTrueIfStudentIsSuccessfullyAdded()

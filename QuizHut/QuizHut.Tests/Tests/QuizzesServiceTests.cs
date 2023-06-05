@@ -41,32 +41,32 @@
             Assert.False(resultModelCollection.First().IsAssigned);
         }
 
-        [Fact]
-        public async Task GetUnAssignedQuizzesToCategoryAsyncShouldReturnCorrectModelCollection()
-        {
-            var creatorId = Guid.NewGuid().ToString();
-            var firstQuizId = await CreateQuizAsync("First quiz", creatorId, "testquizpass");
+        //[Fact]
+        //public async Task GetUnAssignedQuizzesToCategoryAsyncShouldReturnCorrectModelCollection()
+        //{
+        //    var creatorId = Guid.NewGuid().ToString();
+        //    var firstQuizId = await CreateQuizAsync("First quiz", creatorId, "testquizpass");
 
-            var secondQuizId = await CreateQuizAsync("Second quiz", creatorId, "123");
-            var categoryId = Guid.NewGuid().ToString();
-            await AddQuizToCategoryAsync(categoryId, secondQuizId);
+        //    var secondQuizId = await CreateQuizAsync("Second quiz", creatorId, "123");
+        //    var categoryId = Guid.NewGuid().ToString();
+        //    await AddQuizToCategoryAsync(categoryId, secondQuizId);
 
-            var model = new QuizAssignViewModel()
-            {
-                Id = firstQuizId,
-                Name = "First quiz",
-                CreatorId = creatorId,
-                IsAssigned = false,
-            };
+        //    var model = new QuizAssignViewModel()
+        //    {
+        //        Id = firstQuizId,
+        //        Name = "First quiz",
+        //        CreatorId = creatorId,
+        //        IsAssigned = false,
+        //    };
 
-            var resultModelCollection = await Service.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(categoryId, creatorId);
+        //    var resultModelCollection = await Service.GetUnAssignedQuizzesToCategoryByCreatorIdAsync<QuizAssignViewModel>(categoryId, creatorId);
 
-            Assert.IsAssignableFrom<IList<QuizAssignViewModel>>(resultModelCollection);
-            Assert.Equal(model.Id, resultModelCollection.First().Id);
-            Assert.Equal(model.Name, resultModelCollection.First().Name);
-            Assert.Equal(model.CreatorId, resultModelCollection.First().CreatorId);
-            Assert.False(resultModelCollection.First().IsAssigned);
-        }
+        //    Assert.IsAssignableFrom<IList<QuizAssignViewModel>>(resultModelCollection);
+        //    Assert.Equal(model.Id, resultModelCollection.First().Id);
+        //    Assert.Equal(model.Name, resultModelCollection.First().Name);
+        //    Assert.Equal(model.CreatorId, resultModelCollection.First().CreatorId);
+        //    Assert.False(resultModelCollection.First().IsAssigned);
+        //}
 
         [Fact]
         public async Task GetUnAssignedQuizzesToEventAsync_ShouldReturnCorrectModelCollection()

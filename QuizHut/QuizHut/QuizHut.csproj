@@ -17,12 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Images\main_icon.ico" />
     <None Remove="Infrastructure\Fonts\Manrope-VariableFont_wght.ttf" />
     <None Remove="Images\LoginViewImages\EyePic.png" />
     <None Remove="Images\LoginViewImages\EyePic2.png" />
-    <None Remove="Images\LoginViewImages\LoginFormBackground.jpg" />
     <None Remove="Images\LoginViewImages\MainLogo.png" />
-    <None Remove="Images\LoginViewImages\QuestionMark.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\main_icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Infrastructure\Fonts\Manrope-VariableFont_wght.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -52,13 +54,7 @@
     <Resource Include="Images\LoginViewImages\EyePic2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Images\LoginViewImages\LoginFormBackground.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Images\LoginViewImages\MainLogo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\LoginViewImages\QuestionMark.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

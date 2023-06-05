@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:QuizHut.Infrastructure.UserControls" 
              xmlns:nav="clr-namespace:QuizHut.Infrastructure.Services.Contracts"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             
              mc:Ignorable="d" 
-             Width="250" Height="500">
+             d:Width="250" d:Height="500">
     <StackPanel>
                 <!-- Menu Buttons -->
         <RadioButton x:Name="MVHomeMenuBtn"
@@ -90,7 +91,7 @@
                                  CommandParameter="{x:Static nav:ViewType.Student}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="UserGroup" Style="{StaticResource MenuButtonIcon}"/>
-                <TextBlock Text="Учащиеся" Style="{StaticResource MenuButtonText}"/>
+                <TextBlock Text="Участники" Style="{StaticResource MenuButtonText}"/>
             </StackPanel>
         </RadioButton>
     </StackPanel>

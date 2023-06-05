@@ -46,7 +46,7 @@
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act 
-            var result = await userAccountService.RegisterAsync(newUser, password);
+            var result = await userAccountService.RegisterAsync(newUser, password, UserRole.Student);
 
             // Assert 
             Assert.True(result);
@@ -63,7 +63,7 @@
                 .ReturnsAsync(IdentityResult.Failed());
 
             // Act 
-            var result = await userAccountService.RegisterAsync(newUser, password);
+            var result = await userAccountService.RegisterAsync(newUser, password, UserRole.Student);
 
             // Assert 
             Assert.False(result);
@@ -72,22 +72,24 @@
         [Fact]
         public async Task LoginAsync_ValidCredentials_ReturnsTrue()
         {
-            // Arrange 
+            // Arrange
             var email = "test@example.com";
             var password = "password";
-            var user = new ApplicationUser();
 
-            mockUserManager.Setup(x => x.FindByEmailAsync(email))
+            var user = new ApplicationUser { Email = email };
+
+            mockUserManager.Setup(m => m.FindByEmailAsync(email))
                 .ReturnsAsync(user);
-            mockUserManager.Setup(x => x.CheckPasswordAsync(user, password))
+            mockUserManager.Setup(m => m.CheckPasswordAsync(user, password))
                 .ReturnsAsync(true);
+            mockUserManager.Setup(m => m.GetRolesAsync(user))
+                .ReturnsAsync(new[] { "Organizer" });
 
-            // Act 
+            // Act
             var result = await userAccountService.LoginAsync(email, password);
 
-            // Assert 
+            // Assert
             Assert.True(result);
-            //Assert.Equal(user.Id, AccountStore.CurrentAdminId);
         }
 
         [Fact]
@@ -189,18 +191,5 @@
             // Assert 
             Assert.False(result);
         }
-
-        //[Fact]
-        //public void Logout_UpdatesCurrentUserIsLoggedInToFalse()
-        //{
-        //    // Arrange 
-        //    userAccountService.AccountStore.CurrentUser = new ApplicationUser();
-
-        //    // Act 
-        //    userAccountService.Logout();
-
-        //    // Assert 
-        //    Assert.Null(userAccountService.AccountStore.CurrentUser);
-        //}
     }
 }

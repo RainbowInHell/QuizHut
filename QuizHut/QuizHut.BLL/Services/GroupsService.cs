@@ -50,7 +50,7 @@
                 query = query.Where(filter);
             }
 
-            return await query.OrderByDescending(x => x.CreatedOn).To<T>().ToListAsync();
+            return await query.Include(x => x.StudentsGroups).ThenInclude(x => x.Student).OrderByDescending(x => x.CreatedOn).To<T>().ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllGroupsByEventIdAsync<T>(string eventId)

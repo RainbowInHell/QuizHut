@@ -14,7 +14,6 @@
                 {
                     var model = s.GetRequiredService<MainViewModel>();
                     var window = new MainView(model);
-                    model.DialogComplete += (_, _) => window.Close();
 
                     return window;
                 });

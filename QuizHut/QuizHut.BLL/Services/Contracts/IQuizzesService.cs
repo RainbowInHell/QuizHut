@@ -10,7 +10,7 @@
 
         Task<IList<T>> GetQuizzesByCategoryIdAsync<T>(string id);
         
-        Task<IList<T>> GetUnAssignedQuizzesToCategoryByCreatorIdAsync<T>(string categoryId, string creatorId);
+        Task<IList<T>> GetUnAssignedQuizzesToCategoryByCreatorIdAsync<T>(string creatorId);
 
         Task<IList<T>> GetUnAssignedQuizzesToEventAsync<T>(string creatorId = null);
 

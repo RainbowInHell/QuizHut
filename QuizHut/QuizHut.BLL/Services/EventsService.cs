@@ -1,7 +1,6 @@
 ﻿namespace QuizHut.BLL.Services
 {
     using System.Globalization;
-
     using Microsoft.EntityFrameworkCore;
 
     using QuizHut.BLL.Expression.Contracts;
@@ -91,14 +90,13 @@
         }
 
         public async Task<IList<T>> GetAllEventsFilteredByStatusAndGroupAsync<T>(
-            Status status, 
-            string groupId, 
+            Status status,
+            string groupId,
             string creatorId = null)
         {
             var query = repository
                 .AllAsNoTracking()
-                .Where(x => !x.EventsGroups
-                .Any(x => x.GroupId == groupId));
+                .Where(x => !x.EventsGroups.Any(x => x.GroupId == groupId));
 
             if (creatorId != null)
             {
@@ -110,6 +108,47 @@
               .OrderByDescending(x => x.CreatedOn)
               .To<T>()
               .ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllEventsByStatusAndStudentIdAsync<T>(
+            Status status,
+            string studentId,
+            string searchCriteria = null,
+            string searchText = null)
+        {
+            var query = repository
+                .AllAsNoTracking()
+                .Include(x => x.Quizzes)
+                .ThenInclude(q => q.Results)
+                .Where(x => x.EventsGroups.Any(eg => eg.Group.StudentsGroups.Any(sg => sg.StudentId == studentId)));
+
+            //var query1 = await repository
+            //    .AllAsNoTracking()
+            //    .Where(e => e.Quizzes.Any(q => q.Results.Any(r => r.StudentId == studentId)))
+            //    .Select(e => new
+            //    {
+            //        Name = e.Name,
+            //        Quizzes = e.Quizzes.Where(q => q.Results.Any(r => r.StudentId == studentId)).ToList(),
+            //        Results = e.Quizzes.SelectMany(q => q.Results.Where(r => r.StudentId == studentId)).ToList()
+            //    })
+            //    .ToListAsync();
+
+            if (status == Status.Active)
+            {
+                query = query.Where(x => x.Quizzes.Any(q => !q.Results.Any(r => r.StudentId == studentId)));
+            }
+
+            if (searchCriteria != null && searchText != null)
+            {
+                var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
+                query = query.Where(filter);
+            }
+
+            return await query
+                .Where(x => x.Status == status)
+                .OrderByDescending(x => x.CreatedOn)
+                .To<T>()
+                .ToListAsync();
         }
 
         public async Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId)
@@ -139,14 +178,14 @@
                 @event.Quizzes.Add(quiz);
                 @event.Status = GetStatus(@event.ActivationDateAndTime, @event.DurationOfActivity, quizId);
 
-                repository.Update(@event);
-                await repository.SaveChangesAsync();
-
-                if (@event.Status != Status.Ended)
+                if (@event.Quizzes.Count == 1)
                 {
                     await SheduleStatusChangeAsync(@event.ActivationDateAndTime, @event.DurationOfActivity, @event.Id, @event.Status);
                 }
             }
+
+            repository.Update(@event);
+            await repository.SaveChangesAsync();
         }
 
         public async Task AssignGroupsToEventAsync(IList<string> groupIds, string eventId)
@@ -158,10 +197,10 @@
         }
 
         public async Task<string> CreateEventAsync(
-            string name, 
-            string activationDate, 
-            string activeFrom, 
-            string activeTo, 
+            string name,
+            string activationDate,
+            string activeFrom,
+            string activeTo,
             string creatorId)
         {
             var activationDateAndTime = GetActivationDateAndTimeUtc(activationDate, activeFrom);
@@ -201,7 +240,7 @@
             repository.Update(@event);
             await repository.SaveChangesAsync();
 
-            if (@event.Quizzes.Count > 0)
+            if (@event.Quizzes.Any())
             {
                 await SheduleStatusChangeAsync(activationDateAndTime, durationOfActivity, id, @event.Status);
             }
@@ -221,13 +260,9 @@
 
             if (!@event.Quizzes.Any())
             {
-                if (@event.Status == Status.Active)
-                {
-                    @event.Status = Status.Pending;
-                }
+                @event.Status = Status.Pending;
+                await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
             }
-
-            await scheduledJobsService.DeleteJobsAsync(@event.Id, true);
 
             repository.Update(@event);
             await repository.SaveChangesAsync();
@@ -241,15 +276,8 @@
                 .Where(x => x.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            foreach (var quiz in @event.Quizzes)
-            {
-                quiz.EventId = null;
-                quizRepository.Update(quiz);
-            }
-
             repository.Delete(@event);
 
-            await quizRepository.SaveChangesAsync();
             await repository.SaveChangesAsync();
         }
 
@@ -283,7 +311,7 @@
             }
         }
 
-        public string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate)
+        public string GetTimeErrorMessage(string activeFrom, string activeTo, string activationDate, string oldActiveFrom = null)
         {
             var zone = TimeZoneInfo.FindSystemTimeZoneById(TZConvert.IanaToWindows(DateTimeConverter.TimeZoneIana));
             var userLocalTimeNow = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, zone);
@@ -303,7 +331,7 @@
             var nowMins = timeNow.Minutes;
             var invalidStartingTime = startHours < nowHours || (startHours == nowHours && startMins < nowMins);
 
-            if (userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
+            if (activeFrom != oldActiveFrom && userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
             {
                 return "Invalid Starting Time";
             }
@@ -361,15 +389,6 @@
             }
 
             return Status.Ended;
-        }
-
-        private async Task<string[]> GetStudentsNamesByEventIdAsync(string id)
-        {
-            return await repository
-                .AllAsNoTracking()
-                .Where(x => x.Id == id)
-                .SelectMany(x => x.EventsGroups.SelectMany(x => x.Group.StudentsGroups.Select(x => x.Student.UserName)))
-                .ToArrayAsync();
         }
 
         private async Task SheduleStatusChangeAsync(

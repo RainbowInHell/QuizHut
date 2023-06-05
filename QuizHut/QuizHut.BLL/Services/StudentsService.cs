@@ -24,7 +24,6 @@
 
         public async Task<IList<T>> GetAllStudentsAsync<T>(
             string teacherId = null,
-            string groupId = null,
             string searchCriteria = null,
             string searchText = null)
         {
@@ -33,11 +32,6 @@
             if (teacherId != null)
             {
                 query = query.Where(x => x.TeacherId == teacherId);
-            }
-
-            if (groupId != null)
-            {
-                query = query.Where(x => !x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId));
             }
 
             if (searchCriteria != null && searchText != null)
@@ -60,6 +54,15 @@
                 .ToListAsync();
         }
 
+        public async Task<IList<T>> GetAllStudentsUnAssignedToGroup<T>(string groupId)
+        {
+            return await userRepository
+                .AllAsNoTracking()
+                .Where(x => !x.StudentsInGroups.Select(x => x.GroupId).Contains(groupId))
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task<bool> AddStudentAsync(string email, string teacherId)
         {
             var user = await userRepository
@@ -69,16 +72,8 @@
 
             if (user != null && user.TeacherId != teacherId)
             {
-                var teacher = await userRepository
-                    .All()
-                    .Where(x => x.Id == teacherId)
-                    .FirstOrDefaultAsync();
-
                 user.TeacherId = teacherId;
-                teacher.Students.Add(user);
-
                 userRepository.Update(user);
-                userRepository.Update(teacher);
 
                 await userRepository.SaveChangesAsync();
 
@@ -95,18 +90,13 @@
                 .Where(x => x.Id == studentId)
                 .FirstOrDefaultAsync();
 
-            var teacher = await userRepository
-                .All()
-                .Where(x => x.Id == teacherId)
-                .FirstOrDefaultAsync();
+            if (studentToRemove != null)
+            {
+                studentToRemove.TeacherId = null;
 
-            studentToRemove.TeacherId = null;
-            teacher.Students.Remove(studentToRemove);
-
-            userRepository.Update(studentToRemove);
-            userRepository.Update(teacher);
-
-            await userRepository.SaveChangesAsync();
+                userRepository.Update(studentToRemove);
+                await userRepository.SaveChangesAsync();
+            }
         }
     }
 }

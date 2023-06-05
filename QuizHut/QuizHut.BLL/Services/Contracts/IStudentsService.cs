@@ -4,11 +4,12 @@
     {
         Task<IList<T>> GetAllStudentsAsync<T>(
             string teacherId = null,
-            string groupId = null,
             string searchCriteria = null,
             string searchText = null);
 
         Task<IList<T>> GetAllStudentsByGroupIdAsync<T>(string groupId);
+
+        Task<IList<T>> GetAllStudentsUnAssignedToGroup<T>(string groupId);
 
         Task<bool> AddStudentAsync(string email, string teacherId);
 

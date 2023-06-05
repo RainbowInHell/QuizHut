@@ -4,11 +4,15 @@
     {
         Task<IEnumerable<T>> GetAllResultsByEventAndGroupAsync<T>(string eventId, string groupId);
 
-        Task<int> GetResultsCountByStudentIdAsync(string id, string searchCriteria = null, string searchText = null);
+        Task<IEnumerable<T>> GetAllResultsByStudentIdAsync<T>(string studentId, string searchCriteria = null, string searchText = null);
 
-        Task<string> CreateResultAsync(string studentId, decimal points, string quizId);
+        Task<IEnumerable<T>> GetAllResultsByStudentIdAndQuizIdAsync<T>(string studentId, string quizId);
 
-        Task UpdateResultAsync(string id, decimal points);
+        Task<bool> DoesParticipantHasResult(string participantId, string quizId);
+
+        Task<string> CreateResultAsync(string studentId, string quizId);
+
+        Task UpdateResultAsync(string id, decimal points, TimeSpan timeSpent);
 
         Task DeleteResultAsync(string id);
     }

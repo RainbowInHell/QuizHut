@@ -1,6 +1,8 @@
 ﻿namespace QuizHut.Infrastructure.Services.Contracts
 {
     using System;
+    using QuizHut.BLL.Helpers.Contracts;
+    using System.Windows.Threading;
 
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.EntityViewModels.Answers;
@@ -13,6 +15,8 @@
     public interface ISharedDataStore
     {
         ApplicationUser? CurrentUser { get; set; }
+
+        UserRole? CurrentUserRole { get; set; }
 
         GroupListViewModel? SelectedGroup { get; set; }
 
@@ -35,5 +39,7 @@
         TimeSpan RemainingTime { get; set; }
 
         EventSimpleViewModel? EventToView { get; set; }
+
+        DispatcherTimer DispatcherTimer { get; set; }
     }
 }

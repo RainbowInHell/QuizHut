@@ -68,14 +68,14 @@
                 query = query.Where(x => x.IsActivationJob == deleteActivationJobCondition);
             }
 
-            var jobs = await query.ToListAsync();
+            var jobsIds = await query
+                .Select(x => x.JobId)
+                .ToListAsync();
 
-            foreach (var job in jobs)
+            foreach (var jobId in jobsIds)
             {
-                repository.Delete(job);
+                backgroundJobClient.Delete(jobId);
             }
-
-            await repository.SaveChangesAsync();
         }
 
         public async Task SetStatusChangeJobAsync(string eventId, Status status)
@@ -86,7 +86,7 @@
                 .Where(e => e.Id == eventId)
                 .FirstOrDefaultAsync();
 
-            if (@event == null || @event.Quizzes.Count == 0 || @event.Status == status)
+            if (@event == null || @event.Status == status)
             {
                 return;
             }

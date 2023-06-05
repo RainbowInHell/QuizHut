@@ -10,6 +10,8 @@
         AddEvents,
         AddQuizzes,
         AddGroups,
+        ActiveEvents,
+        EndedEvents
     }
 
     public interface IViewDisplayTypeService
