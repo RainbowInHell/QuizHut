@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -60,6 +61,8 @@
 
         private async Task OnNavigateTakingQuizAsyncCommandExecute(object p)
         {
+            sharedDataStore.QuizToPass.Questions = sharedDataStore.QuizToPass.Questions.OrderBy(q => q.Number).ToList();
+
             foreach (var question in sharedDataStore.QuizToPass.Questions)
             {
                 question.Answers = shuffler.Shuffle(question.Answers);

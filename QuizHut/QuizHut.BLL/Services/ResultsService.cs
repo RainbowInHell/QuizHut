@@ -78,13 +78,14 @@
         {
             var quiz = await quizRepository
                 .All()
+                .Include(x => x.Questions)
                 .Where(x => x.Id == quizId)
                 .FirstOrDefaultAsync();
 
             var result = new Result()
             {
                 StudentId = studentId,
-                QuizId = quizId,
+                QuizId = quiz.Id,
                 MaxPoints = quiz.Questions.Count
             };
 

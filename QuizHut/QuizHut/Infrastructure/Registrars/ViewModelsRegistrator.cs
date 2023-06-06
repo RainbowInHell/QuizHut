@@ -477,7 +477,6 @@
             return new StudentHomeViewModel(
                 services.GetRequiredService<IQuizzesService>(),
                 services.GetRequiredService<IResultsService>(),
-                services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<StartQuizViewModel>>());
         } 

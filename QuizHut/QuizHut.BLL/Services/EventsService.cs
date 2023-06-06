@@ -113,7 +113,6 @@
         public async Task<IList<T>> GetAllEventsByStatusAndStudentIdAsync<T>(
             Status status,
             string studentId,
-            string searchCriteria = null,
             string searchText = null)
         {
             var query = repository
@@ -135,12 +134,12 @@
 
             if (status == Status.Active)
             {
-                query = query.Where(x => x.Quizzes.Any(q => !q.Results.Any(r => r.StudentId == studentId)));
+                query = query.Where(x => x.Quizzes.Any(q => q.Results.Any(r => r.StudentId == studentId)));
             }
 
-            if (searchCriteria != null && searchText != null)
+            if (searchText != null)
             {
-                var filter = expressionBuilder.GetExpression<Event>(searchCriteria, searchText);
+                var filter = expressionBuilder.GetExpression<Event>("Name", searchText);
                 query = query.Where(filter);
             }
 

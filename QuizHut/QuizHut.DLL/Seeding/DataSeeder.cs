@@ -67,7 +67,7 @@
             {
                 var quiz = new Quiz()
                 {
-                    Name = $"Тестовая виктоорина {i}",
+                    Name = $"Тестовая викторина {i}",
                     Password = $"password{i}",
                     Description = $"<p>Это тестовая викторина{i}</p>",
                 };

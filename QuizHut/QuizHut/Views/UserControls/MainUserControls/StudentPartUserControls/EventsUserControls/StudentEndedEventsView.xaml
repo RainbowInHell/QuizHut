@@ -28,15 +28,7 @@
                     VerticalAlignment="Top" HorizontalAlignment="Center" >
             <TextBlock Grid.Row="0" VerticalAlignment="Center"
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
-                   Text="Поиск по:"/>
-            <ComboBox Grid.Row="0"
-                  Width="150" Height="35" VerticalContentAlignment="Center"
-                  Margin="10,0,0,0"
-                  Tag="Критерий..."
-                  ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
-                  SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"
-                  FontFamily="{StaticResource Manrope}" FontSize="14">
-            </ComboBox>
+                   Text="Поиск по названию события:"/>
             <TextBox  x:Name="MSEEVSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"

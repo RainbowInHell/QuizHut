@@ -33,7 +33,7 @@
             this.dateTimeConverter = dateTimeConverter;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
         }
 
         #region Fields and properties
@@ -65,11 +65,9 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => SearchCriteria != null && SearchText != null;
-
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            //await LoadStudentResultsAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentPendingEventsAsync(SearchText);
         }
 
         #endregion
@@ -85,9 +83,9 @@
 
         #endregion
 
-        private async Task LoadStudentPendingEventsAsync(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentPendingEventsAsync(string searchText = null)
         {
-            var studentPendingEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentPendingEventViewModel>(Status.Pending, sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
+            var studentPendingEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentPendingEventViewModel>(Status.Pending, sharedDataStore.CurrentUser.Id, searchText);
 
             foreach (var studentActiveEvent in studentPendingEvents)
             {

@@ -13,7 +13,6 @@
         Task<IList<T>> GetAllEventsByStatusAndStudentIdAsync<T>(
             Status status,
             string studentId,
-            string searchCriteria = null,
             string searchText = null);
 
         Task<IList<T>> GetAllEventsByGroupIdAsync<T>(string groupId);

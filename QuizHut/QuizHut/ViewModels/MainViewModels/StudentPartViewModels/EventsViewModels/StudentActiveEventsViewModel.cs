@@ -34,7 +34,7 @@
             this.dateTimeConverter = dateTimeConverter;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
         }
 
         #region Fields and properties
@@ -44,13 +44,6 @@
         {
             get => studentActiveEvents;
             set => Set(ref studentActiveEvents, value);
-        }
-
-        private string searchCriteria;
-        public string SearchCriteria
-        {
-            get => searchCriteria;
-            set => Set(ref searchCriteria, value);
         }
 
         private string searchText;
@@ -66,11 +59,9 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => SearchCriteria != null && SearchText != null;
-
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            //await LoadStudentResultsAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentActiveEventsAsync(SearchText);
         }
 
         #endregion
@@ -86,9 +77,9 @@
 
         #endregion
 
-        private async Task LoadStudentActiveEventsAsync(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentActiveEventsAsync(string searchText = null)
         {
-            var studentActiveEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentActiveEventViewModel>(Status.Active, sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
+            var studentActiveEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentActiveEventViewModel>(Status.Active, sharedDataStore.CurrentUser.Id, searchText);
 
             foreach (var studentActiveEvent in studentActiveEvents)
             {

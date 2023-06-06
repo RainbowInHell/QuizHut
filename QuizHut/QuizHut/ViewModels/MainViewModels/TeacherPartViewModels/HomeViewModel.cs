@@ -80,7 +80,13 @@
 
             if (quizToPass == null)
             {
-                ErrorMessage = "Нет викторины с таким паролем.";
+                ErrorMessage = "Нет викторины с таким паролем";
+                return;
+            }
+
+            if (!quizToPass.Questions.Any())
+            {
+                ErrorMessage = "Квиз должен содержать хотя бы один вопрос";
                 return;
             }
 
