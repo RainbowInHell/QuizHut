@@ -72,7 +72,8 @@
                 Width="100" Height="35"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,20,0"
-                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold"
+                Command="{Binding ExportDataAsyncCommand}">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
                 <TextBlock Text="Выгрузить" 

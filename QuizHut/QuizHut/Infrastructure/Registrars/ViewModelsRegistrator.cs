@@ -381,7 +381,9 @@
                 services.GetRequiredService<IShuffler>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<TakingQuizViewModel>>(),
-                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>());
+                services.GetRequiredService<IAccountStore>(),
+                services.GetRequiredService<ViewModelRenavigate<HomeViewModel>>(),
+                services.GetRequiredService<ViewModelRenavigate<StudentHomeViewModel>>());
         }
 
         private static TakingQuizViewModel CreateTakingQuizViewModel(IServiceProvider services)
@@ -452,7 +454,8 @@
             return new StudentActiveEventsViewModel(
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<IDateTimeConverter>());
+                services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>());
         }
 
         private static StudentPendingEventsViewModel CreateStudentPendingEventsViewModel(IServiceProvider services)
@@ -460,7 +463,8 @@
             return new StudentPendingEventsViewModel(
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<IDateTimeConverter>());
+                services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>());
         }
 
         private static StudentEndedEventsViewModel CreateStudentEndedEventsViewModel(IServiceProvider services)
@@ -469,7 +473,8 @@
                 services.GetRequiredService<IEventsService>(),
                 services.GetRequiredService<IResultsService>(),
                 services.GetRequiredService<ISharedDataStore>(),
-                services.GetRequiredService<IDateTimeConverter>());
+                services.GetRequiredService<IDateTimeConverter>(),
+                services.GetRequiredService<IExporter>());
         }
 
         private static StudentHomeViewModel CreateStudentHomeViewModel(IServiceProvider services)

@@ -31,19 +31,24 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
+        private readonly IExporter exporter;
+
         public StudentEndedEventsViewModel(
             IEventsService eventsService,
             IResultsService resultsService,
             ISharedDataStore sharedDataStore, 
-            IDateTimeConverter dateTimeConverter)
+            IDateTimeConverter dateTimeConverter,
+            IExporter exporter)
         {
             this.eventsService = eventsService;
             this.resultsService = resultsService;
             this.sharedDataStore = sharedDataStore;
             this.dateTimeConverter = dateTimeConverter;
             this.sharedDataStore = sharedDataStore;
+            this.exporter = exporter;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
         }
 
@@ -94,7 +99,18 @@
 
         #endregion
 
-        private async Task LoadStudentEndedEventsAsync(string searchText = null)
+        #region ExportDataCommand
+
+        public ICommandAsync ExportDataAsyncCommand { get; }
+
+        private async Task OnExportDataAsyncCommandExecute(object p)
+        {
+            await exporter.GenerateExcelReportAsync(studentEndedEvents);
+        }
+
+        #endregion
+
+        private async Task LoadStudentEndedEventsAsync(string searchCriteria = null, string searchText = null)
         {
             var studentEndedEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentEndedEventViewModel>(Status.Ended, sharedDataStore.CurrentUser.Id, searchText);
 
