@@ -96,18 +96,14 @@
 
         private async Task OnDeleteUserCommandAsyncExecute(object p)
         {
-            //var result = await userAccountService.DeleteUserAsync(CurrentUser.Id);
+            var result = await userAccountService.DeleteUserAsync(CurrentUser.Id);
 
-            //if (result.Succeeded)
-            //{
-            //    userAccountService.Logout();
+            if (result.Succeeded)
+            {
+                userAccountService.Logout();
 
-            //    authorizationRenavigator.Renavigate();
-            //}
-
-            userAccountService.Logout();
-
-            authorizationRenavigator.Renavigate();
+                authorizationRenavigator.Renavigate();
+            }
         }
 
         #endregion
