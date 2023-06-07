@@ -113,7 +113,7 @@
                   Width="900"
                   RowHeight="25">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
+                    <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="auto" MinWidth="250"
                                     Binding="{Binding FullName}"/>
                     <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
                                     Binding="{Binding Email}"/>

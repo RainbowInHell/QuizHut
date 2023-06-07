@@ -67,10 +67,39 @@
                    Style="{StaticResource MainTextBlock}" FontSize="16" FontWeight="SemiBold"
                    Text="* выберите временной интервал с '00:00' до '23:59'"/>
 
-        <!-- User message block -->
-        <TextBlock Style="{StaticResource ErrorTextBlock1}"
-                   Grid.Row="6" Grid.ColumnSpan="2"
+        <!-- Create message block -->
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="2"
                    Margin="5,0,0,0" HorizontalAlignment="Left"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                   Text="{Binding ErrorMessageCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock.Style>
+                <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <!-- Edit message block -->
+        <TextBlock Grid.Row="6" Grid.ColumnSpan="2"
+                   Margin="5,0,0,0" HorizontalAlignment="Left"
+                   Text="{Binding ErrorMessageEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <TextBlock.Style>
+                <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@
 
     using FontAwesome.Sharp;
 
+    using QuizHut.BLL.Helpers.Contracts;
     using QuizHut.BLL.Services.Contracts;
     using QuizHut.DLL.Entities;
     using QuizHut.Infrastructure.Commands;
@@ -24,15 +25,19 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
+        private readonly IAccountStore accountStore;
+
         private readonly IRenavigator authorizationRenavigator;
 
         public UserProfileViewModel(
             IUserAccountService userAccountService,
             ISharedDataStore sharedDataStore,
+            IAccountStore accountStore,
             IRenavigator authorizationRenavigator)
         {
             this.userAccountService = userAccountService;
             this.sharedDataStore = sharedDataStore;
+            this.accountStore = accountStore;
             this.authorizationRenavigator = authorizationRenavigator;
 
             LoadDataCommand = new ActionCommand(OnLoadDataCommandExecuted);
@@ -41,6 +46,8 @@
         }
 
         #region FieldsAndProperties
+
+        public UserRole CurrentUserRole => accountStore.CurrentUserRole;
 
         private ApplicationUser currentUser;
         public ApplicationUser CurrentUser

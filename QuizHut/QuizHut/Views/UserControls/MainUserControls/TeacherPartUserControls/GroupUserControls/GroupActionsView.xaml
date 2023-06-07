@@ -155,8 +155,68 @@
 
             <!-- Description textBlock -->
             <TextBlock Grid.Row="3" Grid.Column="1"
-                       Style="{StaticResource MainTextBlock}"
-                       Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold"/>
+                       Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Назначьте события для группы" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Назначьте участников для группы" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Input textBox or itemsSource -->
             <TextBox x:Name="GAVGroupNameTextBox"
@@ -342,11 +402,102 @@
                 </StackPanel.Style>
             </StackPanel>
 
-            <!-- User message block -->
-            <TextBlock x:Name="GAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+            <!-- Create message block -->
+            <TextBlock x:Name="GAVMessageCreateTextBox"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                   Text="{Binding ErrorMessageCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Edit message block -->
+            <TextBlock x:Name="GAVMessageEditTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessageEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Assign students message block -->
+            <TextBlock x:Name="GAVMessageStudentsTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessageStudents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Assign events message block -->
+            <TextBlock x:Name="GAVMessageEventsTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessageEvents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="2">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="3">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Add group and Cancel buttons -->
             <Button x:Name="GAVAddGroupBtn" Grid.Row="6" Grid.Column="1"

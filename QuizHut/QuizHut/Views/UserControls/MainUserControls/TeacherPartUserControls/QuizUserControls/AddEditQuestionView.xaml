@@ -56,16 +56,7 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
-            <StackPanel Grid.Row="2" Grid.Column="1"
-                        Orientation="Horizontal" Margin="0,5" 
-                        HorizontalAlignment="Right">
-                <CheckBox IsChecked="{Binding IsFullEvaluation}"
-                          VerticalAlignment="Center"/>
-                <TextBlock Style="{StaticResource MainTextBlock}"
-                           FontWeight="SemiBold" FontSize="17"
-                           Text="100% совпадение ответа" Margin="10,0"/>
-            </StackPanel>
-
+            
             <TextBlock Grid.Row="2" Grid.Column="1"
                        Text="Изменение вопроса">
                 <TextBlock.Style>
@@ -82,6 +73,16 @@
                 </TextBlock.Style>
             </TextBlock>
 
+            <StackPanel Grid.Row="2" Grid.Column="1"
+                        Orientation="Horizontal" Margin="0,5" 
+                        HorizontalAlignment="Right">
+                <CheckBox IsChecked="{Binding IsFullEvaluation}"
+                          VerticalAlignment="Center"/>
+                <TextBlock Style="{StaticResource MainTextBlock}"
+                           FontWeight="SemiBold" FontSize="17"
+                           Text="100% совпадение ответа" Margin="10,0"/>
+            </StackPanel>
+
             <!-- Description textBlock -->
             <TextBlock Grid.Row="3" Grid.Column="1"
                        Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold"
@@ -95,11 +96,42 @@
                      VerticalContentAlignment="Top"
                      Text="{Binding QuestionDescriptionToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- User message block -->
-            <TextBlock x:Name="AEQVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+            <!-- Create message block -->
+            <TextBlock x:Name="AEQVMessageCreateTextBox"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                   Text="{Binding ErrorMessageCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Edit message block -->
+            <TextBlock x:Name="AEQVMessageEditTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessageEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Add/Cancel button -->
             <Button x:Name="QAEVAddQuestionBtn" Grid.Row="6" Grid.Column="1"

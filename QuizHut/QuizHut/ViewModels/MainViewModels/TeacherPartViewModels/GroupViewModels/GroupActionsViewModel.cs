@@ -108,11 +108,32 @@
             set => Set(ref groupNameToCreate, value);
         }
 
-        private string? errorMessage;
-        public string? ErrorMessage
+        private string? errorMessageCreate;
+        public string? ErrorMessageCreate
         {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
+            get => errorMessageCreate;
+            set => Set(ref errorMessageCreate, value);
+        }
+
+        private string? errorMessageEdit;
+        public string? ErrorMessageEdit
+        {
+            get => errorMessageEdit;
+            set => Set(ref errorMessageEdit, value);
+        }
+
+        private string? errorMessageStudents;
+        public string? ErrorMessageStudents
+        {
+            get => errorMessageStudents;
+            set => Set(ref errorMessageStudents, value);
+        }
+
+        private string? errorMessageEvents;
+        public string? ErrorMessageEvents
+        {
+            get => errorMessageEvents;
+            set => Set(ref errorMessageEvents, value);
         }
 
         #endregion

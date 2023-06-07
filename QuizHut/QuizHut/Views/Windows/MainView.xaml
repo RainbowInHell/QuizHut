@@ -150,7 +150,7 @@
                         </Button.Style>
                     </Button>
                     <!-- Help button -->
-                    <Button x:Name="MVHelpBtn"
+                    <Button x:Name="MVHelpBtn" Cursor="Help"
                             HorizontalAlignment="Right"
                             Margin="20"
                             Grid.Row="3"

@@ -8,9 +8,9 @@
               xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              
              mc:Ignorable="d" 
-             Height="530" Width="500"
+             Height="600" Width="1000"
              HorizontalAlignment="Left" VerticalAlignment="Top"
-             Margin="150,10,0,0">
+             Margin="20,10,0,0">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -22,98 +22,100 @@
         <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
     </UserControl.Effect>
 
-    <Border Background="{StaticResource MainViewBackground4}"
-            CornerRadius="15">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="15"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="15"/>
-            </Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal">
+        <Border Background="{StaticResource MainViewBackground4}"
+                CornerRadius="15"
+                Height="530" Width="500">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="70"/>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="15"/>
-            </Grid.RowDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="15"/>
+                </Grid.RowDefinitions>
 
-            <!-- Title -->
-            <StackPanel Grid.Row="1" Grid.Column="1"
+                <!-- Title -->
+                <StackPanel Grid.Row="1" Grid.Column="1"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                <fa:IconImage Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    <fa:IconImage Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"
                               Icon="Gear" Foreground="{StaticResource IconColor2}"/>
-                <TextBlock x:Name="MUPVTitleTB"
+                    <TextBlock x:Name="MUPVTitleTB"
                            Style="{StaticResource MainTextBlock}"
                            Text="Профиль пользователя"
                            Margin="10,0,0,0"/>
-            </StackPanel>
+                </StackPanel>
 
-            <!-- Subtitile -->
-            <TextBlock x:Name="MUPVSubTitleTB" Grid.Row="2" Grid.Column="1"
+                <!-- Subtitile -->
+                <TextBlock x:Name="MUPVSubTitleTB" Grid.Row="2" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
                        Text="Просмотрите или измените некоторые данные профиля" FontSize="16"
                        VerticalAlignment="Center"/>
 
-            <!-- Email block -->
-            <StackPanel x:Name="MUPVEmailSP"
+                <!-- Email block -->
+                <StackPanel x:Name="MUPVEmailSP"
                         Grid.Row="3" Grid.Column="1"
                         VerticalAlignment="Bottom">
-                <TextBlock Style="{StaticResource MainTextBlock}" 
+                    <TextBlock Style="{StaticResource MainTextBlock}" 
                            FontSize="15" FontWeight="Bold" Text="Почта:" 
                            Margin="0,0,0,2"/>
-                <TextBox Style="{StaticResource textBoxStyle}"
+                    <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
                          IsEnabled="False"
                  Text="{Binding CurrentUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
+                </StackPanel>
 
-            <!-- FirstName block -->
-            <StackPanel x:Name="MUPVFirstNameSP"
+                <!-- FirstName block -->
+                <StackPanel x:Name="MUPVFirstNameSP"
                         Grid.Row="4" Grid.Column="1"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="370">
-                <TextBlock Style="{StaticResource MainTextBlock}" 
+                    <TextBlock Style="{StaticResource MainTextBlock}" 
                            FontSize="15" FontWeight="Bold" Text="Имя:" 
                            Margin="0,0,0,2"/>
-                <TextBox Style="{StaticResource textBoxStyle}"
+                    <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
                          Tag="Имя..."
                          Text="{Binding CurrentUser.FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            <!-- FirstName message block -->
-            <TextBlock x:Name="MUPVFirstNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                </StackPanel>
+                <!-- FirstName message block -->
+                <TextBlock x:Name="MUPVFirstNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="{Binding FirstNameErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- LastName block -->
-            <StackPanel x:Name="MUPVLastNameSP"
+                <!-- LastName block -->
+                <StackPanel x:Name="MUPVLastNameSP"
                         Grid.Row="6" Grid.Column="1"
                         VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="370">
-                <TextBlock Style="{StaticResource MainTextBlock}" 
+                    <TextBlock Style="{StaticResource MainTextBlock}" 
                            FontSize="15" FontWeight="Bold" Text="Фамилия:" 
                            Margin="0,0,0,2"/>
-                <TextBox Style="{StaticResource textBoxStyle}"
+                    <TextBox Style="{StaticResource textBoxStyle}"
                          Height="40" FontSize="16" MaxLength="50"
                          Tag="Фамилия..."
                          Text="{Binding CurrentUser.LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-            <!-- LastName message block -->
-            <TextBlock x:Name="MUPVLastNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+                </StackPanel>
+                <!-- LastName message block -->
+                <TextBlock x:Name="MUPVLastNameMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
                    Grid.Row="7" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
                    Text="{Binding LastNameErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- Update first/last names button -->
-            <Button x:Name="MUPVChangeFirstLastNameBtn" Grid.Row="4" Grid.Column="1" Grid.RowSpan="4"
+                <!-- Update first/last names button -->
+                <Button x:Name="MUPVChangeFirstLastNameBtn" Grid.Row="4" Grid.Column="1" Grid.RowSpan="4"
                     Style="{StaticResource UserOptionButton}"
                     VerticalAlignment="Center" HorizontalAlignment="Right"
                     Width="80" Height="40" Background="{StaticResource ActiveColor3}"
@@ -121,18 +123,18 @@
                     Command="{Binding UpdateUserCommandAsync}"
                     Content="Изменить" FontFamily="{StaticResource Manrope}" FontSize="12" FontWeight="Bold"/>
 
-            <!-- Info block -->
-            <TextBlock Grid.Row="8" Grid.Column="1"
+                <!-- Info block -->
+                <TextBlock Grid.Row="8" Grid.Column="1"
                        Style="{StaticResource MainTextBlock}"
                        Text="Ваш аккаунт содержит персональную информацию. 
                        Данная страница позволяет скачать ваши личные данные или удалить аккаунт." FontSize="14" FontWeight="Medium"
                        VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify" Margin="0,10,0,0"/>
-            <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,70,0,0"
+                <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,70,0,0"
                        Style="{StaticResource MainTextBlock}"
                        Text="Удаление этих данных навсегда удалит ваш аккаунт без возможности восстановления." FontSize="16" FontWeight="ExtraBold"
                        VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify"/>
-            
-            <Button x:Name="MUPVDeleteBtn" Grid.Row="9" Grid.Column="1"
+
+                <Button x:Name="MUPVDeleteBtn" Grid.Row="9" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"
                     Background="{StaticResource menuOverColor}"
                     Width="170" Height="50" Margin="0,0,0,0"
@@ -140,6 +142,148 @@
                     Content="Удалить"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
                     Command="{Binding DeleteUserCommandAsync}"/>
-        </Grid>
-    </Border>
+            </Grid>
+        </Border>
+        <Border Background="{StaticResource MainViewBackground4}"
+                CornerRadius="15"
+                Height="590" Width="400" Margin="50,0,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="15"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="15"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                    <fa:IconImage Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center"
+                              Icon="ChartSimple" Foreground="{StaticResource IconColor2}"/>
+                    <TextBlock x:Name="MUPVTitle2TB"
+                           Style="{StaticResource MainTextBlock}"
+                           Text="Статистические отчёты"
+                           Margin="10,0,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="3" Grid.Column="1">
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Cтатистический отчет по количеству участников в каждом событии" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport1Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+                    
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, оценивающий успеваемость различных групп" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport2Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, представляющий успеваемость по разным категориям" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport3Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, определяющий наиболее успешных участников по каждой викторине" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport4Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, отображающий процент выполнения тестов различными группами" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport5Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, показывающий распределение успеваемости учащихся по различным категориям" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport6Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding }"/>
+                    </WrapPanel>
+                    <Separator Background="{StaticResource menuOverColor}"/>
+
+                    <WrapPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource MainTextBlock}"
+                                   Text="Статистический отчет, содержащий информацию о времени, затраченном каждым студентом на прохождение викторин" FontSize="13" FontWeight="Medium"
+                                   VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Left" Width="200"/>
+                        <Button x:Name="MUPVReport7Btn"
+                                Template="{StaticResource MainButtonTemplate}"
+                                Background="{StaticResource menuOverColor}"
+                                Width="170" Height="45"
+                                Content="Выгрузить"
+                                Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
+                                Command="{Binding DeleteUserCommandAsync}"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentUserRole}" Value="Student">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentUserRole}" Value="Unauthorised">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+    </StackPanel>
 </UserControl>

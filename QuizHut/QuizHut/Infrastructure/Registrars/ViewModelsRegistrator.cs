@@ -438,6 +438,7 @@
             return new UserProfileViewModel(
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<ISharedDataStore>(),
+                services.GetRequiredService<IAccountStore>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
         }       
         

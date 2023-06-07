@@ -40,12 +40,12 @@
         <!-- FilterBy textBox-->
         <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,690,0"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,720,0"
                    Text="Поиск по:"/>
         <ComboBox Grid.Row="0"
-                  HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="150" Height="35"
-                  Margin="0,0,535,0"
+                  HorizontalAlignment="Right" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                  Width="150" Height="40"
+                  Margin="0,0,560,0"
                   Tag="Критерий..."
                   ItemsSource="{Binding SearchCriteriasInEnglish.Keys}"
                   SelectedItem="{Binding SearchCriteria, Mode=TwoWay}"
@@ -55,14 +55,18 @@
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
                   HorizontalAlignment="Right" VerticalAlignment="Center"
-                  Width="420" Height="35" Margin="0,0,110,0"
+                  Width="420" Height="40" MaxLength="50" Margin="0,0,130,0"
                   Tag="Выберите критерий и введите текст для поиска..."
                   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="MSVRefreshSearchBtn" Grid.Row="0"
+                Template="{StaticResource RefreshButton1}"
+                Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,140,0"
+                Command="{Binding RefreshSearchCommandAsync}"/>
         <Button Grid.Row="0"
                 Command="{Binding SearchCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
-                Width="90" Height="35"
+                Width="110" Height="40"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,10,0"
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold">
@@ -93,7 +97,7 @@
         <!-- Add email textBox -->
         <TextBox x:Name="MVSAddStudTB" Grid.Row="2"
                  Style="{StaticResource textBoxStyle}"
-                 Height="40" Width="500" Margin="0,0,140,0"
+                 Height="40" Width="500" MaxLength="50" Margin="0,0,130,0"
                  HorizontalAlignment="Right" VerticalAlignment="Center"
                  Tag="Email"
                  Text="{Binding StudentEmailToAdd, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -101,9 +105,9 @@
                 Command="{Binding AddStudentToTeacherListCommandAsync}"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource PrimaryActiveColor}"
-                Width="100" Height="40"
+                Width="110" Height="40"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
-                Margin="0,0,20,0"
+                Margin="0,0,10,0"
                 Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
             <StackPanel Orientation="Horizontal">
                 <fa:IconImage Icon="CirclePlus" Foreground="White" Width="20" Height="20" Margin="0,0,3,0"/>
@@ -116,15 +120,18 @@
         <!-- Data grid students -->
         <DataGrid x:Name="MVSStudentDataGrid" ItemsSource="{Binding Students}"
                   SelectedItem="{Binding SelectedStudent}"
-                  Style="{StaticResource DataGridStyle1}" CellStyle="{StaticResource DataGridCellStyle1}" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" RowStyle="{StaticResource DataGridRowStyle1}" 
+                  Style="{StaticResource DataGridStyle1}" 
+                  CellStyle="{StaticResource DataGridCellStyle1}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" 
+                  RowStyle="{StaticResource DataGridRowStyle1}" 
             Grid.Row="4" Margin="0,0,0,20" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="*"
+                <DataGridTextColumn Header="Полное имя" IsReadOnly="True" Width="auto" MinWidth="300"
                                     Binding="{Binding FullName}"/>
                 <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
                                     Binding="{Binding Email}"/>
 
-                <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto">
+                <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="auto" MinWidth="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">

@@ -134,11 +134,32 @@
             set => Set(ref groups, value);
         }
 
-        private string? errorMessage;
-        public string? ErrorMessage
+        private string? errorMessageCreate;
+        public string? ErrorMessageCreate
         {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
+            get => errorMessageCreate;
+            set => Set(ref errorMessageCreate, value);
+        }
+
+        private string? errorMessageEdit;
+        public string? ErrorMessageEdit
+        {
+            get => errorMessageEdit;
+            set => Set(ref errorMessageEdit, value);
+        }
+
+        private string? errorMessageQuizzes;
+        public string? ErrorMessageQuizzes
+        {
+            get => errorMessageQuizzes;
+            set => Set(ref errorMessageQuizzes, value);
+        }
+
+        private string? errorMessageGroups;
+        public string? ErrorMessageGroups
+        {
+            get => errorMessageGroups;
+            set => Set(ref errorMessageGroups, value);
         }
 
         #endregion

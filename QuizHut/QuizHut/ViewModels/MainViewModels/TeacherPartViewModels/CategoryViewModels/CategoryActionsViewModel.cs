@@ -85,18 +85,25 @@
             set => Set(ref quizzes, value);
         }
 
-        private string? createUpdateErrorMessage;
-        public string? CreateUpdateErrorMessage
+        private string? errorMessageCreate;
+        public string? ErrorMessageCreate
         {
-            get => createUpdateErrorMessage;
-            set => Set(ref createUpdateErrorMessage, value);
+            get => errorMessageCreate;
+            set => Set(ref errorMessageCreate, value);
         }
 
-        private string? assignQuizziesErrorMessage;
-        public string? AssignQuizziesErrorMessage
+        private string? errorMessageEdit;
+        public string? ErrorMessageEdit
         {
-            get => assignQuizziesErrorMessage;
-            set => Set(ref assignQuizziesErrorMessage, value);
+            get => errorMessageEdit;
+            set => Set(ref errorMessageEdit, value);
+        }
+
+        private string? errorMessageQuizzes;
+        public string? ErrorMessageQuizzes
+        {
+            get => errorMessageQuizzes;
+            set => Set(ref errorMessageQuizzes, value);
         }
 
         #endregion
@@ -138,13 +145,13 @@
 
         private bool CanCreateUpdateCategoryNameCommandExecute(object p)
         {
-            if (string.IsNullOrEmpty(CategoryNameToCreate))
-            {
-                CreateUpdateErrorMessage = "Название категории не может быть пустым";
-                return false;
-            }
+            //if (string.IsNullOrEmpty(CategoryNameToCreate))
+            //{
+            //    CreateUpdateErrorMessage = "Название категории не может быть пустым";
+            //    return false;
+            //}
 
-            CreateUpdateErrorMessage = null;
+            //CreateUpdateErrorMessage = null;
             return true;
         }
 
