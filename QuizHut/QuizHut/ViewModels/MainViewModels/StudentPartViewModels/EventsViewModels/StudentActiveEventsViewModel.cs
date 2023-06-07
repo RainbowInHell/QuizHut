@@ -96,7 +96,7 @@
 
         #endregion
 
-        private async Task LoadStudentActiveEventsAsync(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentActiveEventsAsync(string searchText = null)
         {
             var studentActiveEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentActiveEventViewModel>(Status.Active, sharedDataStore.CurrentUser.Id, searchText);
 

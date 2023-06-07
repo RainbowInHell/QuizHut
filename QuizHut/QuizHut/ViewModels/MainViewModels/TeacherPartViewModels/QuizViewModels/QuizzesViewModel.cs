@@ -21,6 +21,7 @@
     class QuizzesViewModel : ViewModel, IMenuView
     {
         public static string Title { get; } = "Викторины";
+
         public static IconChar IconChar { get; } = IconChar.FolderOpen;
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
@@ -177,9 +178,9 @@
 
         private async Task OnFilterByCategoryCommandAsyncExecute(object p)
         {
-            await LoadQuizzesData(SearchCriteriasInEnglish[SearchCriteria] ?? null, SearchText, SelectedCategory.Id);
+            var searchCriteria = SearchCriteria == null ? null : SearchCriteriasInEnglish[SearchCriteria];
 
-            SelectedCategory = null;
+            await LoadQuizzesData(searchCriteria, SearchText, SelectedCategory.Id);
         }
 
         #endregion

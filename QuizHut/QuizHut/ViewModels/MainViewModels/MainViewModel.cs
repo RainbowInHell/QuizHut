@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System.IO;
+    using System.Reflection;
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
@@ -113,7 +115,9 @@
         public ICommand ShowHelpCommand { get; }
         private void OnShowHelpCommandExecuted(object p)
         {
-            System.Windows.Forms.Help.ShowHelp(null, @"QuizzesHutHelp.chm");
+            string currentDirectoryPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(currentDirectoryPath, @"QuizzesHutHelp.chm"));
         }
 
         #endregion

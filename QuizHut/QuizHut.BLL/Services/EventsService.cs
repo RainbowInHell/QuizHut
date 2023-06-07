@@ -121,22 +121,6 @@
                 .ThenInclude(q => q.Results)
                 .Where(x => x.EventsGroups.Any(eg => eg.Group.StudentsGroups.Any(sg => sg.StudentId == studentId)));
 
-            //var query1 = await repository
-            //    .AllAsNoTracking()
-            //    .Where(e => e.Quizzes.Any(q => q.Results.Any(r => r.StudentId == studentId)))
-            //    .Select(e => new
-            //    {
-            //        Name = e.Name,
-            //        Quizzes = e.Quizzes.Where(q => q.Results.Any(r => r.StudentId == studentId)).ToList(),
-            //        Results = e.Quizzes.SelectMany(q => q.Results.Where(r => r.StudentId == studentId)).ToList()
-            //    })
-            //    .ToListAsync();
-
-            if (status == Status.Active)
-            {
-                query = query.Where(x => x.Quizzes.Any(q => q.Results.Any(r => r.StudentId == studentId)));
-            }
-
             if (searchText != null)
             {
                 var filter = expressionBuilder.GetExpression<Event>("Name", searchText);

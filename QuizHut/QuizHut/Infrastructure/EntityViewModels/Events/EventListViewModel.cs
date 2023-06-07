@@ -37,11 +37,11 @@
             switch (status)
             {
                 case Status.Active:
-                    return "Активный";
+                    return "Активно";
                 case Status.Pending:
                     return "В ожидании";
                 case Status.Ended:
-                    return "Завершен";
+                    return "Завершено";
                 default:
                     return string.Empty;
             }
