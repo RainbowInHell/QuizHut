@@ -118,6 +118,16 @@
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<bool> IsQuizAssignedToGroup(string participantId, string eventId, string quizId)
+        {
+            bool isAssignedToQuiz = await quizRepository
+                .AllAsNoTracking()
+                .AnyAsync(q => q.EventId == eventId && q.Id == quizId &&
+                               q.Event.EventsGroups.Any(eg => eg.Group.StudentsGroups.Any(sg => sg.StudentId == participantId)));
+
+            return isAssignedToQuiz;
+        }
+
         //Метод создания викторины
         public async Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password)
         {

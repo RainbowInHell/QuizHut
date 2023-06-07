@@ -123,7 +123,7 @@
                 <DataGridTextColumn Header="Длительность" IsReadOnly="True" Width="*"
                                     Binding="{Binding Duration}"/>
                 <DataGridTextColumn Header="Статус" IsReadOnly="True" Width="*"
-                                    Binding="{Binding Status}"/>
+                                    Binding="{Binding StatusAsString}"/>
 
                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="*">
                     <DataGridTemplateColumn.CellTemplate>

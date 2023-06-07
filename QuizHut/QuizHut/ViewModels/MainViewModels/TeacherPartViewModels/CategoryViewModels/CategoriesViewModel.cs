@@ -50,7 +50,7 @@
             NavigateCategorySettingsCommand = new RenavigateCommand(categorySettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
             DeleteCategoryCommandAsync = new ActionCommandAsync(OnDeleteCategoryCommandExecutedAsync);
             ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
@@ -115,8 +115,6 @@
         #region SearchCommandAsync
 
         public ICommandAsync SearchCommandAsync { get; }
-
-        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {

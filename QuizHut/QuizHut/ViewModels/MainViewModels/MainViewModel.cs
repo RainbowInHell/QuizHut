@@ -1,5 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels
 {
+    using System.IO;
+    using System.Reflection;
     using System.Windows.Input;
 
     using FontAwesome.Sharp;
@@ -45,6 +47,7 @@
             NavigationCommand.Execute(ViewType.Authorization);
             
             LogoutCommand = new ActionCommand(OnLogoutCommandExecuted);
+            ShowHelpCommand = new ActionCommand(OnShowHelpCommandExecuted);
         }
 
         #region Fields and properties
@@ -104,6 +107,17 @@
         {
             userAccountService.Logout();
             NavigationCommand.Execute(ViewType.Authorization);
+        }
+
+        #endregion
+
+        #region ShowHelpCommand
+        public ICommand ShowHelpCommand { get; }
+        private void OnShowHelpCommandExecuted(object p)
+        {
+            string currentDirectoryPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+            System.Windows.Forms.Help.ShowHelp(null, Path.Combine(currentDirectoryPath, @"QuizzesHutHelp.chm"));
         }
 
         #endregion

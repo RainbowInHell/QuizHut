@@ -5,8 +5,10 @@
 
     using QuizHut.Infrastructure.EntityViewModels;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
+    using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Infrastructure.EntityViewModels.Results;
 
     public interface IExporter
     {
@@ -33,5 +35,13 @@
         Task GenerateExcelReportAsync(ObservableCollection<CategoryViewModel> categories);
 
         Task GenerateExcelReportAsync(ObservableCollection<GroupListViewModel> groups);
+
+        Task GenerateExcelReportAsync(ObservableCollection<StudentResultViewModel> studentResults, string studentName);
+
+        Task GenerateExcelReportAsync(ObservableCollection<StudentActiveEventViewModel> studentActiveEvents);
+
+        Task GenerateExcelReportAsync(ObservableCollection<StudentPendingEventViewModel> studentPendingEvents);
+
+        Task GenerateExcelReportAsync(ObservableCollection<StudentEndedEventViewModel> studentEndedEvents);
     }
 }

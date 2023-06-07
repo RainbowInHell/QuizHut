@@ -15,7 +15,19 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_7089A25DC84B471EB7A8763DC51F63BB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A5F917766BE541FF9BE6C9E6D0518574"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D2119297934D4DB3B379FE809F9E757F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -116,6 +128,46 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7089A25DC84B471EB7A8763DC51F63BB"
+            {
+            "SourcePath" = "8:..\\QuizHut\\bin\\Debug\\net7.0-windows\\QuizzesHutHelp.chm"
+            "TargetName" = "8:QuizzesHutHelp.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_5BD2FE6F85E543069F707A08ACE7A74D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D2119297934D4DB3B379FE809F9E757F"
+            {
+            "SourcePath" = "8:..\\QuizHut\\Images\\main_icon.ico"
+            "TargetName" = "8:main_icon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_5BD2FE6F85E543069F707A08ACE7A74D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -173,7 +225,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QuizHut.Setup"
         "ProductCode" = "8:{A11A02E8-75B9-4F6B-8F0B-B6F42C44C4A3}"
-        "PackageCode" = "8:{D059FB8A-3D50-44E4-8AD9-D0678041EEAA}"
+        "PackageCode" = "8:{73FBF5B3-B1E1-411C-A652-795A1D548E29}"
         "UpgradeCode" = "8:{11F5D64A-96CB-493B-8D51-A42885F18568}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -181,12 +233,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:SparfByk Inc."
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:QuizHut.Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:SparfByk Inc."
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -295,7 +347,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_20FC043717324807BBE2C963AA5F7C1F"
             {
-            "Name" = "8:QuizHut"
+            "Name" = "8:QuizzesHut"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -304,7 +356,7 @@
             "Target" = "8:_A5F917766BE541FF9BE6C9E6D0518574"
             "Folder" = "8:_3449465660534059AC9E2FE18077BECD"
             "WorkingFolder" = "8:_5BD2FE6F85E543069F707A08ACE7A74D"
-            "Icon" = "8:"
+            "Icon" = "8:_D2119297934D4DB3B379FE809F9E757F"
             "Feature" = "8:"
             }
         }
@@ -320,7 +372,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_117FF14F6AE9417EBF5CBE1436C707FA"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:Папка установки"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
@@ -355,7 +407,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_9F960BA29023425B957889BD34647FE1"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Confirm Installation"
+                    "DisplayName" = "8:Подтверждение установки"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
@@ -377,7 +429,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B3D7452B3D9E493D81DF37FC9ED49FA8"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Welcome"
+                    "DisplayName" = "8:Добро пожаловать!"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
@@ -434,7 +486,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C4CEAE836A37478BAAAD798572DF99CC"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Finished"
+                    "DisplayName" = "8:Готово"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"
@@ -465,7 +517,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_0048D3C8D8C24E609A5AF1ECE8B3C5EA"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Progress"
+                    "DisplayName" = "8:Ход выполнения"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
@@ -515,7 +567,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_181DC2EEFFC245A2A0E4F2169D89C240"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Welcome"
+                    "DisplayName" = "8:Добро пожаловать!"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
@@ -563,7 +615,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1F7C7174378B481FA49615BC510E1A5E"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Installation Folder"
+                    "DisplayName" = "8:Папка установки"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
@@ -585,7 +637,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_B4DFCB3BDA094799BBD6D24A77CD4866"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Confirm Installation"
+                    "DisplayName" = "8:Подтверждение установки"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
@@ -616,7 +668,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D17D86E373074096948560AB6B90D2E3"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Progress"
+                    "DisplayName" = "8:Ход выполнения"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
@@ -666,7 +718,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_77F4C04534FD413BB3944C2FBFB416E9"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Finished"
+                    "DisplayName" = "8:Готово"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
@@ -708,7 +760,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A5F917766BE541FF9BE6C9E6D0518574"
             {
-            "SourcePath" = "8:..\\QuizHut\\obj\\Debug\\net7.0-windows\\apphost.exe"
+            "SourcePath" = "8:..\\QuizHut\\obj\\Release\\net7.0-windows\\apphost.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_5BD2FE6F85E543069F707A08ACE7A74D"

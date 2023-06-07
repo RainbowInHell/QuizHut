@@ -17,8 +17,10 @@
     using QuizHut.DLL.Repositories.Contracts;
     using QuizHut.Infrastructure.EntityViewModels;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
+    using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
+    using QuizHut.Infrastructure.EntityViewModels.Results;
     using QuizHut.Infrastructure.Services.Contracts;
 
     public class Exporter : IExporter
@@ -686,6 +688,169 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
                 await package.SaveAsAsync(new FileInfo(@"D:\GroupsReport.xlsx"));
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<StudentResultViewModel> studentResults, string studentName)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add($"Результаты {studentName}");
+
+                worksheet.Cells[1, 1].Value = "Участник:";
+                worksheet.Cells[1, 2].Value = studentName;
+
+                worksheet.Cells[2, 1].Value = "Дата экспорта:";
+                worksheet.Cells[2, 2].Value = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+                worksheet.Cells[4, 1, 4, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[4, 1, 4, 5].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[4, 1, 4, 5].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[4, 1, 4, 5].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[4, 1, 4, 5].Style.Font.Bold = true;
+
+                worksheet.Cells[4, 1].Value = "Событие";
+                worksheet.Cells[4, 2].Value = "Викторина";
+                worksheet.Cells[4, 3].Value = "Дата";
+                worksheet.Cells[4, 4].Value = "Время прохождения";
+                worksheet.Cells[4, 5].Value = "Баллы";
+
+                int rowIndex = 5;
+                foreach (var result in studentResults)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = result.EventName;
+                    worksheet.Cells[rowIndex, 2].Value = result.QuizName;
+                    worksheet.Cells[rowIndex, 3].Value = result.Date;
+                    worksheet.Cells[rowIndex, 4].Value = result.TimeSpent;
+                    worksheet.Cells[rowIndex, 5].Value = result.Score;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                string saveDate = DateTime.Now.ToString("dd_MM__HH_mm");
+                await package.SaveAsAsync(new FileInfo($@"D:\{studentName}_OwnResultReport_{saveDate}.xlsx"));
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<StudentActiveEventViewModel> studentActiveEvents)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Активные события");
+
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
+                worksheet.Cells[1, 1].Value = "Событие";
+                worksheet.Cells[1, 2].Value = "Продолжительность";
+
+                int rowIndex = 2;
+                foreach (var studentActiveEvent in studentActiveEvents)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = studentActiveEvent.Name;
+                    worksheet.Cells[rowIndex, 2].Value = studentActiveEvent.Duration;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await package.SaveAsAsync(new FileInfo(@"D:\StudentActiveEventsReport.xlsx"));
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<StudentPendingEventViewModel> studentPendingEvents)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Cобытия в ожидании");
+
+                worksheet.Cells[1, 1, 1, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 3].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 3].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 3].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 3].Style.Font.Bold = true;
+
+                worksheet.Cells[1, 1].Value = "Событие";
+                worksheet.Cells[1, 2].Value = "Дата";
+                worksheet.Cells[1, 3].Value = "Продолжительность";
+
+                int rowIndex = 2;
+                foreach (var studentPendingEvent in studentPendingEvents)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = studentPendingEvent.Name;
+                    worksheet.Cells[rowIndex, 2].Value = studentPendingEvent.Date;
+                    worksheet.Cells[rowIndex, 2].Value = studentPendingEvent.Duration;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await package.SaveAsAsync(new FileInfo(@"D:\StudentPendingEventsReport.xlsx"));
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<StudentEndedEventViewModel> studentEndedEvents)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Завершённые события");
+
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
+                worksheet.Cells[1, 1].Value = "Событие";
+                worksheet.Cells[1, 2].Value = "Дата";
+
+                int rowIndex = 2;
+                foreach (var studentEndedEvent in studentEndedEvents)
+                {
+                    worksheet.Cells[rowIndex, 1].Value = studentEndedEvent.Name;
+                    worksheet.Cells[rowIndex, 2].Value = studentEndedEvent.Date;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await package.SaveAsAsync(new FileInfo(@"D:\StudentEndedEventsReport.xlsx"));
             }
         }
 

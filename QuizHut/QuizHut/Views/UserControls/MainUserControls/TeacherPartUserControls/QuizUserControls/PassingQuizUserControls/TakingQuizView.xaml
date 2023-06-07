@@ -36,7 +36,7 @@
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="auto" MinHeight="50" MaxHeight="110"/>
                     <RowDefinition Height="5"/>
-                    <RowDefinition Height="auto" MinHeight="150" MaxHeight="280"/>
+                    <RowDefinition Height="auto" MinHeight="150" MaxHeight="330"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="55"/>
                     <RowDefinition Height="35"/>
@@ -73,19 +73,21 @@
                 <ScrollViewer x:Name="TQVAnswersSV" 
                           Grid.Row="5" Grid.Column="1"
                           CanContentScroll="False"
+                          HorizontalScrollBarVisibility="Disabled"
                           Background="Transparent"
                           Margin="0,5,0,5"
                           Foreground="{StaticResource PrimaryFontColor}">
                 <ItemsControl ItemsSource="{Binding CurrentQuestion.Answers}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <WrapPanel Orientation="Horizontal" Margin="0,5" >
                                 <CheckBox IsChecked="{Binding IsRightAnswerAssumption}" 
                                           VerticalAlignment="Center"/>
                                 <TextBlock Style="{StaticResource MainTextBlock}" 
-                                           VerticalAlignment="Center"
+                                           VerticalAlignment="Center" 
+                                           TextWrapping="Wrap" TextAlignment="Left"
                                            Text="{Binding Text}" Margin="10,0"/>
-                            </StackPanel>
+                            </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

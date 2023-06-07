@@ -26,14 +26,22 @@
 
         private readonly IDateTimeConverter dateTimeConverter;
 
-        public StudentPendingEventsViewModel(IEventsService eventsService, ISharedDataStore sharedDataStore, IDateTimeConverter dateTimeConverter)
+        private readonly IExporter exporter;
+
+        public StudentPendingEventsViewModel(
+            IEventsService eventsService, 
+            ISharedDataStore sharedDataStore, 
+            IDateTimeConverter dateTimeConverter,
+            IExporter exporter)
         {
             this.eventsService = eventsService;
             this.sharedDataStore = sharedDataStore;
             this.dateTimeConverter = dateTimeConverter;
+            this.exporter = exporter;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
         }
 
         #region Fields and properties
@@ -65,11 +73,9 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => SearchCriteria != null && SearchText != null;
-
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            //await LoadStudentResultsAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+            await LoadStudentPendingEventsAsync(SearchText);
         }
 
         #endregion
@@ -85,9 +91,20 @@
 
         #endregion
 
+        #region ExportDataCommand
+
+        public ICommandAsync ExportDataAsyncCommand { get; }
+
+        private async Task OnExportDataAsyncCommandExecute(object p)
+        {
+            await exporter.GenerateExcelReportAsync(studentPendingEvents);
+        }
+
+        #endregion
+
         private async Task LoadStudentPendingEventsAsync(string searchCriteria = null, string searchText = null)
         {
-            var studentPendingEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentPendingEventViewModel>(Status.Pending, sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
+            var studentPendingEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentPendingEventViewModel>(Status.Pending, sharedDataStore.CurrentUser.Id, searchText);
 
             foreach (var studentActiveEvent in studentPendingEvents)
             {

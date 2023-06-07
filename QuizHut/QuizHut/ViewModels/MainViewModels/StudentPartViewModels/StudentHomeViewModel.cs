@@ -1,5 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.StudentPartViewModels
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FontAwesome.Sharp;
@@ -26,20 +27,16 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
-        private readonly IShuffler shuffler;
-
         private readonly IRenavigator startQuizRenavigator;
 
         public StudentHomeViewModel(
             IQuizzesService quizzesService,
             IResultsService resultsService,
-            IShuffler shuffler,
             ISharedDataStore sharedDataStore,
             IRenavigator startQuizRenavigator)
         {
             this.quizzesService = quizzesService;
             this.resultsService = resultsService;
-            this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
             this.startQuizRenavigator = startQuizRenavigator;
 
@@ -76,19 +73,21 @@
 
             if (quizToPass == null)
             {
-                ErrorMessage = "Нет викторины с таким паролем.";
+                ErrorMessage = "Нет викторины с таким паролем";
                 return;
             }
 
-            if (quizToPass.Event == null)
+            if (!quizToPass.Questions.Any() || quizToPass.Event == null || quizToPass.Event.Status != Status.Active)
             {
-                ErrorMessage = "Викторина должна быть назначена на событие.";
+                ErrorMessage = "Викторина временно недоступна";
                 return;
             }
 
-            if (quizToPass.Event.Status != Status.Active)
+            var isStudentGroupAssignedToQuiz = await quizzesService.IsQuizAssignedToGroup(sharedDataStore.CurrentUser.Id, quizToPass.Event.Id, quizToPass.Id);
+
+            if (!isStudentGroupAssignedToQuiz)
             {
-                ErrorMessage = "Событие недоступно.";
+                ErrorMessage = "Ваша группа не назначена на событие";
                 return;
             }
 
@@ -96,9 +95,11 @@
 
             if (doesParticipantHasResult)
             {
-                ErrorMessage = "Вы уже участвовали в викторине.";
+                ErrorMessage = "Вы уже участвовали в викторине";
                 return;
             }
+
+            sharedDataStore.QuizToPass = quizToPass;
 
             startQuizRenavigator.Renavigate();
         }

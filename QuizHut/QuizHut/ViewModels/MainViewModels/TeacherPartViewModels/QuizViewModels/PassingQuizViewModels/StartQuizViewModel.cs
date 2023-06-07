@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.QuizViewModels.PassingQuizViewModels
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -23,20 +24,32 @@
 
         private readonly IRenavigator takingQuizRenavigator;
 
+        private readonly IAccountStore accountStore;
+
+        private readonly IRenavigator homeRenavigator;
+
+        private readonly IRenavigator studentHomeRenavigator;
+
         public StartQuizViewModel(
             IResultsService resultsService,
             IShuffler shuffler,
             ISharedDataStore sharedDataStore,
             IRenavigator takingQuizRenavigator,
-            IRenavigator homeRenavigator)
+            IAccountStore accountStore,
+            IRenavigator homeRenavigator,
+            IRenavigator studentHomeRenavigator)
         {
             this.resultsService = resultsService;
             this.shuffler = shuffler;
             this.sharedDataStore = sharedDataStore;
+            this.accountStore = accountStore;
             this.takingQuizRenavigator = takingQuizRenavigator;
 
+            this.homeRenavigator = homeRenavigator;
+            this.studentHomeRenavigator = studentHomeRenavigator;
+
             NavigateTakingQuizAsyncCommand = new ActionCommandAsync(OnNavigateTakingQuizAsyncCommandExecute);
-            NavigateHomeCommand = new RenavigateCommand(homeRenavigator);
+            NavigateHomeCommand = new ActionCommand(OnNavigateHomeCommandExecuted);
         }
 
         #region Fields and properties
@@ -60,6 +73,8 @@
 
         private async Task OnNavigateTakingQuizAsyncCommandExecute(object p)
         {
+            sharedDataStore.QuizToPass.Questions = sharedDataStore.QuizToPass.Questions.OrderBy(q => q.Number).ToList();
+
             foreach (var question in sharedDataStore.QuizToPass.Questions)
             {
                 question.Answers = shuffler.Shuffle(question.Answers);
@@ -76,6 +91,18 @@
         }
 
         public ICommand NavigateHomeCommand { get; }
+
+        private void OnNavigateHomeCommandExecuted(object p)
+        {
+            if (accountStore.CurrentUserRole == UserRole.Student)
+            {
+                studentHomeRenavigator.Renavigate();
+            }
+            else
+            {
+                homeRenavigator.Renavigate();
+            }
+        }
 
         #endregion
     }

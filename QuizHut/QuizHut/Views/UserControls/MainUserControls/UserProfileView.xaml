@@ -129,24 +129,14 @@
                        VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify" Margin="0,10,0,0"/>
             <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,70,0,0"
                        Style="{StaticResource MainTextBlock}"
-                       Text="Удаление этих данных навсегда удалит ваш акаунт без возможности восстановления." FontSize="16" FontWeight="ExtraBold"
+                       Text="Удаление этих данных навсегда удалит ваш аккаунт без возможности восстановления." FontSize="16" FontWeight="ExtraBold"
                        VerticalAlignment="Top" TextWrapping="Wrap" TextAlignment="Justify"/>
             
-            <!-- Download/Delete buttons -->
-            <Button x:Name="MUPVDownloadInfoBtn" Grid.Row="9" Grid.Column="1"
-                    Template="{StaticResource MainButtonTemplate}"
-                    Background="{StaticResource PrimaryActiveColor}"
-                    Width="170" Height="50" Margin="20,0,0,0"
-                    VerticalAlignment="Center" HorizontalAlignment="Left"
-                    Content="Скачать"
-                    Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                    Command="{Binding }"/>
-
             <Button x:Name="MUPVDeleteBtn" Grid.Row="9" Grid.Column="1"
                     Template="{StaticResource MainButtonTemplate}"
                     Background="{StaticResource menuOverColor}"
-                    Width="170" Height="50" Margin="0,0,20,0"
-                    VerticalAlignment="Center" HorizontalAlignment="Right"
+                    Width="170" Height="50" Margin="0,0,0,0"
+                    VerticalAlignment="Center" HorizontalAlignment="Center"
                     Content="Удалить"
                     Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
                     Command="{Binding DeleteUserCommandAsync}"/>

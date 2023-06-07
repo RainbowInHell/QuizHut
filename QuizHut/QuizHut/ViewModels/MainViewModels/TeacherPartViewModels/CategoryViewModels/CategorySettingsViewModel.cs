@@ -1,7 +1,6 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.CategoryViewModels
 {
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
