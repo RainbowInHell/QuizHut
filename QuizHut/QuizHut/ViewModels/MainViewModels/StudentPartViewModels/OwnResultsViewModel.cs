@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FontAwesome.Sharp;
@@ -16,9 +17,9 @@
 
     class OwnResultsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Мои результаты";
+        public string Title { get; set; } = "Мои результаты";
 
-        public static IconChar IconChar { get; } = IconChar.Trophy;
+        public IconChar IconChar { get; set; } = IconChar.Trophy;
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
@@ -72,7 +73,7 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => SearchCriteria != null && SearchText != null;
+        private bool CanSearchCommandAsyncExecute(object p) => SearchCriteria != null;
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {

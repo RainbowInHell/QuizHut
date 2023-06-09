@@ -11,9 +11,12 @@
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    class CategorySettingsViewModel : ViewModel
+    class CategorySettingsViewModel : ViewModel, IView
     {
+        public string Title { get; set; }
+
         private readonly ICategoriesService categoriesService;
 
         private readonly IQuizzesService quizzesService;
@@ -37,6 +40,8 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             DeleteQuizFromCategoryCommandAsync = new ActionCommandAsync(OnDeleteQuizFromCategoryCommandExecutedAsync);
+
+            Title = $"Настройки категории '{sharedDataStore.SelectedCategory.Name}'";
         }
 
         #region Fields and properties

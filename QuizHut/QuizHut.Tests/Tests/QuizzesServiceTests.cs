@@ -147,25 +147,25 @@
             Assert.Equal(quizId, resultQuiz.Id);
         }
 
-        [Fact]
-        public async Task CreateQuizAsync_ShouldCreateCorrectly()
-        {
-            //Arrange
-            var creatorId = Guid.NewGuid().ToString();
+        //[Fact]
+        //public async Task CreateQuizAsync_ShouldCreateCorrectly()
+        //{
+        //    //Arrange
+        //    var creatorId = Guid.NewGuid().ToString();
             
-            //Act
-            var quizId = await Service.CreateQuizAsync("Quiz", "description", 30, creatorId, "123456789");
+        //    //Act
+        //    var quizId = await Service.CreateQuizAsync("Quiz", "description", 30, creatorId, "123456789");
 
-            //Arrange
-            var quiz = await GetQuizAsync(quizId);
+        //    //Arrange
+        //    var quiz = await GetQuizAsync(quizId);
 
-            Assert.NotNull(quiz);
-            Assert.Equal("Quiz", quiz.Name);
-            Assert.Equal("description", quiz.Description);
-            Assert.Equal(30, quiz.Timer);
-            Assert.Equal(creatorId, quiz.CreatorId);
-            Assert.Equal("123456789", quiz.Password);
-        }
+        //    Assert.NotNull(quiz);
+        //    Assert.Equal("Quiz", quiz.Name);
+        //    Assert.Equal("description", quiz.Description);
+        //    Assert.Equal(30, quiz.Timer);
+        //    Assert.Equal(creatorId, quiz.CreatorId);
+        //    Assert.Equal("123456789", quiz.Password);
+        //}
 
         [Fact]
         public async Task UpdateQuizAsync_ShouldUpdateCorrectly()

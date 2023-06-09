@@ -19,9 +19,9 @@
 
     class CategoriesViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Категории";
+        public string Title { get; set; } = "Категории";
 
-        public static IconChar IconChar { get; } = IconChar.LayerGroup;
+        public IconChar IconChar { get; set; } = IconChar.LayerGroup;
 
         private readonly ICategoriesService categoriesService;
 
@@ -50,7 +50,8 @@
             NavigateCategorySettingsCommand = new RenavigateCommand(categorySettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             DeleteCategoryCommandAsync = new ActionCommandAsync(OnDeleteCategoryCommandExecutedAsync);
             ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
         }
@@ -116,9 +117,24 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
+
         private async Task OnSearchCommandAsyncExecute(object p)
         {
             await LoadCategoriesData(SearchText);
+        }
+
+        #endregion
+
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchText = null;
+
+            await LoadCategoriesData();
         }
 
         #endregion
@@ -161,11 +177,11 @@
                 {
                     category.CreatedOnDate = dateTimeConverter.GetDate(category.CreatedOn);
                 }
-
-                Categories = new(categories);
                 
                 ErrorMessage = null;
             }
+
+            Categories = new(categories);
         }
     }
 }

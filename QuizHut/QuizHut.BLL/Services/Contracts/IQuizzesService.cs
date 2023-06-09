@@ -20,7 +20,7 @@
 
         Task<bool> IsQuizAssignedToGroup(string participantId, string eventId, string quizId);
 
-        Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password);
+        Task CreateQuizAsync(string name, string description, int? timer, string creatorId, string password);
 
         Task UpdateQuizAsync(string id, string name, string description, int? timer, string password);
 

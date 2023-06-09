@@ -52,8 +52,8 @@
             NavigateAddEventCommand = new RenavigateCommand(addEventRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync, CanLoadDataCommandExecute);
-            CreateGroupCommandAsync = new ActionCommandAsync(OnCreateGroupCommandExecutedAsync, CanCreateGroupCommandExecute);
-            UpdateGroupNameCommandAsync = new ActionCommandAsync(OnUpdateGroupNameCommandExecutedAsync, CanUpdateGroupNameCommandExecute);
+            CreateGroupCommandAsync = new ActionCommandAsync(OnCreateGroupCommandExecutedAsync, CanCreateUpdateGroupCommandExecute);
+            UpdateGroupNameCommandAsync = new ActionCommandAsync(OnUpdateGroupNameCommandExecutedAsync, CanCreateUpdateGroupCommandExecute);
             AssignStudentsToGroupCommandAsync = new ActionCommandAsync(OnAssignStudentsToGroupCommandExecute, CanAssignStudentsToGroupCommandExecute);
             AssignEventsToGroupCommandAsync = new ActionCommandAsync(OnAssignEventsToGroupCommandExecute, CanAssignEventsToGroupCommandExecute);
         }
@@ -87,14 +87,14 @@
             }
         }
 
-        public ObservableCollection<StudentViewModel> students;
+        public ObservableCollection<StudentViewModel> students = new();
         public ObservableCollection<StudentViewModel> Students
         {
             get => students;
             set => Set(ref students, value);
         }
 
-        public ObservableCollection<EventsAssignViewModel> events;
+        public ObservableCollection<EventsAssignViewModel> events = new ();
         public ObservableCollection<EventsAssignViewModel> Events
         {
             get => events;
@@ -108,18 +108,11 @@
             set => Set(ref groupNameToCreate, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         private string? errorMessageStudents;
@@ -185,7 +178,17 @@
 
         public ICommandAsync CreateGroupCommandAsync { get; }
 
-        private bool CanCreateGroupCommandExecute(object p) => !string.IsNullOrEmpty(GroupNameToCreate);
+        private bool CanCreateUpdateGroupCommandExecute(object p)
+        {
+            if (string.IsNullOrEmpty(GroupNameToCreate))
+            {
+                CreateUpdateErrorMessage = "Название группы не может быть пустым";
+                return false;
+            }
+
+            CreateUpdateErrorMessage = null;
+            return true;
+        }
 
         private async Task OnCreateGroupCommandExecutedAsync(object p)
         {
@@ -200,8 +203,6 @@
 
         public ICommandAsync UpdateGroupNameCommandAsync { get; }
 
-        private bool CanUpdateGroupNameCommandExecute(object p) => !string.IsNullOrEmpty(GroupNameToCreate);
-
         private async Task OnUpdateGroupNameCommandExecutedAsync(object p)
         {
             await groupsService.UpdateGroupNameAsync(sharedDataStore.SelectedGroup.Id, GroupNameToCreate);
@@ -215,16 +216,23 @@
 
         public ICommandAsync AssignStudentsToGroupCommandAsync { get; }
 
-        private bool CanAssignStudentsToGroupCommandExecute(object p) => true;
+        private bool CanAssignStudentsToGroupCommandExecute(object p)
+        {
+            if (!Students.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageStudents = "Выберите хотя бы одного участника";
+                return false;
+            }
+
+            ErrorMessageStudents = null;
+            return true;
+        }
 
         private async Task OnAssignStudentsToGroupCommandExecute(object p)
         {
             var selectedStudentIds = Students.Where(s => s.IsAssigned).Select(s => s.Id).ToList();
 
-            if (selectedStudentIds.Any())
-            {
-                await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedStudentIds);
-            }
+            await groupsService.AssignStudentsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedStudentIds);
 
             NavigateGroupSettingsCommand.Execute(p);
         }
@@ -235,16 +243,23 @@
 
         public ICommandAsync AssignEventsToGroupCommandAsync { get; }
 
-        private bool CanAssignEventsToGroupCommandExecute(object p) => true;
+        private bool CanAssignEventsToGroupCommandExecute(object p)
+        {
+            if (!Events.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageEvents = "Выберите хотя бы одно событие";
+                return false;
+            }
+
+            ErrorMessageEvents = null;
+            return true;
+        }
 
         private async Task OnAssignEventsToGroupCommandExecute(object p)
         {
             var selectedEventIds = Events.Where(s => s.IsAssigned).Select(s => s.Id).ToList();
 
-            if (selectedEventIds.Any())
-            {
-                await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedEventIds);
-            }
+            await groupsService.AssignEventsToGroupAsync(sharedDataStore.SelectedGroup.Id, selectedEventIds);
 
             NavigateGroupSettingsCommand.Execute(p);
         }
@@ -255,16 +270,24 @@
         {
             var students = await studentService.GetAllStudentsUnAssignedToGroup<StudentViewModel>(sharedDataStore.SelectedGroup.Id);
 
-            Students = new(students);
-            IsStudentsEmpty = students.Count == 0;
+            IsStudentsEmpty = !students.Any();
+
+            if (!IsStudentsEmpty)
+            {
+                Students = new(students);
+            }
         }
 
         private async Task LoadEventsData()
         {
             var events = await eventsService.GetAllEventsFilteredByStatusAndGroupAsync<EventsAssignViewModel>(Status.Ended, sharedDataStore.SelectedGroup.Id, sharedDataStore.CurrentUser.Id);
 
-            Events = new(events);
-            IsEventsEmpty = events.Count == 0;
+            IsEventsEmpty = !events.Any();
+
+            if (!IsEventsEmpty) 
+            {
+                Events = new(events);
+            }
         }
 
         private void ViewDisplayTypeService_StateChanged()

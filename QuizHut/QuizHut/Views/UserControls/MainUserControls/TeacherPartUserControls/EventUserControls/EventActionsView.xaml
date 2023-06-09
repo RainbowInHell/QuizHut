@@ -405,7 +405,7 @@
             <!-- Assign quizzes message block -->
             <TextBlock x:Name="EAVMessageQuizzesTB" Grid.Row="5" Grid.Column="1"
                        Margin="5,0,0,0" HorizontalAlignment="Left"
-                       Text="quizzes">
+                   Text="{Binding ErrorMessageQuizzes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
                         <Style.Triggers>
@@ -428,7 +428,7 @@
             <!-- Assign groups message block -->
             <TextBlock x:Name="EAVMessageGroupsTB" Grid.Row="5" Grid.Column="1"
                        Margin="5,0,0,0" HorizontalAlignment="Left"
-                       Text="groups">
+                   Text="{Binding ErrorMessageGroups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock.Style>
                     <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
                         <Style.Triggers>

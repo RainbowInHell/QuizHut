@@ -85,18 +85,11 @@
             set => Set(ref quizzes, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         private string? errorMessageQuizzes;
@@ -145,13 +138,13 @@
 
         private bool CanCreateUpdateCategoryNameCommandExecute(object p)
         {
-            //if (string.IsNullOrEmpty(CategoryNameToCreate))
-            //{
-            //    CreateUpdateErrorMessage = "Название категории не может быть пустым";
-            //    return false;
-            //}
+            if (string.IsNullOrEmpty(CategoryNameToCreate))
+            {
+                CreateUpdateErrorMessage = "Название категории не может быть пустым";
+                return false;
+            }
 
-            //CreateUpdateErrorMessage = null;
+            CreateUpdateErrorMessage = null;
             return true;
         }
 
@@ -183,12 +176,13 @@
 
         private bool CanAssignQuizzesToCategoryCommandExecute(object p)
         {
-            //if (!Quizzes.Where(x => x.IsAssigned).Any())
-            //{
-            //    AssignQuizziesErrorMessage = "Выбери";
-            //    return false;
-            //}
+            if (!Quizzes.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageQuizzes = "Выберите хотя бы одну викторину";
+                return false;
+            }
 
+            ErrorMessageQuizzes = null;
             return true;
         }
 
@@ -196,10 +190,7 @@
         {
             var selectedQuizIds = Quizzes.Where(s => s.IsAssigned).Select(s => s.Id).ToList();
 
-            if (selectedQuizIds.Any())
-            {
-                await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategory.Id, selectedQuizIds);
-            }
+            await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategory.Id, selectedQuizIds);
 
             NavigateCategorySettingsCommand.Execute(p);
         }

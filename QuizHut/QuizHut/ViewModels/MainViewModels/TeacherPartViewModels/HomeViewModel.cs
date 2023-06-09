@@ -17,9 +17,9 @@
 
     class HomeViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Главная";
+        public string Title { get; set; } = "Главная";
 
-        public static IconChar IconChar { get; } = IconChar.Home;
+        public IconChar IconChar { get; set; } = IconChar.Home;
 
         private readonly IQuizzesService quizzesService;
 

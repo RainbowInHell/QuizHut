@@ -17,9 +17,9 @@
 
     class StudentActiveEventsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Активные";
+        public string Title { get; set; } = "Активные";
 
-        public static IconChar IconChar { get; } = IconChar.HourglassHalf;
+        public IconChar IconChar { get; set; } = IconChar.HourglassHalf;
 
         private readonly IEventsService eventsService;
 

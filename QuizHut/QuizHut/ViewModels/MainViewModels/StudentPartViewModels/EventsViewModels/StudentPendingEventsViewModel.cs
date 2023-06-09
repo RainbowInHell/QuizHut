@@ -17,8 +17,9 @@
 
     class StudentPendingEventsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "В ожидании";
-        public static IconChar IconChar { get; } = IconChar.HourglassStart;
+        public string Title { get; set; } = "В ожидании";
+
+        public IconChar IconChar { get; set; } = IconChar.HourglassStart;
 
         private readonly IEventsService eventsService;
 
@@ -51,13 +52,6 @@
         {
             get => studentPendingEvents;
             set => Set(ref studentPendingEvents, value);
-        }
-
-        private string searchCriteria;
-        public string SearchCriteria
-        {
-            get => searchCriteria;
-            set => Set(ref searchCriteria, value);
         }
 
         private string searchText;
@@ -102,7 +96,7 @@
 
         #endregion
 
-        private async Task LoadStudentPendingEventsAsync(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentPendingEventsAsync(string searchText = null)
         {
             var studentPendingEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentPendingEventViewModel>(Status.Pending, sharedDataStore.CurrentUser.Id, searchText);
 

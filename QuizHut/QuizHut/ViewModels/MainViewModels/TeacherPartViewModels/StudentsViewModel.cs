@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FontAwesome.Sharp;
@@ -16,9 +17,9 @@
 
     class StudentsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Участники";
+        public string Title { get; set; } = "Участники";
 
-        public static IconChar IconChar { get; } = IconChar.UserGroup;
+        public IconChar IconChar { get; set; } = IconChar.UserGroup;
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
@@ -41,9 +42,10 @@
             this.sharedDataStore = sharedDataStore;
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             AddStudentToTeacherListCommandAsync = new ActionCommandAsync(OnAddStudentToTeacherListCommandExecute, CanAddStudentToTeacherListCommandExecute);
             DeleteStudentFromTeacherListCommandAsync = new ActionCommandAsync(OnDeleteStudentFromTeacherListCommandExecute);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncExecute);
         }
 
@@ -108,11 +110,25 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria)  && !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
             await LoadStudentsDataAsync(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+        }
+
+        #endregion
+
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchCriteria = null;
+            SearchText = null;
+
+            await LoadStudentsDataAsync();
         }
 
         #endregion
@@ -167,15 +183,16 @@
         {
             var students = await studentService.GetAllStudentsAsync<StudentViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
 
-            if (students.Count == 0)
+            if (!students.Any())
             {
                 ErrorMessage = "Участники не найдены";
             }
             else
             {
-                Students = new(students);
                 ErrorMessage = null;
             }
+
+            Students = new(students);
         }
     }
 }

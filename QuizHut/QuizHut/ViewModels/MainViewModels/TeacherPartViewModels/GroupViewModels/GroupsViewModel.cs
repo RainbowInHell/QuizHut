@@ -1,6 +1,7 @@
 ﻿namespace QuizHut.ViewModels.MainViewModels.TeacherPartViewModels.GroupViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -18,9 +19,9 @@
 
     class GroupsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Группы";
+        public string Title { get; set; } = "Группы";
 
-        public static IconChar IconChar { get; } = IconChar.PeopleGroup;
+        public IconChar IconChar { get; set; } = IconChar.PeopleGroup;
 
         private readonly IGroupsService groupsService;
 
@@ -49,7 +50,8 @@
             NavigateGroupSettingsCommand = new RenavigateCommand(groupSettingRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
-            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute);
+            SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             DeleteGroupCommandAsync = new ActionCommandAsync(OnDeleteGroupCommandExecutedAsync);
             ExportDataCommandAsync = new ActionCommandAsync(OnExportDataCommandAsyncExecute);
         }
@@ -115,9 +117,24 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchText);
+
         private async Task OnSearchCommandAsyncExecute(object p)
         {
             await LoadGroupsData(SearchText);
+        }
+
+        #endregion
+
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchText = null;
+
+            await LoadGroupsData();
         }
 
         #endregion
@@ -150,9 +167,18 @@
         {
             var groups = await groupsService.GetAllGroupsAsync<GroupListViewModel>(sharedDataStore.CurrentUser.Id, searchText: searchText);
 
-            foreach (var group in groups)
+            if (!groups.Any())
             {
-                group.CreatedOnDate = dateTimeConverter.GetDate(group.CreatedOn);
+                ErrorMessage = "Группы не найдены";
+            }
+            else
+            {
+                foreach (var group in groups)
+                {
+                    group.CreatedOnDate = dateTimeConverter.GetDate(group.CreatedOn);
+                }
+
+                ErrorMessage = null;
             }
 
             Groups = new(groups);

@@ -35,7 +35,7 @@
         <TextBlock Grid.Row="0" 
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,590,0"
-                   Text="Поиск:"/>
+                   Text="Поиск по названию:"/>
         <TextBox  x:Name="MVGSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"

@@ -2,6 +2,7 @@
 {
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -26,6 +27,10 @@
         private readonly ISharedDataStore sharedDataStore;
 
         private readonly IViewDisplayTypeService viewDisplayTypeService;
+
+        private const string datePattern = @"^(0[1-9]|1\d|2\d|3[01])/(0[1-9]|1[0-2])/\d{4}$";
+
+        private const string timePattern = @"^(?:[01][0-9]|2[0-3]):[0-5][0-9]$";
 
         public EventActionsViewModel(
             IEventsService eventsService,
@@ -120,32 +125,25 @@
             set => Set(ref eventAvaliableTo, value);
         }
 
-        public ObservableCollection<QuizAssignViewModel> quizzes;
+        public ObservableCollection<QuizAssignViewModel> quizzes = new ();
         public ObservableCollection<QuizAssignViewModel> Quizzes
         {
             get => quizzes;
             set => Set(ref quizzes, value);
         }
 
-        public ObservableCollection<GroupAssignViewModel> groups;
+        public ObservableCollection<GroupAssignViewModel> groups = new();
         public ObservableCollection<GroupAssignViewModel> Groups
         {
             get => groups;
             set => Set(ref groups, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         private string? errorMessageQuizzes;
@@ -213,27 +211,41 @@
 
         private bool CanCreateUpdateEventCommandExecute(object p)
         {
-            if (!string.IsNullOrEmpty(EventNameToCreate) &&
-                !string.IsNullOrEmpty(EventActivationDate) &&
-                !string.IsNullOrEmpty(EventAvaliableFrom) &&
-                !string.IsNullOrEmpty(EventAvaliableTo))
+            if (string.IsNullOrEmpty(EventNameToCreate) ||
+                string.IsNullOrEmpty(EventActivationDate) ||
+                string.IsNullOrEmpty(EventAvaliableFrom) ||
+                string.IsNullOrEmpty(EventAvaliableTo))
             {
-                return true;
+                CreateUpdateErrorMessage = "Все поля должны быть заполнены";
+                return false;
             }
 
-            return false;
-        }
+            if (!Regex.IsMatch(EventActivationDate, datePattern))
+            {
+                CreateUpdateErrorMessage = "Неверный формат даты";
+                return false;
+            }
 
-        private async Task OnCreateEventCommandExecutedAsync(object p)
-        {
+            if (!Regex.IsMatch(EventAvaliableFrom, timePattern) || !Regex.IsMatch(EventAvaliableTo, timePattern))
+            {
+                CreateUpdateErrorMessage = "Неверный формат времени";
+                return false;
+            }
+
             var timeErrorMessage = eventsService.GetTimeErrorMessage(EventAvaliableFrom, EventAvaliableTo, EventActivationDate);
 
             if (timeErrorMessage != null)
             {
-                // TODO: Error message for user
-                return;
+                CreateUpdateErrorMessage = timeErrorMessage;
+                return false;
             }
 
+            CreateUpdateErrorMessage = null;
+            return true;
+        }
+
+        private async Task OnCreateEventCommandExecutedAsync(object p)
+        {
             await eventsService.CreateEventAsync(EventNameToCreate, EventActivationDate, EventAvaliableFrom, EventAvaliableTo, sharedDataStore.CurrentUser.Id);
 
             NavigateEventCommand.Execute(p);
@@ -254,7 +266,7 @@
 
             if (timeErrorMessage != null)
             {
-                // TODO: Error message for user
+                CreateUpdateErrorMessage = timeErrorMessage;
                 return;
             }
 
@@ -269,23 +281,30 @@
 
         public ICommandAsync AssignQuizToEventCommandAsync { get; }
 
-        private bool CanAssignQuizToEventCommandExecute(object p) => true;
+        private bool CanAssignQuizToEventCommandExecute(object p)
+        {
+            if (sharedDataStore.SelectedEvent != null)
+            {
+                if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+                {
+                    ErrorMessageQuizzes = "Нельзя назначить викторину завершенному событию";
+                    return false;
+                }
+            }
+
+            if (!Quizzes.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageQuizzes = "Выберите хотя бы одну викторину";
+                return false;
+            }
+
+            ErrorMessageQuizzes = null;
+            return true;
+        }
 
         private async Task OnAssignQuizToEventCommandExecute(object p)
         {
-            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
-            {
-                // TODO: Error message for user
-                return;
-            }
-
             var selectedQuizes = Quizzes.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
-
-            if (!selectedQuizes.Any())
-            {
-                // TODO: Error message for user
-                return;
-            }
 
             await eventsService.AssignQuizzesToEventAsync(selectedQuizes, sharedDataStore.SelectedEvent.Id);
 
@@ -298,23 +317,30 @@
 
         public ICommandAsync AssignGroupsToEventCommandAsync { get; }
 
-        private bool CanAssignGroupsToEventCommandExecute(object p) => true;
+        private bool CanAssignGroupsToEventCommandExecute(object p)
+        {
+            if (sharedDataStore.SelectedEvent != null)
+            {
+                if (sharedDataStore.SelectedEvent.Status == Status.Ended)
+                {
+                    ErrorMessageGroups = "Нельзя назначить группу завершенному событию";
+                    return false;
+                }
+            }
+
+            if (!Groups.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageGroups = "Выберите хотя бы одну группу";
+                return false;
+            }
+
+            ErrorMessageGroups = null;
+            return true;
+        }
 
         private async Task OnAssignGroupsToEventCommandExecute(object p)
         {
-            if (sharedDataStore.SelectedEvent.Status == Status.Ended)
-            {
-                // TODO: Error message for user
-                return;
-            }
-
             var selectedGroupIds = Groups.Where(s => s.IsAssigned).Select(x => x.Id).ToList();
-
-            if (!selectedGroupIds.Any())
-            {
-                // TODO: Error message for user
-                return;
-            }
 
             await eventsService.AssignGroupsToEventAsync(selectedGroupIds, sharedDataStore.SelectedEvent.Id);
 
@@ -327,16 +353,24 @@
         {
             var quizzes = await quizzesService.GetUnAssignedQuizzesToEventAsync<QuizAssignViewModel>(sharedDataStore.CurrentUser.Id);
 
-            Quizzes = new(quizzes);
-            IsQuizzesEmpty = quizzes.Count == 0;
+            IsQuizzesEmpty = !quizzes.Any();
+
+            if (!IsQuizzesEmpty)
+            {
+                Quizzes = new(quizzes);
+            }
         }
 
         private async Task LoadGroupsData()
         {
             var groups = await groupsService.GetAllGroupsAsync<GroupAssignViewModel>(sharedDataStore.CurrentUser.Id, sharedDataStore.SelectedEvent.Id);
 
-            Groups = new(groups);
-            IsGroupsEmpty = groups.Count == 0;
+            IsGroupsEmpty = !groups.Any();
+
+            if (!IsGroupsEmpty)
+            {
+                Groups = new(groups);
+            }
         }
 
         private void ViewDisplayTypeService_StateChanged()

@@ -2,10 +2,8 @@
 {
     using FontAwesome.Sharp;
 
-    interface IMenuView
+    interface IMenuView : IView
     {
-        static string Title { get; }
-
         static IconChar IconChar { get; }
     }
 }

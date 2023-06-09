@@ -34,8 +34,8 @@
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingsRenavigator);
             NavigateNewQuestionCommand = new RenavigateCommand(newQuestionRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
-            CreateAnswerCommandAsync = new ActionCommandAsync(OnCreateAnswerCommandExecutedAsync, CanCreateAnswerCommandExecute);
-            UpdateAnswerCommandAsync = new ActionCommandAsync(OnUpdateAnswerCommandExecutedAsync, CanUpdateAnswerCommandExecute);
+            CreateAnswerCommandAsync = new ActionCommandAsync(OnCreateAnswerCommandExecutedAsync, CanCreateUpdateAnswerCommandExecute);
+            UpdateAnswerCommandAsync = new ActionCommandAsync(OnUpdateAnswerCommandExecutedAsync, CanCreateUpdateAnswerCommandExecute);
         }
 
         #region Fields and properties
@@ -68,18 +68,11 @@
             set => Set(ref answerDescriptionToCreate, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         #endregion
@@ -98,7 +91,17 @@
 
         public ICommandAsync CreateAnswerCommandAsync { get; }
 
-        private bool CanCreateAnswerCommandExecute(object p) => true;
+        private bool CanCreateUpdateAnswerCommandExecute(object p)
+        {
+            if (string.IsNullOrEmpty(AnswerDescriptionToCreate))
+            {
+                CreateUpdateErrorMessage = "Все поля должны быть заполнены";
+                return false;
+            }
+
+            CreateUpdateErrorMessage = null;
+            return true;
+        }
 
         private async Task OnCreateAnswerCommandExecutedAsync(object p)
         {
@@ -112,8 +115,6 @@
         #region UpdateAnswerCommandAsync
 
         public ICommandAsync UpdateAnswerCommandAsync { get; }
-
-        private bool CanUpdateAnswerCommandExecute(object p) => true;
 
         private async Task OnUpdateAnswerCommandExecutedAsync(object p)
         {

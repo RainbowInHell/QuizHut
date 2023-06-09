@@ -17,9 +17,9 @@
 
     class UserProfileViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Профиль"; 
+        public string Title { get; set; } = "Профиль"; 
 
-        public static IconChar IconChar { get; } = IconChar.AddressCard;
+        public IconChar IconChar { get; set; } = IconChar.AddressCard;
 
         private readonly IUserAccountService userAccountService;
 

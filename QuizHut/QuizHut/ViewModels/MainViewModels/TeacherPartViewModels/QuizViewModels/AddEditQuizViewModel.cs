@@ -35,8 +35,8 @@
             NavigateCreateQuestionCommand = new RenavigateCommand(questionCreateRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
             RefreshQuizPasswordCommand = new ActionCommand(OnRefreshQuizPasswordCommandExecutedAsync);
-            CreateQuizCommandAsync = new ActionCommandAsync(OnCreateQuizCommandExecutedAsync, CanCreateQuizCommandExecute);
-            UpdateQuizCommandAsync = new ActionCommandAsync(OnUpdateQuizCommandExecutedAsync, CanUpdateQuizCommandExecute);
+            CreateQuizCommandAsync = new ActionCommandAsync(OnCreateQuizCommandExecutedAsync, CanCreateUpdateQuizCommandExecute);
+            UpdateQuizCommandAsync = new ActionCommandAsync(OnUpdateQuizCommandExecutedAsync, CanCreateUpdateQuizCommandExecute);
         }
 
         #region Fields and properties
@@ -89,18 +89,11 @@
             set => Set(ref quizTimerToCreate, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         #endregion
@@ -128,7 +121,19 @@
 
         public ICommandAsync CreateQuizCommandAsync { get; }
 
-        private bool CanCreateQuizCommandExecute(object p) => true;
+        private bool CanCreateUpdateQuizCommandExecute(object p)
+        {
+            if (string.IsNullOrEmpty(QuizNameToCreate) || 
+                string.IsNullOrEmpty(QuizPasswordToCreate) || 
+                string.IsNullOrEmpty(QuizDescriptionToCreate))
+            {
+                CreateUpdateErrorMessage = "Все поля должны быть заполнены";
+                return false;
+            }
+
+            CreateUpdateErrorMessage = null;
+            return true;
+        }
 
         private async Task OnCreateQuizCommandExecutedAsync(object p)
         {
@@ -136,20 +141,16 @@
 
             if (quizWithSamePasswordId != null)
             {
-                // TODO: сообщение об ошибке
+                CreateUpdateErrorMessage = "Викторина с таким паролем уже существует";
                 return;
             }
 
-            var quizId = await quizzesService.CreateQuizAsync(
+            await quizzesService.CreateQuizAsync(
                 QuizNameToCreate,
                 QuizDescriptionToCreate,
                 QuizTimerToCreate, sharedDataStore.CurrentUser.Id,
                 QuizPasswordToCreate);
 
-            //
-            //sharedDataStore.SelectedQuiz.Id = quizId;
-
-            //NavigateCreateQuestionCommand.Execute(p);
             NavigateQuizCommand.Execute(p);
         }
 
@@ -159,15 +160,13 @@
 
         public ICommandAsync UpdateQuizCommandAsync { get; }
 
-        private bool CanUpdateQuizCommandExecute(object p) => true;
-
         private async Task OnUpdateQuizCommandExecutedAsync(object p)
         {
             var quizWithSamePassword = await quizzesService.GetQuizByPasswordAsync<QuizAssignViewModel>(QuizPasswordToCreate);
 
             if (quizWithSamePassword != null && quizWithSamePassword.Id != sharedDataStore.SelectedQuiz.Id)
             {
-                // TODO: сообщение об ошибке
+                CreateUpdateErrorMessage = "Викторина с таким паролем уже существует";
                 return;
             }
 

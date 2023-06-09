@@ -258,7 +258,7 @@
             <TextBlock x:Name="СAVMessageCreateTextBox"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessageCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource ErrorTextBlock1}">
                         <Style.Triggers>
@@ -279,7 +279,7 @@
             <TextBlock x:Name="СAVMessageEditTextBox"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessageEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource ErrorTextBlock1}">
                         <Style.Triggers>

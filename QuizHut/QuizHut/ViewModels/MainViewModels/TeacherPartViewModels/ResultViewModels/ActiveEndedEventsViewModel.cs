@@ -36,6 +36,7 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -67,8 +68,8 @@
             set => Set(ref searchText, value);
         }
 
-        private string errorMessage;
-        public string ErrorMessage
+        private string? errorMessage;
+        public string? ErrorMessage
         {
             get => errorMessage;
             set => Set(ref errorMessage, value);
@@ -120,13 +121,37 @@
 
         #endregion
 
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchText = null;
+
+            if (CurrentViewDisplayType == ViewDisplayType.ActiveEvents)
+            {
+                await LoadActiveEventsDataAsync(Status.Active);
+            }
+            else
+            {
+                await LoadActiveEventsDataAsync(Status.Ended);
+            }
+        }
+
+        #endregion
+
         private async Task LoadActiveEventsDataAsync(Status status, string searchText = null)
         {
             var events = await eventsService.GetAllEventsByCreatorIdAndStatusAsync<EventSimpleViewModel>(status, sharedDataStore.CurrentUser.Id, searchText);
 
             if (!events.Any())
             {
-                ErrorMessage = "Нет событий.";
+                ErrorMessage = "События не найдены";
+            }
+            else
+            {
+                ErrorMessage = null;
             }
 
             Events = new(events);

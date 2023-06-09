@@ -34,8 +34,8 @@
             NavigateQuizSettingsCommand = new RenavigateCommand(quizSettingsRenavigator);
             NavigateCreateAnswerCommand = new RenavigateCommand(answerCreateRenavigator, ViewDisplayType.Create, viewDisplayTypeService);
 
-            CreateQuestionCommandAsync = new ActionCommandAsync(OnCreateQuestionCommandExecutedAsync, CanCreateQuestionCommandExecute);
-            UpdateQuestionCommandAsync = new ActionCommandAsync(OnUpdateQuestionCommandExecutedAsync, CanUpdateQuestionCommandExecute);
+            CreateQuestionCommandAsync = new ActionCommandAsync(OnCreateQuestionCommandExecutedAsync, CanCreateUpdateQuestionCommandExecute);
+            UpdateQuestionCommandAsync = new ActionCommandAsync(OnUpdateQuestionCommandExecutedAsync, CanCreateUpdateQuestionCommandExecute);
         }
 
         #region Fields and properties
@@ -68,18 +68,11 @@
             set => Set(ref isFullEvaluation, value);
         }
 
-        private string? errorMessageCreate;
-        public string? ErrorMessageCreate
+        private string? createUpdateErrorMessage;
+        public string? CreateUpdateErrorMessage
         {
-            get => errorMessageCreate;
-            set => Set(ref errorMessageCreate, value);
-        }
-
-        private string? errorMessageEdit;
-        public string? ErrorMessageEdit
-        {
-            get => errorMessageEdit;
-            set => Set(ref errorMessageEdit, value);
+            get => createUpdateErrorMessage;
+            set => Set(ref createUpdateErrorMessage, value);
         }
 
         #endregion
@@ -98,7 +91,18 @@
 
         public ICommandAsync CreateQuestionCommandAsync { get; }
 
-        private bool CanCreateQuestionCommandExecute(object p) => true;
+        private bool CanCreateUpdateQuestionCommandExecute(object p)
+        {
+            if (string.IsNullOrEmpty(QuestionDescriptionToCreate))
+            {
+                CreateUpdateErrorMessage = "Все поля должны быть заполнены";
+                return false;
+            }
+
+            CreateUpdateErrorMessage = null;
+            return true;
+        }
+
         private async Task OnCreateQuestionCommandExecutedAsync(object p)
         {
             var questionId = await questionsService.CreateQuestionAsync(sharedDataStore.SelectedQuiz.Id, IsFullEvaluation, QuestionDescriptionToCreate);
@@ -113,8 +117,6 @@
         #region UpdateQuestionCommandAsync
 
         public ICommandAsync UpdateQuestionCommandAsync { get; }
-
-        private bool CanUpdateQuestionCommandExecute(object p) => true;
 
         private async Task OnUpdateQuestionCommandExecutedAsync(object p)
         {
