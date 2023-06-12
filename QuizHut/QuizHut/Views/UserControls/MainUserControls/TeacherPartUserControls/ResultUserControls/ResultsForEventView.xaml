@@ -69,9 +69,9 @@
                   Width="auto">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Имя" IsReadOnly="True" Width="*"
+                    <DataGridTextColumn Header="Имя" IsReadOnly="True" Width="auto" MinWidth="150"
                                     Binding="{Binding StudentName}"/>
-                    <DataGridTextColumn Header="Email" IsReadOnly="True" Width="*"
+                    <DataGridTextColumn Header="Email" IsReadOnly="True" Width="auto" MinWidth="150"
                                     Binding="{Binding StudentEmail}"/>
                     <DataGridTextColumn Header="Время прохождения" IsReadOnly="True" Width="*"
                                     Binding="{Binding TimeSpent}"/>

@@ -129,7 +129,7 @@
         }
 
         //Метод создания викторины
-        public async Task<string> CreateQuizAsync(string name, string description, int? timer, string creatorId, string password)
+        public async Task CreateQuizAsync(string name, string description, int? timer, string creatorId, string password)
         {
             //Создание нового объекта викторины
             var quiz = new Quiz
@@ -145,8 +145,6 @@
             await quizRepository.AddAsync(quiz);
             //Сохранение изменений в базе данных
             await quizRepository.SaveChangesAsync();
-
-            return quiz.Id;
         }
 
         //Метод обновления викторины

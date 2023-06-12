@@ -13,9 +13,12 @@
     using QuizHut.Infrastructure.EntityViewModels.Groups;
     using QuizHut.Infrastructure.EntityViewModels.Quizzes;
     using QuizHut.DLL.Common;
+    using QuizHut.ViewModels.Contracts;
 
-    class EventSettingsViewModel : ViewModel
+    class EventSettingsViewModel : ViewModel, IView
     {
+        public string Title { get; set; }
+
         private readonly IEventsService eventsService;
 
         private readonly IQuizzesService quizzesService;
@@ -49,6 +52,8 @@
             SendEmailWithQuizPasswordCommandAsync = new ActionCommandAsync(OnSendEmailWithQuizPasswordCommandExecuteAsync);
             DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync);
             DeleteQuizFromEventCommandAsync = new ActionCommandAsync(OnDeleteQuizFromEventCommandExecutedAsync);
+
+            Title = $"Настройки события '{sharedDataStore.SelectedEvent.Name}'";
         }
 
         #region Fields and properties

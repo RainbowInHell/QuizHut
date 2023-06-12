@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -20,15 +21,15 @@
 
     class QuizzesViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Викторины";
+        public string Title { get; set; } = "Викторины";
 
-        public static IconChar IconChar { get; } = IconChar.FolderOpen;
+        public IconChar IconChar { get; set; } = IconChar.FolderOpen;
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
             { "Название", "Name" },
-            { "Назначен", "Assigned" },
-            { "Не назначен", "Unassigned" }
+            { "Назначена", "Assigned" },
+            { "Не назначена", "Unassigned" }
         };
 
         private readonly IQuizzesService quizzesService;
@@ -70,6 +71,7 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             FilterByCategoryCommandAsync = new ActionCommandAsync(OnFilterByCategoryCommandAsyncExecute, CanFilterByCategoryCommandAsyncExecute);
             DeleteQuizCommandAsync = new ActionCommandAsync(OnDeleteQuizCommandExecutedAsync);
             ExportDataAsyncCommand = new ActionCommandAsync(OnExportDataAsyncCommandExecute);
@@ -161,11 +163,26 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria) && !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
-            await LoadQuizzesData(SearchCriteriasInEnglish[SearchCriteria] ?? null, SearchText);
+            await LoadQuizzesData(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+        }
+
+        #endregion
+
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchCriteria = null;
+            SearchText = null;
+            SelectedCategory = null;
+
+            await LoadQuizzesData();
         }
 
         #endregion
@@ -218,9 +235,18 @@
         {
             var quizzes = await quizzesService.GetAllQuizzesAsync<QuizListViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText, categoryId);
 
-            foreach (var quizz in quizzes)
+            if (!quizzes.Any())
             {
-                quizz.CreatedOnDate = dateTimeConverter.GetDate(quizz.CreatedOn);
+                ErrorMessage = "Викторины не найдены";
+            }
+            else
+            {
+                foreach (var quizz in quizzes)
+                {
+                    quizz.CreatedOnDate = dateTimeConverter.GetDate(quizz.CreatedOn);
+                }
+
+                ErrorMessage = null;
             }
 
             Quizzes = new(quizzes);

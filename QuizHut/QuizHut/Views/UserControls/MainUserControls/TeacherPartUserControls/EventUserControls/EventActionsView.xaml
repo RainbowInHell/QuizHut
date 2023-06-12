@@ -57,8 +57,9 @@
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
                 <RowDefinition Height="55"/>
                 <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
@@ -244,6 +245,7 @@
                     </Style>
                 </controls:EventInfoUserControl.Style>
             </controls:EventInfoUserControl>
+            
             <!-- List of groups -->
             <ScrollViewer x:Name="EAVGroupsSV" 
                           Grid.Row="4" Grid.Column="1"
@@ -400,8 +402,55 @@
                 </StackPanel.Style>
             </StackPanel>
 
+            <!-- Assign quizzes message block -->
+            <TextBlock x:Name="EAVMessageQuizzesTB" Grid.Row="5" Grid.Column="1"
+                       Margin="5,0,0,0" HorizontalAlignment="Left"
+                   Text="{Binding ErrorMessageQuizzes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Assign groups message block -->
+            <TextBlock x:Name="EAVMessageGroupsTB" Grid.Row="5" Grid.Column="1"
+                       Margin="5,0,0,0" HorizontalAlignment="Left"
+                   Text="{Binding ErrorMessageGroups, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="5">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
             <!-- Add event and Cancel buttons -->
-            <Button x:Name="EAVAddEventBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVAddEventBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding CreateEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -429,7 +478,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="EAVSaveEventDataBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVSaveEventDataBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding UpdateEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}" 
@@ -457,7 +506,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="EAVAssignGroupsBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVAssignGroupsBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding AssignGroupsToEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -485,7 +534,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="EAVAssignTestBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVAssignTestBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding AssignQuizToEventCommandAsync}"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource PrimaryActiveColor}"
@@ -514,7 +563,7 @@
                 </Button.Style>
             </Button>
 
-            <Button x:Name="EAVCancelBtn" Grid.Row="5" Grid.Column="1"
+            <Button x:Name="EAVCancelBtn" Grid.Row="6" Grid.Column="1"
                         Template="{StaticResource MainButtonTemplate}"
                         Background="{StaticResource SecondaryActiveColor}" 
                         HorizontalAlignment="Right"

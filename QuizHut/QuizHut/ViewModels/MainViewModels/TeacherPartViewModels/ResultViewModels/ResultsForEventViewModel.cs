@@ -10,9 +10,12 @@
     using QuizHut.Infrastructure.EntityViewModels.Results;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    class ResultsForEventViewModel : ViewModel
+    class ResultsForEventViewModel : ViewModel, IView
     {
+        public string Title { get; set; }
+
         private readonly IResultsService resultsService;
 
         private readonly IGroupsService groupsService;
@@ -31,6 +34,8 @@
             LoadEventGroupsDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             LoadEventResultsForGroupCommandAsync = new ActionCommandAsync(OnLoadEventResultsForGroupCommandAsync, CanLoadEventResultsForGroupCommandExecute);
             DeleteResultCommandAsync = new ActionCommandAsync(OnDeleteResultCommandExecuteAsync);
+
+            Title = $"Результаты события '{sharedDataStore.EventToView.Name}'";
         }
 
         #region FieldsAndProperties

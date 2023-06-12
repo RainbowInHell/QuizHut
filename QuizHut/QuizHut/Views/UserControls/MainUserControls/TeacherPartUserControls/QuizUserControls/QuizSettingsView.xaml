@@ -69,7 +69,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Вопрос" IsReadOnly="True" Width="*" Binding="{Binding Text}" />
+                    <DataGridTextColumn Header="Вопрос" IsReadOnly="True" Width="*" MinWidth="400" Binding="{Binding Text}" />
                     <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="180">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -116,7 +116,7 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Header="Ответ" IsReadOnly="True" Width="*"
+                                <DataGridTextColumn Header="Ответ" IsReadOnly="True" Width="*" MinWidth="300"
                                                 Binding="{Binding Text}" />
                                 <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="150">
                                     <DataGridTemplateColumn.CellTemplate>

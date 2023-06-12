@@ -28,11 +28,11 @@
                     VerticalAlignment="Top" HorizontalAlignment="Center" >
             <TextBlock Grid.Row="0" VerticalAlignment="Center"
                    FontSize="18" FontWeight="SemiBold" FontFamily="{StaticResource Manrope}" Foreground="{StaticResource PrimaryFontColor}"
-                   Text="Поиск по названию события:"/>
+                   Text="Поиск по названию:"/>
             <TextBox  x:Name="MSEEVSearchTB"
                   Style="{StaticResource textBoxStyle}"
                   Grid.Row="0"
-                  Width="420" Height="35" Margin="10,0,0,0"
+                  Width="420" Height="35" MaxLength="50" Margin="10,0,0,0"
                   Tag="Выберите критерий и введите текст для поиска..."
                   Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <Button x:Name="MSEEVSearchBtn"
@@ -101,7 +101,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Событие" IsReadOnly="True" Width="300"
+                    <DataGridTextColumn Header="Событие" IsReadOnly="True" Width="auto" MinWidth="200"
                                     Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Дата" IsReadOnly="True" Width="*"
                                     Binding="{Binding Date}"/>
@@ -118,7 +118,7 @@
                               RowStyle="{StaticResource NestedDataGridRowStyle1}"
                               Width="900">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Викторина" IsReadOnly="True" Width="*"
+                                <DataGridTextColumn Header="Викторина" IsReadOnly="True" Width="auto" MinWidth="200"
                                                 Binding="{Binding Name}" />
                                 <DataGridTextColumn Header="Баллы" IsReadOnly="True" Width="*"
                                                 Binding="{Binding Score.Score}" />

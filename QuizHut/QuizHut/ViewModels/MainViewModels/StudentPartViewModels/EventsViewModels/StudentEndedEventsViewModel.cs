@@ -19,9 +19,9 @@
 
     class StudentEndedEventsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Завершённые";
+        public string Title { get; set; } = "Завершённые";
 
-        public static IconChar IconChar { get; } = IconChar.HourglassEnd;
+        public IconChar IconChar { get; set; } = IconChar.HourglassEnd;
 
         private readonly IEventsService eventsService;
 
@@ -59,13 +59,6 @@
         {
             get => studentEndedEvents;
             set => Set(ref studentEndedEvents, value);
-        }
-
-        private string searchCriteria;
-        public string SearchCriteria
-        {
-            get => searchCriteria;
-            set => Set(ref searchCriteria, value);
         }
 
         private string searchText;
@@ -110,7 +103,7 @@
 
         #endregion
 
-        private async Task LoadStudentEndedEventsAsync(string searchCriteria = null, string searchText = null)
+        private async Task LoadStudentEndedEventsAsync(string searchText = null)
         {
             var studentEndedEvents = await eventsService.GetAllEventsByStatusAndStudentIdAsync<StudentEndedEventViewModel>(Status.Ended, sharedDataStore.CurrentUser.Id, searchText);
 

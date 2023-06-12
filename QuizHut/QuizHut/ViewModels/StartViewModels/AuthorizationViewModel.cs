@@ -69,9 +69,10 @@
             get => password;
             set => Set(ref password, value);
         }
+        private bool IsLoggedIn { get; set; } = true;
 
-        private string errorMessage;
-        public string ErrorMessage
+        private string? errorMessage;
+        public string? ErrorMessage
         {
             get => errorMessage;
             set => Set(ref errorMessage, value);
@@ -103,8 +104,14 @@
 
             var validationResult = validator.Validate(loginRequest);
 
+            if (!IsLoggedIn)
+            {
+                IsLoggedIn = true;
+                return true;
+            }
             if (validationResult.IsValid)
             {
+                IsLoggedIn = true;
                 ErrorMessage = null;
                 return true;
             }
@@ -115,18 +122,18 @@
 
         private async Task OnLoginCommandExecutedAsync(object p)
         {
-            bool isLoggedIn = await userAccountService.LoginAsync(Email, Password);
+            IsLoggedIn = await userAccountService.LoginAsync(Email, Password);
 
-            if (isLoggedIn)
+            if (IsLoggedIn)
             {
-                if (accountStore.CurrentUserRole == UserRole.Teacher)
+                sharedDataStore.CurrentUserRole = accountStore.CurrentUserRole;
+
+                if (sharedDataStore.CurrentUserRole == UserRole.Teacher)
                 {
-                    sharedDataStore.CurrentUserRole = UserRole.Teacher;
                     teacherMainRenavigator.Renavigate();
                 }
                 else
                 {
-                    sharedDataStore.CurrentUserRole = UserRole.Student;
                     studentMainRenavigator.Renavigate();
                 }
             }

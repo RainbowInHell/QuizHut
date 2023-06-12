@@ -13,7 +13,7 @@
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
         <Border x:Name="MVSHGoToTakeQuizBlock"
                 CornerRadius="15" 
-                Width="450" Height="250" Margin="100,100,0,0"
+                Width="450" Height="250" Margin="280,180,0,0"
                 Background="{StaticResource MainViewBackground4}">
 
             <Border.Effect>
@@ -58,7 +58,7 @@
                      Grid.Row="4" Grid.Column="1" Margin="0,5,0,0"
                      Style="{StaticResource textBoxStyle}"
                      Tag="Введите пароль викторины..."
-                     Height="45"
+                     Height="45" MaxLength="50"
                      FontFamily="{StaticResource Manrope}" FontSize="18"
                      Text="{Binding QuizPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 

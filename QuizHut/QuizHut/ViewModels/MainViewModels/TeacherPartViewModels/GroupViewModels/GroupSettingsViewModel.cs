@@ -12,9 +12,12 @@
     using QuizHut.Infrastructure.EntityViewModels.Events;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    class GroupSettingsViewModel : ViewModel
+    class GroupSettingsViewModel : ViewModel, IView
     {
+        public string Title { get; set; }
+
         private readonly IGroupsService groupsService;
 
         private readonly IEventsService eventsService;
@@ -43,6 +46,8 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             DeleteStudentFromGroupCommandAsync = new ActionCommandAsync(OnDeleteStudentFromGroupCommandExecutedAsync);
             DeleteEventFromGroupCommandAsync = new ActionCommandAsync(OnDeleteEventFromGroupCommandExecutedAsync);
+
+            Title = $"Настройки группы '{sharedDataStore.SelectedGroup.Name}'";
         }
 
         #region Fields and properties

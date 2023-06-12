@@ -12,9 +12,12 @@
     using QuizHut.Infrastructure.EntityViewModels.Questions;
     using QuizHut.Infrastructure.Services.Contracts;
     using QuizHut.ViewModels.Base;
+    using QuizHut.ViewModels.Contracts;
 
-    class QuizSettingsViewModel : ViewModel
+    class QuizSettingsViewModel : ViewModel, IView
     {
+        public string Title { get; set; }
+
         private readonly IQuestionsService questionsService;
 
         private readonly IAnswersService answersService;
@@ -43,6 +46,8 @@
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             DeleteQuestionCommandAsync = new ActionCommandAsync(OnDeleteQuestionCommandExecutedAsync);
             DeleteAnswerCommandAsync = new ActionCommandAsync(OnDeleteAnswerCommandExecutedAsync);
+
+            Title = $"Настройки викторины '{sharedDataStore.SelectedQuiz.Name}'";
         }
 
         #region Fields and properties

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Input;
 
@@ -19,9 +20,9 @@
 
     class EventsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "События";
+        public string Title { get; set; } = "События";
 
-        public static IconChar IconChar { get; } = IconChar.CalendarDays;
+        public IconChar IconChar { get; set; } = IconChar.CalendarDays;
 
         public Dictionary<string, string> SearchCriteriasInEnglish => new()
         {
@@ -59,6 +60,7 @@
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
+            RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             DeleteEventCommandAsync = new ActionCommandAsync(OnDeleteEventCommandExecutedAsync);
         }
 
@@ -130,11 +132,25 @@
 
         public ICommandAsync SearchCommandAsync { get; }
 
-        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria);
+        private bool CanSearchCommandAsyncExecute(object p) => !string.IsNullOrEmpty(SearchCriteria) && !string.IsNullOrEmpty(SearchText);
 
         private async Task OnSearchCommandAsyncExecute(object p)
         {
             await LoadEventsData(SearchCriteriasInEnglish[SearchCriteria], SearchText);
+        }
+
+        #endregion
+
+        #region RefreshSearchCommandAsync
+
+        public ICommandAsync RefreshSearchCommandAsync { get; }
+
+        private async Task OnRefreshSearchCommandAsyncExecute(object p)
+        {
+            SearchCriteria = null;
+            SearchText = null;
+
+            await LoadEventsData();
         }
 
         #endregion
@@ -156,16 +172,22 @@
         {
             var events = await eventsService.GetAllEventsAsync<EventListViewModel>(sharedDataStore.CurrentUser.Id, searchCriteria, searchText);
 
-            foreach (var @event in events)
+            if (!events.Any())
             {
-                @event.Duration = dateTimeConverter.GetDurationString(@event.ActivationDateAndTime, @event.DurationOfActivity);
-                @event.StartDate = dateTimeConverter.GetDate(@event.ActivationDateAndTime);
+                ErrorMessage = "События не найдены";
+            }
+            else
+            {
+                foreach (var @event in events)
+                {
+                    @event.Duration = dateTimeConverter.GetDurationString(@event.ActivationDateAndTime, @event.DurationOfActivity);
+                    @event.StartDate = dateTimeConverter.GetDate(@event.ActivationDateAndTime);
+                }
+
+                ErrorMessage = null;
             }
 
             Events = new(events);
-
-            //await exporter.GenerateComplexResultsExcelReportAsync();
-            //await exporter.GenerateTimeSpentOnQuizzesByStudentAsync();
         }
     }
 }

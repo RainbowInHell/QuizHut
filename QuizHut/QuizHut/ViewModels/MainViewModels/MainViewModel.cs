@@ -14,7 +14,6 @@
     using QuizHut.ViewModels.Base;
     using QuizHut.ViewModels.Contracts;
     using QuizHut.ViewModels.Factory;
-    using QuizHut.ViewModels.MainViewModels.TeacherPartViewModels;
 
     class MainViewModel : ViewModel
     {
@@ -70,14 +69,14 @@
             }
         }
 
-        private string title = HomeViewModel.Title;
+        private string title;
         public string Title 
         { 
             get => title;
             set => Set(ref title, value);
         }
 
-        private IconChar iconChar = HomeViewModel.IconChar;
+        private IconChar iconChar;
         public IconChar IconChar 
         { 
             get => iconChar;
@@ -124,10 +123,16 @@
 
         private void ShowingContent()
         {
-            if(CurrentView is IMenuView menuView)
+            if (CurrentView is IView menuView)
             {
-                Title = menuView.GetType().GetProperty("Title").GetValue(null).ToString();
-                IconChar = (IconChar)menuView.GetType().GetProperty("IconChar").GetValue(null);
+                Title = menuView.GetType().GetProperty("Title").GetValue(menuView).ToString();
+
+                var iconCharProperty = menuView.GetType().GetProperty("IconChar");
+                
+                if (iconCharProperty != null)
+                {
+                    IconChar = (IconChar)iconCharProperty.GetValue(menuView);
+                }
             }
         }
 

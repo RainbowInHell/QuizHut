@@ -303,7 +303,7 @@
 
             if (userLocalTimeNow.Date > activationDateAndTimeToUserLocalTime.Date)
             {
-                return "Invalid Activation Date";
+                return "Дата активации не может быть ниже текущей";
             }
 
             var timeToStart = TimeSpan.Parse(activeFrom);
@@ -316,13 +316,13 @@
 
             if (activeFrom != oldActiveFrom && userLocalTimeNow.Date == activationDateAndTimeToUserLocalTime.Date && invalidStartingTime)
             {
-                return "Invalid Starting Time";
+                return "Время начала не может быть ниже текущего или прежнего";
             }
 
             var duration = GetDurationOfActivity(activationDate, activeFrom, activeTo);
             if (duration.Hours <= 0 && duration.Minutes <= 0)
             {
-                return "Invalid Duration Of Activity";
+                return "Неверная продолжительность";
             }
 
             return null;
@@ -333,8 +333,8 @@
         private DateTime GetActivationDateAndTimeUtc(string activationDate, string activeFrom)
         {
             return DateTime.ParseExact(activationDate, "dd/MM/yyyy", CultureInfo.InvariantCulture)
-                           .Add(TimeSpan.Parse(activeFrom))
-                           .ToUniversalTime();
+                       .Add(TimeSpan.Parse(activeFrom))
+                       .ToUniversalTime();
         }
 
         private TimeSpan GetDurationOfActivity(string activationDate, string activeFrom, string activeTo)

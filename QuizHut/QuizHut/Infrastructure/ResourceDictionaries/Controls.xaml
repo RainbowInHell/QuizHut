@@ -658,4 +658,19 @@
         <Setter Property="Margin" Value="0 4 0 0"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
+    
+    <!-- Template for refresh search button -->
+    <ControlTemplate x:Key="RefreshButton1" TargetType="Button">
+        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
+            <fa:IconImage x:Name="RefreshIcon1"
+                          Icon="Refresh"
+                          Foreground="{StaticResource SecondaryActiveColor}" Opacity="0.8"
+                          Width="20" Height="20"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" TargetName="RefreshIcon1" Value="1" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 </ResourceDictionary>

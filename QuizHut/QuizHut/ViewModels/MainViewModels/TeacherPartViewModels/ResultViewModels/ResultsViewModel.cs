@@ -18,9 +18,9 @@
 
     class ResultsViewModel : ViewModel, IMenuView
     {
-        public static string Title { get; } = "Результаты"; 
+        public string Title { get; set; } = "Результаты"; 
         
-        public static IconChar IconChar { get; } = IconChar.Award;
+        public IconChar IconChar { get; set; } = IconChar.Award;
 
         private readonly IEventsService eventsService;
 

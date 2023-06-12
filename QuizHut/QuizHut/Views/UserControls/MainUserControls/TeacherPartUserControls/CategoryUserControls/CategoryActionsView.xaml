@@ -121,8 +121,41 @@
 
             <!-- Description textBlock -->
             <TextBlock Grid.Row="3" Grid.Column="1"
-                       Style="{StaticResource MainTextBlock}"
-                       Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold"/>
+                       Text="* Вы можете изменить это потом" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1"
+                       Text="* Назначьте викторины для добавления в категорию" FontSize="14" FontWeight="SemiBold">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource MainTextBlock}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Input textBox or itemsSource -->
             <TextBox x:Name="СAVCategoryNameTextBox"
@@ -221,12 +254,70 @@
                 </StackPanel.Style>
             </StackPanel>
 
-            <!-- User message block -->
-            <TextBlock x:Name="СAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+            <!-- Create message block -->
+            <TextBlock x:Name="СAVMessageCreateTextBox"
                    Grid.Row="5" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource ErrorTextBlock1}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Edit message block -->
+            <TextBlock x:Name="СAVMessageEditTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource ErrorTextBlock1}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Assign quizzes message block -->
+            <TextBlock x:Name="СAVMessageQuizzesTextBox"
+                   Grid.Row="5" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding ErrorMessageQuizzes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource ErrorTextBlock1}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="4">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
             <!-- Add group and Cancel buttons -->
             <Button x:Name="CAVAddCategoryBtn" Grid.Row="6" Grid.Column="1"
                         Command="{Binding CreateCategoryCommandAsync}"

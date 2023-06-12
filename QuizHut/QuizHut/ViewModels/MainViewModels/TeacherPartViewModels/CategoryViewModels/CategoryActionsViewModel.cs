@@ -92,11 +92,11 @@
             set => Set(ref createUpdateErrorMessage, value);
         }
 
-        private string? assignQuizziesErrorMessage;
-        public string? AssignQuizziesErrorMessage
+        private string? errorMessageQuizzes;
+        public string? ErrorMessageQuizzes
         {
-            get => assignQuizziesErrorMessage;
-            set => Set(ref assignQuizziesErrorMessage, value);
+            get => errorMessageQuizzes;
+            set => Set(ref errorMessageQuizzes, value);
         }
 
         #endregion
@@ -176,12 +176,13 @@
 
         private bool CanAssignQuizzesToCategoryCommandExecute(object p)
         {
-            //if (!Quizzes.Where(x => x.IsAssigned).Any())
-            //{
-            //    AssignQuizziesErrorMessage = "Выбери";
-            //    return false;
-            //}
+            if (!Quizzes.Where(s => s.IsAssigned).Any())
+            {
+                ErrorMessageQuizzes = "Выберите хотя бы одну викторину";
+                return false;
+            }
 
+            ErrorMessageQuizzes = null;
             return true;
         }
 
@@ -189,10 +190,7 @@
         {
             var selectedQuizIds = Quizzes.Where(s => s.IsAssigned).Select(s => s.Id).ToList();
 
-            if (selectedQuizIds.Any())
-            {
-                await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategory.Id, selectedQuizIds);
-            }
+            await categoriesService.AssignQuizzesToCategoryAsync(sharedDataStore.SelectedCategory.Id, selectedQuizIds);
 
             NavigateCategorySettingsCommand.Execute(p);
         }

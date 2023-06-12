@@ -91,11 +91,42 @@
                      VerticalContentAlignment="Top"
                      Text="{Binding AnswerDescriptionToCreate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <!-- User message block -->
-            <TextBlock x:Name="AEAVMessageTextBox" Style="{StaticResource ErrorTextBlock1}"
+            <!-- Create message block -->
+            <TextBlock x:Name="AEAVMessageCreateTextBox"
                    Grid.Row="6" Grid.Column="1"
                    Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
-                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <!-- Edit message block -->
+            <TextBlock x:Name="AEAVMessageEditTextBox"
+                   Grid.Row="6" Grid.Column="1"
+                   Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                   Text="{Binding CreateUpdateErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock.Style>
+                    <Style BasedOn="{StaticResource ErrorTextBlock1}" TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="0">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding CurrentViewDisplayType}" Value="1">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
 
             <!-- Add/Cancel button -->
             <Button x:Name="AAEVAddAnswerBtn" Grid.Row="7" Grid.Column="1"
