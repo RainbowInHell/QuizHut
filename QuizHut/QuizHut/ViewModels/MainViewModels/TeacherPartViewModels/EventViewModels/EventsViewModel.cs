@@ -62,6 +62,7 @@
             SearchCommandAsync = new ActionCommandAsync(OnSearchCommandAsyncExecute, CanSearchCommandAsyncExecute);
             RefreshSearchCommandAsync = new ActionCommandAsync(OnRefreshSearchCommandAsyncExecute);
             DeleteEventCommandAsync = new ActionCommandAsync(OnDeleteEventCommandExecutedAsync);
+            ExportDataCommandAsync = new ActionCommandAsync(OnExportDataCommandAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -164,6 +165,17 @@
             await eventsService.DeleteEventAsync(SelectedEvent.Id);
 
             await LoadEventsData();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommandAsync ExportDataCommandAsync { get; }
+
+        private async Task OnExportDataCommandAsyncExecute(object p)
+        {
+            //await exporter.GenerateExcelReportAsync(Events);
         }
 
         #endregion

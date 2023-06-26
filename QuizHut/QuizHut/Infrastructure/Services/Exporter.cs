@@ -9,7 +9,8 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    
+    using Microsoft.Win32;
+
     using OfficeOpenXml;
     using OfficeOpenXml.Style;
     
@@ -25,6 +26,8 @@
 
     public class Exporter : IExporter
     {
+        private const string DEFAULT_FILE_NAME = "ExcelReport";
+
         private readonly IRepository<ApplicationUser> studentRepository;
 
         private readonly IRepository<Category> categoryRepository;
@@ -53,88 +56,32 @@
             this.studentRepository = studentRepository;
         }
 
-        //public async Task GenerateComplexResultsExcelReportAsync()
-        //{
-        //    var resultsWithEventsAndQuizzes = await resultRepository.All()
-        //        .Include(r => r.Student)
-        //        .Include(r => r.Quiz)
-        //            .ThenInclude(q => q.Event)
-        //                .ThenInclude(e => e.EventsGroups)
-        //                    .ThenInclude(eg => eg.Group)
-        //        .ToListAsync();
+        public async Task<bool> SaveReportAsync(ExcelPackage package)
+        {
+            var saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Files (*.xlsx)|*.xlsx";
+            saveFileDialog.DefaultExt = "xlsx";
+            saveFileDialog.AddExtension = true;
+            saveFileDialog.FileName = DEFAULT_FILE_NAME;
 
-        //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                await package.SaveAsAsync(new FileInfo(saveFileDialog.FileName));
 
-        //    using (var package = new ExcelPackage())
-        //    {
-        //        var worksheet = package.Workbook.Worksheets.Add("Better Report");
+                return true;
+            }
 
-        //        worksheet.Cells[1, 1].Value = "Событие";
-        //        worksheet.Cells[1, 2].Value = "Группа";
-        //        worksheet.Cells[1, 3].Value = "Участник";
-        //        worksheet.Cells[1, 4].Value = "Баллы";
-        //        worksheet.Cells[1, 5].Value = "Максимально баллов";
-        //        worksheet.Cells[1, 6].Value = "Зтраченное время";
-        //        worksheet.Cells[1, 7].Value = "Дата";
-        //        worksheet.Cells[1, 8].Value = "Викторина";
+            return false;
+        }
 
-        //        ApplyReportStyling(worksheet, 1, 8);
-
-        //        var groupedResults = resultsWithEventsAndQuizzes
-        //            .GroupBy(r => r.Quiz?.Event?.Name)
-        //            .ToList();
-
-        //        int rowIndex = 2;
-
-        //        foreach (var group in groupedResults)
-        //        {
-        //            string eventName = group.Key;
-
-        //            // Add a new row for the event header
-        //            worksheet.Cells[rowIndex, 1].Value = eventName;
-        //            worksheet.Cells[rowIndex, 1, rowIndex, 8].Merge = true;
-        //            worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.Font.Bold = true;
-        //            worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-
-        //            foreach (var result in group)
-        //            {
-        //                var groupName = result.Quiz?.Event?.EventsGroups?.FirstOrDefault()?.Group?.Name;
-        //                var studentName = $"{result.Student?.FirstName} {result.Student?.LastName}";
-        //                var points = result.Points;
-        //                var maxPoints = result.MaxPoints;
-        //                var timeSpent = result.TimeSpent.ToString(@"hh\:mm\:ss");
-        //                var activationDate = result.Quiz?.Event?.ActivationDateAndTime.ToShortDateString();
-        //                var quizName = result.Quiz?.Name;
-
-        //                worksheet.Cells[rowIndex, 1].Value = eventName;
-        //                worksheet.Cells[rowIndex, 2].Value = groupName;
-        //                worksheet.Cells[rowIndex, 3].Value = studentName;
-        //                worksheet.Cells[rowIndex, 4].Value = points;
-        //                worksheet.Cells[rowIndex, 5].Value = maxPoints;
-        //                worksheet.Cells[rowIndex, 6].Value = timeSpent;
-        //                worksheet.Cells[rowIndex, 7].Value = activationDate;
-        //                worksheet.Cells[rowIndex, 8].Value = quizName;
-
-        //                ApplyReportStyling(worksheet, rowIndex, 8);
-
-        //                rowIndex++;
-        //            }
-        //        }
-
-        //        worksheet.Cells.AutoFitColumns();
-
-        //        var byteArray = await package.GetAsByteArrayAsync();
-        //        await File.WriteAllBytesAsync(@"D:\ComplexResultsReport.xlsx", byteArray);
-        //    }
-        //}
         public async Task GenerateComplexResultsExcelReportAsync()
         {
             var resultsWithEventsAndQuizzes = await resultRepository.All()
                 .Include(r => r.Student)
                 .Include(r => r.Quiz)
-                    .ThenInclude(q => q.Event)
-                        .ThenInclude(e => e.EventsGroups)
-                            .ThenInclude(eg => eg.Group)
+                .ThenInclude(q => q.Event)
+                .ThenInclude(e => e.EventsGroups)
+                .ThenInclude(eg => eg.Group)
                 .ToListAsync();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -143,34 +90,35 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Better Report");
 
-                worksheet.Cells[1, 1].Value = "Событие";
-                worksheet.Cells[1, 2].Value = "Группа";
-                worksheet.Cells[1, 3].Value = "Участник";
-                worksheet.Cells[1, 4].Value = "Баллы";
-                worksheet.Cells[1, 5].Value = "Максимально баллов";
-                worksheet.Cells[1, 6].Value = "Зтраченное время";
-                worksheet.Cells[1, 7].Value = "Дата";
-                worksheet.Cells[1, 8].Value = "Викторина";
+                worksheet.Cells[1, 1].Value = "Группа";
+                worksheet.Cells[1, 2].Value = "Участник";
+                worksheet.Cells[1, 3].Value = "Баллы";
+                worksheet.Cells[1, 4].Value = "Максимально баллов";
+                worksheet.Cells[1, 5].Value = "Затраченное время";
+                worksheet.Cells[1, 6].Value = "Дата";
+                worksheet.Cells[1, 7].Value = "Викторина";
 
-                worksheet.Cells[1, 1, 1, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[1, 1, 1, 8].Style.Font.Bold = true;
-                worksheet.Cells[1, 1, 1, 8].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                var headerRange = worksheet.Cells[1, 1, 1, 7];
+                headerRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                headerRange.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                headerRange.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                headerRange.Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                headerRange.Style.Font.Bold = true;
 
                 var groupedResults = resultsWithEventsAndQuizzes
                     .GroupBy(r => r.Quiz?.Event?.Name)
                     .ToList();
 
                 int rowIndex = 2;
-
+                int rowIndexx = 3;
                 foreach (var group in groupedResults)
                 {
                     string eventName = group.Key;
 
-                    // Add a new row for the event header
                     worksheet.Cells[rowIndex, 1].Value = eventName;
-                    worksheet.Cells[rowIndex, 1, rowIndex, 8].Merge = true;
-                    worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.Font.Bold = true;
-                    worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Merge = true;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.Font.Bold = true;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
                     foreach (var result in group)
                     {
@@ -182,25 +130,33 @@
                         var activationDate = result.Quiz?.Event?.ActivationDateAndTime.ToShortDateString();
                         var quizName = result.Quiz?.Name;
 
-                        worksheet.Cells[rowIndex, 1].Value = eventName;
-                        worksheet.Cells[rowIndex, 2].Value = groupName;
-                        worksheet.Cells[rowIndex, 3].Value = studentName;
-                        worksheet.Cells[rowIndex, 4].Value = points;
-                        worksheet.Cells[rowIndex, 5].Value = maxPoints;
-                        worksheet.Cells[rowIndex, 6].Value = timeSpent;
-                        worksheet.Cells[rowIndex, 7].Value = activationDate;
-                        worksheet.Cells[rowIndex, 8].Value = quizName;
+                        worksheet.Cells[rowIndexx, 1].Value = groupName;
+                        worksheet.Cells[rowIndexx, 2].Value = studentName;
+                        worksheet.Cells[rowIndexx, 3].Value = points;
+                        worksheet.Cells[rowIndexx, 4].Value = maxPoints;
+                        worksheet.Cells[rowIndexx, 5].Value = timeSpent;
+                        worksheet.Cells[rowIndexx, 6].Value = activationDate;
+                        worksheet.Cells[rowIndexx, 7].Value = quizName;
 
-                        worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells[rowIndex, 1, rowIndex, 8].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        var rowRange = worksheet.Cells[rowIndex, 1, rowIndexx, 7];
+                        rowRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        rowRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                        rowIndex++;
+                        rowIndexx++;
                     }
+
+                    rowIndex = rowIndexx;
                 }
 
                 worksheet.Cells.AutoFitColumns();
 
-                await package.SaveAsAsync(new FileInfo(@"D:\ComplexResultsReport.xlsx"));
+                var dataRange = worksheet.Cells[1, 1, rowIndexx - 1, 7];
+                dataRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                dataRange.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
 
@@ -230,23 +186,36 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Student Performance Distribution");
 
-                // Add headers
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
                 worksheet.Cells[1, 1].Value = "Категория";
                 worksheet.Cells[1, 2].Value = "Распределение баллов";
 
-                ApplyReportStyling(worksheet, reportData.Count, 2);
 
-                // Add data
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].CategoryName;
                     worksheet.Cells[i + 2, 2].Value = string.Join(", ", reportData[i].ScoreDistribution);
 
-                    worksheet.Cells[i + 2, 1, i + 2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    rowIndex++;
                 }
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\StudentPerformanceDistribution.xlsx", byteArray);
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
 
@@ -258,7 +227,7 @@
                 .Select(s => new
                 {
                     StudentName = $"{s.FirstName} {s.LastName}",
-                    TotalTimeSpent = s.Results.Sum(r => r.TimeSpent.TotalMinutes)
+                    TotalTimeSpent = s.Results.Sum(r => Math.Round(r.TimeSpent.TotalMinutes,2))
                 })
                 .ToList();
 
@@ -268,26 +237,38 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Time Spent on Quizzes by Student");
 
-                // Add headers
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
                 worksheet.Cells[1, 1].Value = "Участник";
                 worksheet.Cells[1, 2].Value = "Всего потрачено времени (минут)";
 
-                ApplyReportStyling(worksheet, reportData.Count, 2);
-
-                // Add data
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].StudentName;
                     worksheet.Cells[i + 2, 2].Value = reportData[i].TotalTimeSpent;
 
-                    worksheet.Cells[i + 2, 1, i + 2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                }
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\TimeSpentOnQuizzesByStudent.xlsx", byteArray);
+                    rowIndex++;
+                }
+                
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+               
+                await SaveReportAsync(package);
             }
         }
-        //
+        
         public async Task GenerateQuizCompletionRateByGroupAsync()
         {
             var groups = groupRepository.All().Include(g => g.StudentsGroups);
@@ -307,29 +288,44 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Quiz Completion Rate by Group");
 
-                // Add headers
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
                 worksheet.Cells[1, 1].Value = "Группа";
                 worksheet.Cells[1, 2].Value = "Коэффициент завершенности (%)";
 
-                ApplyReportStyling(worksheet, reportData.Count, 2);
-
-                // Add data
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].GroupName;
                     worksheet.Cells[i + 2, 2].Value = reportData[i].CompletionRate;
 
-                    worksheet.Cells[i + 2, 1, i + 2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    rowIndex++;
                 }
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\QuizCompletionRateByGroup.xlsx", byteArray);
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
 
         public async Task GenerateTopPerformingStudentsByQuizAsync()
         {
-            var quizzes = await quizRepository.All().Include(q => q.Results).ThenInclude(x => x.Student).ToListAsync();
+            var quizzes = await quizRepository.All()
+                .Include(q => q.Results)
+                .ThenInclude(x => x.Student)
+                .ToListAsync();
 
             var reportData = quizzes
                 .Select(q => new
@@ -352,23 +348,35 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Top Performing Students");
 
-                // Add headers
-                worksheet.Cells[1, 1].Value = "Викиторина";
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
+                worksheet.Cells[1, 1].Value = "Викторина";
                 worksheet.Cells[1, 2].Value = "Лучшие участники";
 
-                ApplyReportStyling(worksheet, reportData.Count, 2);
-
-                // Add data
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].QuizName;
                     worksheet.Cells[i + 2, 2].Value = string.Join(", ", reportData[i].TopPerformingStudents.Select(s => $"{s.StudentName} ({Math.Round(s.Score, 2)})"));
 
-                    worksheet.Cells[i + 2, 1, i + 2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    rowIndex++;
                 }
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\TopPerformingStudents.xlsx", byteArray);
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
 
@@ -382,7 +390,7 @@
                 {
                     CategoryId = group.Key,
                     CategoryName = categoryRepository.All().FirstOrDefault(x => x.Id == group.Key)?.Name,
-                    AverageScore = group.SelectMany(q => q.Results).DefaultIfEmpty().Average(r => r != null ? r.Points : 0)
+                    AverageScore = group.SelectMany(q => q.Results).DefaultIfEmpty().Average(r => r?.Points)
                 })
                 .ToList();
 
@@ -392,19 +400,35 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Quiz Performance by Category");
 
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
+
                 worksheet.Cells[1, 1].Value = "Категория";
                 worksheet.Cells[1, 2].Value = "Средний балл";
 
-                ApplyReportStyling(worksheet, reportData.Count, 2);
-
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].CategoryName;
                     worksheet.Cells[i + 2, 2].Value = reportData[i].AverageScore;
+
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    rowIndex++;
                 }
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\QuizPerformanceByCategory.xlsx", byteArray);
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
 
@@ -423,11 +447,10 @@
                 GroupName = group.Name,
                 AverageScore = group.StudentsGroups
                     .SelectMany(sg => sg.Student.Results)
-                    .Select(r => r.Points)
-                    .DefaultIfEmpty(0) // Use 0 as the default value if there are no results
+                    .Select(r => Math.Round(r.Points,2))
+                    .DefaultIfEmpty(0)
                     .Average()
             }).ToList();
-
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
@@ -435,28 +458,38 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Group Performance");
 
-                ApplyReportStyling(worksheet, 1, 2);
+                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 2].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 2].Style.Font.Bold = true;
 
                 worksheet.Cells[1, 1].Value = "Группа";
                 worksheet.Cells[1, 2].Value = "Средний балл";
 
-                worksheet.Cells[1, 1, 1, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
+                int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
                 {
                     worksheet.Cells[i + 2, 1].Value = reportData[i].GroupName;
                     worksheet.Cells[i + 2, 2].Value = reportData[i].AverageScore;
 
-                    worksheet.Cells[i + 2, 1, i + 2, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    rowIndex++;
                 }
 
-                ApplyCellBorders(worksheet, 1, reportData.Count + 1, 1, 2);
+                worksheet.Cells.AutoFitColumns();
 
-                var byteArray = await package.GetAsByteArrayAsync();
-                await File.WriteAllBytesAsync(@"D:\GroupPerformance.xlsx", byteArray);
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
             }
         }
-        
+
         public async Task GenerateEventParticipationReportAsync()
         {
             var events = await eventRepository.All()
@@ -505,7 +538,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\EventParticipation.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -547,11 +580,10 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\StudentsReport.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
-        //Ну типо...
         public async Task GenerateExcelReportAsync(ObservableCollection<QuizListViewModel> quizzes)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -560,7 +592,11 @@
             {
                 var worksheet = package.Workbook.Worksheets.Add("Report");
 
-                ApplyReportStyling(worksheet, 1, 7);
+                worksheet.Cells[1, 1, 1, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 7].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 7].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 7].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 7].Style.Font.Bold = true;
 
                 worksheet.Cells[1, 1].Value = "Викторина";
                 worksheet.Cells[1, 2].Value = "Количество вопросов";
@@ -570,6 +606,7 @@
                 worksheet.Cells[1, 6].Value = "Время на прохождение";
                 worksheet.Cells[1, 7].Value = "Вопросы";
 
+                int rowIndex = 2;
                 int maxQuestionLength = 0;
                 for (var i = 0; i < quizzes.Count; i++)
                 {
@@ -591,17 +628,23 @@
                             maxQuestionLength = maxQuestionLengthInQuiz;
                     }
 
-                    ApplyQuestionColumnStyling(worksheet, i + 2, 7);
-                }
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.Border.BorderAround(ExcelBorderStyle.Thin);
 
-                ApplyCellBorders(worksheet, 1, quizzes.Count + 1, 1, 7);
+                    rowIndex++;
+                }
 
                 worksheet.Cells.AutoFitColumns();
 
-                int questionColumnWidth = maxQuestionLength * 1;
-                worksheet.Column(7).Width = questionColumnWidth;
+                worksheet.Cells[1, 1, rowIndex - 1, 7].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 7].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 7].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\QuizzesReport.xlsx"));
+                //int questionColumnWidth = maxQuestionLength * 1;
+                //worksheet.Column(7).Width = questionColumnWidth;
+
+                await SaveReportAsync(package);
             }
         }
 
@@ -643,7 +686,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\CategoriesReport.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -687,7 +730,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\GroupsReport.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -736,8 +779,7 @@
                 worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[4, 1, rowIndex - 1, 5].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                string saveDate = DateTime.Now.ToString("dd_MM__HH_mm");
-                await package.SaveAsAsync(new FileInfo($@"D:\{studentName}_OwnResultReport_{saveDate}.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -774,7 +816,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\StudentActiveEventsReport.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -813,7 +855,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 3].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\StudentPendingEventsReport.xlsx"));
+                await SaveReportAsync(package);
             }
         }
 
@@ -850,84 +892,7 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
-                await package.SaveAsAsync(new FileInfo(@"D:\StudentEndedEventsReport.xlsx"));
-            }
-        }
-
-        #region Helpers
-
-        private void ApplyReportStyling(ExcelWorksheet worksheet, int rowCount, int columnCount)
-        {
-            worksheet.Cells[1, 1, 1, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            worksheet.Cells[1, 1, 1, columnCount].Style.Font.Bold = true;
-
-            worksheet.Cells[1, 1, rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[1, 1, rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[1, 1, rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-            worksheet.Cells[1, 1, rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-
-            worksheet.Cells[1, 1, 1, columnCount].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells[1, 1, 1, columnCount].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                worksheet.Cells[i + 2, 1, i + 2, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-                worksheet.Cells[i + 2, 1, i + 2, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[i + 2, 1, i + 2, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[i + 2, 1, i + 2, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                worksheet.Cells[i + 2, 1, i + 2, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-            }
-
-            worksheet.Cells.AutoFitColumns();
-        }
-
-        private void ApplyQuestionColumnStyling(ExcelWorksheet worksheet, int startRow, int column)
-        {
-            var columnCells = worksheet.Cells[startRow, column, worksheet.Dimension.End.Row, column];
-            var columnStyle = worksheet.Column(column).Style;
-
-            // Apply horizontal alignment to center
-            columnStyle.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-
-            // Apply vertical alignment to middle
-            columnStyle.VerticalAlignment = ExcelVerticalAlignment.Center;
-
-            // Apply wrap text
-            columnStyle.WrapText = true;
-
-            // Set row heights to fit the wrapped text
-            columnCells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            columnCells.Style.ShrinkToFit = true;
-
-            // Adjust row heights
-            for (int row = startRow; row <= worksheet.Dimension.End.Row; row++)
-            {
-                var cell = worksheet.Cells[row, column];
-                cell.AutoFitColumns();
-            }
-        }
-
-        #endregion
-
-        void ApplyCellBorders(ExcelWorksheet worksheet, int startRow, int endRow, int startColumn, int endColumn)
-        {
-            using (var range = worksheet.Cells[startRow, startColumn, endRow, endColumn])
-            {
-                var borderStyle = ExcelBorderStyle.Thin;
-                var borderColor = Color.Black;
-
-                range.Style.Border.Top.Style = borderStyle;
-                range.Style.Border.Top.Color.SetColor(borderColor);
-
-                range.Style.Border.Bottom.Style = borderStyle;
-                range.Style.Border.Bottom.Color.SetColor(borderColor);
-
-                range.Style.Border.Left.Style = borderStyle;
-                range.Style.Border.Left.Color.SetColor(borderColor);
-
-                range.Style.Border.Right.Style = borderStyle;
-                range.Style.Border.Right.Color.SetColor(borderColor);
+                await SaveReportAsync(package);
             }
         }
     }

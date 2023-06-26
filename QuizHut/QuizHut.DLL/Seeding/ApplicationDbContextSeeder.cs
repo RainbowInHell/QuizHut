@@ -26,7 +26,6 @@
             foreach (var seeder in seeders)
             {
                 await seeder.SeedAsync(dbContext, serviceProvider);
-                await dbContext.SaveChangesAsync();
             }
         }
     }

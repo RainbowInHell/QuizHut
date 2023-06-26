@@ -18,7 +18,7 @@
     </i:Interaction.Triggers>
     <StackPanel VerticalAlignment="Top">
         <Button x:Name="MVQDownloadBtn"
-                Command="{Binding ExportDataAsyncCommand}"
+                Command="{Binding ExportDataCommandAsync}"
                 Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource Color5}"

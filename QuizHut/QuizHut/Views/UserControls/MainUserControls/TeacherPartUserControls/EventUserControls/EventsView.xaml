@@ -79,6 +79,7 @@
 
         <!-- Download and Add buttons -->
         <Button x:Name="MVEDownloadBtn"
+                Command="{Binding ExportDataCommandAsync}"
                 Grid.Row="2"
                 Template="{StaticResource MainButtonTemplate}"
                 Background="{StaticResource Color8}"

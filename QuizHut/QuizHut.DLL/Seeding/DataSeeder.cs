@@ -15,43 +15,37 @@
 
             var organizerId = await CreateUser(userManager, "Пример", "Организатора", "organizer@mail.ru", "Organizer");
 
-            await CreateUser(userManager, "Матвей", "Быковский", "bykovsky@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Анастасия", "Бразинская", "braniskaya@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Владислав", "Вишневскй", "vishnevski@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Даниил", "Григоренко", "grigorenko@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Алексей", "Волчек", "volcheck@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Алексей", "Заяц", "zayac@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Кирилл", "Карпекин", "karpekin@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Илья", "Миклашевич", "miklashevich@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Денис", "Раткевич", "ratkevich@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Владимир", "Климченя", "klimchenya@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Павел", "Золотарев", "zolotarev@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Мария", "Комкова", "komkova@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Карина", "Липская", "lipskaya@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Артем", "Зеленок", "zelenok@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Егор", "Чужавко", "chyzhavko@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Александр", "Янушевич", "yanushevich@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Алексей", "Курышев", "kyrishev@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Дарина", "Сулим", "sulim@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Давид", "Орлис", "bykovsky@mail.ru", "Student", organizerId);
-            await CreateUser(userManager, "Даниил", "Бяроско", "bykovsky@mail.ru", "Student", organizerId);
-
-            if (!dbContext.Quizzes.Any())
+            if (organizerId != null)
             {
+                await CreateUser(userManager, "Матвей", "Быковский", "bykovsky@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Анастасия", "Бразинская", "braniskaya@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Владислав", "Вишневскй", "vishnevski@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Даниил", "Григоренко", "grigorenko@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Алексей", "Волчек", "volcheck@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Алексей", "Заяц", "zayac@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Кирилл", "Карпекин", "karpekin@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Илья", "Миклашевич", "miklashevich@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Денис", "Раткевич", "ratkevich@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Владимир", "Климченя", "klimchenya@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Павел", "Золотарев", "zolotarev@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Мария", "Комкова", "komkova@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Карина", "Липская", "lipskaya@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Артем", "Зеленок", "zelenok@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Егор", "Чужавко", "chyzhavko@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Александр", "Янушевич", "yanushevich@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Алексей", "Курышев", "kyrishev@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Дарина", "Сулим", "sulim@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Давид", "Орлис", "bykovsky@mail.ru", "Student", organizerId);
+                await CreateUser(userManager, "Даниил", "Бяроско", "bykovsky@mail.ru", "Student", organizerId);
+
                 await CreateQuizzesAsync(organizerId, userManager, dbContext);
-            }
 
-            if (!dbContext.Categories.Any())
-            {
                 await CreateCategoryAsync(organizerId, "Алгоритмы", dbContext);
                 await CreateCategoryAsync(organizerId, "Математика", dbContext);
                 await CreateCategoryAsync(organizerId, "ООП", dbContext);
                 await CreateCategoryAsync(organizerId, "БазыДанных", dbContext);
                 await CreateCategoryAsync(organizerId, "Гит", dbContext);
-            }
 
-            if (!dbContext.Groups.Any())
-            {
                 await CreateGroupAsync(organizerId, "T-991", dbContext);
                 await CreateGroupAsync(organizerId, "T-992", dbContext);
                 await CreateGroupAsync(organizerId, "T-993", dbContext);
@@ -59,6 +53,8 @@
                 await CreateGroupAsync(organizerId, "T-995", dbContext);
             }
         }
+
+        #region QuizzesCreation
 
         private static async Task CreateQuizzesAsync(string organizerId, UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
         {
@@ -105,6 +101,8 @@
             }
         }
 
+        #endregion
+
         #region UserCreation
 
         private static async Task<string> CreateUser(
@@ -129,9 +127,10 @@
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, roleName);
+                return user.Id;
             }
 
-            return user.Id;
+            return null;
         }
 
         #endregion
