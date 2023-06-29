@@ -129,6 +129,16 @@
 
             var validationResult = validator.Validate(registerRequest);
 
+            if (Password != RepeatPassword)
+            {
+                ErrorMessage = "Пароли не совпадают";
+                return false;
+            }
+            else
+            {
+                ErrorMessage = null;
+            }
+
             if (validationResult.IsValid)
             {
                 ErrorMessage = null;

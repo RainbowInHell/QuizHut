@@ -32,6 +32,8 @@
 
         Task GenerateComplexResultsExcelReportAsync();
 
+        Task GenerateExcelReportAsync(ObservableCollection<EventListViewModel> events);
+
         Task GenerateExcelReportAsync(ObservableCollection<StudentViewModel> students);
 
         Task GenerateExcelReportAsync(ObservableCollection<QuizListViewModel> quizzes);

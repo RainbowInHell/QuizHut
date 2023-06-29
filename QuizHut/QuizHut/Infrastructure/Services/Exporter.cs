@@ -106,11 +106,10 @@
                 headerRange.Style.Font.Bold = true;
 
                 var groupedResults = resultsWithEventsAndQuizzes
-                    .GroupBy(r => r.Quiz?.Event?.Name)
+                    .GroupBy(r => r.Quiz?.Event?.Name) // Group by Event Name
                     .ToList();
 
                 int rowIndex = 2;
-                int rowIndexx = 3;
                 foreach (var group in groupedResults)
                 {
                     string eventName = group.Key;
@@ -119,6 +118,9 @@
                     worksheet.Cells[rowIndex, 1, rowIndex, 7].Merge = true;
                     worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.Font.Bold = true;
                     worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    rowIndex++; // Move to the next row for the group name
 
                     foreach (var result in group)
                     {
@@ -130,27 +132,25 @@
                         var activationDate = result.Quiz?.Event?.ActivationDateAndTime.ToShortDateString();
                         var quizName = result.Quiz?.Name;
 
-                        worksheet.Cells[rowIndexx, 1].Value = groupName;
-                        worksheet.Cells[rowIndexx, 2].Value = studentName;
-                        worksheet.Cells[rowIndexx, 3].Value = points;
-                        worksheet.Cells[rowIndexx, 4].Value = maxPoints;
-                        worksheet.Cells[rowIndexx, 5].Value = timeSpent;
-                        worksheet.Cells[rowIndexx, 6].Value = activationDate;
-                        worksheet.Cells[rowIndexx, 7].Value = quizName;
+                        worksheet.Cells[rowIndex, 1].Value = groupName; // Use groupName here to display the group name
+                        worksheet.Cells[rowIndex, 2].Value = studentName;
+                        worksheet.Cells[rowIndex, 3].Value = points;
+                        worksheet.Cells[rowIndex, 4].Value = maxPoints;
+                        worksheet.Cells[rowIndex, 5].Value = timeSpent;
+                        worksheet.Cells[rowIndex, 6].Value = activationDate;
+                        worksheet.Cells[rowIndex, 7].Value = quizName;
 
-                        var rowRange = worksheet.Cells[rowIndex, 1, rowIndexx, 7];
+                        var rowRange = worksheet.Cells[rowIndex, 1, rowIndex, 7];
                         rowRange.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         rowRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
 
-                        rowIndexx++;
+                        rowIndex++; // Move to the next row for the next result
                     }
-
-                    rowIndex = rowIndexx;
                 }
 
                 worksheet.Cells.AutoFitColumns();
 
-                var dataRange = worksheet.Cells[1, 1, rowIndexx - 1, 7];
+                var dataRange = worksheet.Cells[1, 1, rowIndex - 1, 7];
                 dataRange.Style.Border.Top.Style = ExcelBorderStyle.Thin;
                 dataRange.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 dataRange.Style.Border.Left.Style = ExcelBorderStyle.Thin;
@@ -171,6 +171,7 @@
                     CategoryName = categoryRepository.All().FirstOrDefault(x => x.Id == q.CategoryId)?.Name,
                     StudentScore = r.Points
                 }))
+                .Where(r => !string.IsNullOrEmpty(r.CategoryName)) // Filter out empty category names
                 .GroupBy(r => r.CategoryId)
                 .Select(group => new
                 {
@@ -194,7 +195,6 @@
 
                 worksheet.Cells[1, 1].Value = "Категория";
                 worksheet.Cells[1, 2].Value = "Распределение баллов";
-
 
                 int rowIndex = 2;
                 for (int i = 0; i < reportData.Count; i++)
@@ -392,6 +392,7 @@
                     CategoryName = categoryRepository.All().FirstOrDefault(x => x.Id == group.Key)?.Name,
                     AverageScore = group.SelectMany(q => q.Results).DefaultIfEmpty().Average(r => r?.Points)
                 })
+                .Where(r => !string.IsNullOrEmpty(r.CategoryName)) // Filter out empty category names
                 .ToList();
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -537,6 +538,52 @@
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Left.Style = ExcelBorderStyle.Thin;
                 worksheet.Cells[1, 1, rowIndex - 1, 2].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+
+                await SaveReportAsync(package);
+            }
+        }
+
+        public async Task GenerateExcelReportAsync(ObservableCollection<EventListViewModel> events)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Report");
+
+                worksheet.Cells[1, 1, 1, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[1, 1, 1, 4].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                worksheet.Cells[1, 1, 1, 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[1, 1, 1, 4].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                worksheet.Cells[1, 1, 1, 4].Style.Font.Bold = true;
+
+                worksheet.Cells[1, 1].Value = "Название";
+                worksheet.Cells[1, 2].Value = "Начало";
+                worksheet.Cells[1, 3].Value = "Продолжительность";
+                worksheet.Cells[1, 4].Value = "Статус";
+
+                int rowIndex = 2;
+                for (var i = 0; i < events.Count; i++)
+                {
+                    worksheet.Cells[rowIndex, 1, rowIndex, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    worksheet.Cells[rowIndex, 1, rowIndex, 4].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                    var student = events[i];
+
+                    worksheet.Cells[rowIndex, 1].Value = student.Name;
+                    worksheet.Cells[rowIndex, 2].Value = student.StartDate;
+                    worksheet.Cells[rowIndex, 3].Value = student.Duration;
+                    worksheet.Cells[rowIndex, 4].Value = student.StatusAsString;
+
+                    rowIndex++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                worksheet.Cells[1, 1, rowIndex - 1, 4].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 4].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 4].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                worksheet.Cells[1, 1, rowIndex - 1, 4].Style.Border.Right.Style = ExcelBorderStyle.Thin;
 
                 await SaveReportAsync(package);
             }

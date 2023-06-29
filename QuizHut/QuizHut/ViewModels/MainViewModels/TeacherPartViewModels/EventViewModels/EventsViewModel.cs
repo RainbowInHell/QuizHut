@@ -175,7 +175,7 @@
 
         private async Task OnExportDataCommandAsyncExecute(object p)
         {
-            //await exporter.GenerateExcelReportAsync(Events);
+            await exporter.GenerateExcelReportAsync(Events);
         }
 
         #endregion
