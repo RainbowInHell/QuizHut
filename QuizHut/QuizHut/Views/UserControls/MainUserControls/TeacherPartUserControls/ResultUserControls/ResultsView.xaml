@@ -16,48 +16,65 @@
             <i:InvokeCommandAction Command="{Binding LoadDataCommandAsync}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-        <Border x:Name="MVRLastActiveEventsBlock"
+    <StackPanel VerticalAlignment="Top">
+        <Button x:Name="MVQDownloadBtn"
+                Command="{Binding ExportDataCommandAsync}"
+                Grid.Row="2"
+                Template="{StaticResource MainButtonTemplate}"
+                Background="{StaticResource Color5}"
+                Width="130" Height="45"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Margin="20,0,0,0"
+                Foreground="{StaticResource SecondaryFontColor}" FontFamily="{StaticResource Manrope}" FontSize="14" FontWeight="SemiBold">
+            <StackPanel Orientation="Horizontal">
+                <fa:IconImage Icon="Download" Foreground="White" Width="20" Height="20" Margin="0,0,4,0"/>
+                <TextBlock Text="Выгрузить" 
+                           FontFamily="{StaticResource Manrope}" FontSize="16" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+        <StackPanel Orientation="Horizontal">
+            <Border x:Name="MVRLastActiveEventsBlock"
                 CornerRadius="15" 
-                Width="480" Height="350" Margin="20,50,0,0"
+                Width="480" Height="350" Margin="20,20,0,0"
                 Background="{StaticResource MainViewBackground4}">
 
-            <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
-            </Border.Effect>
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
+                </Border.Effect>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="133*"/>
-                    <ColumnDefinition Width="15"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="133*"/>
+                        <ColumnDefinition Width="15"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="15"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="15"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Title -->
-                <StackPanel Orientation="Horizontal"
+                    <!-- Title -->
+                    <StackPanel Orientation="Horizontal"
                             Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-                    <fa:IconImage Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        <fa:IconImage Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                   Icon="CircleInfo" Foreground="{StaticResource IconColor3}"/>
-                    <TextBlock Style="{StaticResource MainTextBlock}"
+                        <TextBlock Style="{StaticResource MainTextBlock}"
                                Margin="5,0,0,0" VerticalAlignment="Center"
                                Text="Результаты для: " FontSize="14" FontWeight="Medium"/>
-                </StackPanel>
+                    </StackPanel>
 
 
-                <TextBlock Grid.Row="2" Grid.Column="1"
+                    <TextBlock Grid.Row="2" Grid.Column="1"
                            Style="{StaticResource MainTextBlock}"
                            Text="Последние активные события" Grid.ColumnSpan="2"/>
 
-                <DataGrid x:Name="MVRLastActiveEventsDataGrid" 
+                    <DataGrid x:Name="MVRLastActiveEventsDataGrid" 
                           Grid.Row="3" Grid.Column="1"
                           ItemsSource="{Binding ActiveEvents}"    
                           SelectedItem="{Binding EventToView}"
@@ -67,90 +84,90 @@
                           RowStyle="{StaticResource DataGridRowStyle2}"
                           HeadersVisibility="None">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*" FontWeight="Bold"
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*" FontWeight="Bold"
                                     Binding="{Binding Name}"/>
 
-                        <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="MVRViewActiveEventResultsBtn" 
+                            <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="MVRViewActiveEventResultsBtn" 
                                             VerticalAlignment="Bottom" 
                                             Width="70" Height="30"
                                             Style="{StaticResource UserOptionButton}"
                                             Tag="{StaticResource SecondaryFontColor}" Background="Transparent"
                                             Command="{Binding DataContext.NavigateResultsForEventCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Смотреть" Style="{StaticResource UserOptionButtonText}" FontSize="11" FontWeight="Bold"
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Смотреть" Style="{StaticResource UserOptionButtonText}" FontSize="11" FontWeight="Bold"
                                                    VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                
-                <!-- View all active events -->
-                <Button x:Name="MVRAllActiveEventsBtn" Grid.Row="4" Grid.Column="1"
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- View all active events -->
+                    <Button x:Name="MVRAllActiveEventsBtn" Grid.Row="4" Grid.Column="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                                 Width="120" Height="40"
                                 Style="{StaticResource UserOptionButton}"
                                 Tag="{StaticResource IconColor3}" Background="Transparent"
                                 Command="{Binding NavigateActiveEventsCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Все" Style="{StaticResource UserOptionButtonText}" FontSize="18" FontWeight="Bold"
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Все" Style="{StaticResource UserOptionButtonText}" FontSize="18" FontWeight="Bold"
                                    VerticalAlignment="Center"/>
-                        <fa:IconImage Icon="RectangleList"
+                            <fa:IconImage Icon="RectangleList"
                                               Height="20" Width="20"
                                               Style="{StaticResource UserOptionButtonIcon}"
                                               Margin="10,0,0,0"
                                               VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </Border>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
 
-        <Border x:Name="MVRLastEndedEventsBlock"
+            <Border x:Name="MVRLastEndedEventsBlock"
                 CornerRadius="15" 
-                Width="480" Height="350" Margin="20,50,0,0"
+                Width="480" Height="350" Margin="20,20,0,0"
                 Background="{StaticResource MainViewBackground4}">
 
-            <Border.Effect>
-                <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
-            </Border.Effect>
+                <Border.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="20" Direction="315" Opacity="0.5"/>
+                </Border.Effect>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="15"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="15"/>
+                    </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="15"/>
-                </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="15"/>
+                    </Grid.RowDefinitions>
 
-                <!-- Title -->
-                <StackPanel Orientation="Horizontal"
+                    <!-- Title -->
+                    <StackPanel Orientation="Horizontal"
                             Grid.Row="1" Grid.Column="1">
-                    <fa:IconImage Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        <fa:IconImage Width="20" Height="20" HorizontalAlignment="Left" VerticalAlignment="Center"
                                   Icon="CircleInfo" Foreground="{StaticResource IconColor4}"/>
-                    <TextBlock Style="{StaticResource MainTextBlock}"
+                        <TextBlock Style="{StaticResource MainTextBlock}"
                                Margin="5,0,0,0" VerticalAlignment="Center"
                                Text="Результаты для: " FontSize="14" FontWeight="Medium"/>
-                </StackPanel>
+                    </StackPanel>
 
-                <TextBlock Grid.Row="2" Grid.Column="1"
+                    <TextBlock Grid.Row="2" Grid.Column="1"
                            Style="{StaticResource MainTextBlock}"
-                           Text="Последние оконченные события"/>
+                           Text="Последние завершённые события"/>
 
-                <DataGrid x:Name="MVRLastEndedEventsDataGrid" 
+                    <DataGrid x:Name="MVRLastEndedEventsDataGrid" 
                           Grid.Row="3" Grid.Column="1"
                           ItemsSource="{Binding EndedEvents}"  
                           SelectedItem="{Binding EventToView}"                          
@@ -160,48 +177,49 @@
                           RowStyle="{StaticResource DataGridRowStyle3}"
                           HeadersVisibility="None">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*" FontWeight="Bold"
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Название" IsReadOnly="True" Width="*" FontWeight="Bold"
                                     Binding="{Binding Name}"/>
 
-                        <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="100">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="MVRViewEndedEventResultsBtn" 
+                            <DataGridTemplateColumn Header="Управление" IsReadOnly="True" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="MVRViewEndedEventResultsBtn" 
                                             VerticalAlignment="Bottom" 
                                             Width="70" Height="30"
                                             Style="{StaticResource UserOptionButton}"
                                             Tag="{StaticResource SecondaryFontColor}" Background="Transparent"
                                             Command="{Binding DataContext.NavigateResultsForEventCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="Смотреть" Style="{StaticResource UserOptionButtonText}" FontSize="11" FontWeight="Bold"
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Смотреть" Style="{StaticResource UserOptionButtonText}" FontSize="11" FontWeight="Bold"
                                                    VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                
-                <!-- View all ended events -->
-                <Button x:Name="MVRAllEndedEventsBtn" Grid.Row="4" Grid.Column="1"
+                                            </StackPanel>
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!-- View all ended events -->
+                    <Button x:Name="MVRAllEndedEventsBtn" Grid.Row="4" Grid.Column="1"
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" 
                                 Width="120" Height="40"
                                 Style="{StaticResource UserOptionButton}"
                                 Tag="{StaticResource IconColor4}" Background="Transparent"
                                 Command="{Binding NavigateEndedEventsCommand}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Все" Style="{StaticResource UserOptionButtonText}" FontSize="18" FontWeight="Bold"
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Все" Style="{StaticResource UserOptionButtonText}" FontSize="18" FontWeight="Bold"
                                    VerticalAlignment="Center"/>
-                        <fa:IconImage Icon="RectangleList"
+                            <fa:IconImage Icon="RectangleList"
                                               Height="20" Width="20"
                                               Style="{StaticResource UserOptionButtonIcon}"
                                               Margin="10,0,0,0"
                                               VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </Grid>
-        </Border>
+                        </StackPanel>
+                    </Button>
+                </Grid>
+            </Border>
+        </StackPanel>
     </StackPanel>
 </UserControl>

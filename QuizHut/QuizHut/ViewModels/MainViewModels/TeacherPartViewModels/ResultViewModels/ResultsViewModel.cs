@@ -26,21 +26,26 @@
 
         private readonly ISharedDataStore sharedDataStore;
 
+        private readonly IExporter exporter;
+
         public ResultsViewModel(
             IEventsService eventsService,
             ISharedDataStore sharedDataStore,
             IRenavigator activeEndedEventsRenavigator,
             IRenavigator resultsForEventRenavigator,
-            IViewDisplayTypeService viewDisplayTypeService)
+            IViewDisplayTypeService viewDisplayTypeService,
+            IExporter exporter)
         {
             this.eventsService = eventsService;
             this.sharedDataStore = sharedDataStore;
+            this.exporter = exporter;
 
             NavigateActiveEventsCommand = new RenavigateCommand(activeEndedEventsRenavigator, ViewDisplayType.ActiveEvents, viewDisplayTypeService);
             NavigateEndedEventsCommand = new RenavigateCommand(activeEndedEventsRenavigator, ViewDisplayType.EndedEvents, viewDisplayTypeService);
             NavigateResultsForEventCommand = new RenavigateCommand(resultsForEventRenavigator);
 
             LoadDataCommandAsync = new ActionCommandAsync(OnLoadDataCommandExecutedAsync);
+            ExportDataCommandAsync = new ActionCommandAsync(OnExportDataCommandAsyncExecute);
         }
 
         #region FieldsAndProperties
@@ -91,6 +96,17 @@
             await LoadActiveEventsDataAsync();
 
             await LoadEndedEventsDataAsync();
+        }
+
+        #endregion
+
+        #region ExportDataCommand
+
+        public ICommandAsync ExportDataCommandAsync { get; }
+
+        private async Task OnExportDataCommandAsyncExecute(object p)
+        {
+            await exporter.GenerateComplexResultsExcelReportAsync();
         }
 
         #endregion

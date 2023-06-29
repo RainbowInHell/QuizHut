@@ -184,7 +184,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportFirstDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
                     
@@ -198,7 +198,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportSecondDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
 
@@ -212,7 +212,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportThirdDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
 
@@ -226,7 +226,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportFourthDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
 
@@ -240,7 +240,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportFifthDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
 
@@ -254,7 +254,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding }"/>
+                                Command="{Binding ExportSixthDataCommandAsync}"/>
                     </WrapPanel>
                     <Separator Background="{StaticResource menuOverColor}"/>
 
@@ -268,7 +268,7 @@
                                 Width="170" Height="45"
                                 Content="Выгрузить"
                                 Foreground="{StaticResource SecondaryFontColor}" FontSize="20" FontWeight="SemiBold"
-                                Command="{Binding DeleteUserCommandAsync}"/>
+                                Command="{Binding ExportSeventhDataCommandAsync}"/>
                     </WrapPanel>
                 </StackPanel>
             </Grid>

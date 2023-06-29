@@ -3,6 +3,8 @@
     using System.Collections.ObjectModel;
     using System.Threading.Tasks;
 
+    using OfficeOpenXml;
+    
     using QuizHut.Infrastructure.EntityViewModels;
     using QuizHut.Infrastructure.EntityViewModels.Categories;
     using QuizHut.Infrastructure.EntityViewModels.Events;
@@ -12,6 +14,8 @@
 
     public interface IExporter
     {
+        Task<bool> SaveReportAsync(ExcelPackage package);
+
         Task GenerateStudentPerformanceDistributionByCategoryAsync();
 
         Task GenerateTimeSpentOnQuizzesByStudentAsync();
@@ -27,6 +31,8 @@
         Task GenerateEventParticipationReportAsync();
 
         Task GenerateComplexResultsExcelReportAsync();
+
+        Task GenerateExcelReportAsync(ObservableCollection<EventListViewModel> events);
 
         Task GenerateExcelReportAsync(ObservableCollection<StudentViewModel> students);
 

@@ -413,7 +413,8 @@
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<ViewModelRenavigate<ActiveEndedEventsViewModel>>(),
                 services.GetRequiredService<ViewModelRenavigate<ResultsForEventViewModel>>(),
-                services.GetRequiredService<IViewDisplayTypeService>());
+                services.GetRequiredService<IViewDisplayTypeService>(),
+                services.GetRequiredService<IExporter>());
         }
 
         private static ResultsForEventViewModel CreateResultsForEventViewModel(IServiceProvider services)
@@ -439,6 +440,7 @@
                 services.GetRequiredService<IUserAccountService>(),
                 services.GetRequiredService<ISharedDataStore>(),
                 services.GetRequiredService<IAccountStore>(),
+                services.GetRequiredService<IExporter>(),
                 services.GetRequiredService<ViewModelRenavigate<AuthorizationViewModel>>());
         }       
         
