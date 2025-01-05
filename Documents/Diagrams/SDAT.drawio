@@ -1,0 +1,85 @@
+<mxfile host="Electron" modified="2023-05-19T16:26:50.867Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.2.8 Chrome/112.0.5615.165 Electron/24.2.0 Safari/537.36" etag="1jRBc4CjLTF2EqqgJ57O" version="21.2.8" type="device">
+  <diagram name="Page-1" id="ij_p5tIyQAHa9fmhZDqF">
+    <mxGraphModel dx="955" dy="1749" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-7" value="" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="110" y="-40" width="780" height="780" as="geometry" />
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-2" value="Автоматизировать сбор и обработку данных для подготовки и проведения олимпиады" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="360" y="320" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-3" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" target="oJLkqS9eCKC-fQZEIERX-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="350" as="sourcePoint" />
+            <mxPoint x="460" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-4" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" target="oJLkqS9eCKC-fQZEIERX-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="240" as="sourcePoint" />
+            <mxPoint x="510" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-5" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="oJLkqS9eCKC-fQZEIERX-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="760" y="380" as="sourcePoint" />
+            <mxPoint x="680" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-6" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" target="oJLkqS9eCKC-fQZEIERX-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="480" y="520" as="sourcePoint" />
+            <mxPoint x="610" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-8" value="Ответственный от &lt;br&gt;учреждения образования" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="395" y="520" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-10" value="Данные &lt;br&gt;участников &lt;br&gt;олимпиады" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="190" y="350" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-12" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" target="oJLkqS9eCKC-fQZEIERX-2" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="410" as="sourcePoint" />
+            <mxPoint x="360" y="379.84" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="oJLkqS9eCKC-fQZEIERX-13" value="Регламент &lt;br&gt;проведения &lt;br&gt;олимпиады" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="375" y="180" width="90" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-1" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="oJLkqS9eCKC-fQZEIERX-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="240" as="sourcePoint" />
+            <mxPoint x="540" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-2" value="Положение о&lt;br&gt;проведении олимпиады" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="465" y="200" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-3" value="Аналитические отчеты о &lt;br&gt;проведении олимпиады" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="680" y="360" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-4" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="oJLkqS9eCKC-fQZEIERX-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="379.7" as="sourcePoint" />
+            <mxPoint x="680" y="379.7" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-5" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" edge="1" parent="1" source="oJLkqS9eCKC-fQZEIERX-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="410" as="sourcePoint" />
+            <mxPoint x="680" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9ziyzVLKXozDI3AOBOHT-6" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="379.55" as="sourcePoint" />
+            <mxPoint x="360" y="379.55" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
